@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
@@ -26,127 +27,132 @@ class _PasswordScreenState extends State<PasswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            CustomAppBar(),
+        child: GetBuilder<PasswordController>(
+          builder: (_) => Form(
+            key: _controller.formKey,
+            child: Column(
+              children: [
+                const CustomAppBar(),
 
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppDimensions.paddingExtraLarge,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppDimensions.paddingExtraLarge,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Obx(
-                        () => Text(
-                          'Шаг ${_controller.currentStep} из 3',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: AppColors.blackText,
+                      /// Шаг и индикатор
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            r'step_3_of_3'.tr,
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: AppColors.blackText,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 24.w,
+                            height: 24.h,
+                            child: _controller.status == Status.loading
+                                ? CircularProgressIndicator(
+                                    color: AppColors.green,
+                                  )
+                                : const SizedBox.shrink(),
+                          ),
+                        ],
+                      ),
+
+                      SizedBox(height: 40.h),
+
+                      /// Заголовок
+                      Text(
+                        r'new_password'.tr,
+                        style: TextStyle(
+                          fontSize: 24,
+                          color: AppColors.blackText,
+                        ),
+                      ),
+                      Text(
+                        r'create_password'.tr,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: AppColors.greyInactive,
+                          fontFamily: AppFonts.secondaryFont,
+                        ),
+                      ),
+                      SizedBox(height: AppDimensions.padding60.h),
+
+                      /// Поле ввода пароля
+                      TextFormField(
+                        controller: _controller.passwordController,
+                        focusNode: _controller.passwordFocus,
+                        keyboardType: TextInputType.visiblePassword,
+                        obscureText: !_controller.isPasswordVisible,
+                        onChanged: _controller.onPasswordChanged,
+                        validator: _controller.validatePassword,
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontFamily: AppFonts.primaryFont,
+                        ),
+                        decoration: InputDecoration(
+                          hintText: r'password'.tr,
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: 17.h,
+                            horizontal: AppDimensions.paddingLarge.w,
+                          ),
+                          suffixIconConstraints: BoxConstraints(
+                            minHeight: 20.h,
+                            minWidth: 20.w,
+                          ),
+                          suffixIcon: GestureDetector(
+                            onTap: _controller.togglePasswordVisibility,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: AppDimensions.paddingExtraLarge.w,
+                              ),
+                              child: _controller.isPasswordVisible
+                                  ? SvgPicture.asset(
+                                      AppAssets.eyeIcon,
+                                      color: AppColors.grey,
+                                      width: 24.w,
+                                      height: 24.h,
+                                    )
+                                  : SvgPicture.asset(
+                                      AppAssets.eyeSlashIcon,
+                                      color: AppColors.grey,
+                                      width: 24.w,
+                                      height: 24.h,
+                                    ),
+                            ),
                           ),
                         ),
                       ),
 
-                      Obx(
-                        () => SizedBox(
-                          width: 24.w,
-                          height: 24.h,
-                          child: CircularProgressIndicator(
-                            color: AppColors.green,
-                            value: _controller.isLoading ? null : 0,
+                      SizedBox(height: AppDimensions.paddingMedium.h),
+
+                      /// Кнопка "Подтвердить"
+                      Opacity(
+                        opacity: _controller.isPasswordValid ? 1.0 : 0.5,
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: ElevatedButtonWithState(
+                            isLoading: _controller.status == Status.loading,
+                            isError: _controller.status == Status.error,
+                            onPressed: _controller.isPasswordValid
+                                ? _controller.confirmPassword
+                                : null,
+                            child: Text(r'confirm'.tr),
                           ),
                         ),
                       ),
                     ],
                   ),
-
-                  SizedBox(height: 40.h),
-
-                  Text(
-                    'Новый пароль',
-                    style: TextStyle(fontSize: 24, color: AppColors.blackText),
-                  ),
-                  Text(
-                    'Придумайте надежный пароль',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: AppColors.greyInactive,
-                      fontFamily: 'Gliroy',
-                    ),
-                  ),
-                  SizedBox(height: AppDimensions.padding60.h),
-
-                  Obx(
-                    () => TextField(
-                      keyboardType: TextInputType.visiblePassword,
-                      obscureText: !_controller.isPasswordVisible,
-                      onChanged: (value) {
-                        _controller.updatePassword(value);
-                      },
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontFamily: AppFonts.primaryFont,
-                      ),
-                      decoration: InputDecoration(
-                        hintText: 'Пароль',
-                        contentPadding: EdgeInsets.symmetric(
-                          vertical: 17.h,
-                          horizontal: AppDimensions.paddingLarge.w,
-                        ),
-                        suffixIconConstraints: BoxConstraints(
-                          minHeight: 20.h,
-                          minWidth: 20.w,
-                        ),
-                        suffixIcon: GestureDetector(
-                          onTap: _controller.togglePasswordVisibility,
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: AppDimensions.paddingExtraLarge.w,
-                            ),
-                            child: _controller.isPasswordVisible
-                                ? SvgPicture.asset(
-                                    AppAssets.eyeIcon,
-                                    color: AppColors.grey,
-                                    width: 24.w,
-                                    height: 24.h,
-                                  )
-                                : SvgPicture.asset(
-                                    AppAssets.eyeSlashIcon,
-                                    color: AppColors.grey,
-                                    width: 24.w,
-                                    height: 24.h,
-                                  ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(height: AppDimensions.paddingMedium.h),
-
-                  Obx(
-                    () => Opacity(
-                      opacity: _controller.isPasswordValid ? 1.0 : 0.5,
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        child: ElevatedButtonWithState(
-                          isLoading: _controller.isLoading,
-                          isError: _controller.hasError,
-                          onPressed: _controller.isPasswordValid
-                              ? _controller.confirmPassword
-                              : null,
-                          child: Text('Подтвердить'),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

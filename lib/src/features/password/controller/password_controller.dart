@@ -1,95 +1,69 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:senagat_mobile/src/features/login_accept/presentation/login_accept_screen.dart';
+import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
+import 'package:senagat_mobile/src/utils/services/show_snack.dart';
+import '../../../core/states/stateful_data.dart';
+import '../../../core/control_state_variable_mixin.dart';
+import '../../login_confirmation/presetation/login_confirmation.dart';
 
-class PasswordController extends GetxController {
-  // Observable for loading state
-  final RxBool _isLoading = false.obs;
-  bool get isLoading => _isLoading.value;
+class PasswordController extends GetxController with StateControlMixin {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  // Observable for error state
-  final RxBool _hasError = false.obs;
-  bool get hasError => _hasError.value;
+  bool isPasswordVisible = false;
+  bool isPasswordValid = false;
 
-  // Observable for password visibility
-  final RxBool _isPasswordVisible = false.obs;
-  bool get isPasswordVisible => _isPasswordVisible.value;
+  late final TextEditingController passwordController;
+  late final FocusNode passwordFocus;
 
-  // Observable for password
-  final RxString _password = ''.obs;
-  String get password => _password.value;
-
-  // Observable for step progress
-  final RxInt _currentStep = 3.obs;
-  int get currentStep => _currentStep.value;
-
-  bool get isPasswordValid => _password.value.length >= 8;
+  int currentStep = 3;
 
   @override
   void onInit() {
+    passwordController = TextEditingController();
+    passwordFocus = FocusNode();
     super.onInit();
-    // Initialize any required setup
   }
 
-  /// Toggle password visibility
   void togglePasswordVisibility() {
-    _isPasswordVisible.value = !_isPasswordVisible.value;
+    isPasswordVisible = !isPasswordVisible;
+    update();
   }
 
-  /// Update password
-  void updatePassword(String newPassword) {
-    _password.value = newPassword;
+  void onPasswordChanged(String val) {
+    isPasswordValid = val.length >= 6; // или любая другая логика валидации
+    update();
   }
 
-  /// Validate password
-  bool _validatePassword(String password) {
-    // Add password validation logic here
-    return password.length >= 8;
-  }
+  Future<void> confirmPassword() async {
+    if (formKey.currentState?.validate() ?? false) {
+      formKey.currentState!.save();
+      status = Status.loading;
+      update();
 
-  /// Confirm password
-  void confirmPassword() {
-    if (!_validatePassword(_password.value)) {
-      _hasError.value = true;
-      return;
-    }
+      // Имитируем API-запрос
+      await Future.delayed(const Duration(seconds: 2));
 
-    _isLoading.value = true;
-    try {
-      // Simulate password confirmation
-      Future.delayed(const Duration(seconds: 2), () {
-        _isLoading.value = false;
-        _navigateToNextScreen();
-      });
-    } catch (e) {
-      _hasError.value = true;
-      _isLoading.value = false;
-      print('Error confirming password: $e');
+      status = Status.completed;
+      update();
+
+      // Переход на следующий экран (или другой логикой)
+      Get.toNamed(DashboardScreen.route);
     }
   }
 
-  /// Navigate to next screen after password confirmation
-  void _navigateToNextScreen() {
-    try {
-      Get.toNamed(LoginAcceptScreen.route);
-    } catch (e) {
-      _hasError.value = true;
-      print('Error navigating to next screen: $e');
+  String? validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Поле не может быть пустым';
+    } else if (value.length < 6) {
+      return 'Минимум 6 символов';
     }
+    return null;
   }
 
-  /// Reset error state
-  void resetError() {
-    _hasError.value = false;
-  }
-
-  /// Get password validation message
-  String getPasswordValidationMessage() {
-    if (_password.value.isEmpty) {
-      return '';
-    }
-    if (_password.value.length < 8) {
-      return 'Пароль должен содержать минимум 8 символов';
-    }
-    return '';
+  @override
+  void dispose() {
+    passwordController.dispose();
+    passwordFocus.dispose();
+    super.dispose();
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
@@ -18,7 +19,13 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final LoginController _controller = Get.put(LoginController());
+  late final LoginController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = Get.put(LoginController(GlobalKey<FormState>()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,169 +34,135 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           children: [
             CustomAppBar(),
-
             Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: AppDimensions.paddingExtraLarge,
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Obx(
-                        () => Text(
-                          'Шаг ${_controller.currentStep} из 3',
+              child: GetBuilder<LoginController>(
+                builder: (controller) {
+                  return Form(
+                    key: controller.key,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              r'step_3_of_3'.tr,
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                color: AppColors.blackText,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 24.w,
+                              height: 24.h,
+                              child: controller.status == Status.loading
+                                  ? CircularProgressIndicator(
+                                      color: AppColors.green,
+                                    )
+                                  : SizedBox.shrink(),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: AppDimensions.padding40.h),
+                        Text(
+                          r'phone'.tr,
                           style: TextStyle(
-                            fontSize: 14.sp,
+                            fontSize: 24.sp,
                             color: AppColors.blackText,
                           ),
                         ),
-                      ),
-
-                      Obx(
-                        () => SizedBox(
-                          width: 24.w,
-                          height: 24.h,
-                          child: CircularProgressIndicator(
-                            color: AppColors.green,
-                            value: _controller.isLoading ? null : 0,
+                        Text(
+                          r'send_sms'.tr,
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            color: AppColors.greyInactive,
+                            fontFamily: AppFonts.secondaryFont,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(height: AppDimensions.padding40.h),
-
-                  Text(
-                    'Телефон',
-                    style: TextStyle(
-                      fontSize: 24.sp,
-                      color: AppColors.blackText,
-                    ),
-                  ),
-                  Text(
-                    'Мы отправим СМС с кодом подтверждения.',
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      color: AppColors.greyInactive,
-                      fontFamily: 'Gliroy',
-                    ),
-                  ),
-                  SizedBox(height: AppDimensions.padding60.h),
-
-                  Obx(
-                    () => _controller.phoneNumberError.value.isEmpty
-                        ? SizedBox.shrink()
-                        : Padding(
-                            padding: const EdgeInsets.only(bottom: 10),
-                            child: Text(
-                              _controller.phoneNumberError.value,
-                              style: TextStyle(
-                                color: AppColors.redDark,
-                                fontSize: 15.sp,
-                                fontFamily: AppFonts.secondaryFont,
+                        SizedBox(height: AppDimensions.padding60.h),
+                        Row(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(
+                                AppDimensions.paddingExtraLarge.w,
                               ),
-                            ),
-                          ),
-                  ),
-
-                  Row(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(
-                          AppDimensions.paddingExtraLarge.w,
-                        ),
-                        decoration: BoxDecoration(
-                          color: AppColors.inputFillBackground,
-                          borderRadius: BorderRadius.circular(
-                            AppDimensions.borderRadiusMedium,
-                          ),
-                        ),
-                        child: Text(
-                          _controller.countryCode,
-                          style: TextStyle(fontSize: 14.sp),
-                        ),
-                      ),
-                      SizedBox(width: AppDimensions.paddingSmall.w),
-                      Expanded(
-                        child: Obx(
-                          () => TextField(
-                            keyboardType: TextInputType.phone,
-                            onChanged: (value) {
-                              _controller.updatePhoneNumber(value);
-                            },
-                            maxLength: 8,
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              fontFamily: AppFonts.primaryFont,
-                            ),
-                            decoration: InputDecoration(
-                              hintText: 'Введите номер',
-                              border: OutlineInputBorder(),
-                              focusedBorder: OutlineInputBorder(
+                              decoration: BoxDecoration(
+                                color: AppColors.inputFillBackground,
                                 borderRadius: BorderRadius.circular(
                                   AppDimensions.borderRadiusMedium,
                                 ),
-                                borderSide: BorderSide(
-                                  color:
-                                      _controller
-                                          .phoneNumberError
-                                          .value
-                                          .isNotEmpty
-                                      ? AppColors.redDark
-                                      : AppColors.green,
-                                  width: 1,
+                              ),
+                              child: Text(
+                                '+993',
+                                style: TextStyle(fontSize: 14.sp),
+                              ),
+                            ),
+                            SizedBox(width: AppDimensions.paddingSmall.w),
+                            Expanded(
+                              child: TextFormField(
+                                controller: controller.phoneController,
+                                focusNode: controller.phoneFocus,
+                                keyboardType: TextInputType.phone,
+                                onChanged: controller.onPhoneTextChanged,
+                                maxLength: 8,
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  fontFamily: AppFonts.primaryFont,
+                                ),
+                                validator: (_) => controller.validatePhone(),
+                                decoration: InputDecoration(
+                                  hintText: r'enter_number'.tr,
+                                  border: OutlineInputBorder(),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                      AppDimensions.borderRadiusMedium,
+                                    ),
+                                    borderSide: BorderSide(
+                                      color: AppColors.green,
+                                      width: 1,
+                                    ),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                      AppDimensions.borderRadiusMedium,
+                                    ),
+                                    borderSide: BorderSide(
+                                      color: AppColors.green,
+                                      width: 1,
+                                    ),
+                                  ),
+                                  counter: const SizedBox(),
+                                  contentPadding: EdgeInsets.symmetric(
+                                    vertical: AppDimensions.paddingExtraLarge.h,
+                                    horizontal: AppDimensions.paddingLarge.w,
+                                  ),
                                 ),
                               ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(
-                                  AppDimensions.borderRadiusMedium,
-                                ),
-                                borderSide: BorderSide(
-                                  color:
-                                      _controller
-                                          .phoneNumberError
-                                          .value
-                                          .isNotEmpty
-                                      ? AppColors.redDark
-                                      : AppColors.green,
-                                  width: 1,
-                                ),
-                              ),
-                              counter: const SizedBox(),
-                              contentPadding: EdgeInsets.symmetric(
-                                vertical: AppDimensions.paddingExtraLarge.h,
-                                horizontal: AppDimensions.paddingLarge.w,
-                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: AppDimensions.paddingMedium.h),
+                        Opacity(
+                          opacity: controller.continueEnabled ? 1.0 : 0.5,
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: ElevatedButtonWithState(
+                              isLoading: controller.status == Status.loading,
+                              isError: controller.status == Status.error,
+                              onPressed: controller.continueEnabled
+                                  ? controller.onLoginTap
+                                  : null,
+                              child: Text(r'send_code'.tr),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(height: AppDimensions.paddingMedium.h),
-
-                  Obx(
-                    () => Opacity(
-                      opacity: _controller.isPhoneValid ? 1.0 : 0.5,
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        child: ElevatedButtonWithState(
-                          isLoading: _controller.isLoading,
-                          isError: _controller.hasError,
-                          child: Text('Отправить код'),
-                          onPressed: _controller.isPhoneValid
-                              ? _controller.sendVerificationCode
-                              : null,
-                        ),
-                      ),
+                      ],
                     ),
-                  ),
-                ],
+                  );
+                },
               ),
             ),
           ],

@@ -225,7 +225,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     ),
                   ),
                   Text(
-                    'Оплатить можно практически всё!',
+                    r'pay_everything'.tr,
                     style: TextStyle(
                       color: AppColors.greyInactive,
                       fontSize: 14.sp,
@@ -237,8 +237,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     child: ElevatedButtonWithState(
                       isLoading: _controller.isLoading,
                       isError: _controller.hasError,
-                      child: Text('Создать аккаунт'),
                       onPressed: _controller.navigateToCreateAccount,
+                      child: Text(r'create_account'.tr),
                     ),
                   ),
                   SizedBox(height: AppDimensions.paddingExtraLarge.h),
@@ -246,7 +246,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'У вас уже есть аккаунт?',
+                        r'do_you_have_account'.tr,
                         style: TextStyle(
                           fontSize: 14.sp,
                           color: AppColors.greyInactive,
@@ -256,7 +256,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       GestureDetector(
                         onTap: _controller.navigateToLogin,
                         child: Text(
-                          'Войти',
+                          r'sign_in'.tr,
                           style: TextStyle(
                             fontSize: 14.sp,
                             color: AppColors.blackText,

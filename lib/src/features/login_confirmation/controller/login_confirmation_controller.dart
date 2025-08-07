@@ -1,141 +1,103 @@
-import 'package:get/get.dart';
-import 'package:senagat_mobile/src/features/password/presentation/password_screen.dart';
 import 'dart:async';
 
-class LoginConfirmationController extends GetxController {
-  // Observable for loading state
-  final RxBool _isLoading = false.obs;
-  bool get isLoading => _isLoading.value;
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
+import 'package:senagat_mobile/src/core/states/stateful_data.dart';
+import 'package:senagat_mobile/src/features/password/presentation/password_screen.dart';
+import 'package:senagat_mobile/src/utils/services/show_snack.dart';
 
-  // Observable for error state
-  final RxBool _hasError = false.obs;
-  bool get hasError => _hasError.value;
+class LoginConfirmationController extends GetxController
+    with StateControlMixin {
+  final String phoneNumber;
+  LoginConfirmationController(this.phoneNumber);
 
-  // Observable for OTP code
-  final RxString _otpCode = ''.obs;
-  String get otpCode => _otpCode.value;
+  final int otpLength = 5;
+  final int timerMaxSeconds = 60;
 
-  // Observable for phone number
-  final RxString _phoneNumber = '+99364626088'.obs;
-  String get phoneNumber => _phoneNumber.value;
-
-  // Observable for step progress
-  final RxInt _currentStep = 2.obs;
-  int get currentStep => _currentStep.value;
-
-  // Timer for OTP
-  final RxInt _secondsLeft = 60.obs;
-  int get secondsLeft => _secondsLeft.value;
-
-  final RxBool _timerEnded = false.obs;
-  bool get timerEnded => _timerEnded.value;
-
-  // Pin length error
-  final RxBool _pinLengthError = false.obs;
-  bool get pinLengthError => _pinLengthError.value;
-
-  bool get isPinFull => _otpCode.value.length == 5;
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  late final TextEditingController otpController;
+  late final FocusNode otpFocus;
 
   Timer? _timer;
+  int secondsLeft = 60;
+  bool timerEnded = false;
+  bool pinLengthError = false;
+
+  bool get isPinFull => otpController.text.length == otpLength;
 
   @override
   void onInit() {
     super.onInit();
+    otpController = TextEditingController();
+    otpFocus = FocusNode();
+    otpController.addListener(_onOtpChanged);
     startTimer();
-    // Initialize any required setup
   }
 
   void startTimer() {
     _timer?.cancel();
-    _secondsLeft.value = 60;
-    _timerEnded.value = false;
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      if (_secondsLeft.value > 0) {
-        _secondsLeft.value--;
+    secondsLeft = timerMaxSeconds;
+    timerEnded = false;
+
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (secondsLeft > 0) {
+        secondsLeft--;
       } else {
-        _timerEnded.value = true;
+        timerEnded = true;
         timer.cancel();
       }
+      update();
     });
+
+    update();
+  }
+
+  void _onOtpChanged() {
+    pinLengthError =
+        otpController.text.isNotEmpty && otpController.text.length < otpLength;
+    if (otpController.text.length == otpLength) pinLengthError = false;
+    update();
+  }
+
+  void applyOtpCode() async {
+    if (formKey.currentState?.validate() != true) return;
+
+    status = Status.loading;
+    update();
+
+    await Future.delayed(const Duration(seconds: 2));
+
+    status = Status.completed;
+    update();
+
+    Get.toNamed(PasswordScreen.route);
+  }
+
+  String? validateOtp(String? code) {
+    if ((code ?? '').length != otpLength) {
+      return 'Введите 5-значный код';
+    }
+    return null;
+  }
+
+  void resendOtpCode() async {
+    status = Status.loading;
+    update();
+
+    await Future.delayed(const Duration(seconds: 1));
+    otpController.clear();
+    startTimer();
+
+    status = Status.completed;
+    update();
   }
 
   @override
-  void onClose() {
+  void dispose() {
     _timer?.cancel();
-    super.onClose();
-  }
-
-  /// Update OTP code
-  void updateOtpCode(String code) {
-    _otpCode.value = code;
-    if (code.isNotEmpty && code.length < 5) {
-      _pinLengthError.value = true;
-    } else if (code.length == 5) {
-      _pinLengthError.value = false;
-    }
-  }
-
-  /// Apply OTP code
-  void applyOtpCode() {
-    if (_timerEnded.value) {
-      _hasError.value = true;
-      return;
-    }
-    if (_otpCode.value.length != 5) {
-      _pinLengthError.value = true;
-      return;
-    }
-
-    _isLoading.value = true;
-    try {
-      // Simulate OTP validation
-      Future.delayed(const Duration(seconds: 2), () {
-        _isLoading.value = false;
-        _navigateToNextScreen();
-      });
-    } catch (e) {
-      _hasError.value = true;
-      _isLoading.value = false;
-      print('Error applying OTP: $e');
-    }
-  }
-
-  /// Navigate to next screen after OTP validation
-  void _navigateToNextScreen() {
-    try {
-      Get.toNamed(PasswordScreen.route);
-    } catch (e) {
-      _hasError.value = true;
-      print('Error navigating to next screen: $e');
-    }
-  }
-
-  /// Reset error state
-  void resetError() {
-    _hasError.value = false;
-    _pinLengthError.value = true;
-  }
-
-  /// Resend OTP code
-  void resendOtpCode() {
-    _isLoading.value = true;
-    try {
-      // Simulate resending OTP
-      Future.delayed(const Duration(seconds: 1), () {
-        _isLoading.value = false;
-        // Reset OTP code
-        _otpCode.value = '';
-        startTimer();
-      });
-    } catch (e) {
-      _hasError.value = true;
-      _isLoading.value = false;
-      print('Error resending OTP: $e');
-    }
-  }
-
-  /// Update phone number
-  void updatePhoneNumber(String phone) {
-    _phoneNumber.value = phone;
+    otpController.dispose();
+    otpFocus.dispose();
+    super.dispose();
   }
 }
