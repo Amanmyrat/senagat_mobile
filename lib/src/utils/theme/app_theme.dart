@@ -18,7 +18,7 @@ class AppTheme {
     useMaterial3: true,
     scaffoldBackgroundColor: AppColors.lightBackground,
     appBarTheme: const AppBarTheme(
-      color: AppColors.blue,
+      color: AppColors.green,
       centerTitle: true,
       elevation: 1.0,
       iconTheme: IconThemeData(color: AppColors.grey),
@@ -31,7 +31,7 @@ class AppTheme {
     brightness: Brightness.light,
     canvasColor: AppColors.white,
     colorScheme: const ColorScheme.light(
-      primary: AppColors.blue,
+      primary: AppColors.green,
       onPrimary: AppColors.white,
       background: AppColors.white,
       surface: AppColors.lighterGrey,
@@ -46,17 +46,13 @@ class AppTheme {
       surfaceTint: AppColors.white,
     ),
     dividerColor: AppColors.lightGrey,
-    dividerTheme: const DividerThemeData(
-      color: AppColors.lightGrey,
-    ),
+    dividerTheme: const DividerThemeData(color: AppColors.lightGrey),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(28.r),
-          ),
+          borderRadius: BorderRadius.all(Radius.circular(10.r)),
         ),
-        backgroundColor: AppColors.blue,
+        backgroundColor: AppColors.green,
         foregroundColor: AppColors.extraLightGrey,
         fixedSize: const Size.fromHeight(AppDimensions.buttonHeight),
         elevation: 1.0,
@@ -69,14 +65,16 @@ class AppTheme {
       filled: true,
       fillColor: AppColors.inputFillBackground,
       labelStyle: AppTextTheme.instance.lightTheme.bodySmall?.copyWith(
-        color: AppColors.grey,
-        fontWeight: FontWeight.w500,
+        color: AppColors.blackText,
+        fontWeight: FontWeight.w400,
         fontSize: 14.0.sp,
+        fontFamily: AppFonts.primaryFont,
       ),
       hintStyle: AppTextTheme.instance.lightTheme.bodySmall?.copyWith(
         color: AppColors.grey,
-        fontWeight: FontWeight.w300,
-        fontSize: 12.0.sp,
+        fontWeight: FontWeight.w400,
+        fontSize: 14.0.sp,
+        fontFamily: AppFonts.primaryFont,
       ),
       prefixStyle: AppTextTheme.instance.lightTheme.bodySmall?.copyWith(
         color: AppColors.grey,
@@ -84,28 +82,20 @@ class AppTheme {
         fontSize: 12.0.sp,
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(10.r),
-        ),
-        borderSide: const BorderSide(color: AppColors.blue),
+        borderRadius: BorderRadius.all(Radius.circular(10.r)),
+        borderSide: const BorderSide(color: AppColors.green),
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(10.r),
-        ),
+        borderRadius: BorderRadius.all(Radius.circular(10.r)),
         borderSide: const BorderSide(color: AppColors.inputFillBackground),
       ),
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(10.r),
-        ),
+        borderRadius: BorderRadius.all(Radius.circular(10.r)),
         borderSide: const BorderSide(color: AppColors.inputFillBackground),
       ),
     ),
     textButtonTheme: TextButtonThemeData(
-      style: TextButton.styleFrom(
-        foregroundColor: AppColors.blue,
-      ),
+      style: TextButton.styleFrom(foregroundColor: AppColors.blue),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(

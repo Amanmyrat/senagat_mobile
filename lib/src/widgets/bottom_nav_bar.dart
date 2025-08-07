@@ -6,10 +6,9 @@ import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
 
 class BottomNavBarItem {
   final String icon;
+  final String label;
 
-  BottomNavBarItem({
-    required this.icon,
-  });
+  BottomNavBarItem({required this.icon, required this.label});
 }
 
 class BottomNavBar extends StatefulWidget {
@@ -18,12 +17,13 @@ class BottomNavBar extends StatefulWidget {
   final Color? backgroundColor;
   Function(int)? onTap;
 
-  BottomNavBar(
-      {super.key,
-      required this.children,
-      required this.currentIndex,
-      this.backgroundColor,
-      required this.onTap});
+  BottomNavBar({
+    super.key,
+    required this.children,
+    required this.currentIndex,
+    this.backgroundColor,
+    required this.onTap,
+  });
 
   @override
   State<BottomNavBar> createState() => _BottomNavBarState();
@@ -35,14 +35,15 @@ class _BottomNavBarState extends State<BottomNavBar> {
     return Container(
       decoration: BoxDecoration(
         color: widget.backgroundColor ?? Theme.of(context).colorScheme.primary,
-        border: Border.all(color: const Color(0xffE0E5FE), width: 1.w),
+        border: Border.all(color: const Color(0xffEEF2ED), width: 1.w),
       ),
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: List.generate(
           widget.children.length,
           (index) => NavBarItem(
+            label: widget.children[index].label,
             index: index,
             item: widget.children[index],
             selected: widget.currentIndex == index,
@@ -65,7 +66,7 @@ class NavBarItem extends StatefulWidget {
   bool selected;
   final Function onTap;
   final Color? backgroundColor;
-
+  final String label;
   NavBarItem({
     super.key,
     required this.item,
@@ -73,6 +74,7 @@ class NavBarItem extends StatefulWidget {
     required this.onTap,
     this.backgroundColor,
     required this.index,
+    required this.label,
   });
 
   @override
@@ -86,23 +88,22 @@ class _NavBarItemState extends State<NavBarItem> {
       onTap: () {
         widget.onTap();
       },
-      child: SizedBox(
-        width: 80.w,
-        height: 66.h,
+      child: Padding(
+        padding: const EdgeInsets.all(20),
         child: Column(
-          mainAxisAlignment: widget.selected
-              ? MainAxisAlignment.end
-              : MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            SvgPicture.asset(widget.item.icon,
-                color:
-                    widget.selected ? AppColors.blue : AppColors.blueInactive),
-            if (widget.selected) ...[
-              SizedBox(
-                height: 4.h,
-              ),
-              // SvgPicture.asset(AppAssets.navIndicator)
-            ]
+            SvgPicture.asset(
+              widget.item.icon,
+              color: widget.selected ? AppColors.black : AppColors.greyInactive,
+              width: 24.w,
+              height: 24.h,
+            ),
+            SizedBox(height: 5.h),
+            Text(
+              widget.label,
+              style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w400),
+            ),
           ],
         ),
       ),

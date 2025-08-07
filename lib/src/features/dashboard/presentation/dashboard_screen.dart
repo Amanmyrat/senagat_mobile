@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/features/blank/presentation/blank_screen.dart';
 import 'package:senagat_mobile/src/widgets/bottom_nav_bar.dart';
+import '../../../utils/constants/app_assets.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../controller/dashboard_controller.dart';
 import '../utils/custom_navigator.dart';
@@ -31,19 +32,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
               children: const [
                 CustomNavigator(
                   initialRoute: BlankScreen(),
-                  nestedId: NestedNavigationIds.contacts,
+                  nestedId: NestedNavigationIds.home,
                 ),
                 CustomNavigator(
                   initialRoute: BlankScreen(),
-                  nestedId: NestedNavigationIds.chats,
+                  nestedId: NestedNavigationIds.catalog,
                 ),
                 CustomNavigator(
                   initialRoute: BlankScreen(),
-                  nestedId: NestedNavigationIds.services,
+                  nestedId: NestedNavigationIds.card,
                 ),
                 CustomNavigator(
                   initialRoute: BlankScreen(),
-                  nestedId: NestedNavigationIds.profile,
+                  nestedId: NestedNavigationIds.settings,
                 ),
               ],
             ),
@@ -56,18 +57,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
           currentIndex: _controller.currentIndex,
           backgroundColor: AppColors.lightBackground,
           children: [
-            // BottomNavBarItem(
-            //   icon: AppAssets.navigationContacts,
-            // ),
-            // BottomNavBarItem(
-            //   icon: AppAssets.navigationChats,
-            // ),
-            // BottomNavBarItem(
-            //   icon: AppAssets.navigationServices,
-            // ),
-            // BottomNavBarItem(
-            //   icon: AppAssets.navigationProfile,
-            // ),
+            BottomNavBarItem(
+              icon: AppAssets.navigationhouseIcon,
+              label: 'Home',
+            ),
+            BottomNavBarItem(
+              icon: AppAssets.navigationcardsThreeIcon,
+              label: 'Catalog',
+            ),
+            BottomNavBarItem(
+              icon: AppAssets.navigationCreditCardIcon,
+              label: 'Card',
+            ),
+            BottomNavBarItem(
+              icon: AppAssets.navigationSettingIcon,
+              label: 'Settings',
+            ),
           ],
         ),
       ),

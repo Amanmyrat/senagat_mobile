@@ -50,17 +50,17 @@ class DashboardController extends GetxController {
   ///random int.
   int _getKeyIdForPosition(int position) {
     switch (position) {
-      case DashboardNavigationIndex.services:
-        return NestedNavigationIds.services;
+      case DashboardNavigationIndex.card:
+        return NestedNavigationIds.card;
 
-      case DashboardNavigationIndex.chats:
-        return NestedNavigationIds.chats;
+      case DashboardNavigationIndex.catalog:
+        return NestedNavigationIds.catalog;
 
-      case DashboardNavigationIndex.contacts:
-        return NestedNavigationIds.contacts;
+      case DashboardNavigationIndex.home:
+        return NestedNavigationIds.home;
 
-      case DashboardNavigationIndex.profile:
-        return NestedNavigationIds.profile;
+      case DashboardNavigationIndex.settings:
+        return NestedNavigationIds.settings;
 
       default:
         return -1;

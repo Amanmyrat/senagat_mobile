@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
-import '../../../core/globals.dart';
-import '../../../core/states/stateful_data.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
 import '../../../utils/theme/constants/app_fonts.dart';
@@ -56,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: 24.h,
                           child: CircularProgressIndicator(
                             color: AppColors.green,
-                            value: _controller.isLoading ? null : 1.0,
+                            value: _controller.isLoading ? null : 0,
                           ),
                         ),
                       ),
@@ -81,6 +79,22 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   SizedBox(height: AppDimensions.padding60.h),
+
+                  Obx(
+                    () => _controller.phoneNumberError.value.isEmpty
+                        ? SizedBox.shrink()
+                        : Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: Text(
+                              _controller.phoneNumberError.value,
+                              style: TextStyle(
+                                color: AppColors.redDark,
+                                fontSize: 15.sp,
+                                fontFamily: AppFonts.secondaryFont,
+                              ),
+                            ),
+                          ),
+                  ),
 
                   Row(
                     children: [
@@ -114,10 +128,37 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             decoration: InputDecoration(
                               hintText: 'Введите номер',
-                              errorText:
-                                  _controller.phoneNumberError.value.isEmpty
-                                  ? null
-                                  : _controller.phoneNumberError.value,
+                              border: OutlineInputBorder(),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(
+                                  AppDimensions.borderRadiusMedium,
+                                ),
+                                borderSide: BorderSide(
+                                  color:
+                                      _controller
+                                          .phoneNumberError
+                                          .value
+                                          .isNotEmpty
+                                      ? AppColors.redDark
+                                      : AppColors.green,
+                                  width: 1,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(
+                                  AppDimensions.borderRadiusMedium,
+                                ),
+                                borderSide: BorderSide(
+                                  color:
+                                      _controller
+                                          .phoneNumberError
+                                          .value
+                                          .isNotEmpty
+                                      ? AppColors.redDark
+                                      : AppColors.green,
+                                  width: 1,
+                                ),
+                              ),
                               counter: const SizedBox(),
                               contentPadding: EdgeInsets.symmetric(
                                 vertical: AppDimensions.paddingExtraLarge.h,
@@ -133,13 +174,18 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: AppDimensions.paddingMedium.h),
 
                   Obx(
-                    () => SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      child: ElevatedButtonWithState(
-                        isLoading: _controller.isLoading,
-                        isError: _controller.hasError,
-                        child: Text('Отправить код'),
-                        onPressed: _controller.sendVerificationCode,
+                    () => Opacity(
+                      opacity: _controller.isPhoneValid ? 1.0 : 0.5,
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: ElevatedButtonWithState(
+                          isLoading: _controller.isLoading,
+                          isError: _controller.hasError,
+                          child: Text('Отправить код'),
+                          onPressed: _controller.isPhoneValid
+                              ? _controller.sendVerificationCode
+                              : null,
+                        ),
                       ),
                     ),
                   ),

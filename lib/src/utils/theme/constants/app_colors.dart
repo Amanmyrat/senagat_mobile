@@ -21,12 +21,13 @@ class AppColors {
   static const Color orange = Color.fromRGBO(238, 116, 20, 1);
   static const Color blue = Color(0xff5879FA);
   static const Color blueDark = Color(0xff0047FF);
-  static const Color blueInactive = Color(0xffA2AAB8);
+  static const Color greyInactive = Color(0xff6F736D);
   static const Color blueLight = Color(0xff6690B9);
   static const Color lightBackground = Color(0xffEFF2FF);
+  static const Color green = Color(0xff2C702C);
   static const Color greenDark = Color(0xff088142);
-  static const Color redDark = Color(0xffAA3535);
-  static const Color inputFillBackground = Color(0xffE8ECFF);
-  static const Color blackText = Color(0xff071026);
+  static const Color redDark = Color(0xffCC1717);
+  static const Color inputFillBackground = Color(0xffE6EAE3);
+  static const Color blackText = Color(0xff191B19);
   static const Color blackText2 = Color(0xff1C1C1C);
 }
