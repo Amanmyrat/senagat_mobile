@@ -23,12 +23,16 @@ class ElevatedButtonWithState extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
-      style: customStyle ??
+      style:
+          customStyle ??
           ElevatedButton.styleFrom(
-            disabledBackgroundColor: AppColors.blue.withOpacity(.6),
+            disabledBackgroundColor: AppColors.green.withOpacity(.6),
             disabledForegroundColor: Colors.white70,
-            backgroundColor:
-                isError ? Theme.of(context).colorScheme.error : null,
+
+
+            backgroundColor: isError
+                ? Theme.of(context).colorScheme.error
+                : null,
           ),
       child: _getState(),
     );

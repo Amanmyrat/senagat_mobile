@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'constants/app_fonts.dart';
 
 class AppTextTheme {
   const AppTextTheme._();
@@ -13,14 +13,12 @@ class AppTextTheme {
   static final AppTextTheme instance = AppTextTheme();
 
   TextTheme get lightTheme {
-    final textTheme = GoogleFonts.robotoTextTheme(ThemeData.light().textTheme);
-
-    return textTheme;
+    final base = ThemeData.light().textTheme;
+    return base.apply(fontFamily: AppFonts.primaryFont);
   }
 
   TextTheme get darkTheme {
-    final textTheme = GoogleFonts.robotoTextTheme(ThemeData.dark().textTheme);
-
-    return textTheme;
+    final base = ThemeData.dark().textTheme;
+    return base.apply(fontFamily: AppFonts.primaryFont);
   }
 }

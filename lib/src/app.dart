@@ -5,6 +5,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:overlay_support/overlay_support.dart';
+import 'package:senagat_mobile/src/features/login/presentation/login_screen.dart';
+import 'package:senagat_mobile/src/features/login_accept/presentation/login_accept_screen.dart';
+import 'package:senagat_mobile/src/features/login_confirmation/presetation/login_confirmation.dart';
+import 'package:senagat_mobile/src/features/password/presentation/password_screen.dart';
+import 'package:senagat_mobile/src/features/welcome/presentation/welcome_screen.dart';
 import 'package:senagat_mobile/src/features/blank/presentation/blank_screen.dart';
 import 'package:senagat_mobile/src/features/splash/presentation/splash_screen.dart';
 import 'package:senagat_mobile/src/utils/localization/controller/language_controller.dart';
@@ -45,7 +50,8 @@ class _SenagatAppState extends State<SenagatApp> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-        const SystemUiOverlayStyle(statusBarColor: AppColors.blue));
+      const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+    );
 
     return ScreenUtilInit(
       designSize: const Size(430, 932),
@@ -76,8 +82,21 @@ class _SenagatAppState extends State<SenagatApp> {
                 page: () => const SplashScreen(),
               ),
               GetPage(
-                name: BlankScreen.route,
-                page: () => const BlankScreen(),
+                name: WelcomeScreen.route,
+                page: () => const WelcomeScreen(),
+              ),
+              GetPage(name: LoginScreen.route, page: () => const LoginScreen()),
+              GetPage(
+                name: LoginConfiramationScreen.route,
+                page: () => const LoginConfiramationScreen(),
+              ),
+              GetPage(
+                name: PasswordScreen.route,
+                page: () => const PasswordScreen(),
+              ),
+              GetPage(
+                name: LoginAcceptScreen.route,
+                page: () => const LoginAcceptScreen(),
               ),
             ],
           ),
