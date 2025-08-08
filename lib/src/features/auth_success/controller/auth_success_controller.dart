@@ -1,7 +1,8 @@
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
+import 'package:senagat_mobile/src/features/register_password_setup/controller/register_password_setup_controller.dart';
 
-class LoginAcceptController extends GetxController {
+class AuthSuccessController extends GetxController {
   // Observable for loading state
   final RxBool _isLoading = false.obs;
   bool get isLoading => _isLoading.value;

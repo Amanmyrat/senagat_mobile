@@ -5,20 +5,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:overlay_support/overlay_support.dart';
-import 'package:senagat_mobile/src/features/login/presentation/login_screen.dart';
-import 'package:senagat_mobile/src/features/login_accept/presentation/login_accept_screen.dart';
-import 'package:senagat_mobile/src/features/login_confirmation/presetation/login_confirmation.dart';
-import 'package:senagat_mobile/src/features/password/presentation/password_screen.dart';
+import 'package:senagat_mobile/src/features/auth_success/presentation/auth_success_screen.dart';
+import 'package:senagat_mobile/src/features/register_confirmation/presentation/register_confirmation.dart';
+import 'package:senagat_mobile/src/features/register_password_setup/presentation/register_password_setup_screen.dart';
 import 'package:senagat_mobile/src/features/welcome/presentation/welcome_screen.dart';
-import 'package:senagat_mobile/src/features/blank/presentation/blank_screen.dart';
 import 'package:senagat_mobile/src/features/splash/presentation/splash_screen.dart';
 import 'package:senagat_mobile/src/utils/localization/controller/language_controller.dart';
 import 'package:senagat_mobile/src/utils/localization/localization_service.dart';
 import 'package:senagat_mobile/src/utils/theme/app_theme.dart';
-import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
 import 'package:senagat_mobile/src/utils/theme/controller/theme_controller.dart';
 import 'features/dashboard/controller/dashboard_controller.dart';
 import 'features/dashboard/presentation/dashboard_screen.dart';
+import 'features/register/presentation/register_screen.dart';
 
 class SenagatApp extends StatefulWidget {
   const SenagatApp({super.key});
@@ -85,18 +83,18 @@ class _SenagatAppState extends State<SenagatApp> {
                 name: WelcomeScreen.route,
                 page: () => const WelcomeScreen(),
               ),
-              GetPage(name: LoginScreen.route, page: () => const LoginScreen()),
+              GetPage(name: RegisterScreen.route, page: () => const RegisterScreen()),
               GetPage(
-                name: LoginConfiramationScreen.route,
-                page: () => const LoginConfiramationScreen(),
+                name: RegisterConfirmationScreen.route,
+                page: () => const RegisterConfirmationScreen(),
               ),
               GetPage(
-                name: PasswordScreen.route,
-                page: () => const PasswordScreen(),
+                name: RegisterPasswordSetupScreen.route,
+                page: () => const RegisterPasswordSetupScreen(),
               ),
               GetPage(
-                name: LoginAcceptScreen.route,
-                page: () => const LoginAcceptScreen(),
+                name: AuthSuccessScreen.route,
+                page: () => const AuthSuccessScreen(),
               ),
             ],
           ),

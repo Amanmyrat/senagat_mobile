@@ -7,25 +7,18 @@ import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
 import '../../../utils/theme/constants/app_fonts.dart';
 import '../../../widgets/elevated_button_with_state.dart';
-import '../controller/login_controller.dart';
+import '../controller/register_controller.dart';
 
-class LoginScreen extends StatefulWidget {
-  static const route = r'/login';
+class RegisterScreen extends StatefulWidget {
+  static const route = r'/register';
 
-  const LoginScreen({super.key});
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  late final LoginController controller;
-
-  @override
-  void initState() {
-    super.initState();
-    controller = Get.put(LoginController(GlobalKey<FormState>()));
-  }
+class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
               padding: const EdgeInsets.symmetric(
                 horizontal: AppDimensions.paddingExtraLarge,
               ),
-              child: GetBuilder<LoginController>(
+              child: GetBuilder<RegisterController>(
                 builder: (controller) {
                   return Form(
                     key: controller.key,
@@ -49,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              r'step_3_of_3'.tr,
+                              r'step_1_of_3'.tr,
                               style: TextStyle(
                                 fontSize: 14.sp,
                                 color: AppColors.blackText,

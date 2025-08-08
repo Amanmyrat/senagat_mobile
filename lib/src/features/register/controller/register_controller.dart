@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
-import 'package:senagat_mobile/src/utils/services/show_snack.dart';
 import 'package:senagat_mobile/src/utils/validator.dart';
-import '../../login_confirmation/presetation/login_confirmation.dart';
 
-class LoginController extends GetxController with StateControlMixin {
+import '../../register_confirmation/presentation/register_confirmation.dart';
+
+class RegisterController extends GetxController with StateControlMixin {
   final GlobalKey<FormState> key;
   bool continueEnabled = false;
 
-  LoginController(this.key);
+  RegisterController(this.key);
 
   late final TextEditingController phoneController;
   late final FocusNode phoneFocus;
@@ -32,7 +32,7 @@ class LoginController extends GetxController with StateControlMixin {
       status = Status.completed;
       update();
       Get.toNamed(
-        LoginConfiramationScreen.route,
+        RegisterConfirmationScreen.route,
         arguments: {'phone': phoneController.text},
       );
     }

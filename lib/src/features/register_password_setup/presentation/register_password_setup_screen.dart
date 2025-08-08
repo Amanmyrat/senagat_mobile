@@ -9,25 +9,25 @@ import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
 import '../../../widgets/elevated_button_with_state.dart';
-import '../controller/password_controller.dart';
+import '../controller/register_password_setup_controller.dart';
 
-class PasswordScreen extends StatefulWidget {
-  static const route = r'/passsword';
+class RegisterPasswordSetupScreen extends StatefulWidget {
+  static const route = r'/register/password/setup';
 
-  const PasswordScreen({super.key});
+  const RegisterPasswordSetupScreen({super.key});
 
   @override
-  State<PasswordScreen> createState() => _PasswordScreenState();
+  State<RegisterPasswordSetupScreen> createState() => _RegisterPasswordSetupScreenState();
 }
 
-class _PasswordScreenState extends State<PasswordScreen> {
-  final PasswordController _controller = Get.put(PasswordController());
+class _RegisterPasswordSetupScreenState extends State<RegisterPasswordSetupScreen> {
+  final RegisterPasswordSetupController _controller = Get.put(RegisterPasswordSetupController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: GetBuilder<PasswordController>(
+        child: GetBuilder<RegisterPasswordSetupController>(
           builder: (_) => Form(
             key: _controller.formKey,
             child: Column(

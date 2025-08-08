@@ -5,18 +5,18 @@ import 'package:get/get.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
-import '../controller/login_accept_controller.dart';
+import '../controller/auth_success_controller.dart';
 
-class LoginAcceptScreen extends StatefulWidget {
-  static const route = '/login_accept';
-  const LoginAcceptScreen({Key? key}) : super(key: key);
+class AuthSuccessScreen extends StatefulWidget {
+  static const route = '/auth/success';
+  const AuthSuccessScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginAcceptScreen> createState() => _LoginAcceptScreenState();
+  State<AuthSuccessScreen> createState() => _AuthSuccessScreenState();
 }
 
-class _LoginAcceptScreenState extends State<LoginAcceptScreen> {
-  final LoginAcceptController _controller = Get.put(LoginAcceptController());
+class _AuthSuccessScreenState extends State<AuthSuccessScreen> {
+  final AuthSuccessController _controller = Get.put(AuthSuccessController());
 
   @override
   Widget build(BuildContext context) {

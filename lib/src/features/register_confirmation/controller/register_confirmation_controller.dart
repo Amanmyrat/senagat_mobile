@@ -4,13 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
-import 'package:senagat_mobile/src/features/password/presentation/password_screen.dart';
-import 'package:senagat_mobile/src/utils/services/show_snack.dart';
+import 'package:senagat_mobile/src/features/register_password_setup/presentation/register_password_setup_screen.dart';
 
-class LoginConfirmationController extends GetxController
+class RegisterConfirmationController extends GetxController
     with StateControlMixin {
   final String phoneNumber;
-  LoginConfirmationController(this.phoneNumber);
+  RegisterConfirmationController(this.phoneNumber);
 
   final int otpLength = 5;
   final int timerMaxSeconds = 60;
@@ -71,7 +70,7 @@ class LoginConfirmationController extends GetxController
     status = Status.completed;
     update();
 
-    Get.toNamed(PasswordScreen.route);
+    Get.toNamed(RegisterPasswordSetupScreen.route);
   }
 
   String? validateOtp(String? code) {
