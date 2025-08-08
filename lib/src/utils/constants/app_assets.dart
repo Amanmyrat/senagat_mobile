@@ -27,4 +27,7 @@ class AppAssets {
   static const navigationcardsThreeIcon = 'assets/icons/CardsThree.svg';
 
   static const senagatIcon = 'assets/images/senagat.png';
+  static const glowingObjectIcon = 'assets/images/glowing_object.png';
+  static const spreadsheet = 'assets/images/spreadsheet.png';
+  static const sandClock = 'assets/images/sandClock.png';
 }

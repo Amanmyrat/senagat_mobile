@@ -69,7 +69,7 @@ class _SenagatAppState extends State<SenagatApp> {
             // darkTheme: AppTheme.darkTheme,
             debugShowCheckedModeBanner: false,
             themeMode: _initThemeMode(),
-            initialRoute: SplashScreen.route,
+            initialRoute: DashboardScreen.route,
             initialBinding: DashboardBinding(),
             defaultTransition: Transition.cupertino,
             getPages: [

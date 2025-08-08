@@ -22,4 +22,9 @@ const Map<String, String> ruRu = {
   r'password': r'Пароль',
   r'confirm': r'Подтвердить',
   r'check_bank': r'Проверка со стороны банка',
+
+  r'home': r'Home',
+  r'catalog': r'Catalog',
+  r'card': r'Card',
+  r'setting': r'Setting',
 };

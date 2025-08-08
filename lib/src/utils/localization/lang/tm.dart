@@ -22,4 +22,9 @@ const Map<String, String> tmTm = {
   r'password': r'Parol',
   r'confirm': r'Tassykla',
   r'check_bank': r'Bank tarapyndan tassyklama',
+
+  r'home': r'Home',
+  r'catalog': r'Catalog',
+  r'card': r'Card',
+  r'setting': r'Setting',
 };

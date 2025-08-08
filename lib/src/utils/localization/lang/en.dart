@@ -22,4 +22,9 @@ const Map<String, String> enUs = {
   r'password': r'Password',
   r'confirm': r'Confirm',
   r'check_bank': r'Check out that side of the bank',
+
+  r'home': r'Home',
+  r'catalog': r'Catalog',
+  r'card': r'Card',
+  r'setting': r'Setting',
 };

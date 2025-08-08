@@ -14,7 +14,7 @@ class AppColors {
   static const Color mediumGrey = Color.fromRGBO(227, 227, 227, 1);
   static const Color lighterGrey = Color.fromRGBO(248, 248, 248, 1);
   static const Color extraLightGrey = Color.fromRGBO(245, 242, 245, 1);
-  static const Color lightGrey = Color.fromRGBO(242, 242, 242, 1);
+  static const Color lightGrey = Color.fromRGBO(218, 223, 216, 1);
   static const Color transparent = Color.fromRGBO(0, 0, 0, 0);
   static const Color redMedium = Color.fromRGBO(200, 80, 64, 1);
   static const Color redLight = Color.fromARGB(255, 240, 138, 138);

@@ -59,7 +59,7 @@ dependencies:
   pinenacl: ^0.6.0
   flutter_launcher_icons: ^0.14.4
   url_launcher: ^6.3.2
-  persistent_bottom_nav_bar: ^5.0.2
+  persistent_bottom_nav_bar: ^6.1.2
 
 dev_dependencies:
   flutter_test:
