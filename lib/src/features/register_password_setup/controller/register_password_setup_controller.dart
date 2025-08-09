@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:senagat_mobile/src/features/auth_success/presentation/auth_success_screen.dart';
 import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../core/control_state_variable_mixin.dart';
@@ -43,19 +44,9 @@ class RegisterPasswordSetupController extends GetxController with StateControlMi
       status = Status.completed;
       update();
 
-      Get.toNamed(DashboardScreen.route);
+      Get.toNamed(AuthSuccessScreen.route);
     }
   }
-
-  String? validatePassword(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Поле не может быть пустым';
-    } else if (value.length < 6) {
-      return 'Минимум 6 символов';
-    }
-    return null;
-  }
-
   @override
   void dispose() {
     passwordController.dispose();
