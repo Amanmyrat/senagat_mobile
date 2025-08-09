@@ -26,8 +26,10 @@ class _RegisterConfirmationScreenState extends State<RegisterConfirmationScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.lightBackground,
       body: SafeArea(
         child: GetBuilder<RegisterConfirmationController>(
+          init: RegisterConfirmationController(),
           builder: (controller) => Form(
             key: controller.formKey,
             child: Column(
@@ -40,12 +42,11 @@ class _RegisterConfirmationScreenState extends State<RegisterConfirmationScreen>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      /// Step and loader
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            r'step_2_of_3'.tr,
+                            controller.login ? r'step_1_of_2'.tr :r'step_1_of_2'.tr,
                             style: TextStyle(
                               fontSize: 14.sp,
                               color: AppColors.blackText,
@@ -54,17 +55,16 @@ class _RegisterConfirmationScreenState extends State<RegisterConfirmationScreen>
                           SizedBox(
                             width: 24.w,
                             height: 24.h,
-                            child: controller.status == Status.loading
-                                ? CircularProgressIndicator(
-                                    color: AppColors.green,
-                                  )
-                                : const SizedBox.shrink(),
+                            child: CircularProgressIndicator(
+                              color: AppColors.green,
+                              backgroundColor: AppColors.dividerColor,
+                              value: controller.login ? 0.75 : 0.5,
+                            )
                           ),
                         ],
                       ),
                       SizedBox(height: AppDimensions.padding40.h),
 
-                      /// Title and subtitle
                       Text(
                         r'OTP'.tr,
                         style: TextStyle(
@@ -73,9 +73,8 @@ class _RegisterConfirmationScreenState extends State<RegisterConfirmationScreen>
                         ),
                       ),
                       Text(
-                        r'code_was_sent_to'
-                                '${controller.phoneNumber}'
-                            .tr,
+                        r'code_was_sent_to'.tr
+                        + controller.phoneNumber,
                         style: TextStyle(
                           fontSize: 14.sp,
                           color: AppColors.greyInactive,
@@ -84,21 +83,20 @@ class _RegisterConfirmationScreenState extends State<RegisterConfirmationScreen>
                       ),
                       SizedBox(height: AppDimensions.padding60.h),
 
-                      controller.isPinFull || !controller.pinLengthError
-                          ? const SizedBox.shrink()
-                          : Padding(
-                              padding: const EdgeInsets.only(bottom: 10),
-                              child: Text(
-                                r'incorrectly_entered_OTP'.tr,
-                                style: TextStyle(
-                                  color: AppColors.redDark,
-                                  fontSize: 15.sp,
-                                  fontFamily: AppFonts.secondaryFont,
-                                ),
-                              ),
-                            ),
+                      controller.status == Status.error
+                          ?Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Text(
+                          r'incorrectly_entered_OTP'.tr,
+                          style: TextStyle(
+                            color: AppColors.redDark,
+                            fontSize: 15.sp,
+                            fontFamily: AppFonts.secondaryFont,
+                          ),
+                        ),
+                      )
+                          : SizedBox.shrink(),
 
-                      /// PIN input
                       PinCodeTextField(
                         controller: controller.otpController,
                         focusNode: controller.otpFocus,
@@ -116,7 +114,7 @@ class _RegisterConfirmationScreenState extends State<RegisterConfirmationScreen>
                           fieldHeight: 64.h,
                           fieldWidth: 74.w,
                           activeColor:
-                              (controller.isPinFull || controller.timerEnded)
+                              ( controller.status != Status.error)
                               ? AppColors.green
                               : AppColors.redDark,
                           activeFillColor: AppColors.inputFillBackground,
@@ -139,7 +137,6 @@ class _RegisterConfirmationScreenState extends State<RegisterConfirmationScreen>
                         },
                       ),
 
-                      /// Apply button
                       Opacity(
                         opacity: controller.isPinFull ? 1.0 : 0.5,
                         child: SizedBox(
@@ -147,9 +144,7 @@ class _RegisterConfirmationScreenState extends State<RegisterConfirmationScreen>
                           height: 64.h,
                           child: ElevatedButtonWithState(
                             isLoading: controller.status == Status.loading,
-                            isError:
-                                controller.status == Status.error ||
-                                controller.timerEnded,
+                            isError: controller.status == Status.error,
                             onPressed: controller.isPinFull
                                 ? controller.applyOtpCode
                                 : null,
@@ -164,7 +159,6 @@ class _RegisterConfirmationScreenState extends State<RegisterConfirmationScreen>
                         ),
                       ),
 
-                      /// Timer / resend
                       SizedBox(height: 16.h),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

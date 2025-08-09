@@ -7,4 +7,7 @@ class AppFonts {
 
   static const String primaryFont = 'Kinetika';
   static const String secondaryFont = 'Gilroy';
+  static const String XoloniumFont = 'Xolonium';
+
+
 }

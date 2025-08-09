@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
+import 'package:senagat_mobile/src/features/auth_success/presentation/auth_success_screen.dart';
 import 'package:senagat_mobile/src/features/register_password_setup/presentation/register_password_setup_screen.dart';
 
 class RegisterConfirmationController extends GetxController
     with StateControlMixin {
-  final String phoneNumber;
-  RegisterConfirmationController(this.phoneNumber);
+  String phoneNumber = '';
 
   final int otpLength = 5;
   final int timerMaxSeconds = 60;
@@ -20,14 +20,16 @@ class RegisterConfirmationController extends GetxController
 
   Timer? _timer;
   int secondsLeft = 60;
-  bool timerEnded = false;
   bool pinLengthError = false;
+  bool login = false;
 
   bool get isPinFull => otpController.text.length == otpLength;
 
   @override
   void onInit() {
     super.onInit();
+    login = Get.arguments['login'];
+    phoneNumber = Get.arguments['phone'];
     otpController = TextEditingController();
     otpFocus = FocusNode();
     otpController.addListener(_onOtpChanged);
@@ -37,13 +39,12 @@ class RegisterConfirmationController extends GetxController
   void startTimer() {
     _timer?.cancel();
     secondsLeft = timerMaxSeconds;
-    timerEnded = false;
 
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (secondsLeft > 0) {
         secondsLeft--;
       } else {
-        timerEnded = true;
+        status == Status.error;
         timer.cancel();
       }
       update();
@@ -70,14 +71,7 @@ class RegisterConfirmationController extends GetxController
     status = Status.completed;
     update();
 
-    Get.toNamed(RegisterPasswordSetupScreen.route);
-  }
-
-  String? validateOtp(String? code) {
-    if ((code ?? '').length != otpLength) {
-      return 'Введите 5-значный код';
-    }
-    return null;
+    Get.toNamed(login ? AuthSuccessScreen.route : RegisterPasswordSetupScreen.route);
   }
 
   void resendOtpCode() async {

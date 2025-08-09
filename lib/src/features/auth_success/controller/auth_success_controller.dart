@@ -1,19 +1,14 @@
 import 'package:get/get.dart';
+import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:senagat_mobile/src/features/register_password_setup/controller/register_password_setup_controller.dart';
 
-class AuthSuccessController extends GetxController {
-  // Observable for loading state
-  final RxBool _isLoading = false.obs;
-  bool get isLoading => _isLoading.value;
+import '../../../core/control_state_variable_mixin.dart';
 
-  // Observable for error state
-  final RxBool _hasError = false.obs;
-  bool get hasError => _hasError.value;
+class AuthSuccessController extends GetxController with StateControlMixin{
 
-  // Observable for bank verification status
-  final RxBool _isBankVerificationComplete = false.obs;
-  bool get isBankVerificationComplete => _isBankVerificationComplete.value;
+  bool _isBankVerificationComplete = false;
+  bool get isBankVerificationComplete => _isBankVerificationComplete;
 
   @override
   void onInit() {
@@ -21,35 +16,23 @@ class AuthSuccessController extends GetxController {
     _startBankVerification();
   }
 
-  /// Start bank verification process
   void _startBankVerification() {
-    _isLoading.value = true;
+    status = Status.loading;
     // Simulate bank verification process
     Future.delayed(const Duration(seconds: 3), () {
-      _isBankVerificationComplete.value = true;
-      _isLoading.value = false;
+      _isBankVerificationComplete = true;
+      status = Status.completed;
       _navigateToNextScreen();
     });
   }
 
-  /// Navigate to next screen after verification
   void _navigateToNextScreen() {
     try {
       Get.toNamed(DashboardScreen.route);
     } catch (e) {
-      _hasError.value = true;
+      status = Status.error;
       print('Error navigating to next screen: $e');
     }
   }
 
-  /// Reset error state
-  void resetError() {
-    _hasError.value = false;
-  }
-
-  /// Retry bank verification
-  void retryVerification() {
-    _isBankVerificationComplete.value = false;
-    _startBankVerification();
-  }
 }
