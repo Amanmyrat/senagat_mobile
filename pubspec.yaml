@@ -60,6 +60,7 @@ dependencies:
   flutter_launcher_icons: ^0.14.4
   url_launcher: ^6.3.2
   persistent_bottom_nav_bar: ^6.1.2
+  smooth_page_indicator: ^1.2.1
 
 dev_dependencies:
   flutter_test:
@@ -94,7 +95,6 @@ flutter:
   fonts:
     - family: Kinetika
       fonts:
-        - asset: assets/fonts/Kinetika-Regular.ttf
         - asset: assets/fonts/Kinetika-Bold.ttf
           weight: 400
 

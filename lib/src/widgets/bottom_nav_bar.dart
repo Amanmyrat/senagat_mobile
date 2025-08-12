@@ -103,6 +103,7 @@ class _NavBarItemState extends State<NavBarItem> {
             Text(
               widget.label,
               style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w400),
+
             ),
           ],
         ),

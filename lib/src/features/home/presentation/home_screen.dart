@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:senagat_mobile/src/features/add_card/presentation/add_card_screen.dart';
+import 'package:senagat_mobile/src/features/fast_operation_settings/presentation/fast_operation_settings_screen.dart';
+import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
+import 'package:senagat_mobile/src/features/phone_pay/presentation/phone_pay_screen.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
@@ -16,88 +20,131 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  final List<String> flags = [
+    AppAssets.ruIcon,
+    AppAssets.enIcon,
+    AppAssets.euIcon,
+  ];
+  final List<String> serviceIcons = [
+    AppAssets.deviceMobileIcon,
+    AppAssets.globeIcon,
+    AppAssets.flameIcon,
+    AppAssets.dropIcon,
+  ];
+  final List<String> serviceTitle = [
+    'Телефон',
+    'Net и Tv',
+    'Газ',
+    'Вода',
+  ];
+
+  final List<String> currency = [
+    'RUB',
+    'USD',
+    'EUR',
+  ];
+
+  BoxDecoration boxDecoration = BoxDecoration(
+    borderRadius: BorderRadius.circular(
+      AppDimensions.borderRadiusMedium.r,
+    ),
+    border: Border.all(color: AppColors.dividerColor, width: 1.w, style: BorderStyle.solid),
+    boxShadow: [
+      BoxShadow(
+        color: AppColors.dividerColor,
+        blurRadius: 4,
+      ),
+    ],
+    color: AppColors.white,
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.white,
       body: SingleChildScrollView(
-        child: Expanded(
-          child: SafeArea(
-            child: Padding(
-              padding: EdgeInsets.only(
-                left: AppDimensions.paddingMedium,
-                right: AppDimensions.paddingMedium,
-                top: AppDimensions.paddingExtraLarge.w,
-                bottom: AppDimensions.padding40,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          keyboardType: TextInputType.phone,
-
-                          maxLength: 8,
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontFamily: AppFonts.primaryFont,
+        physics: BouncingScrollPhysics(),
+        padding: EdgeInsets.only(bottom: 115.h),
+        child: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: AppDimensions.paddingMedium,
+              horizontal: AppDimensions.paddingExtraLarge.w,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        keyboardType: TextInputType.phone,
+                        maxLength: 8,
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontFamily: AppFonts.primaryFont,
+                        ),
+                        decoration: InputDecoration(
+                          hintText: r'Найти банкомат'.tr,
+                          border: OutlineInputBorder(),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                              AppDimensions.borderRadiusMedium,
+                            ),
+                            borderSide: BorderSide(
+                              color: AppColors.green,
+                              width: 1,
+                            ),
                           ),
-                          decoration: InputDecoration(
-                            hintText: r'enter_number'.tr,
-                            border: OutlineInputBorder(),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(
-                                AppDimensions.borderRadiusMedium,
-                              ),
-                              borderSide: BorderSide(
-                                color: AppColors.green,
-                                width: 1,
-                              ),
-                            ),
-                            prefixIconConstraints: BoxConstraints(
-                              maxWidth: 20,
-                              maxHeight: 20,
-                            ),
-                            prefixIcon: SvgPicture.asset(
+                          prefixIconConstraints: BoxConstraints(
+                            minWidth: 20.w,
+                            minHeight: 20.h,
+                          ),
+                          prefixIcon: Padding(
+                            padding: EdgeInsets.only(left: 20.w, right: 10.w),
+                            child: SvgPicture.asset(
                               AppAssets.searchIcon,
                               width: 20.w,
                             ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(
-                                AppDimensions.borderRadiusMedium,
-                              ),
-                              borderSide: BorderSide(
-                                color: AppColors.green,
-                                width: 1,
-                              ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                              AppDimensions.borderRadiusMedium,
                             ),
+                            borderSide: BorderSide(
+                              color: AppColors.white,
+                              width: 1.w,
+                            ),
+                          ),
 
-                            counter: const SizedBox(),
-                            contentPadding: EdgeInsets.symmetric(
-                              vertical: AppDimensions.paddingExtraLarge.h,
-                              horizontal: AppDimensions.paddingLarge.w,
-                            ),
+                          counter: const SizedBox(),
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: AppDimensions.paddingExtraLarge.h,
+                            horizontal: AppDimensions.paddingLarge.w,
                           ),
                         ),
                       ),
-                      SizedBox(width: 4.w),
-                      Container(
-                        padding: EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                            AppDimensions.borderRadiusMedium.r,
-                          ),
-                          color: AppColors.inputFillBackground,
+                    ),
+                    SizedBox(width: 4.w),
+                    Container(
+                      padding: EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                          AppDimensions.borderRadiusMedium.r,
                         ),
-                        child: SvgPicture.asset(
-                          AppAssets.qrCodeIcon,
-                          width: 20.w,
-                        ),
+                        color: AppColors.inputFillBackground,
                       ),
-                      SizedBox(width: 4.w),
-                      Container(
+                      child: SvgPicture.asset(
+                        AppAssets.qrCodeIcon,
+                        width: 20.w,
+                      ),
+                    ),
+                    SizedBox(width: 4.w),
+                    GestureDetector(
+                      onTap: () {
+                        Get.toNamed(NotificationsScreen.route);
+                      },
+                      child: Container(
                         padding: EdgeInsets.all(16),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(
@@ -110,10 +157,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           width: 20.w,
                         ),
                       ),
-                    ],
-                  ),
-                  SizedBox(height: 22.h),
-                  Container(
+                    ),
+                  ],
+                ),
+                SizedBox(height: 22.h),
+                GestureDetector(
+                  onTap: (){
+                    Get.toNamed(AddCardScreen.route);
+                  },
+                  child: Container(
                     width: 390.w,
                     height: 220.h,
                     decoration: BoxDecoration(
@@ -129,18 +181,23 @@ class _HomeScreenState extends State<HomeScreen> {
 
                         SizedBox(height: AppDimensions.paddingMedium),
 
-                        Text('Добавить карту'),
+                        Text('Добавить карту', style: TextStyle(color: AppColors.blackText, fontSize: 17.sp,),),
                       ],
                     ),
                   ),
+                ),
 
-                  SizedBox(height: AppDimensions.padding40.h),
+                SizedBox(height: AppDimensions.padding40.h),
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Быстрые опирации'),
-                      Text(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Быстрые опирации', style: TextStyle(color: AppColors.blackText,fontSize: 17.sp),),
+                    GestureDetector(
+                      onTap: (){
+                        Get.toNamed(FastOperationSettingsScreen.route);
+                      },
+                      child: Text(
                         'Настроить',
                         style: TextStyle(
                           color: AppColors.green,
@@ -148,229 +205,317 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontFamily: AppFonts.secondaryFont,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
+                ),
 
-                  SizedBox(height: 16.h),
+                SizedBox(height: 16.h),
 
-                  SizedBox(
-                    height: 78,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 4,
-                      itemBuilder: (context, index) {
-                        return Container(
+                SizedBox(
+                  height: 78,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: serviceIcons.length,
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: (){
+                          Get.toNamed(PhonePayScreen.route);
+                        },
+                        child: Container(
+                          width: 90.w,
+                          height: 78.h,
                           padding: EdgeInsets.symmetric(
-                            horizontal: AppDimensions.paddingLarge.w,
                             vertical: AppDimensions.paddingMedium.h,
                           ),
                           margin: EdgeInsets.only(
-                            left: AppDimensions.marginMedium.w,
+                            right: AppDimensions.marginMedium.w,
                           ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                              AppDimensions.borderRadiusMedium.r,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.lightGrey,
-                                blurRadius: 4,
-                              ),
-                            ],
-                            color: AppColors.white,
-                          ),
+                          decoration: boxDecoration,
                           child: Column(
                             children: [
                               SvgPicture.asset(
-                                AppAssets.deviceMobileIcon,
+                                serviceIcons[index],
                                 width: 30.w,
                                 color: AppColors.green,
                               ),
                               SizedBox(height: AppDimensions.paddingMedium.h),
-
                               Text(
-                                'Телефон',
+                                serviceTitle[index],
                                 style: TextStyle(
                                   color: AppColors.blackText,
                                   fontSize: 14.sp,
                                   fontFamily: AppFonts.secondaryFont,
                                 ),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-
-                  SizedBox(height: AppDimensions.padding40.h),
-
-                  Container(
-                    padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(
-                        AppDimensions.borderRadiusMedium.r,
-                      ),
-                      boxShadow: [
-                        BoxShadow(color: AppColors.lightGrey, blurRadius: 4),
-                      ],
-                      color: AppColors.white,
-                    ),
-
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 220,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Благотворительный \n фонд',
-                                style: TextStyle(
-                                  color: AppColors.blackText,
-                                  fontSize: 17.sp,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              SizedBox(height: AppDimensions.paddingMedium.w),
-                              Text(
-                                'Пожертвование любой суммы приветствуется',
-                                style: TextStyle(
-                                  color: AppColors.blackText,
-                                  fontSize: 14.sp,
-                                  fontFamily: AppFonts.secondaryFont,
-                                ),
-                              ),
-                              SizedBox(height: AppDimensions.paddingMedium.w),
-                              Row(
-                                children: [
-                                  Text(
-                                    'Пожертвовать',
-                                    style: TextStyle(
-                                      color: AppColors.green,
-                                      fontSize: 14.sp,
-                                    ),
-                                  ),
-                                  SvgPicture.asset(
-                                    AppAssets.arrowLeftIcon,
-                                    color: AppColors.green,
-                                    width: 14.w,
-                                  ),
-                                ],
                               ),
                             ],
                           ),
                         ),
-                        Image.asset(AppAssets.glowingObjectIcon),
-                      ],
-                    ),
+                      );
+                    },
                   ),
+                ),
 
-                  SizedBox(height: AppDimensions.padding40.h),
+                SizedBox(height: AppDimensions.padding40.h),
 
-                  Text(
-                    'Сервисы',
-                    style: TextStyle(
-                      color: AppColors.blackText,
-                      fontSize: 17.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 16.h),
-                  SizedBox(
-                    height: 232,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 2,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          padding: EdgeInsets.all(
-                            AppDimensions.paddingExtraLarge.w,
-                          ),
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                              AppDimensions.borderRadiusMedium.r,
+                Container(
+                  padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
+                  width: MediaQuery.of(context).size.width,
+                  decoration: boxDecoration,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Благотворительный \n фонд',
+                              style: TextStyle(
+                                color: AppColors.blackText,
+                                fontSize: 17.sp,
+                              ),
                             ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.lightGrey,
-                                blurRadius: 4,
+                            SizedBox(height: AppDimensions.paddingMedium.w),
+                            Text(
+                              'Пожертвование любой суммы приветствуется',
+                              style: TextStyle(
+                                color: AppColors.blackText,
+                                fontSize: 14.sp,
+                                fontFamily: AppFonts.secondaryFont,
                               ),
-                            ],
-                            color: AppColors.white,
-                          ),
-                          child: Row(
-                            children: [
-                              Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Справки',
-                                    style: TextStyle(
-                                      color: AppColors.blackText,
-                                      fontSize: 14.sp,
-                                      fontFamily: AppFonts.secondaryFont,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                            ),
+                            SizedBox(height: AppDimensions.paddingMedium.w),
+                            Row(
+                              children: [
+                                Text(
+                                  'Пожертвовать',
+                                  style: TextStyle(
+                                    color: AppColors.green,
+                                    fontSize: 14.sp,
                                   ),
-                                  Text(
-                                    'Получите любой тип справки',
-                                    style: TextStyle(
-                                      color: AppColors.blackText,
-                                      fontSize: 14.sp,
-                                      fontFamily: AppFonts.secondaryFont,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Image.asset(AppAssets.spreadsheet),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-
-                  SizedBox(height: AppDimensions.padding40.h),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 200,
-                    padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(
-                        AppDimensions.borderRadiusMedium.r,
+                                ),
+                                SvgPicture.asset(
+                                  AppAssets.arrowRightIcon,
+                                  color: AppColors.green,
+                                  width: 14.w,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                      boxShadow: [
-                        BoxShadow(color: AppColors.lightGrey, blurRadius: 4),
-                      ],
-                      color: AppColors.white,
-                    ),
+                      Image.asset(AppAssets.glowingObjectIcon,),
+                    ],
+                  ),
+                ),
+
+                SizedBox(height: AppDimensions.padding40.h),
+
+                Text(
+                  'Сервисы',
+                  style: TextStyle(
+                    color: AppColors.blackText,
+                    fontSize: 17.sp,
+                  ),
+                ),
+                SizedBox(height: 16.h),
+                SizedBox(
+                  height: 232.h,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 2,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        padding: EdgeInsets.all(
+                          AppDimensions.paddingExtraLarge.w,
+                        ),
+                        margin: EdgeInsets.only(right: AppDimensions.marginMedium),
+                        width: 290.w,
+                        decoration: boxDecoration,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Stack(
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          'Справки',
+                                          style: TextStyle(
+                                            color: AppColors.blackText,
+                                            fontSize: 14.sp,
+                                          ),
+                                        ),
+
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            SizedBox(
+                                              child: Text(
+                                                'Получите любой \n тип справки',
+                                                style: TextStyle(
+                                                  color: AppColors.blackText,
+                                                  fontSize: 14.sp,
+                                                  fontFamily: AppFonts.secondaryFont,
+                                                ),
+                                              ),
+                                            ),
+
+                                          ],
+                                        ),
+
+                                      ],),
+                                    Positioned(
+                                      bottom: 0,
+                                        left: 80,
+                                        child: Image.asset(AppAssets.spreadsheet),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.bottomRight,
+                                      child: SvgPicture.asset(
+                                        AppAssets.arrowRightIcon,
+                                        color: AppColors.black,
+                                        width: 14.w,
+                                      ),
+                                    ),
+                                  ]),
+                            ),
+
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+
+                SizedBox(height: AppDimensions.padding40.h),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 200,
+                  padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
+                  decoration: boxDecoration,
+                  child: Column(
+                    children: [
+                      Image.asset(AppAssets.sandClock),
+                      SizedBox(height: AppDimensions.paddingExtraLarge.h),
+                      Text(
+                        'История пуста',
+                        style: TextStyle(
+                          color: AppColors.blackText,
+                          fontSize: 17.sp,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: AppDimensions.padding40.h),
+                Text('Обменные курсы',style: TextStyle(
+                  color: AppColors.blackText,
+                  fontSize: 17.sp,
+                ), ),
+                SizedBox(height: 16.h),
+
+                Container(
+                  padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
+                  decoration: boxDecoration,
+                  child: Expanded(
                     child: Column(
                       children: [
-                        Image.asset(AppAssets.sandClock),
-                        SizedBox(height: AppDimensions.paddingExtraLarge.h),
-                        Text(
-                          'История пуста',
-                          style: TextStyle(
-                            color: AppColors.blackText,
-                            fontSize: 17.sp,
-                            fontFamily: AppFonts.secondaryFont,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                'Валюта',
+                                style: TextStyle(
+                                  color: AppColors.blackText,
+                                  fontSize: 14.sp,
+                                ),
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  'Покупка',
+                                  style: TextStyle(
+                                    color: AppColors.blackText,
+                                    fontSize: 14.sp,
+                                  ),
+                                ),
+                                SizedBox(width: AppDimensions.paddingExtraLarge.w,),
+                                Text(
+                                  'Продажа',
+                                  style: TextStyle(
+                                    color: AppColors.blackText,
+                                    fontSize: 14.sp,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
+
+                        ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: 3,
+                            itemBuilder: (context, index){
+                            return Padding(
+                              padding: EdgeInsets.only(top: AppDimensions.paddingExtraLarge.h),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Image.asset(flags[index]),
+                                      SizedBox(width: 4.w,),
+                                      Text(
+                                        currency[index],
+                                        style: TextStyle(
+                                          color: AppColors.blackText,
+                                          fontSize: 14.sp,
+                                        ),
+                                      ),
+                                  ],),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      SizedBox(
+                                        width: AppDimensions.padding60.w,
+                                        child: Text(
+                                          textAlign: TextAlign.end,
+                                          '1213',
+                                          style: TextStyle(
+                                            color: AppColors.blackText,
+                                            fontSize: 14.sp,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(width: AppDimensions.paddingSuperExtraLarge.w,),
+                                      SizedBox(
+                                        width: AppDimensions.padding60.w,
+                                        child: Text(
+                                          textAlign: TextAlign.end,
+                                          '124',
+                                          style: TextStyle(
+                                            color: AppColors.blackText,
+                                            fontSize: 14.sp,
+                                          ),
+                                        ),
+                                      ),
+                                    ],),
+                                ],
+                              ),
+                            );
+                            })
                       ],
                     ),
                   ),
-
-                  Text('data'),
-
-                  Container(),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

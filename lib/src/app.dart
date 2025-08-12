@@ -5,10 +5,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:overlay_support/overlay_support.dart';
+import 'package:senagat_mobile/src/features/add_card/presentation/add_card_screen.dart';
+import 'package:senagat_mobile/src/features/fast_operation_settings/presentation/fast_operation_settings_screen.dart';
 import 'package:senagat_mobile/src/features/login/presentation/login_screen.dart';
 import 'package:senagat_mobile/src/features/login_accept/presentation/login_accept_screen.dart';
 import 'package:senagat_mobile/src/features/login_confirmation/presetation/login_confirmation.dart';
+import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
 import 'package:senagat_mobile/src/features/password/presentation/password_screen.dart';
+import 'package:senagat_mobile/src/features/phone_pay/presentation/phone_pay_screen.dart';
+import 'package:senagat_mobile/src/features/phone_pay_verification/presentation/phone_pay_verification_screen.dart';
 import 'package:senagat_mobile/src/features/welcome/presentation/welcome_screen.dart';
 import 'package:senagat_mobile/src/features/blank/presentation/blank_screen.dart';
 import 'package:senagat_mobile/src/features/splash/presentation/splash_screen.dart';
@@ -97,6 +102,26 @@ class _SenagatAppState extends State<SenagatApp> {
               GetPage(
                 name: LoginAcceptScreen.route,
                 page: () => const LoginAcceptScreen(),
+              ),
+              GetPage(
+                name: NotificationsScreen.route,
+                page: () => const NotificationsScreen(),
+              ),
+              GetPage(
+                name: AddCardScreen.route,
+                page: () => const AddCardScreen(),
+              ),
+              GetPage(
+                name: PhonePayScreen.route,
+                page: () => const PhonePayScreen(),
+              ),
+              GetPage(
+                name: PhonePayVerificationScreen.route,
+                page: () => const PhonePayVerificationScreen(),
+              ),
+              GetPage(
+                name: FastOperationSettingsScreen.route,
+                page: () => const FastOperationSettingsScreen(),
               ),
             ],
           ),

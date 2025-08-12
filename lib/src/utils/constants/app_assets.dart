@@ -20,6 +20,13 @@ class AppAssets {
   static const plusIcon = 'assets/icons/Plus.svg';
   static const qrCodeIcon = 'assets/icons/QrCode.svg';
   static const arrowLeftIcon = 'assets/icons/arrow_left.svg';
+  static const arrowRightIcon = 'assets/icons/CaretRight.svg';
+  static const infoIcon = 'assets/icons/Info.svg';
+  static const broomIcon = 'assets/icons/Broom.svg';
+  static const plusCircleIcon = 'assets/icons/PlusCircle.svg';
+  static const minusCircleIcon = 'assets/icons/MinusCircle.svg';
+  static const listIcon = 'assets/icons/List.svg';
+
 
   static const navigationCreditCardIcon = 'assets/icons/CreditCard.svg';
   static const navigationSettingIcon = 'assets/icons/GearSix.svg';
@@ -27,7 +34,14 @@ class AppAssets {
   static const navigationcardsThreeIcon = 'assets/icons/CardsThree.svg';
 
   static const senagatIcon = 'assets/images/senagat.png';
-  static const glowingObjectIcon = 'assets/images/glowing_object.png';
+  static const glowingObjectIcon = 'assets/images/glowingObjectIcon.png';
   static const spreadsheet = 'assets/images/spreadsheet.png';
   static const sandClock = 'assets/images/sandClock.png';
+
+  static const cardImage = 'assets/images/cardImage.jpg';
+
+  static const ruIcon = 'assets/icons/RU.png';
+  static const enIcon = 'assets/icons/US.png';
+  static const tmIcon = 'assets/icons/TM.png';
+  static const euIcon = 'assets/icons/EU.png';
 }

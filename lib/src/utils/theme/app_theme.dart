@@ -45,7 +45,7 @@ class AppTheme {
       outline: AppColors.blue,
       surfaceTint: AppColors.white,
     ),
-    dividerColor: AppColors.lightGrey,
+    dividerColor: AppColors.dividerColor,
     dividerTheme: const DividerThemeData(color: AppColors.lightGrey),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
@@ -95,7 +95,7 @@ class AppTheme {
       ),
     ),
     textButtonTheme: TextButtonThemeData(
-      style: TextButton.styleFrom(foregroundColor: AppColors.blue),
+      style: TextButton.styleFrom(foregroundColor: AppColors.green),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
@@ -103,7 +103,7 @@ class AppTheme {
           borderRadius: BorderRadius.circular(28.r),
         ),
         fixedSize: Size.fromHeight(AppDimensions.buttonHeight.h),
-        foregroundColor: AppColors.blue,
+        foregroundColor: AppColors.green,
         side: const BorderSide(color: AppColors.redMedium),
       ),
     ),

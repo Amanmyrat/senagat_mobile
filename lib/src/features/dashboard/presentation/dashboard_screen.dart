@@ -1,4 +1,3 @@
-// ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,7 +12,6 @@ import '../../../utils/theme/constants/app_colors.dart';
 import '../controller/dashboard_controller.dart';
 import '../utils/custom_navigator.dart';
 import '../utils/nested_nav_ids.dart';
-import '../../blank/presentation/blank_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   static const route = '/dashboard';
@@ -146,6 +144,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         controller: _navController,
         screens: _buildScreens(),
         items: _navBarItems(),
+        padding: EdgeInsets.zero,
         backgroundColor: AppColors.white,
         handleAndroidBackButtonPress: true,
         resizeToAvoidBottomInset: true,
@@ -167,8 +166,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         ),
 
-        navBarStyle: NavBarStyle.style10, // Style 9
-
+        navBarStyle: NavBarStyle.style10,
         onItemSelected: (index) {
           _controller.updateCurrentIndex(index);
         },
