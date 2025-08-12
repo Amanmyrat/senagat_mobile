@@ -40,6 +40,7 @@ class CustomNavigator extends StatelessWidget {
         page: () => screen,
         transition: Transition.cupertino,
         curve: Curves.fastOutSlowIn,
+
       );
     };
   }

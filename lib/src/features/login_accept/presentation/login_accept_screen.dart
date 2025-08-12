@@ -55,7 +55,7 @@ class _LoginAcceptScreenState extends State<LoginAcceptScreen> {
                         ? CircularProgressIndicator(color: AppColors.green)
                         : SvgPicture.asset(
                             AppAssets.checkIcon,
-                            color: AppColors.greenDark,
+                            color: AppColors.green,
                           ),
                   ),
                 ),

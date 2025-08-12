@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import '../utils/nested_nav_ids.dart';
 
 class DashboardController extends GetxController {
-  /// Current index of navigation page (observable)
+
   final RxInt _currentIndex = 0.obs;
   RxInt get currentIndexRx => _currentIndex; // for reactive use
   int get currentIndex => _currentIndex.value; // for simple read
@@ -12,7 +12,6 @@ class DashboardController extends GetxController {
 
   String? phone;
 
-  /// Update current index due to selection
   void updateCurrentIndex(int currentIndex) async {
     int keyIdForPosition = _getKeyIdForPosition(_currentIndex.value);
     if (_currentIndex.value == currentIndex) {
@@ -22,7 +21,6 @@ class DashboardController extends GetxController {
     }
   }
 
-  /// Handle back button presses
   Future<bool> onWillPop() async {
     int keyIdForPosition = _getKeyIdForPosition(_currentIndex.value);
     if (keyIdForPosition != -1) {
@@ -38,7 +36,12 @@ class DashboardController extends GetxController {
     return true;
   }
 
-  /// Map index to nested navigation ID
+
+  @override
+  void onInit() {
+    super.onInit();
+  }
+
   int _getKeyIdForPosition(int position) {
     switch (position) {
       case DashboardNavigationIndex.card:
