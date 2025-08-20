@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:senagat_mobile/src/features/phone_pay/controller/phone_pay_controller.dart';
-import 'package:senagat_mobile/src/features/phone_pay_verification/presentation/phone_pay_verification_screen.dart';
+import 'package:senagat_mobile/src/features/phone_pay/controller/pay_controller.dart';
+import 'package:senagat_mobile/src/features/phone_pay_verification/presentation/pay_verification_screen.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -13,16 +13,16 @@ import '../../../utils/theme/constants/app_dimensions.dart';
 import '../../../utils/theme/constants/app_fonts.dart';
 import '../../../widgets/elevated_button_with_state.dart';
 
-class PhonePayScreen extends StatefulWidget {
+class PayScreen extends StatefulWidget {
   static const route = r'/phone/pay';
 
-  const PhonePayScreen({super.key});
+  const PayScreen({super.key});
 
   @override
-  State<PhonePayScreen> createState() => _PhonePayScreenState();
+  State<PayScreen> createState() => _PayScreenState();
 }
 
-class _PhonePayScreenState extends State<PhonePayScreen> {
+class _PayScreenState extends State<PayScreen> {
 
   final _key = GlobalKey<FormState>();
 
@@ -30,8 +30,8 @@ class _PhonePayScreenState extends State<PhonePayScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: GetBuilder<PhonePayController>(
-          init: PhonePayController(_key),
+        child: GetBuilder<PayController>(
+          init: PayController(_key),
           builder: (controller) {
             return Column(
               children: [
@@ -135,7 +135,7 @@ class _PhonePayScreenState extends State<PhonePayScreen> {
                                   child: TextFormField(
                                     keyboardType: TextInputType.phone,
                                     controller: controller.phoneController,
-                                    onChanged: controller.onPhoneTextChanged,
+                                    onChanged: (v)=> controller.isTextNotEmpty(),
                                     focusNode: controller.phoneFocus,
                                     maxLength: 8,
                                     style: TextStyle(
@@ -173,18 +173,64 @@ class _PhonePayScreenState extends State<PhonePayScreen> {
                                 ),
                               ],
                             ),
+                            if(controller.serviceIcon.isEmpty)
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(height: 22.h,),
 
-                            SizedBox(height: 22.h,),
+                                  Text(r'Имя'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+                                  SizedBox(height: AppDimensions.paddingMedium.h,),
+                                  TextFormField(
+                                    keyboardType: TextInputType.name,
+                                    controller: controller.nameController,
+                                    onChanged: (value) => controller.isTextNotEmpty(),
+                                    style: TextStyle(
+                                      fontSize: 14.sp,
+                                      fontFamily: AppFonts.primaryFont,
+                                    ),
+                                    decoration: InputDecoration(
+                                      hintText: r'enter_name'.tr,
+                                      border: OutlineInputBorder(),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(
+                                          AppDimensions.borderRadiusMedium,
+                                        ),
+                                        borderSide: BorderSide(
+                                          color: AppColors.green,
+                                          width: 1.w,
+                                        ),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(
+                                          AppDimensions.borderRadiusMedium,
+                                        ),
+                                        borderSide: BorderSide(
+                                          color: AppColors.white,
+                                          width: 1,
+                                        ),
+                                      ),
+                                      counter: const SizedBox(),
+                                      contentPadding: EdgeInsets.symmetric(
+                                        vertical: AppDimensions.paddingExtraLarge.h,
+                                        horizontal: AppDimensions.paddingLarge.w,
+                                      ),
+                                    ),
+                                  ),
+
+                                ],
+                              ),
+
+                            SizedBox(height: AppDimensions.padding40.h,),
 
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(r'Сумма'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
-                                SizedBox(height: AppDimensions.paddingMedium.h,),
                                 TextFormField(
                                   keyboardType: TextInputType.number,
                                   controller: controller.sumController,
-                                  onChanged: (value) => controller.update(),
+                                  onChanged: (value) => controller.isTextNotEmpty(),
                                   style: TextStyle(
                                     fontSize: 24.sp,
                                     fontFamily: AppFonts.primaryFont,
@@ -226,16 +272,16 @@ class _PhonePayScreenState extends State<PhonePayScreen> {
                 Padding(
                   padding:  EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
                   child: Opacity(
-                    opacity: controller.continueEnabled && controller.sumController.text.isNotEmpty ? 1.0 : 0.5,
+                    opacity: controller.continueEnabled ? 1.0 : 0.5,
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width,
                       child: ElevatedButtonWithState(
                         isLoading: controller.status == Status.loading,
                         isError: controller.status == Status.error,
-                        onPressed:
-                        controller.continueEnabled && controller.sumController.text.isNotEmpty
-                            ? controller.onPayTap
-                            : null,
+                        onPressed:() {
+
+                         controller.continueEnabled == false ?null:controller.onPayTap();
+                          },
                         child: Text(r'send_code'.tr),
                       ),
                     ),

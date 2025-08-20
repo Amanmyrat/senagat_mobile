@@ -193,7 +193,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                         },
                                         child: Padding(
                                           padding:  EdgeInsets.only(right: 20),
-                                          child: SvgPicture.asset(AppAssets.delete, width: 18, color: AppColors.black,),
+                                          child: SvgPicture.asset(AppAssets.deleteIcon, width: 18, color: AppColors.black,),
                                         ),
                                       ) : null,
                                       counter: const SizedBox(),
@@ -263,7 +263,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                                     },
                                                     child: Padding(
                                                       padding:  EdgeInsets.only(right: 20),
-                                                      child: SvgPicture.asset(AppAssets.delete, width: 18, color: AppColors.black,),
+                                                      child: SvgPicture.asset(AppAssets.deleteIcon, width: 18, color: AppColors.black,),
                                                     ),
                                                   ) : null,
                                                   counter: const SizedBox(),
@@ -406,7 +406,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                 ],
               ),
                   if(controller.check)
-                    CheckWidget(isLoading: controller.status == Status.loading, title: true,),
+                    CheckWidget(isLoading: controller.status == Status.loading, isTitle: true, route: DashboardScreen.route,),
               ]
             );
           }

@@ -31,7 +31,9 @@ class AppAssets {
   static const oldPhoneIcon = 'assets/icons/oldphone.svg';
   static const lightbulbIcon = 'assets/icons/Lightbulb.svg';
   static const cabelTvIcon = 'assets/icons/cabeltv.svg';
-  static const delete = 'assets/icons/X.svg';
+  static const deleteIcon = 'assets/icons/X.svg';
+  static const crossHairIcon = 'assets/icons/Crosshair.svg';
+  static const linkIcon = 'assets/icons/Link.svg';
 
 
   static const navigationCreditCardIcon = 'assets/icons/CreditCard.svg';

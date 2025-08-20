@@ -6,14 +6,17 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:senagat_mobile/src/features/add_card/presentation/add_card_screen.dart';
+import 'package:senagat_mobile/src/features/foundation/presentation/foundation_screen.dart';
 import 'package:senagat_mobile/src/features/home/controller/home_controller.dart';
 import 'package:senagat_mobile/src/features/login/presentation/login_screen.dart';
 import 'package:senagat_mobile/src/features/login_accept/presentation/login_accept_screen.dart';
 import 'package:senagat_mobile/src/features/login_confirmation/presetation/login_confirmation.dart';
+import 'package:senagat_mobile/src/features/net_and_tv/presentation/net_and_tv_screen.dart';
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
 import 'package:senagat_mobile/src/features/password/presentation/password_screen.dart';
-import 'package:senagat_mobile/src/features/phone_pay/presentation/phone_pay_screen.dart';
-import 'package:senagat_mobile/src/features/phone_pay_verification/presentation/phone_pay_verification_screen.dart';
+import 'package:senagat_mobile/src/features/phone_pay/presentation/pay_screen.dart';
+import 'package:senagat_mobile/src/features/phone_pay_verification/presentation/pay_verification_screen.dart';
+import 'package:senagat_mobile/src/features/qr_code_screen/presentation/qr_code_screen.dart';
 import 'package:senagat_mobile/src/features/service_settings/controller/service_settings_controller.dart';
 import 'package:senagat_mobile/src/features/service_settings/presentation/service_settings_screen.dart';
 import 'package:senagat_mobile/src/features/welcome/presentation/welcome_screen.dart';
@@ -113,8 +116,8 @@ class _SenagatAppState extends State<SenagatApp> {
                 page: () => const AddCardScreen(),
               ),
               GetPage(
-                name: PhonePayScreen.route,
-                page: () => const PhonePayScreen(),
+                name: PayScreen.route,
+                page: () => const PayScreen(),
               ),
               GetPage(
                 name: PhonePayVerificationScreen.route,
@@ -123,6 +126,18 @@ class _SenagatAppState extends State<SenagatApp> {
               GetPage(
                 name: ServiceSettingsScreen.route,
                 page: () => const ServiceSettingsScreen(),
+              ),
+              GetPage(
+                name: QrCodeScreen.route,
+                page: () => const QrCodeScreen(),
+              ),
+              GetPage(
+                name: FoundationScreen.route,
+                page: () => const FoundationScreen(),
+              ),
+              GetPage(
+                name: NetAndTvScreen.route,
+                page: () => const NetAndTvScreen(),
               ),
             ],
           ),

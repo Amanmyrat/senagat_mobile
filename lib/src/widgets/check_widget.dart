@@ -11,10 +11,12 @@ import 'elevated_button_with_state.dart';
 
 class CheckWidget extends StatelessWidget {
 
-  final bool title;
+  final bool isTitle;
   final bool isLoading;
+  final String route;
+  final String? buttonTitle;
 
-  const CheckWidget({super.key, required this.title, required this.isLoading,});
+  const CheckWidget({super.key, required this.isTitle, required this.isLoading, required this.route,  this.buttonTitle,});
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +36,10 @@ class CheckWidget extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children:  [
                 Image.asset(AppAssets.senagatIcon),
-                if (title == true)
+                if (isTitle == true)
                   SizedBox(height: 22.h,),
 
-                if (title == true)
+                if (isTitle == true)
                   Text(r'Добавление карты'.tr, style: TextStyle(color: AppColors.blackText, fontSize: 24.sp),),
 
                 SizedBox(height: 22.h),
@@ -58,21 +60,21 @@ class CheckWidget extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
 
-                if (title == false)
+                if (isTitle == false)
                   SizedBox(height: 22.h,),
 
-               if(title == false)
+               if(isTitle == false)
                  isLoading ? SizedBox() :Padding(
                   padding: EdgeInsets.symmetric(horizontal: AppDimensions.paddingExtraLarge.w),
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: ElevatedButtonWithState(
                       onPressed: (){
-                        Get.offNamed(DashboardScreen.route);
+                        Get.offNamed(route);
                       },
                       isError: false,
                       isLoading: false,
-                      child: Text(r'На главную'.tr),
+                      child: Text(buttonTitle ?? ''),
                     ),
                   ),
                 ),

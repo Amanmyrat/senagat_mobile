@@ -3,8 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/features/add_card/presentation/add_card_screen.dart';
+import 'package:senagat_mobile/src/features/foundation/presentation/foundation_screen.dart';
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
-import 'package:senagat_mobile/src/features/phone_pay/presentation/phone_pay_screen.dart';
+import 'package:senagat_mobile/src/features/qr_code_screen/presentation/qr_code_screen.dart';
 import 'package:senagat_mobile/src/features/service_settings/presentation/service_settings_screen.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
@@ -106,17 +107,22 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           SizedBox(width: 4.w),
-                          Container(
-                            padding: EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(
-                                AppDimensions.borderRadiusMedium.r,
+                          GestureDetector(
+                            onTap: (){
+                              Get.toNamed(QrCodeScreen.route);
+                            },
+                            child: Container(
+                              padding: EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                  AppDimensions.borderRadiusMedium.r,
+                                ),
+                                color: AppColors.inputFillBackground,
                               ),
-                              color: AppColors.inputFillBackground,
-                            ),
-                            child: SvgPicture.asset(
-                              AppAssets.qrCodeIcon,
-                              width: 20.w,
+                              child: SvgPicture.asset(
+                                AppAssets.qrCodeIcon,
+                                width: 20.w,
+                              ),
                             ),
                           ),
                           SizedBox(width: 4.w),
@@ -262,11 +268,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           scrollDirection: Axis.horizontal,
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          itemCount: controller.serviceController.selectedServiceTitle.length < 4
+                          itemCount: controller.serviceController.selectedServiceTitle.length <= 4
                               ? controller.serviceController.selectedServiceTitle.length + 1
                               : controller.serviceController.selectedServiceTitle.length,
                           itemBuilder: (context, index) {
-                            if (controller.serviceController.selectedServiceTitle.length < 4 &&
+                            if (controller.serviceController.selectedServiceTitle.length <= 4 &&
                                 index == controller.serviceController.selectedServiceTitle.length) {
                               return GestureDetector(
                                 onTap: () {
@@ -338,57 +344,62 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       SizedBox(height: AppDimensions.padding40.h),
 
-                      Container(
-                        padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width,
-                        decoration: boxDecoration,
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Благотворительный \n фонд',
-                                    style: TextStyle(
-                                      color: AppColors.blackText,
-                                      fontSize: 17.sp,
+                      GestureDetector(
+                        onTap: (){
+                          Get.toNamed(FoundationScreen.route);
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
+                          width: MediaQuery
+                              .of(context)
+                              .size
+                              .width,
+                          decoration: boxDecoration,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Благотворительный \n фонд',
+                                      style: TextStyle(
+                                        color: AppColors.blackText,
+                                        fontSize: 17.sp,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(height: AppDimensions.paddingMedium.w),
-                                  Text(
-                                    'Пожертвование любой суммы приветствуется',
-                                    style: TextStyle(
-                                      color: AppColors.blackText,
-                                      fontSize: 14.sp,
-                                      fontFamily: AppFonts.secondaryFont,
+                                    SizedBox(height: AppDimensions.paddingMedium.w),
+                                    Text(
+                                      'Пожертвование любой суммы приветствуется',
+                                      style: TextStyle(
+                                        color: AppColors.blackText,
+                                        fontSize: 14.sp,
+                                        fontFamily: AppFonts.secondaryFont,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(height: AppDimensions.paddingMedium.w),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        'Пожертвовать',
-                                        style: TextStyle(
-                                          color: AppColors.green,
-                                          fontSize: 14.sp,
+                                    SizedBox(height: AppDimensions.paddingMedium.h),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Пожертвовать',
+                                          style: TextStyle(
+                                            color: AppColors.green,
+                                            fontSize: 14.sp,
+                                          ),
                                         ),
-                                      ),
-                                      SvgPicture.asset(
-                                        AppAssets.arrowRightIcon,
-                                        color: AppColors.green,
-                                        width: 14.w,
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                        SvgPicture.asset(
+                                          AppAssets.arrowRightIcon,
+                                          color: AppColors.green,
+                                          width: 14.w,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            Image.asset(AppAssets.glowingObjectIcon,),
-                          ],
+                              Image.asset(AppAssets.glowingObjectIcon,),
+                            ],
+                          ),
                         ),
                       ),
 
@@ -441,8 +452,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
 
                                         Row(
-                                          mainAxisAlignment: MainAxisAlignment
-                                              .spaceBetween,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
                                             SizedBox(
                                               child: Text(
@@ -490,6 +500,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: AppDimensions.padding40.h),
+                      controller.payBox.isEmpty?
                       Container(
                         width: MediaQuery
                             .of(context)
@@ -511,6 +522,73 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ],
                         ),
+                      ) :
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('История', style: TextStyle(
+                            color: AppColors.blackText,
+                            fontSize: 17.sp,
+                          ),),
+                          SizedBox(height: 6.h),
+
+                          ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: controller.payBox.length,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemBuilder: (context,index){
+                            return Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: 90.h,
+                              padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
+                              margin: EdgeInsets.symmetric(vertical: 5),
+                              decoration: boxDecoration,
+                              child: Row(
+                                children: [
+                                  Container(
+                                    padding:EdgeInsets.all(AppDimensions.paddingMedium.w) ,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: AppColors.green,
+                                    ),
+                                    child: SvgPicture.asset(controller.payBox.getAt(index)?.serviceIcon ?? '', color: AppColors.white,),
+                                  ),
+                                  SizedBox(width: AppDimensions.paddingMedium.w),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          controller.payBox.getAt(index)?.serviceName ?? '',
+                                          style: TextStyle(
+                                            color: AppColors.blackText,
+                                            fontSize: 14.sp,
+                                          ),
+                                        ),
+                                        Text(
+                                          controller.payBox.getAt(index)?.number ?? '',
+                                          style: TextStyle(
+                                            color: AppColors.blackText,
+                                            fontSize: 14.sp,
+                                            fontFamily: AppFonts.secondaryFont
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Text(
+                                    '-${controller.payBox.getAt(index)?.sum ?? ''}',
+                                    style: TextStyle(
+                                        color: AppColors.blackText,
+                                        fontSize: 17.sp,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }),
+                        ],
                       ),
                       SizedBox(height: AppDimensions.padding40.h),
                       Text('Обменные курсы', style: TextStyle(
@@ -567,8 +645,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     padding: EdgeInsets.only(
                                         top: AppDimensions.paddingExtraLarge.h),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment
-                                          .spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         Row(
                                           children: [
@@ -583,8 +660,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                           ],),
                                         Row(
-                                          mainAxisAlignment: MainAxisAlignment
-                                              .spaceBetween,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
                                             SizedBox(
                                               width: AppDimensions.padding60.w,
@@ -619,8 +695,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                ),
-
+                )
               ],
             )
 

@@ -23,7 +23,7 @@ class AppTheme {
       elevation: 1.0,
       iconTheme: IconThemeData(color: AppColors.grey),
       systemOverlayStyle: SystemUiOverlayStyle(
-        statusBarColor: AppColors.blue,
+        statusBarColor: Colors.transparent,
         statusBarBrightness: Brightness.light,
         statusBarIconBrightness: Brightness.light,
       ),

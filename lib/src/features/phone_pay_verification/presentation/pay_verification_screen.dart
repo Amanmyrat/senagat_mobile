@@ -3,7 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
-import 'package:senagat_mobile/src/features/phone_pay_verification/controller/phone_pay_verification_controller.dart';
+import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
+import 'package:senagat_mobile/src/features/foundation/presentation/foundation_screen.dart';
+import 'package:senagat_mobile/src/features/phone_pay_verification/controller/pay_verification_controller.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/utils/services/show_snack.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
@@ -79,14 +81,16 @@ class _PhonePayVerificationScreenState extends State<PhonePayVerificationScreen>
                                                       child: Column(
                                                         crossAxisAlignment: CrossAxisAlignment.center,
                                                         children: [
-                                                          Container(
-                                                            padding:EdgeInsets.all(AppDimensions.paddingMedium.w) ,
-                                                            decoration: BoxDecoration(
-                                                              shape: BoxShape.circle,
-                                                              color: AppColors.white,
+                                                          if(controller.payBox.get(controller.payKey)!.serviceIcon.isNotEmpty)
+                                                            Container(
+                                                              padding:EdgeInsets.all(AppDimensions.paddingMedium.w) ,
+                                                              decoration: BoxDecoration(
+                                                                shape: BoxShape.circle,
+                                                                color: AppColors.white,
+                                                              ),
+                                                              child: SvgPicture.asset(controller.payBox.get(controller.payKey)?.serviceIcon ?? '', color: AppColors.green,),
                                                             ),
-                                                            child: SvgPicture.asset(controller.payBox.get(controller.payKey)?.serviceIcon ?? '', color: AppColors.green,),
-                                                          ),
+
                                                           Text(
                                                             controller.payBox.get(controller.payKey)?.serviceName ?? 'a',
                                                             style: TextStyle(
@@ -157,6 +161,36 @@ class _PhonePayVerificationScreenState extends State<PhonePayVerificationScreen>
                                                             ),
                                                           ),
                                                           Divider(color: AppColors.dividerColor, height: 1,),
+                                                          controller.payBox.get(controller.payKey)!.serviceIcon.isEmpty ? Column(
+                                                            children: [
+                                                              Padding(
+                                                                padding: EdgeInsets.all(AppDimensions.paddingMedium.w),
+                                                                child: Row(
+                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                  children: [
+                                                                    Text(
+                                                                      r'Имя'.tr,
+                                                                      style: TextStyle(
+                                                                        fontSize: 14.sp,
+                                                                        color: AppColors.blackText,
+                                                                        fontFamily: AppFonts.secondaryFont,
+                                                                      ),
+                                                                    ),
+                                                                    Text(
+                                                                      controller.payBox.get(controller.payKey)?.userName ?? 'a',
+                                                                      style: TextStyle(
+                                                                        fontSize: 14.sp,
+                                                                        color: AppColors.blackText,
+                                                                        fontFamily: AppFonts.secondaryFont,
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              Divider(color: AppColors.dividerColor, height: 1,),
+                                                            ],
+                                                          ): SizedBox(),
+
                                                           Padding(
                                                             padding: EdgeInsets.all(AppDimensions.paddingMedium.w),
                                                             child: Row(
@@ -213,7 +247,7 @@ class _PhonePayVerificationScreenState extends State<PhonePayVerificationScreen>
                                                 ),
 
                                                 Positioned(
-                                                  top: 170,
+                                                  top: controller.payBox.get(controller.payKey)!.serviceIcon.isEmpty ? 125 : 170,
                                                   left: -10,
                                                   child: Container(
                                                     width: 30.w,
@@ -225,7 +259,7 @@ class _PhonePayVerificationScreenState extends State<PhonePayVerificationScreen>
                                                   ),
                                                 ),
                                                 Positioned(
-                                                  top: 170,
+                                                  top: controller.payBox.get(controller.payKey)!.serviceIcon.isEmpty ? 125 : 170,
                                                   right: -10,
                                                   child: Container(
                                                     width: 30.w,
@@ -264,7 +298,10 @@ class _PhonePayVerificationScreenState extends State<PhonePayVerificationScreen>
                         ],
                       ),
                       if(controller.check == true)
-                        CheckWidget(isLoading: controller.status == Status.loading, title: false,),
+                        CheckWidget(isLoading: controller.status == Status.loading,
+                          isTitle: false, route: controller.payBox.get(controller.payKey)!.serviceIcon.isEmpty ? FoundationScreen.route : DashboardScreen.route,
+                          buttonTitle:controller.payBox.get(controller.payKey)!.serviceIcon.isEmpty ? r'Страница фонда'.tr : r'На главную'.tr,
+                        ),
                     ],
                   ),
                 ),

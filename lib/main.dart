@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:senagat_mobile/src/app.dart';
 import 'package:senagat_mobile/src/core/local/key_value_storage_base.dart';
@@ -22,6 +21,7 @@ void main() async {
   await Hive.openBox('fast_operations');
   await Hive.openBox<CardModel>('cardsBox');
   await Hive.openBox<PayModel>('payBox');
+  await Hive.openBox<PayModel>('payFoundationBox');
 
   runApp(const SenagatApp());
 }

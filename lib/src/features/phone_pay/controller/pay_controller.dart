@@ -4,19 +4,20 @@ import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/home/controller/home_controller.dart';
-import 'package:senagat_mobile/src/features/phone_pay_verification/presentation/phone_pay_verification_screen.dart';
+import 'package:senagat_mobile/src/features/phone_pay_verification/presentation/pay_verification_screen.dart';
 import 'package:senagat_mobile/src/features/service_settings/controller/service_settings_controller.dart';
 
 import '../model/pay_model.dart';
 
-class PhonePayController extends GetxController with StateControlMixin {
+class PayController extends GetxController with StateControlMixin {
   final GlobalKey<FormState> key;
   bool continueEnabled = false;
 
-  PhonePayController(this.key);
+  PayController(this.key);
 
   late final TextEditingController phoneController;
   late final TextEditingController sumController;
+  late final TextEditingController nameController;
   late ServiceSettingsController serviceSettingsController;
 
   String serviceName = '';
@@ -27,14 +28,20 @@ class PhonePayController extends GetxController with StateControlMixin {
 
   @override
   void onInit() {
-    serviceName = Get.arguments['selectedServiceTitle'];
-    serviceIcon = Get.arguments['selectedServiceIcon'];
+    try{
+      serviceName = Get.arguments['selectedServiceTitle'];
+      serviceIcon = Get.arguments['selectedServiceIcon'];
+    }catch(e){
+      print(e);
+    }
+
 
     serviceSettingsController = Get.find<ServiceSettingsController>();
 
     phoneController = TextEditingController();
     phoneFocus = FocusNode();
     sumController = TextEditingController();
+    nameController = TextEditingController();
 
     super.onInit();
   }
@@ -49,26 +56,27 @@ class PhonePayController extends GetxController with StateControlMixin {
       status = Status.completed;
 
       update();
-      Get.toNamed(PhonePayVerificationScreen.route,);
+      Get.offNamed(PhonePayVerificationScreen.route,);
   }
 
   Future<void> saveCard() async {
     final box = Hive.box<PayModel>('payBox');
     final pay = PayModel(
-        serviceName: serviceName,
-        serviceIcon: serviceIcon,
-        number: phoneController.text,
-        sum: sumController.text,
-        userName: '',
+      serviceName: serviceName,
+      serviceIcon: serviceIcon,
+      number: phoneController.text,
+      sum: sumController.text,
+      userName: nameController.text,
     );
-    await box.put('pay',pay);
+    await box.put('pay', pay);
   }
 
-  void onPhoneTextChanged(String val) {
-    continueEnabled = val.length >= 8;
+  void isTextNotEmpty(){
+    serviceIcon.isEmpty?
+    phoneController.text.length >= 8 && sumController.text.isNotEmpty && nameController.text.isNotEmpty ? continueEnabled = true: continueEnabled = false:
+    phoneController.text.length >= 8 && sumController.text.isNotEmpty ? continueEnabled = true : continueEnabled = false;
     update();
   }
-
 
   @override
   void dispose() {
@@ -76,6 +84,7 @@ class PhonePayController extends GetxController with StateControlMixin {
     phoneFocus.dispose();
 
     sumController.dispose();
+    nameController.dispose();
 
     super.dispose();
   }
