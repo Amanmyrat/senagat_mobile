@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:senagat_mobile/src/features/phone_pay/controller/pay_controller.dart';
-import 'package:senagat_mobile/src/features/phone_pay_verification/presentation/pay_verification_screen.dart';
+import 'package:senagat_mobile/src/features/pay/controller/pay_controller.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
@@ -54,7 +51,7 @@ class _PayScreenState extends State<PayScreen> {
                             ),
                             SizedBox(height: AppDimensions.padding40.h,),
                             Text(
-                              r'Выберите карту'.tr,
+                              r'select_a_card'.tr,
                               style: TextStyle(
                                 fontSize: 17.sp,
                                 color: AppColors.blackText,
@@ -111,7 +108,7 @@ class _PayScreenState extends State<PayScreen> {
 
                             SizedBox(height: AppDimensions.padding40.h,),
 
-                            Text(r'Номер телефона'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+                            Text(r'phone_number'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
                             SizedBox(height: AppDimensions.paddingMedium.h,),
                             Row(
                               children: [
@@ -151,7 +148,7 @@ class _PayScreenState extends State<PayScreen> {
                                         ),
                                         borderSide: BorderSide(
                                           color: AppColors.green,
-                                          width: 1,
+                                          width: 1.w,
                                         ),
                                       ),
                                       enabledBorder: OutlineInputBorder(
@@ -160,7 +157,7 @@ class _PayScreenState extends State<PayScreen> {
                                         ),
                                         borderSide: BorderSide(
                                           color: AppColors.white,
-                                          width: 1,
+                                          width: 1.w,
                                         ),
                                       ),
                                       counter: const SizedBox(),
@@ -207,7 +204,7 @@ class _PayScreenState extends State<PayScreen> {
                                         ),
                                         borderSide: BorderSide(
                                           color: AppColors.white,
-                                          width: 1,
+                                          width: 1.w,
                                         ),
                                       ),
                                       counter: const SizedBox(),
@@ -226,7 +223,7 @@ class _PayScreenState extends State<PayScreen> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(r'Сумма'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+                                Text(r'sum'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
                                 TextFormField(
                                   keyboardType: TextInputType.number,
                                   controller: controller.sumController,
@@ -237,20 +234,20 @@ class _PayScreenState extends State<PayScreen> {
                                     color: AppColors.blackText
                                   ),
                                   decoration: InputDecoration(
-                                    hintText: r'Введите сумму'.tr,
+                                    hintText: r'enter_sum'.tr,
                                     fillColor: AppColors.white,
                                     focusedBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                         strokeAlign: BorderSide.strokeAlignOutside,
                                         color: AppColors.green,
-                                        width: 1,
+                                        width: 1.w,
                                       ),
                                     ),
                                     enabledBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                         strokeAlign: BorderSide.strokeAlignOutside,
                                         color: AppColors.dividerColor,
-                                        width: 1,
+                                        width: 1.w,
                                       ),
                                     ),
                                     counter: const SizedBox(),

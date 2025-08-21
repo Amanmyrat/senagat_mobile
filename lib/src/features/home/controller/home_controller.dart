@@ -5,9 +5,9 @@ import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/add_card/controller/add_card_controller.dart';
 import 'package:senagat_mobile/src/features/add_card/model/card_model.dart';
 import 'package:senagat_mobile/src/features/net_and_tv/presentation/net_and_tv_screen.dart';
-import 'package:senagat_mobile/src/features/phone_pay/presentation/pay_screen.dart';
+import 'package:senagat_mobile/src/features/pay/presentation/pay_screen.dart';
 import '../../../utils/constants/app_assets.dart';
-import '../../phone_pay/model/pay_model.dart';
+import '../../pay/model/pay_model.dart';
 import '../../service_settings/controller/service_settings_controller.dart';
 
 class HomeController extends GetxController with StateControlMixin {

@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:senagat_mobile/src/features/phone_pay/presentation/pay_screen.dart';
+import 'package:senagat_mobile/src/features/pay/presentation/pay_screen.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
-
 import '../../../utils/constants/app_assets.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
@@ -31,7 +30,7 @@ class _FoundationScreenState extends State<FoundationScreen> {
     boxShadow: [
       BoxShadow(
         color: AppColors.dividerColor,
-        blurRadius: 4,
+        blurRadius: 4.r,
       ),
     ],
     color: AppColors.white,
@@ -64,7 +63,7 @@ class _FoundationScreenState extends State<FoundationScreen> {
                               children: [
                                 Image.asset(AppAssets.glowingObjectIcon,),
                                 Text(
-                                  'Благотворительный фонд',
+                                  r'charitable_foundation'.tr,
                                   style: TextStyle(
                                     color: AppColors.blackText,
                                     fontSize: 17.sp,
@@ -72,7 +71,7 @@ class _FoundationScreenState extends State<FoundationScreen> {
                                 ),
                                 SizedBox(height: AppDimensions.paddingMedium.h),
                                 Text(
-                                  'Детский рак лечится. Мы работаем, чтобы любой ребенок в Туркмении мог получить все необходимое лечение.',
+                                  r'fund_text'.tr,
                                   style: TextStyle(
                                     color: AppColors.blackText,
                                     fontSize: 14.sp,
@@ -85,7 +84,7 @@ class _FoundationScreenState extends State<FoundationScreen> {
                           ),
                           SizedBox(height: AppDimensions.padding40.h),
                           Text(
-                            'Баланс фонда',
+                            r'fund_balance'.tr,
                             style: TextStyle(
                               color: AppColors.blackText,
                               fontSize: 17.sp,
@@ -103,7 +102,7 @@ class _FoundationScreenState extends State<FoundationScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Баланс',
+                                        r'balance'.tr,
                                         style: TextStyle(
                                           color: AppColors.greyInactive,
                                           fontSize: 14.sp,
@@ -169,7 +168,7 @@ class _FoundationScreenState extends State<FoundationScreen> {
                           ),
                           SizedBox(height: AppDimensions.padding40.h),
                           Text(
-                            'Ваша помощь фонду',
+                            r'your_help_to_the_fund'.tr,
                             style: TextStyle(
                               color: AppColors.blackText,
                               fontSize: 17.sp,
@@ -231,10 +230,10 @@ class _FoundationScreenState extends State<FoundationScreen> {
                               isError: false,
                               onPressed: (){
                                 Get.offNamed(PayScreen.route, arguments: {
-                                  'selectedServiceTitle': 'Благотворительный фонд',
+                                  'selectedServiceTitle': r'charitable_foundation'.tr,
                                 });
                               },
-                              child: Text(r'Пожертвовать'.tr),
+                              child: Text(r'donate'.tr),
                             ),
                           ),
                         ],

@@ -6,8 +6,6 @@ import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:senagat_mobile/src/features/foundation/presentation/foundation_screen.dart';
 import 'package:senagat_mobile/src/features/phone_pay_verification/controller/pay_verification_controller.dart';
-import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
-import 'package:senagat_mobile/src/utils/services/show_snack.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
 import 'package:senagat_mobile/src/widgets/check_widget.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
@@ -56,7 +54,7 @@ class _PhonePayVerificationScreenState extends State<PhonePayVerificationScreen>
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          r'Подтверждение'.tr,
+                                          r'confirmation'.tr,
                                           style: TextStyle(
                                             fontSize: 24.sp,
                                             color: AppColors.blackText,
@@ -129,7 +127,7 @@ class _PhonePayVerificationScreenState extends State<PhonePayVerificationScreen>
                                                         crossAxisAlignment: CrossAxisAlignment.start,
                                                         children: [
                                                           Text(
-                                                            r'Информация'.tr,
+                                                            r'information'.tr,
                                                             style: TextStyle(
                                                               fontSize: 17.sp,
                                                               color: AppColors.blackText,
@@ -142,7 +140,7 @@ class _PhonePayVerificationScreenState extends State<PhonePayVerificationScreen>
                                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                               children: [
                                                                 Text(
-                                                                  r'Номер телефона'.tr,
+                                                                  r'phone_number'.tr,
                                                                   style: TextStyle(
                                                                     fontSize: 14.sp,
                                                                     color: AppColors.blackText,
@@ -160,7 +158,7 @@ class _PhonePayVerificationScreenState extends State<PhonePayVerificationScreen>
                                                               ],
                                                             ),
                                                           ),
-                                                          Divider(color: AppColors.dividerColor, height: 1,),
+                                                          Divider(color: AppColors.dividerColor, height: 1.h,),
                                                           controller.payBox.get(controller.payKey)!.serviceIcon.isEmpty ? Column(
                                                             children: [
                                                               Padding(
@@ -169,7 +167,7 @@ class _PhonePayVerificationScreenState extends State<PhonePayVerificationScreen>
                                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                   children: [
                                                                     Text(
-                                                                      r'Имя'.tr,
+                                                                      r'name'.tr,
                                                                       style: TextStyle(
                                                                         fontSize: 14.sp,
                                                                         color: AppColors.blackText,
@@ -187,7 +185,7 @@ class _PhonePayVerificationScreenState extends State<PhonePayVerificationScreen>
                                                                   ],
                                                                 ),
                                                               ),
-                                                              Divider(color: AppColors.dividerColor, height: 1,),
+                                                              Divider(color: AppColors.dividerColor, height: 1.h,),
                                                             ],
                                                           ): SizedBox(),
 
@@ -197,7 +195,7 @@ class _PhonePayVerificationScreenState extends State<PhonePayVerificationScreen>
                                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                               children: [
                                                                 Text(
-                                                                  r'Оптала через'.tr,
+                                                                  r'payment_via'.tr,
                                                                   style: TextStyle(
                                                                     fontSize: 14.sp,
                                                                     color: AppColors.blackText,
@@ -215,14 +213,14 @@ class _PhonePayVerificationScreenState extends State<PhonePayVerificationScreen>
                                                               ],
                                                             ),
                                                           ),
-                                                          Divider(color: AppColors.dividerColor, height: 1,),
+                                                          Divider(color: AppColors.dividerColor, height: 1.h,),
                                                           Padding(
                                                             padding: EdgeInsets.all(AppDimensions.paddingMedium.w),
                                                             child: Row(
                                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                               children: [
                                                                 Text(
-                                                                  r'Категория'.tr,
+                                                                  r'category'.tr,
                                                                   style: TextStyle(
                                                                     fontSize: 14.sp,
                                                                     color: AppColors.blackText,
@@ -291,7 +289,7 @@ class _PhonePayVerificationScreenState extends State<PhonePayVerificationScreen>
                                 },
                                 isError: false,
                                 isLoading: false,
-                                child: Text(r'Оплатить'.tr),
+                                child: Text(r'pay'.tr),
                               ),
                             ),
                           ),
@@ -300,7 +298,7 @@ class _PhonePayVerificationScreenState extends State<PhonePayVerificationScreen>
                       if(controller.check == true)
                         CheckWidget(isLoading: controller.status == Status.loading,
                           isTitle: false, route: controller.payBox.get(controller.payKey)!.serviceIcon.isEmpty ? FoundationScreen.route : DashboardScreen.route,
-                          buttonTitle:controller.payBox.get(controller.payKey)!.serviceIcon.isEmpty ? r'Страница фонда'.tr : r'На главную'.tr,
+                          buttonTitle:controller.payBox.get(controller.payKey)!.serviceIcon.isEmpty ? r'fund_page'.tr : r'home_page'.tr,
                         ),
                     ],
                   ),

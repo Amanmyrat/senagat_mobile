@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
-import 'package:senagat_mobile/src/features/phone_pay/model/pay_model.dart';
+import 'package:senagat_mobile/src/features/pay/model/pay_model.dart';
 import '../../../core/states/stateful_data.dart';
 
 class PhonePayVerificationController extends GetxController with StateControlMixin {

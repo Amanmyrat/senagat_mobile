@@ -3,16 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/features/net_and_tv/controller/net_and_tv_controller.dart';
-import 'package:senagat_mobile/src/features/phone_pay/controller/pay_controller.dart';
-import 'package:senagat_mobile/src/features/phone_pay_verification/presentation/pay_verification_screen.dart';
-import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../../../core/states/stateful_data.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
-import '../../../utils/theme/constants/app_fonts.dart';
-import '../../../widgets/elevated_button_with_state.dart';
 
 class NetAndTvScreen extends StatefulWidget {
   static const route = r'/net/pay';

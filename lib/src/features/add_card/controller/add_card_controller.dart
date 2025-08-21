@@ -13,17 +13,18 @@ class AddCardController extends GetxController with StateControlMixin {
   late final TextEditingController cardNumberController;
   late final TextEditingController nameController;
   late final TextEditingController termController;
+  late final TextEditingController cvcController;
 
   bool continueEnabled = false;
   bool check = false;
 
   int selectedDesign = 0;
 
-  List<AssetImage> cardDesigns = [
-    AssetImage(AppAssets.cardImage),
-    AssetImage(AppAssets.cardImage),
-    AssetImage(AppAssets.cardImage),
-    AssetImage(AppAssets.cardImage),
+  List<String> cardDesigns = [
+      AppAssets.senagatIcon,
+      AppAssets.cardImage,
+      AppAssets.cardImage,
+      AppAssets.cardImage,
   ];
 
   late final cardNumberFormatter = MaskTextInputFormatter(
@@ -53,6 +54,7 @@ class AddCardController extends GetxController with StateControlMixin {
     cardNumberController = TextEditingController();
     nameController = TextEditingController();
     termController = TextEditingController();
+    cvcController = TextEditingController();
 
     pageController.addListener(() {
       selectedDesign = pageController.page?.round() ?? 0;
@@ -61,17 +63,12 @@ class AddCardController extends GetxController with StateControlMixin {
     super.onInit();
   }
 
-  void onCardTextChanged(String val) {
-    continueEnabled = val.length >= 19 &&
-        nameController.text.isNotEmpty &&
-        termController.text.isNotEmpty;
-    update();
-  }
 
-  void onTermTextChanged(String val) {
+  void onTextChanged(String val) {
     continueEnabled = cardNumberController.text.length >= 19 &&
         nameController.text.isNotEmpty &&
-        val.length >= 5;
+        termController.text.length >= 5 &&
+        cvcController.text.length >=3;
     update();
   }
 
@@ -86,7 +83,7 @@ class AddCardController extends GetxController with StateControlMixin {
       cardNumber: cardNumberController.text,
       name: nameController.text,
       expiryDate: termController.text,
-      designIndex: selectedDesign,
+      cardDesign: cardDesigns[selectedDesign],
     );
     await box.put('card',card);
   }
@@ -96,7 +93,6 @@ class AddCardController extends GetxController with StateControlMixin {
       Get.toNamed(DashboardScreen.route,);
     } catch (e) {
       status = Status.error;
-      debugPrint('Error navigating to next screen: $e');
     }
   }
 

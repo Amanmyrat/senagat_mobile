@@ -57,7 +57,7 @@ class _ServiceSettingsScreenState extends State<ServiceSettingsScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              r'Кнопки быстрой навигации'.tr,
+                              r'quick_navigation_buttons'.tr,
                               style: TextStyle(
                                 fontSize: 24.sp,
                                 color: AppColors.blackText,
@@ -66,7 +66,7 @@ class _ServiceSettingsScreenState extends State<ServiceSettingsScreen> {
                             SizedBox(height: controller.selectedServiceTitle.isNotEmpty ? AppDimensions.padding40.h : 0),
 
                             if(controller.selectedServiceTitle.isNotEmpty)
-                              Text('${r'Выбранно '.tr}${controller.selectedServiceTitle.length} ${'/'} 4', style: TextStyle(
+                              Text('${r'selected '.tr}${controller.selectedServiceTitle.length} ${'/'} 4', style: TextStyle(
                                 fontSize: 14.sp,
                                 color: AppColors.grey,
                               ),),
@@ -130,7 +130,7 @@ class _ServiceSettingsScreenState extends State<ServiceSettingsScreen> {
                               },
                             ),
                             SizedBox(height: AppDimensions.padding40.h,),
-                            Text(r'Все'.tr, style: TextStyle(
+                            Text(r'all'.tr, style: TextStyle(
                               fontSize: 14.sp,
                               color: AppColors.grey,
                             ),),

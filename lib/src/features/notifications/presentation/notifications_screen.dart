@@ -51,7 +51,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                       children: [
                         SizedBox(height: AppDimensions.padding40.h),
                         Text(
-                          r'Уведомления'.tr,
+                          r'notifications'.tr,
                           style: TextStyle(
                             fontSize: 24.sp,
                             color: AppColors.blackText,
@@ -61,7 +61,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         SizedBox(height: AppDimensions.paddingMedium.h),
                           Container(
                             padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
-                            height: 224,
+                            height: 224.h,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(
                                 AppDimensions.borderRadiusMedium.r,
@@ -70,7 +70,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                               boxShadow: [
                                 BoxShadow(
                                   color: AppColors.dividerColor,
-                                  blurRadius: 4,
+                                  blurRadius: 4.r,
                                 ),
                               ],
                               color: AppColors.inputFillBackground,
@@ -79,7 +79,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 SvgPicture.asset(AppAssets.magnIcon, width: 60,),
-                                Text('Уведомлений нет', style: TextStyle(color: AppColors.blackText,fontSize: 17.sp),),
+                                Text(r'no_notifications'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 17.sp),),
                                 SizedBox(
                                   width: MediaQuery.of(context).size.width,
                                   child: ElevatedButtonWithState(
@@ -88,7 +88,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                                     },
                                     isError: false,
                                     isLoading: false,
-                                    child: Text(r'Перейти в котолог'.tr),
+                                    child: Text(r'go_to_catologist'.tr),
                                   ),
                                 ),
                               ],

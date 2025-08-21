@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/features/add_card/controller/add_card_controller.dart';
 import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
@@ -47,7 +46,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: AppDimensions.paddingExtraLarge.w),
                               child: Text(
-                                r'Выберите дизайн'.tr,
+                                r'choose_a_design'.tr,
                                 style: TextStyle(
                                   fontSize: 24.sp,
                                   color: AppColors.blackText,
@@ -71,9 +70,9 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                    horizontal: AppDimensions.marginMedium,
                                   ),
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.r),
+                                    borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
                                     image: DecorationImage(
-                                        image: controller.cardDesigns[index],
+                                        image: AssetImage(controller.cardDesigns[index]),
                                         fit: BoxFit.fill,
                                     ),
                                   ),
@@ -86,7 +85,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                           'Senagat Bank',
                                           style: TextStyle(
                                             color: AppColors.white,
-                                            fontSize: 14,
+                                            fontSize: 14.sp,
                                           ),
                                         ),
                                       ),
@@ -105,14 +104,14 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            controller.nameController.text.isNotEmpty ? controller.nameController.text :'Имя на карте',
+                                            controller.nameController.text.isNotEmpty ? controller.nameController.text : r'name_on_the_card'.tr,
                                             style: TextStyle(
                                               fontSize: 14.sp,
                                               color: AppColors.white,
                                             ),
                                           ),
                                           Text(
-                                            controller.termController.text.isNotEmpty ? controller.termController.text :'Срок',
+                                            controller.termController.text.isNotEmpty ? controller.termController.text : r'term'.tr,
                                             style: TextStyle(
                                               fontSize: 14.sp,
                                               color: AppColors.white,
@@ -147,14 +146,14 @@ class _AddCardScreenState extends State<AddCardScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(r'Данные карты'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 24.sp),),
+                                  Text(r'card_details'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 24.sp),),
                                   SizedBox(height: 32.h,),
-                                  Text(r'Номер карты'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+                                  Text(r'card_number'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
                                   SizedBox(height: AppDimensions.paddingMedium.h,),
                                   TextField(
                                     keyboardType: TextInputType.phone,
                                     textInputAction: TextInputAction.next,
-                                    onChanged: controller.onCardTextChanged,
+                                    onChanged: controller.onTextChanged,
                                     controller: controller.cardNumberController,
                                     inputFormatters: [controller.cardNumberFormatter],
                                     style: TextStyle(
@@ -162,7 +161,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                       fontFamily: AppFonts.primaryFont,
                                     ),
                                     decoration: InputDecoration(
-                                      hintText: r'Номер карты'.tr,
+                                      hintText: r'card_number'.tr,
                                       border: OutlineInputBorder(),
                                       focusedBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(
@@ -170,7 +169,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                         ),
                                         borderSide: BorderSide(
                                           color: AppColors.green,
-                                          width: 1,
+                                          width: 1.w,
                                         ),
                                       ),
                                       enabledBorder: OutlineInputBorder(
@@ -192,8 +191,8 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                           controller.onClearTextField(controller.cardNumberController);
                                         },
                                         child: Padding(
-                                          padding:  EdgeInsets.only(right: 20),
-                                          child: SvgPicture.asset(AppAssets.deleteIcon, width: 18, color: AppColors.black,),
+                                          padding:  EdgeInsets.only(right: AppDimensions.paddingExtraLarge.w),
+                                          child: SvgPicture.asset(AppAssets.deleteIcon, width: 18.w, color: AppColors.black,),
                                         ),
                                       ) : null,
                                       counter: const SizedBox(),
@@ -216,7 +215,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                           child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Text('Имя на карте',
+                                              Text(r'name_on_the_card'.tr,
                                                 style: TextStyle(
                                                     color: AppColors.blackText,
                                                     fontSize: 14.sp),
@@ -232,7 +231,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                                   fontFamily: AppFonts.primaryFont,
                                                 ),
                                                 decoration: InputDecoration(
-                                                  hintText: r'Имя на карте'.tr,
+                                                  hintText: r'name_on_the_card'.tr,
                                                   border: OutlineInputBorder(),
                                                   focusedBorder: OutlineInputBorder(
                                                     borderRadius: BorderRadius.circular(
@@ -240,7 +239,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                                     ),
                                                     borderSide: BorderSide(
                                                       color: AppColors.green,
-                                                      width: 1,
+                                                      width: 1.w,
                                                     ),
                                                   ),
                                                   enabledBorder: OutlineInputBorder(
@@ -249,7 +248,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                                     ),
                                                     borderSide: BorderSide(
                                                       color: AppColors.white,
-                                                      width: 1,
+                                                      width: 1.w,
                                                     ),
                                                   ),
                                                   suffixIconConstraints: BoxConstraints(
@@ -262,8 +261,8 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                                       controller.onClearTextField(controller.nameController);
                                                     },
                                                     child: Padding(
-                                                      padding:  EdgeInsets.only(right: 20),
-                                                      child: SvgPicture.asset(AppAssets.deleteIcon, width: 18, color: AppColors.black,),
+                                                      padding:  EdgeInsets.only(right: AppDimensions.paddingExtraLarge.w),
+                                                      child: SvgPicture.asset(AppAssets.deleteIcon, width: 18.w, color: AppColors.black,),
                                                     ),
                                                   ) : null,
                                                   counter: const SizedBox(),
@@ -281,11 +280,11 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                           child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Text('Срок', style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+                                              Text(r'term'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
                                               SizedBox(height: AppDimensions.paddingMedium.h,),
                                               TextField(
                                                 controller: controller.termController,
-                                                onChanged: controller.onTermTextChanged,
+                                                onChanged: controller.onTextChanged,
                                                 keyboardType: TextInputType.phone,
                                                 maxLength: 5,
                                                 textAlign: TextAlign.center,
@@ -295,7 +294,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                                   fontFamily: AppFonts.primaryFont,
                                                 ),
                                                 decoration: InputDecoration(
-                                                  hintText: r'Срок'.tr,
+                                                  hintText: r'term'.tr,
                                                   border: OutlineInputBorder(),
                                                   focusedBorder: OutlineInputBorder(
                                                     borderRadius: BorderRadius.circular(
@@ -303,7 +302,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                                     ),
                                                     borderSide: BorderSide(
                                                       color: AppColors.green,
-                                                      width: 1,
+                                                      width: 1.w,
                                                     ),
                                                   ),
                                                   enabledBorder: OutlineInputBorder(
@@ -312,7 +311,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                                     ),
                                                     borderSide: BorderSide(
                                                       color: AppColors.white,
-                                                      width: 1,
+                                                      width: 1.w,
                                                     ),
                                                   ),
                                                   counter: const SizedBox(),
@@ -329,10 +328,12 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                         Flexible(
                                           child: Column(
                                             children: [
-                                              SizedBox(height: 25,),
+                                              SizedBox(height: 25.h,),
                                               TextFormField(
                                                 keyboardType: TextInputType.number,
                                                 textAlign: TextAlign.center,
+                                                controller: controller.cvcController,
+                                                onChanged: controller.onTextChanged,
                                                 maxLength: 3,
                                                 style: TextStyle(
                                                   fontSize: 14.sp,
@@ -347,7 +348,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                                     ),
                                                     borderSide: BorderSide(
                                                       color: AppColors.green,
-                                                      width: 1,
+                                                      width: 1.w,
                                                     ),
                                                   ),
                                                   enabledBorder: OutlineInputBorder(
@@ -356,7 +357,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                                     ),
                                                     borderSide: BorderSide(
                                                       color: AppColors.white,
-                                                      width: 1,
+                                                      width: 1.w,
                                                     ),
                                                   ),
                                                   suffixIconConstraints: BoxConstraints(minWidth: 20.w, minHeight: 20.h),
@@ -398,7 +399,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                           onPressed: (){
                               controller.startBankVerification();
                           },
-                          child: Text(r'Подтвердить'.tr),
+                          child: Text(r'confirm'.tr),
                         ),
                       ),
                     ),

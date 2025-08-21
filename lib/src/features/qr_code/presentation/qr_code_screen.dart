@@ -1,11 +1,11 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
-
 import '../../../utils/constants/app_assets.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 
@@ -33,7 +33,7 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
               final List<Barcode> barcodes = capture.barcodes;
               for (final barcode in barcodes) {
                 setState(() {
-                  qrCode = barcode.rawValue ?? "Unknown";
+                  qrCode = barcode.rawValue ?? '';
                 });
               }
             },
@@ -46,11 +46,11 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                padding: const EdgeInsets.all(16),
+                padding: EdgeInsets.all(AppDimensions.paddingExtraLarge),
                 color: Colors.black54,
                 child: Text(
-                  "Scanned: $qrCode",
-                  style: const TextStyle(color: Colors.white, fontSize: 18),
+                  qrCode!,
+                  style: TextStyle(color: AppColors.white, fontSize: 17.sp),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -62,6 +62,8 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
 
 }
 class ScannerOverlay extends StatelessWidget {
+  const ScannerOverlay({super.key});
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
@@ -122,7 +124,7 @@ class HolePainter extends CustomPainter {
     final holePaint = Paint()
       ..blendMode = BlendMode.clear;
 
-    final rrect = RRect.fromRectAndRadius(holeRect, Radius.circular(borderRadius));
+    final rrect = RRect.fromRectAndRadius(holeRect, Radius.circular(borderRadius.r));
     canvas.drawRRect(rrect, holePaint);
 
     // Glowing border around the hole

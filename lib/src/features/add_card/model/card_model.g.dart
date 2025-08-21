@@ -20,7 +20,7 @@ class CardModelAdapter extends TypeAdapter<CardModel> {
       cardNumber: fields[0] as String,
       name: fields[1] as String,
       expiryDate: fields[2] as String,
-      designIndex: fields[3] as int,
+      cardDesign: fields[3] as String,
     );
   }
 
@@ -35,7 +35,7 @@ class CardModelAdapter extends TypeAdapter<CardModel> {
       ..writeByte(2)
       ..write(obj.expiryDate)
       ..writeByte(3)
-      ..write(obj.designIndex);
+      ..write(obj.cardDesign);
   }
 
   @override

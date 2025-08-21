@@ -63,19 +63,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
             children: [
               BottomNavBarItem(
                 icon: AppAssets.navigationhouseIcon,
-                label: 'Home',
+                label: r'home'.tr,
               ),
               BottomNavBarItem(
                 icon: AppAssets.navigationcardsThreeIcon,
-                label: 'Catalog',
+                label: r'catalog'.tr,
               ),
               BottomNavBarItem(
                 icon: AppAssets.navigationCreditCardIcon,
-                label: 'Card',
+                label: r'card'.tr,
               ),
               BottomNavBarItem(
                 icon: AppAssets.navigationSettingIcon,
-                label: 'Settings',
+                label: r'settings'.tr,
               ),
             ],
           ),

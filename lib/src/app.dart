@@ -14,9 +14,9 @@ import 'package:senagat_mobile/src/features/login_confirmation/presetation/login
 import 'package:senagat_mobile/src/features/net_and_tv/presentation/net_and_tv_screen.dart';
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
 import 'package:senagat_mobile/src/features/password/presentation/password_screen.dart';
-import 'package:senagat_mobile/src/features/phone_pay/presentation/pay_screen.dart';
+import 'package:senagat_mobile/src/features/pay/presentation/pay_screen.dart';
 import 'package:senagat_mobile/src/features/phone_pay_verification/presentation/pay_verification_screen.dart';
-import 'package:senagat_mobile/src/features/qr_code_screen/presentation/qr_code_screen.dart';
+import 'package:senagat_mobile/src/features/qr_code/presentation/qr_code_screen.dart';
 import 'package:senagat_mobile/src/features/service_settings/controller/service_settings_controller.dart';
 import 'package:senagat_mobile/src/features/service_settings/presentation/service_settings_screen.dart';
 import 'package:senagat_mobile/src/features/welcome/presentation/welcome_screen.dart';

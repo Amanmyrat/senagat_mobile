@@ -14,13 +14,13 @@ class CardModel extends HiveObject {
   String expiryDate;
 
   @HiveField(3)
-  int designIndex;
+  String cardDesign;
 
 
   CardModel({
     required this.cardNumber,
     required this.name,
     required this.expiryDate,
-    required this.designIndex,
+    required this.cardDesign,
   });
 }

@@ -5,13 +5,13 @@ import 'package:get/get.dart';
 import 'package:senagat_mobile/src/features/add_card/presentation/add_card_screen.dart';
 import 'package:senagat_mobile/src/features/foundation/presentation/foundation_screen.dart';
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
-import 'package:senagat_mobile/src/features/qr_code_screen/presentation/qr_code_screen.dart';
 import 'package:senagat_mobile/src/features/service_settings/presentation/service_settings_screen.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
 
+import '../../qr_code/presentation/qr_code_screen.dart';
 import '../controller/home_controller.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
     boxShadow: [
       BoxShadow(
         color: AppColors.dividerColor,
-        blurRadius: 4,
+        blurRadius: 4.r,
       ),
     ],
     color: AppColors.white,
@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 fontFamily: AppFonts.primaryFont,
                               ),
                               decoration: InputDecoration(
-                                hintText: r'Найти банкомат'.tr,
+                                hintText: r'find_an_ATM'.tr,
                                 border: OutlineInputBorder(),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(
@@ -74,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   borderSide: BorderSide(
                                     color: AppColors.green,
-                                    width: 1,
+                                    width: 1.w,
                                   ),
                                 ),
                                 prefixIconConstraints: BoxConstraints(
@@ -82,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   minHeight: 20.h,
                                 ),
                                 prefixIcon: Padding(
-                                  padding: EdgeInsets.only(left: 20.w, right: 10.w),
+                                  padding: EdgeInsets.only(left: AppDimensions.paddingExtraLarge.w, right: AppDimensions.paddingMedium.w),
                                   child: SvgPicture.asset(
                                     AppAssets.searchIcon,
                                     width: 20.w,
@@ -112,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Get.toNamed(QrCodeScreen.route);
                             },
                             child: Container(
-                              padding: EdgeInsets.all(16),
+                              padding: EdgeInsets.all(16.w),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(
                                   AppDimensions.borderRadiusMedium.r,
@@ -161,7 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.r),
                             image: DecorationImage(
-                              image: AssetImage(AppAssets.cardImage),
+                              image: AssetImage(controller.cardBox.get(controller.cardKey)!.cardDesign),
                               fit: BoxFit.fill,
                             ),
                           ),
@@ -231,7 +231,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                               SizedBox(height: AppDimensions.paddingMedium),
 
-                              Text('Добавить карту', style: TextStyle(
+                              Text(r'add_a_card'.tr, style: TextStyle(
                                 color: AppColors.blackText, fontSize: 17.sp,),),
                             ],
                           ),
@@ -243,13 +243,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('Быстрые опирации', style: TextStyle(color: AppColors.blackText, fontSize: 17.sp),),
+                          Text(r'fast_operations'.tr, style: TextStyle(color: AppColors.blackText, fontSize: 17.sp),),
                           GestureDetector(
                             onTap: () {
                               Get.toNamed(ServiceSettingsScreen.route);
                             },
                             child: Text(
-                              'Настроить',
+                              r'tune'.tr,
                               style: TextStyle(
                                 color: AppColors.green,
                                 fontSize: 14.sp,
@@ -292,13 +292,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                     boxShadow: [
                                       BoxShadow(
                                         color: AppColors.dividerColor,
-                                        blurRadius: 4,
+                                        blurRadius: 4.r,
                                       ),
                                     ],
                                     color: AppColors.green,
                                   ),
                                   child:  Center(
-                                    child: SvgPicture.asset(AppAssets.plusIcon,width: 30, color: AppColors.white),
+                                    child: SvgPicture.asset(AppAssets.plusIcon,width: 30.w, color: AppColors.white),
                                   ),
                                 ),
                               );
@@ -362,7 +362,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Благотворительный \n фонд',
+                                      r'charitable_foundation'.tr,
                                       style: TextStyle(
                                         color: AppColors.blackText,
                                         fontSize: 17.sp,
@@ -370,7 +370,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     SizedBox(height: AppDimensions.paddingMedium.w),
                                     Text(
-                                      'Пожертвование любой суммы приветствуется',
+                                      r'donations_of_any_amount'.tr,
                                       style: TextStyle(
                                         color: AppColors.blackText,
                                         fontSize: 14.sp,
@@ -381,7 +381,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Row(
                                       children: [
                                         Text(
-                                          'Пожертвовать',
+                                          r'donate'.tr,
                                           style: TextStyle(
                                             color: AppColors.green,
                                             fontSize: 14.sp,
@@ -406,7 +406,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(height: AppDimensions.padding40.h),
 
                       Text(
-                        'Сервисы',
+                        r'services'.tr,
                         style: TextStyle(
                           color: AppColors.blackText,
                           fontSize: 17.sp,
@@ -444,7 +444,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          'Справки',
+                                          r'inquiries'.tr,
                                           style: TextStyle(
                                             color: AppColors.blackText,
                                             fontSize: 14.sp,
@@ -456,12 +456,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                           children: [
                                             SizedBox(
                                               child: Text(
-                                                'Получите любой \n тип справки',
+                                                r'get_any_type_of_help'.tr,
                                                 style: TextStyle(
                                                   color: AppColors.blackText,
                                                   fontSize: 14.sp,
-                                                  fontFamily: AppFonts
-                                                      .secondaryFont,
+                                                  fontFamily: AppFonts.secondaryFont,
                                                 ),
                                               ),
                                             ),
@@ -514,7 +513,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Image.asset(AppAssets.sandClock),
                             SizedBox(height: AppDimensions.paddingExtraLarge.h),
                             Text(
-                              'История пуста',
+                              r'history_is_empty'.tr,
                               style: TextStyle(
                                 color: AppColors.blackText,
                                 fontSize: 17.sp,
@@ -526,7 +525,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('История', style: TextStyle(
+                          Text(r'history'.tr, style: TextStyle(
                             color: AppColors.blackText,
                             fontSize: 17.sp,
                           ),),
@@ -591,7 +590,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                       SizedBox(height: AppDimensions.padding40.h),
-                      Text('Обменные курсы', style: TextStyle(
+                      Text(r'exchange_rates'.tr, style: TextStyle(
                         color: AppColors.blackText,
                         fontSize: 17.sp,
                       ),),
@@ -606,7 +605,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 Expanded(
                                   child: Text(
-                                    'Валюта',
+                                    r'currency'.tr,
                                     style: TextStyle(
                                       color: AppColors.blackText,
                                       fontSize: 14.sp,
@@ -616,7 +615,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Row(
                                   children: [
                                     Text(
-                                      'Покупка',
+                                      r'purchase'.tr,
                                       style: TextStyle(
                                         color: AppColors.blackText,
                                         fontSize: 14.sp,
@@ -625,7 +624,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     SizedBox(
                                       width: AppDimensions.paddingExtraLarge.w,),
                                     Text(
-                                      'Продажа',
+                                      r'sale'.tr,
                                       style: TextStyle(
                                         color: AppColors.blackText,
                                         fontSize: 14.sp,
