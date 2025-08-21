@@ -23,7 +23,7 @@ class AppTheme {
       elevation: 1.0,
       iconTheme: IconThemeData(color: AppColors.grey),
       systemOverlayStyle: SystemUiOverlayStyle(
-        statusBarColor: AppColors.blue,
+        statusBarColor: Colors.transparent,
         statusBarBrightness: Brightness.light,
         statusBarIconBrightness: Brightness.light,
       ),
@@ -46,7 +46,7 @@ class AppTheme {
       surfaceTint: AppColors.white,
     ),
     dividerColor: AppColors.dividerColor,
-    dividerTheme: const DividerThemeData(color: AppColors.dividerColor),
+    dividerTheme: const DividerThemeData(color: AppColors.lightGrey),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
@@ -95,7 +95,7 @@ class AppTheme {
       ),
     ),
     textButtonTheme: TextButtonThemeData(
-      style: TextButton.styleFrom(foregroundColor: AppColors.blue),
+      style: TextButton.styleFrom(foregroundColor: AppColors.green),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
@@ -103,7 +103,7 @@ class AppTheme {
           borderRadius: BorderRadius.circular(28.r),
         ),
         fixedSize: Size.fromHeight(AppDimensions.buttonHeight.h),
-        foregroundColor: AppColors.blue,
+        foregroundColor: AppColors.green,
         side: const BorderSide(color: AppColors.redMedium),
       ),
     ),

@@ -49,7 +49,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
               // ),
             ],
             Container(
-              padding: EdgeInsets.all(AppDimensions.paddingMedium),
+              padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.r),
                 border: Border.all(
@@ -57,6 +57,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                   width: 1.w,
                   style: BorderStyle.solid,
                 ),
+                color: AppColors.white
               ),
               child: SvgPicture.asset(AppAssets.arrowLeftIcon, width: 20.w),
             ),

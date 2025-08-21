@@ -7,9 +7,9 @@ class AppColors {
 
   const AppColors._();
 
-  static const Color black = Color.fromRGBO(0, 0, 0, 1);
+  static const Color black = Color(0xff191B19);
   static const Color lightBlack = Color.fromRGBO(30, 30, 30, 1.0);
-  static const Color white = Color(0xffDDF0DD);
+  static const Color white = Color(0xffEEF2ED);
   static const Color grey = Color(0xff9DA1B1); // icons
   static const Color mediumGrey = Color.fromRGBO(227, 227, 227, 1);
   static const Color lighterGrey = Color.fromRGBO(248, 248, 248, 1);
@@ -24,7 +24,7 @@ class AppColors {
   static const Color blueLight = Color(0xff6690B9);
   static const Color lightBackground = Color(0xffEEF2ED);
   static const Color green = Color(0xff2C702C);
-  static const Color greenDark = Color(0xff088142);
+  static const Color lightGreen = Color(0xff769983);
   static const Color redDark = Color(0xffCC1717);
   static const Color inputFillBackground = Color(0xffE6EAE3);
   static const Color blackText = Color(0xff191B19);

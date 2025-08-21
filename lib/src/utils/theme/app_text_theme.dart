@@ -14,7 +14,7 @@ class AppTextTheme {
 
   TextTheme get lightTheme {
     final base = ThemeData.light().textTheme;
-    return base.apply(fontFamily: AppFonts.primaryFont);
+    return base.apply(fontFamily: AppFonts.primaryFont,);
   }
 
   TextTheme get darkTheme {
