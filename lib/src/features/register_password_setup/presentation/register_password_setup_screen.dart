@@ -9,27 +9,27 @@ import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
 import '../../../widgets/elevated_button_with_state.dart';
-import '../controller/password_controller.dart';
+import '../controller/register_password_setup_controller.dart';
 
-class PasswordScreen extends StatefulWidget {
-  static const route = r'/passsword';
+class RegisterPasswordSetupScreen extends StatefulWidget {
+  static const route = r'/register/password/setup';
 
-  const PasswordScreen({super.key});
+  const RegisterPasswordSetupScreen({super.key});
 
   @override
-  State<PasswordScreen> createState() => _PasswordScreenState();
+  State<RegisterPasswordSetupScreen> createState() => _RegisterPasswordSetupScreenState();
 }
 
-class _PasswordScreenState extends State<PasswordScreen> {
-  final PasswordController _controller = Get.put(PasswordController());
+class _RegisterPasswordSetupScreenState extends State<RegisterPasswordSetupScreen> {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: GetBuilder<PasswordController>(
-          builder: (_) => Form(
-            key: _controller.formKey,
+        child: GetBuilder<RegisterPasswordSetupController>(
+          init: RegisterPasswordSetupController(),
+          builder: (controller) => Form(
+            key: controller.formKey,
             child: Column(
               children: [
                 const CustomAppBar(),
@@ -41,7 +41,6 @@ class _PasswordScreenState extends State<PasswordScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      /// Шаг и индикатор
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -55,18 +54,16 @@ class _PasswordScreenState extends State<PasswordScreen> {
                           SizedBox(
                             width: 24.w,
                             height: 24.h,
-                            child: _controller.status == Status.loading
-                                ? CircularProgressIndicator(
-                                    color: AppColors.green,
-                                  )
-                                : const SizedBox.shrink(),
+                            child:
+                            CircularProgressIndicator(
+                              color: AppColors.green,
+                              value: 0.75,
+                              backgroundColor: AppColors.dividerColor,
+                            )
                           ),
                         ],
                       ),
-
                       SizedBox(height: 40.h),
-
-                      /// Заголовок
                       Text(
                         r'new_password'.tr,
                         style: TextStyle(
@@ -84,14 +81,12 @@ class _PasswordScreenState extends State<PasswordScreen> {
                       ),
                       SizedBox(height: AppDimensions.padding60.h),
 
-                      /// Поле ввода пароля
                       TextFormField(
-                        controller: _controller.passwordController,
-                        focusNode: _controller.passwordFocus,
+                        controller: controller.passwordController,
+                        focusNode: controller.passwordFocus,
                         keyboardType: TextInputType.visiblePassword,
-                        obscureText: !_controller.isPasswordVisible,
-                        onChanged: _controller.onPasswordChanged,
-                        validator: _controller.validatePassword,
+                        obscureText: !controller.isPasswordVisible,
+                        onChanged: controller.onPasswordChanged,
                         style: TextStyle(
                           fontSize: 14.sp,
                           fontFamily: AppFonts.primaryFont,
@@ -107,12 +102,12 @@ class _PasswordScreenState extends State<PasswordScreen> {
                             minWidth: 20.w,
                           ),
                           suffixIcon: GestureDetector(
-                            onTap: _controller.togglePasswordVisibility,
+                            onTap: controller.togglePasswordVisibility,
                             child: Padding(
                               padding: EdgeInsets.symmetric(
                                 horizontal: AppDimensions.paddingExtraLarge.w,
                               ),
-                              child: _controller.isPasswordVisible
+                              child: controller.isPasswordVisible
                                   ? SvgPicture.asset(
                                       AppAssets.eyeIcon,
                                       color: AppColors.grey,
@@ -132,16 +127,15 @@ class _PasswordScreenState extends State<PasswordScreen> {
 
                       SizedBox(height: AppDimensions.paddingMedium.h),
 
-                      /// Кнопка "Подтвердить"
                       Opacity(
-                        opacity: _controller.isPasswordValid ? 1.0 : 0.5,
+                        opacity: controller.isPasswordValid ? 1.0 : 0.5,
                         child: SizedBox(
                           width: MediaQuery.of(context).size.width,
                           child: ElevatedButtonWithState(
-                            isLoading: _controller.status == Status.loading,
-                            isError: _controller.status == Status.error,
-                            onPressed: _controller.isPasswordValid
-                                ? _controller.confirmPassword
+                            isLoading: controller.status == Status.loading,
+                            isError: controller.status == Status.error,
+                            onPressed: controller.isPasswordValid
+                                ? controller.confirmPassword
                                 : null,
                             child: Text(r'confirm'.tr),
                           ),

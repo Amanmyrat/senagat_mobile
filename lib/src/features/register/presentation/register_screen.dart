@@ -1,31 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
+import '../../../utils/constants/app_assets.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
 import '../../../utils/theme/constants/app_fonts.dart';
 import '../../../widgets/elevated_button_with_state.dart';
-import '../controller/login_controller.dart';
+import '../controller/register_controller.dart';
 
-class LoginScreen extends StatefulWidget {
-  static const route = r'/login';
+class RegisterScreen extends StatefulWidget {
+  static const route = r'/register';
 
-  const LoginScreen({super.key});
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  late final LoginController controller;
-
-  @override
-  void initState() {
-    super.initState();
-    controller = Get.put(LoginController(GlobalKey<FormState>()));
-  }
+class _RegisterScreenState extends State<RegisterScreen> {
+  final _key = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +34,8 @@ class _LoginScreenState extends State<LoginScreen> {
               padding: const EdgeInsets.symmetric(
                 horizontal: AppDimensions.paddingExtraLarge,
               ),
-              child: GetBuilder<LoginController>(
+              child: GetBuilder<RegisterController>(
+                init: RegisterController(_key),
                 builder: (controller) {
                   return Form(
                     key: controller.key,
@@ -49,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              r'step_3_of_3'.tr,
+                              controller.login ? r'step_1_of_2'.tr :r'step_1_of_3'.tr,
                               style: TextStyle(
                                 fontSize: 14.sp,
                                 color: AppColors.blackText,
@@ -58,11 +55,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             SizedBox(
                               width: 24.w,
                               height: 24.h,
-                              child: controller.status == Status.loading
-                                  ? CircularProgressIndicator(
-                                      color: AppColors.green,
-                                    )
-                                  : SizedBox.shrink(),
+                              child: CircularProgressIndicator(
+                                color: AppColors.green,
+                                value:0.25,
+                                backgroundColor: AppColors.lightGrey,
+                              )
                             ),
                           ],
                         ),
@@ -83,6 +80,17 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         SizedBox(height: AppDimensions.padding60.h),
+
+                        if(controller.status == Status.error)
+                          Text(r'incorrect_number'.tr, style: TextStyle(
+                              color: AppColors.redDark,
+                              fontSize: 14.sp,
+                              fontFamily: AppFonts.secondaryFont
+                          ),),
+
+                        SizedBox(height: AppDimensions.paddingMedium.h),
+
+
                         Row(
                           children: [
                             Container(
@@ -112,10 +120,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                   fontSize: 14.sp,
                                   fontFamily: AppFonts.primaryFont,
                                 ),
-                                validator: (_) => controller.validatePhone(),
                                 decoration: InputDecoration(
                                   hintText: r'enter_number'.tr,
-                                  border: OutlineInputBorder(),
+
+                                  errorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: controller.status == Status.error ?AppColors.redDark : AppColors.green,
+                                      width: 1,
+                                    ),
+                                  ),
+
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(
                                       AppDimensions.borderRadiusMedium,
@@ -125,12 +139,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                       width: 1,
                                     ),
                                   ),
+
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(
                                       AppDimensions.borderRadiusMedium,
                                     ),
                                     borderSide: BorderSide(
-                                      color: AppColors.green,
+                                      color: AppColors.lightBackground,
                                       width: 1,
                                     ),
                                   ),
@@ -144,15 +159,67 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ],
                         ),
+
+                        SizedBox(height: AppDimensions.paddingMedium.h,),
+
+                        if (controller.login)
+                          TextFormField(
+                          controller: controller.passwordController,
+                          focusNode: controller.passwordFocus,
+                          keyboardType: TextInputType.visiblePassword,
+                          obscureText: !controller.isPasswordVisible,
+                          onChanged: controller.onPasswordChanged,
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontFamily: AppFonts.primaryFont,
+                          ),
+                          decoration: InputDecoration(
+                            hintText: r'password'.tr,
+                            contentPadding: EdgeInsets.symmetric(
+                              vertical: 17.h,
+                              horizontal: AppDimensions.paddingLarge.w,
+                            ),
+                            suffixIconConstraints: BoxConstraints(
+                              minHeight: 20.h,
+                              minWidth: 20.w,
+                            ),
+                            suffixIcon: GestureDetector(
+                              onTap: controller.togglePasswordVisibility,
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: AppDimensions.paddingExtraLarge.w,
+                                ),
+                                child: controller.isPasswordVisible
+                                    ? SvgPicture.asset(
+                                  AppAssets.eyeIcon,
+                                  color: AppColors.grey,
+                                  width: 24.w,
+                                  height: 24.h,
+                                )
+                                    : SvgPicture.asset(
+                                  AppAssets.eyeSlashIcon,
+                                  color: AppColors.grey,
+                                  width: 24.w,
+                                  height: 24.h,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+
                         SizedBox(height: AppDimensions.paddingMedium.h),
                         Opacity(
-                          opacity: controller.continueEnabled ? 1.0 : 0.5,
+                          opacity:controller.login ? controller.continueEnabled && controller.isPasswordValid ? 1.0 : 0.5: controller.continueEnabled ? 1.0 : 0.5,
                           child: SizedBox(
                             width: MediaQuery.of(context).size.width,
                             child: ElevatedButtonWithState(
                               isLoading: controller.status == Status.loading,
                               isError: controller.status == Status.error,
-                              onPressed: controller.continueEnabled
+                              onPressed:
+                              controller.login ?
+                              controller.continueEnabled && controller.isPasswordValid ?
+                              controller.onLoginTap : null
+                                  : controller.continueEnabled
                                   ? controller.onLoginTap
                                   : null,
                               child: Text(r'send_code'.tr),

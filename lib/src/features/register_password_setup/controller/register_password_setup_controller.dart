@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:senagat_mobile/src/features/auth_success/presentation/auth_success_screen.dart';
 import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
-import 'package:senagat_mobile/src/utils/services/show_snack.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../core/control_state_variable_mixin.dart';
-import '../../login_confirmation/presetation/login_confirmation.dart';
 
-class PasswordController extends GetxController with StateControlMixin {
+class RegisterPasswordSetupController extends GetxController with StateControlMixin {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   bool isPasswordVisible = false;
@@ -30,7 +29,7 @@ class PasswordController extends GetxController with StateControlMixin {
   }
 
   void onPasswordChanged(String val) {
-    isPasswordValid = val.length >= 6; // или любая другая логика валидации
+    isPasswordValid = val.length >= 6;
     update();
   }
 
@@ -40,26 +39,14 @@ class PasswordController extends GetxController with StateControlMixin {
       status = Status.loading;
       update();
 
-      // Имитируем API-запрос
       await Future.delayed(const Duration(seconds: 2));
 
       status = Status.completed;
       update();
 
-      // Переход на следующий экран (или другой логикой)
-      Get.toNamed(DashboardScreen.route);
+      Get.toNamed(AuthSuccessScreen.route);
     }
   }
-
-  String? validatePassword(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Поле не может быть пустым';
-    } else if (value.length < 6) {
-      return 'Минимум 6 символов';
-    }
-    return null;
-  }
-
   @override
   void dispose() {
     passwordController.dispose();

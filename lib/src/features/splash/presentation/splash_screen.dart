@@ -56,14 +56,13 @@ class _SplashScreenState extends State<SplashScreen> {
               'Senagat töleg',
               style: TextStyle(
                 color: AppColors.blackText,
-                fontSize: 40,
+                fontSize: 40.sp,
                 fontWeight: FontWeight.bold,
-                fontFamily: 'Xolonium',
               ),
             ),
             Text(
-              'Оплатить можно практически всё!',
-              style: TextStyle(color: AppColors.greyInactive, fontSize: 14),
+              r'pay_everything'.tr,
+              style: TextStyle(color: AppColors.greyInactive, fontSize: 14.sp),
             ),
           ],
         ),

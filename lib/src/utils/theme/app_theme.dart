@@ -45,8 +45,8 @@ class AppTheme {
       outline: AppColors.blue,
       surfaceTint: AppColors.white,
     ),
-    dividerColor: AppColors.lightGrey,
-    dividerTheme: const DividerThemeData(color: AppColors.lightGrey),
+    dividerColor: AppColors.dividerColor,
+    dividerTheme: const DividerThemeData(color: AppColors.dividerColor),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(

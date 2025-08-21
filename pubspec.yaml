@@ -103,3 +103,8 @@ flutter:
         - asset: assets/fonts/Gilroy-Regular.otf
         - asset: assets/fonts/Gilroy-Bold.otf
           weight: 400
+    - family: Xolonium
+      fonts:
+        - asset: assets/fonts/Xolonium-Regular.otf
+        - asset: assets/fonts/Xolonium-Bold.otf
+          weight: 400

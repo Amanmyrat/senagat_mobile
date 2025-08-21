@@ -8,35 +8,30 @@ import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
 import '../../../widgets/elevated_button_with_state.dart';
-import '../controller/login_confirmation_controller.dart';
+import '../controller/register_confirmation_controller.dart';
 
-class LoginConfiramationScreen extends StatefulWidget {
-  static const route = r'/login_confirmation';
+class RegisterConfirmationScreen extends StatefulWidget {
+  static const route = r'/register/confirmation';
 
-  const LoginConfiramationScreen({super.key});
+  const RegisterConfirmationScreen({super.key});
 
   @override
-  State<LoginConfiramationScreen> createState() =>
-      _LoginConfiramationScreenState();
+  State<RegisterConfirmationScreen> createState() =>
+      _RegisterConfirmationScreenState();
 }
 
-class _LoginConfiramationScreenState extends State<LoginConfiramationScreen> {
-  late final LoginConfirmationController _controller;
+class _RegisterConfirmationScreenState extends State<RegisterConfirmationScreen> {
 
-  @override
-  void initState() {
-    super.initState();
-    final args = Get.arguments as Map<String, dynamic>;
-    _controller = Get.put(LoginConfirmationController(args['phone']));
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.lightBackground,
       body: SafeArea(
-        child: GetBuilder<LoginConfirmationController>(
-          builder: (_) => Form(
-            key: _controller.formKey,
+        child: GetBuilder<RegisterConfirmationController>(
+          init: RegisterConfirmationController(),
+          builder: (controller) => Form(
+            key: controller.formKey,
             child: Column(
               children: [
                 const CustomAppBar(),
@@ -47,12 +42,11 @@ class _LoginConfiramationScreenState extends State<LoginConfiramationScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      /// Step and loader
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            r'step_2_of_3'.tr,
+                            controller.login ? r'step_1_of_2'.tr :r'step_1_of_2'.tr,
                             style: TextStyle(
                               fontSize: 14.sp,
                               color: AppColors.blackText,
@@ -61,17 +55,16 @@ class _LoginConfiramationScreenState extends State<LoginConfiramationScreen> {
                           SizedBox(
                             width: 24.w,
                             height: 24.h,
-                            child: _controller.status == Status.loading
-                                ? CircularProgressIndicator(
-                                    color: AppColors.green,
-                                  )
-                                : const SizedBox.shrink(),
+                            child: CircularProgressIndicator(
+                              color: AppColors.green,
+                              backgroundColor: AppColors.dividerColor,
+                              value: controller.login ? 0.75 : 0.5,
+                            )
                           ),
                         ],
                       ),
                       SizedBox(height: AppDimensions.padding40.h),
 
-                      /// Title and subtitle
                       Text(
                         r'OTP'.tr,
                         style: TextStyle(
@@ -80,9 +73,8 @@ class _LoginConfiramationScreenState extends State<LoginConfiramationScreen> {
                         ),
                       ),
                       Text(
-                        r'code_was_sent_to '
-                                '${_controller.phoneNumber}'
-                            .tr,
+                        r'code_was_sent_to'.tr
+                        + controller.phoneNumber,
                         style: TextStyle(
                           fontSize: 14.sp,
                           color: AppColors.greyInactive,
@@ -91,24 +83,23 @@ class _LoginConfiramationScreenState extends State<LoginConfiramationScreen> {
                       ),
                       SizedBox(height: AppDimensions.padding60.h),
 
-                      _controller.isPinFull || !_controller.pinLengthError
-                          ? const SizedBox.shrink()
-                          : Padding(
-                              padding: const EdgeInsets.only(bottom: 10),
-                              child: Text(
-                                r'incorrectly_entered_OTP'.tr,
-                                style: TextStyle(
-                                  color: AppColors.redDark,
-                                  fontSize: 15.sp,
-                                  fontFamily: AppFonts.secondaryFont,
-                                ),
-                              ),
-                            ),
+                      controller.status == Status.error
+                          ?Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Text(
+                          r'incorrectly_entered_OTP'.tr,
+                          style: TextStyle(
+                            color: AppColors.redDark,
+                            fontSize: 15.sp,
+                            fontFamily: AppFonts.secondaryFont,
+                          ),
+                        ),
+                      )
+                          : SizedBox.shrink(),
 
-                      /// PIN input
                       PinCodeTextField(
-                        controller: _controller.otpController,
-                        focusNode: _controller.otpFocus,
+                        controller: controller.otpController,
+                        focusNode: controller.otpFocus,
                         length: 5,
                         keyboardType: TextInputType.number,
                         animationType: AnimationType.fade,
@@ -123,7 +114,7 @@ class _LoginConfiramationScreenState extends State<LoginConfiramationScreen> {
                           fieldHeight: 64.h,
                           fieldWidth: 74.w,
                           activeColor:
-                              (_controller.isPinFull || _controller.timerEnded)
+                              ( controller.status != Status.error)
                               ? AppColors.green
                               : AppColors.redDark,
                           activeFillColor: AppColors.inputFillBackground,
@@ -142,23 +133,20 @@ class _LoginConfiramationScreenState extends State<LoginConfiramationScreen> {
                         appContext: context,
                         autoDisposeControllers: false,
                         onChanged: (_) {
-                          _controller.update();
+                          controller.update();
                         },
                       ),
 
-                      /// Apply button
                       Opacity(
-                        opacity: _controller.isPinFull ? 1.0 : 0.5,
+                        opacity: controller.isPinFull ? 1.0 : 0.5,
                         child: SizedBox(
                           width: MediaQuery.of(context).size.width,
                           height: 64.h,
                           child: ElevatedButtonWithState(
-                            isLoading: _controller.status == Status.loading,
-                            isError:
-                                _controller.status == Status.error ||
-                                _controller.timerEnded,
-                            onPressed: _controller.isPinFull
-                                ? _controller.applyOtpCode
+                            isLoading: controller.status == Status.loading,
+                            isError: controller.status == Status.error,
+                            onPressed: controller.isPinFull
+                                ? controller.applyOtpCode
                                 : null,
                             child: Text(
                               r'apply'.tr,
@@ -171,7 +159,6 @@ class _LoginConfiramationScreenState extends State<LoginConfiramationScreen> {
                         ),
                       ),
 
-                      /// Timer / resend
                       SizedBox(height: 16.h),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -185,9 +172,9 @@ class _LoginConfiramationScreenState extends State<LoginConfiramationScreen> {
                               fontFamily: AppFonts.secondaryFont,
                             ),
                           ),
-                          _controller.secondsLeft > 0
+                          controller.secondsLeft > 0
                               ? Text(
-                                  '00:${_controller.secondsLeft.toString().padLeft(2, '0')}',
+                                  '00:${controller.secondsLeft.toString().padLeft(2, '0')}',
                                   style: TextStyle(
                                     color: AppColors.blackText,
                                     fontSize: 15.sp,
@@ -195,19 +182,19 @@ class _LoginConfiramationScreenState extends State<LoginConfiramationScreen> {
                                   ),
                                 )
                               : GestureDetector(
-                                  onTap: _controller.status == Status.loading
+                                  onTap: controller.status == Status.loading
                                       ? null
-                                      : _controller.resendOtpCode,
+                                      : controller.resendOtpCode,
                                   child: Text(
                                     r'send'.tr,
                                     style: TextStyle(
                                       color:
-                                          _controller.status == Status.loading
+                                          controller.status == Status.loading
                                           ? AppColors.greyInactive
                                           : AppColors.blackText,
                                       fontSize: 15.sp,
                                       fontWeight:
-                                          _controller.status == Status.loading
+                                          controller.status == Status.loading
                                           ? FontWeight.w400
                                           : FontWeight.bold,
                                       fontFamily: AppFonts.secondaryFont,
