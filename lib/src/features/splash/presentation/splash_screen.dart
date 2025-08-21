@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 import 'package:senagat_mobile/src/features/welcome/presentation/welcome_screen.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
-import '../../dashboard/presentation/dashboard_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   static const route = '/splash';

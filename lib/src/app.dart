@@ -6,17 +6,16 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:senagat_mobile/src/features/add_card/presentation/add_card_screen.dart';
+import 'package:senagat_mobile/src/features/auth_success/presentation/auth_success_screen.dart';
 import 'package:senagat_mobile/src/features/foundation/presentation/foundation_screen.dart';
 import 'package:senagat_mobile/src/features/home/controller/home_controller.dart';
-import 'package:senagat_mobile/src/features/login/presentation/login_screen.dart';
-import 'package:senagat_mobile/src/features/login_accept/presentation/login_accept_screen.dart';
-import 'package:senagat_mobile/src/features/login_confirmation/presetation/login_confirmation.dart';
 import 'package:senagat_mobile/src/features/net_and_tv/presentation/net_and_tv_screen.dart';
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
-import 'package:senagat_mobile/src/features/password/presentation/password_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/pay_screen.dart';
-import 'package:senagat_mobile/src/features/phone_pay_verification/presentation/pay_verification_screen.dart';
 import 'package:senagat_mobile/src/features/qr_code/presentation/qr_code_screen.dart';
+import 'package:senagat_mobile/src/features/register/presentation/register_screen.dart';
+import 'package:senagat_mobile/src/features/register_confirmation/presentation/register_confirmation.dart';
+import 'package:senagat_mobile/src/features/register_password_setup/presentation/register_password_setup_screen.dart';
 import 'package:senagat_mobile/src/features/service_settings/controller/service_settings_controller.dart';
 import 'package:senagat_mobile/src/features/service_settings/presentation/service_settings_screen.dart';
 import 'package:senagat_mobile/src/features/welcome/presentation/welcome_screen.dart';
@@ -28,6 +27,7 @@ import 'package:senagat_mobile/src/utils/theme/controller/theme_controller.dart'
 import 'features/add_card/controller/add_card_controller.dart';
 import 'features/dashboard/controller/dashboard_controller.dart';
 import 'features/dashboard/presentation/dashboard_screen.dart';
+import 'features/pay_verification/presentation/pay_verification_screen.dart';
 
 class SenagatApp extends StatefulWidget {
   const SenagatApp({super.key});
@@ -78,7 +78,7 @@ class _SenagatAppState extends State<SenagatApp> {
             // darkTheme: AppTheme.darkTheme,
             debugShowCheckedModeBanner: false,
             themeMode: _initThemeMode(),
-            initialRoute: DashboardScreen.route,
+            initialRoute: SplashScreen.route,
             initialBinding: DashboardBinding(),
             defaultTransition: Transition.cupertino,
             getPages: [
@@ -91,21 +91,24 @@ class _SenagatAppState extends State<SenagatApp> {
                 page: () => const SplashScreen(),
               ),
               GetPage(
+                name: RegisterScreen.route,
+                page: () => const RegisterScreen(),
+              ),
+              GetPage(
+                name: RegisterConfirmationScreen.route,
+                page: () => const RegisterConfirmationScreen(),
+              ),
+              GetPage(
+                name: RegisterPasswordSetupScreen.route,
+                page: () => const RegisterPasswordSetupScreen(),
+              ),
+              GetPage(
+                name: AuthSuccessScreen.route,
+                page: () => const AuthSuccessScreen(),
+              ),
+              GetPage(
                 name: WelcomeScreen.route,
                 page: () => const WelcomeScreen(),
-              ),
-              GetPage(name: LoginScreen.route, page: () => const LoginScreen()),
-              GetPage(
-                name: LoginConfiramationScreen.route,
-                page: () => const LoginConfiramationScreen(),
-              ),
-              GetPage(
-                name: PasswordScreen.route,
-                page: () => const PasswordScreen(),
-              ),
-              GetPage(
-                name: LoginAcceptScreen.route,
-                page: () => const LoginAcceptScreen(),
               ),
               GetPage(
                 name: NotificationsScreen.route,
@@ -120,8 +123,8 @@ class _SenagatAppState extends State<SenagatApp> {
                 page: () => const PayScreen(),
               ),
               GetPage(
-                name: PhonePayVerificationScreen.route,
-                page: () => const PhonePayVerificationScreen(),
+                name: PayVerificationScreen.route,
+                page: () => const PayVerificationScreen(),
               ),
               GetPage(
                 name: ServiceSettingsScreen.route,

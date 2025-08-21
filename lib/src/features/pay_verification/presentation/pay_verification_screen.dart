@@ -5,31 +5,31 @@ import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:senagat_mobile/src/features/foundation/presentation/foundation_screen.dart';
-import 'package:senagat_mobile/src/features/phone_pay_verification/controller/pay_verification_controller.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
 import 'package:senagat_mobile/src/widgets/check_widget.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
 import '../../../widgets/elevated_button_with_state.dart';
+import '../controller/pay_verification_controller.dart';
 
-class PhonePayVerificationScreen extends StatefulWidget {
-  static const route = r'/phone/pay/verification';
+class PayVerificationScreen extends StatefulWidget {
+  static const route = r'/pay/verification';
 
-  const PhonePayVerificationScreen({super.key});
+  const PayVerificationScreen({super.key});
 
   @override
-  State<PhonePayVerificationScreen> createState() => _PhonePayVerificationScreenState();
+  State<PayVerificationScreen> createState() => _PayVerificationScreenState();
 }
 
-class _PhonePayVerificationScreenState extends State<PhonePayVerificationScreen> {
+class _PayVerificationScreenState extends State<PayVerificationScreen> {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: GetBuilder<PhonePayVerificationController>(
-          init: PhonePayVerificationController(),
+        child: GetBuilder<PayVerificationController>(
+          init: PayVerificationController(),
           builder: (controller) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,8 +46,8 @@ class _PhonePayVerificationScreenState extends State<PhonePayVerificationScreen>
                               padding: const EdgeInsets.symmetric(
                                 horizontal: AppDimensions.paddingExtraLarge,
                               ),
-                              child: GetBuilder<PhonePayVerificationController>(
-                                init: PhonePayVerificationController(),
+                              child: GetBuilder<PayVerificationController>(
+                                init: PayVerificationController(),
                                 builder: (controller) {
                                   return Form(
                                     child: Column(
@@ -228,7 +228,7 @@ class _PhonePayVerificationScreenState extends State<PhonePayVerificationScreen>
                                                                   ),
                                                                 ),
                                                                 Text(
-                                                                  r'Услуги'.tr,
+                                                                  r'services2'.tr,
                                                                   style: TextStyle(
                                                                     fontSize: 14.sp,
                                                                     color: AppColors.blackText,

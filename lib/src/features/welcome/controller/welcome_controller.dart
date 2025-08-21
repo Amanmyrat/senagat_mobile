@@ -19,7 +19,6 @@ class WelcomeController extends GetxController with StateControlMixin {
       }
     } catch (e) {
       status = Status.error;
-      print('Error updating language: $e');
     }
   }
 
@@ -29,7 +28,6 @@ class WelcomeController extends GetxController with StateControlMixin {
       Get.toNamed(RegisterScreen.route, arguments: {'login': false});
     } catch (e) {
       status = Status.error;
-      print('Error navigating to create account: $e');
     } finally {
       status = Status.completed;
     }
@@ -41,7 +39,6 @@ class WelcomeController extends GetxController with StateControlMixin {
       Get.toNamed(RegisterScreen.route, arguments: {'login': true});
     } catch (e) {
       status = Status.error;
-      print('Error navigating to login: $e');
     } finally {
       status = Status.completed;
     }

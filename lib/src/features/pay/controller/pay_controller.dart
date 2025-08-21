@@ -3,10 +3,9 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
-import 'package:senagat_mobile/src/features/home/controller/home_controller.dart';
-import 'package:senagat_mobile/src/features/phone_pay_verification/presentation/pay_verification_screen.dart';
 import 'package:senagat_mobile/src/features/service_settings/controller/service_settings_controller.dart';
 
+import '../../pay_verification/presentation/pay_verification_screen.dart';
 import '../model/pay_model.dart';
 
 class PayController extends GetxController with StateControlMixin {
@@ -56,7 +55,7 @@ class PayController extends GetxController with StateControlMixin {
       status = Status.completed;
 
       update();
-      Get.offNamed(PhonePayVerificationScreen.route,);
+      Get.offNamed(PayVerificationScreen.route,);
   }
 
   Future<void> saveCard() async {

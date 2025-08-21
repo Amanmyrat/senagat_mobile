@@ -46,7 +46,7 @@ class _RegisterConfirmationScreenState extends State<RegisterConfirmationScreen>
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            controller.login ? r'step_1_of_2'.tr :r'step_1_of_2'.tr,
+                            controller.login ? r'step_1_of_2'.tr :r'step_2_of_3'.tr,
                             style: TextStyle(
                               fontSize: 14.sp,
                               color: AppColors.blackText,
