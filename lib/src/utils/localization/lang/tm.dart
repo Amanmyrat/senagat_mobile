@@ -10,6 +10,8 @@ const Map<String, String> tmTm = {
   r'send_sms': r'Size tassyklama kody bilen SMS ibereris.',
   r'send_code': r'Kody iber',
   r'step_2_of_3': r'2-nji ädim (3-dan)',
+  r'step_1_of_2': r'1-nji ädim (2-dan)',
+  r'step_2_of_2': r'2-nji ädim (2-dan)',
   r'OTP': r'Kod',
   r'code_was_sent_to': r'Kod şu belga iberildi: ',
   r'incorrectly_entered_OTP': r'Kod nädogry girizildi',

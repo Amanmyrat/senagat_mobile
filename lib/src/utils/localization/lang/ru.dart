@@ -10,6 +10,8 @@ const Map<String, String> ruRu = {
   r'send_sms': r'Мы отправим вам SMS с кодом подтверждения.',
   r'send_code': r'Отправить код',
   r'step_2_of_3': r'Шаг 2 из 3',
+  r'step_1_of_2': r'Шаг 1 из 2',
+  r'step_2_of_2': r'Шаг 2 из 2',
   r'OTP': r'Код',
   r'code_was_sent_to': r'Код был отправлен на ',
   r'incorrectly_entered_OTP': r'Неверно введённый код',
