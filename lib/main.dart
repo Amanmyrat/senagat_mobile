@@ -6,9 +6,14 @@ import 'package:senagat_mobile/src/core/local/key_value_storage_base.dart';
 import 'package:senagat_mobile/src/features/add_card/model/card_model.dart';
 import 'package:senagat_mobile/src/features/pay/model/pay_model.dart';
 import 'package:senagat_mobile/src/utils/path_provider_service.dart';
+import 'package:yandex_maps_mapkit_lite/init.dart' as yandexMapInit;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await yandexMapInit.initMapkit(
+      apiKey: '69312aa7-182d-404c-8bf2-41afab7e5ad1'
+  );
 
   await GetStorage.init();
   await PathProviderService.init();

@@ -344,6 +344,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.4.4"
+  flutter_plugin_android_lifecycle:
+    dependency: transitive
+    description:
+      name: flutter_plugin_android_lifecycle
+      sha256: "6382ce712ff69b0f719640ce957559dde459e55ecd433c767e06d139ddf16cab"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.29"
   flutter_screenutil:
     dependency: "direct main"
     description:
@@ -1263,6 +1271,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.3"
+  yandex_maps_mapkit_lite:
+    dependency: "direct main"
+    description:
+      name: yandex_maps_mapkit_lite
+      sha256: "23ed0a9a9c788fed128b1786310c8bd115f9c354a654935dec954503728f9e61"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.19.0-beta"
 sdks:
   dart: ">=3.8.1 <4.0.0"
   flutter: ">=3.29.0"

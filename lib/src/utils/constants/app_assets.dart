@@ -52,4 +52,9 @@ class AppAssets {
   static const enIcon = 'assets/icons/US.png';
   static const tmIcon = 'assets/icons/TM.png';
   static const euIcon = 'assets/icons/EU.png';
+
+  static const mapPinBlackIcon = 'assets/icons/RU.png';
+  static const mapPinGreenIcon = 'assets/icons/TM.png';
+  // static const mapPinBlackIcon = 'assets/icons/pin_black.svg';
+  // static const mapPinGreenIcon = 'assets/icons/pin_green.svg';
 }

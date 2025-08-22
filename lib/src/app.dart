@@ -27,6 +27,7 @@ import 'package:senagat_mobile/src/utils/theme/controller/theme_controller.dart'
 import 'features/add_card/controller/add_card_controller.dart';
 import 'features/dashboard/controller/dashboard_controller.dart';
 import 'features/dashboard/presentation/dashboard_screen.dart';
+import 'features/map_search/presentation/map_search_screen.dart';
 import 'features/pay_verification/presentation/pay_verification_screen.dart';
 
 class SenagatApp extends StatefulWidget {
@@ -78,7 +79,7 @@ class _SenagatAppState extends State<SenagatApp> {
             // darkTheme: AppTheme.darkTheme,
             debugShowCheckedModeBanner: false,
             themeMode: _initThemeMode(),
-            initialRoute: SplashScreen.route,
+            initialRoute: DashboardScreen.route,
             initialBinding: DashboardBinding(),
             defaultTransition: Transition.cupertino,
             getPages: [
@@ -141,6 +142,10 @@ class _SenagatAppState extends State<SenagatApp> {
               GetPage(
                 name: NetAndTvScreen.route,
                 page: () => const NetAndTvScreen(),
+              ),
+              GetPage(
+                name: MapSearchScreen.route,
+                page: () => const MapSearchScreen(),
               ),
             ],
           ),

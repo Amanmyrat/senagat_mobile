@@ -48,5 +48,8 @@
 	<key>NSCameraUsageDescription</key>
     <string>We need camera access to scan QR codes</string>
 
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Need location to show nearby ATMs and offices.</string>
+
 </dict>
 </plist>
