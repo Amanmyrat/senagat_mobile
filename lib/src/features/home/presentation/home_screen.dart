@@ -78,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     AppDimensions.borderRadiusMedium,
                                   ),
                                   borderSide: BorderSide(
-                                    color: AppColors.green,
+                                    color: AppColors.white,
                                     width: 1.w,
                                   ),
                                 ),

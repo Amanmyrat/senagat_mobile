@@ -45,6 +45,10 @@ dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
 
     implementation("com.google.android.gms:play-services-location:21.1.0")
+    implementation("com.google.android.play:integrity:1.4.0")
+
+    implementation("com.yandex.mapkit.styling:automotivenavigation:4.19.0")
+    implementation("com.yandex.mapkit.styling:roadevents:4.19.0")
 }
 
 flutter {
