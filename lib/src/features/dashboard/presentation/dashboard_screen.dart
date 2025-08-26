@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:senagat_mobile/src/features/blank/presentation/blank_screen.dart';
 import 'package:senagat_mobile/src/features/home/presentation/home_screen.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
+import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
 import 'package:senagat_mobile/src/widgets/bottom_nav_bar.dart';
 import '../../../utils/constants/app_assets.dart';
 import '../controller/dashboard_controller.dart';
@@ -53,7 +54,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         ),
         bottomNavigationBar: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: EdgeInsets.all(AppDimensions.paddingExtraLarge),
           child: BottomNavBar(
             onTap: (index) {
               _controller.updateCurrentIndex(index);

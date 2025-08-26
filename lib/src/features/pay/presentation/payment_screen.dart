@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:senagat_mobile/src/features/pay/controller/pay_controller.dart';
+import 'package:senagat_mobile/src/features/pay/controller/payment_controller.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
 import '../../../core/states/stateful_data.dart';
@@ -10,16 +10,16 @@ import '../../../utils/theme/constants/app_dimensions.dart';
 import '../../../utils/theme/constants/app_fonts.dart';
 import '../../../widgets/elevated_button_with_state.dart';
 
-class PayScreen extends StatefulWidget {
+class PaymentScreen extends StatefulWidget {
   static const route = r'/phone/pay';
 
-  const PayScreen({super.key});
+  const PaymentScreen({super.key});
 
   @override
-  State<PayScreen> createState() => _PayScreenState();
+  State<PaymentScreen> createState() => _PaymentScreenState();
 }
 
-class _PayScreenState extends State<PayScreen> {
+class _PaymentScreenState extends State<PaymentScreen> {
 
   final _key = GlobalKey<FormState>();
 
@@ -27,8 +27,8 @@ class _PayScreenState extends State<PayScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: GetBuilder<PayController>(
-          init: PayController(_key),
+        child: GetBuilder<PaymentController>(
+          init: PaymentController(_key),
           builder: (controller) {
             return Column(
               children: [
@@ -59,53 +59,29 @@ class _PayScreenState extends State<PayScreen> {
                             ),
                             SizedBox(height: 16.h,),
                             Container(
-                              padding: EdgeInsets.all(
-                                AppDimensions.paddingExtraLarge,
-                              ),
+                              padding: EdgeInsets.all( AppDimensions.paddingExtraLarge, ),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10.r),
                                 image: DecorationImage(
                                   image: AssetImage(AppAssets.cardImage),
-                                  fit: BoxFit.cover,
+                                  fit: BoxFit.cover, ), ),
+                              child: Column( children: [
+                                Align( alignment: Alignment.topLeft,
+                                  child: Text( 'Senagat Bank', style:
+                                  TextStyle( color: AppColors.white, fontSize: 14, ),
+                                  ),
                                 ),
-                              ),
-                              child: Column(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Text(
-                                      'Senagat Bank',
-                                      style: TextStyle(
-                                        color: AppColors.white,
-                                        fontSize: 14,
-                                      ),
-                                    ),
+                                SizedBox(height: AppDimensions.paddingExtraLarge.h,),
+                                Row( children: [
+                                  Text( 'xxxx', style: TextStyle( fontSize: 24.sp, color: AppColors.white, ),
                                   ),
-                                  SizedBox(height: AppDimensions.paddingExtraLarge.h,),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        'xxxx',
-                                        style: TextStyle(
-                                          fontSize: 24.sp,
-                                          color: AppColors.white,
-                                        ),
-                                      ),
-                                      SizedBox(width: AppDimensions.paddingExtraLarge.h,),
-                                      Text(
-                                        '0689',
-                                        style: TextStyle(
-                                          fontSize: 24.sp,
-                                          color: AppColors.white,
-                                        ),
-                                      ),
-                                      SizedBox(width: AppDimensions.paddingExtraLarge.h,),
-                                    ],
+                                  SizedBox(width: AppDimensions.paddingExtraLarge.h,),
+                                  Text( '0689', style: TextStyle( fontSize: 24.sp, color: AppColors.white, ),
                                   ),
-                                ],
-                              ),
+                                  SizedBox(width: AppDimensions.paddingExtraLarge.h,),
+                                ],),
+                              ],),
                             ),
-
                             SizedBox(height: AppDimensions.padding40.h,),
 
                             Text(r'phone_number'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
@@ -176,7 +152,7 @@ class _PayScreenState extends State<PayScreen> {
                                 children: [
                                   SizedBox(height: 22.h,),
 
-                                  Text(r'Имя'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+                                  Text(r'name'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
                                   SizedBox(height: AppDimensions.paddingMedium.h,),
                                   TextFormField(
                                     keyboardType: TextInputType.name,

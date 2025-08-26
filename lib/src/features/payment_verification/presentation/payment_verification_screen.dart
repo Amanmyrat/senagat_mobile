@@ -11,25 +11,25 @@ import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
 import '../../../widgets/elevated_button_with_state.dart';
-import '../controller/pay_verification_controller.dart';
+import '../controller/payment_verification_controller.dart';
 
-class PayVerificationScreen extends StatefulWidget {
+class PaymentVerificationScreen extends StatefulWidget {
   static const route = r'/pay/verification';
 
-  const PayVerificationScreen({super.key});
+  const PaymentVerificationScreen({super.key});
 
   @override
-  State<PayVerificationScreen> createState() => _PayVerificationScreenState();
+  State<PaymentVerificationScreen> createState() => _PaymentVerificationScreenState();
 }
 
-class _PayVerificationScreenState extends State<PayVerificationScreen> {
+class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: GetBuilder<PayVerificationController>(
-          init: PayVerificationController(),
+        child: GetBuilder<PaymentVerificationController>(
+          init: PaymentVerificationController(),
           builder: (controller) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,8 +46,8 @@ class _PayVerificationScreenState extends State<PayVerificationScreen> {
                               padding: const EdgeInsets.symmetric(
                                 horizontal: AppDimensions.paddingExtraLarge,
                               ),
-                              child: GetBuilder<PayVerificationController>(
-                                init: PayVerificationController(),
+                              child: GetBuilder<PaymentVerificationController>(
+                                init: PaymentVerificationController(),
                                 builder: (controller) {
                                   return Form(
                                     child: Column(
@@ -79,7 +79,7 @@ class _PayVerificationScreenState extends State<PayVerificationScreen> {
                                                       child: Column(
                                                         crossAxisAlignment: CrossAxisAlignment.center,
                                                         children: [
-                                                          if(controller.payBox.get(controller.payKey)!.serviceIcon.isNotEmpty)
+                                                          if(controller.payBox.get(controller.payKey)?.serviceIcon != null)
                                                             Container(
                                                               padding:EdgeInsets.all(AppDimensions.paddingMedium.w) ,
                                                               decoration: BoxDecoration(
@@ -159,7 +159,8 @@ class _PayVerificationScreenState extends State<PayVerificationScreen> {
                                                             ),
                                                           ),
                                                           Divider(color: AppColors.dividerColor, height: 1.h,),
-                                                          controller.payBox.get(controller.payKey)!.serviceIcon.isEmpty ? Column(
+                                                          controller.payBox.get(controller.payKey)?.serviceIcon == null ?
+                                                          Column(
                                                             children: [
                                                               Padding(
                                                                 padding: EdgeInsets.all(AppDimensions.paddingMedium.w),
@@ -245,7 +246,7 @@ class _PayVerificationScreenState extends State<PayVerificationScreen> {
                                                 ),
 
                                                 Positioned(
-                                                  top: controller.payBox.get(controller.payKey)!.serviceIcon.isEmpty ? 125 : 170,
+                                                  top: controller.payBox.get(controller.payKey)?.serviceIcon == null ? 125 : 170,
                                                   left: -10,
                                                   child: Container(
                                                     width: 30.w,
@@ -257,7 +258,7 @@ class _PayVerificationScreenState extends State<PayVerificationScreen> {
                                                   ),
                                                 ),
                                                 Positioned(
-                                                  top: controller.payBox.get(controller.payKey)!.serviceIcon.isEmpty ? 125 : 170,
+                                                  top: controller.payBox.get(controller.payKey)?.serviceIcon == null ? 125 : 170,
                                                   right: -10,
                                                   child: Container(
                                                     width: 30.w,
@@ -297,8 +298,8 @@ class _PayVerificationScreenState extends State<PayVerificationScreen> {
                       ),
                       if(controller.check == true)
                         CheckWidget(isLoading: controller.status == Status.loading,
-                          isTitle: false, route: controller.payBox.get(controller.payKey)!.serviceIcon.isEmpty ? FoundationScreen.route : DashboardScreen.route,
-                          buttonTitle:controller.payBox.get(controller.payKey)!.serviceIcon.isEmpty ? r'fund_page'.tr : r'home_page'.tr,
+                          isTitle: false, route: controller.payBox.get(controller.payKey)?.serviceIcon == null ? FoundationScreen.route : DashboardScreen.route,
+                          buttonTitle:controller.payBox.get(controller.payKey)?.serviceIcon == null ? r'fund_page'.tr : r'home_page'.tr,
                         ),
                     ],
                   ),

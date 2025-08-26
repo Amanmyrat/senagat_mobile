@@ -63,13 +63,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   ),
                 ),
               ),
-              // Main content
               SafeArea(
                 child: Padding(
                   padding:  EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
                   child: Column(
                     children: [
-                      // Top right dropdown for language selection
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [

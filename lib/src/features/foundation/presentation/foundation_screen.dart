@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:senagat_mobile/src/features/pay/presentation/pay_screen.dart';
+import 'package:senagat_mobile/src/features/pay/presentation/payment_screen.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
 import '../../../utils/constants/app_assets.dart';
 import '../../../utils/theme/constants/app_colors.dart';
@@ -244,7 +244,7 @@ class _FoundationScreenState extends State<FoundationScreen> {
                           isLoading: false,
                           isError: false,
                           onPressed: (){
-                            Get.offNamed(PayScreen.route, arguments: {
+                            Get.offNamed(PaymentScreen.route, arguments: {
                               'selectedServiceTitle': r'charitable_foundation'.tr,
                             });
                           },

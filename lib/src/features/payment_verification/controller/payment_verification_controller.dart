@@ -4,7 +4,7 @@ import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/pay/model/pay_model.dart';
 import '../../../core/states/stateful_data.dart';
 
-class PayVerificationController extends GetxController with StateControlMixin {
+class PaymentVerificationController extends GetxController with StateControlMixin {
 
   bool check = false;
 
