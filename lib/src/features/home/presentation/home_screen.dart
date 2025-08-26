@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:senagat_mobile/src/features/%20Inquiries/presentation/select_tip_inquiries.dart';
 import 'package:senagat_mobile/src/features/add_card/presentation/add_card_screen.dart';
-import 'package:senagat_mobile/src/features/foundation/presentation/foundation_screen.dart';
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
 import 'package:senagat_mobile/src/features/service_settings/presentation/service_settings_screen.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
-
-import '../../qr_code/presentation/qr_code_screen.dart';
 import '../controller/home_controller.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -25,19 +23,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-  BoxDecoration boxDecoration = BoxDecoration(
-    borderRadius: BorderRadius.circular(
-      AppDimensions.borderRadiusMedium.r,
-    ),
-    border: Border.all(color: AppColors.dividerColor, width: 1.w, style: BorderStyle.solid),
-    boxShadow: [
-      BoxShadow(
-        color: AppColors.dividerColor,
-        blurRadius: 4.r,
-      ),
-    ],
-    color: AppColors.white,
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -109,19 +94,20 @@ class _HomeScreenState extends State<HomeScreen> {
                           SizedBox(width: 4.w),
                           GestureDetector(
                             onTap: (){
-                              Get.toNamed(QrCodeScreen.route);
+                             controller.onQrScanTap();
                             },
                             child: Container(
-                              padding: EdgeInsets.all(16.w),
+                              padding: EdgeInsets.all(20.w),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(
                                   AppDimensions.borderRadiusMedium.r,
                                 ),
-                                color: AppColors.inputFillBackground,
+                                color: controller.lastTap == HomeTapType.qr ? AppColors.green : AppColors.inputFillBackground,
                               ),
                               child: SvgPicture.asset(
                                 AppAssets.qrCodeIcon,
                                 width: 20.w,
+                                color: controller.lastTap == HomeTapType.qr ? AppColors.white : AppColors.black,
                               ),
                             ),
                           ),
@@ -268,12 +254,17 @@ class _HomeScreenState extends State<HomeScreen> {
                           scrollDirection: Axis.horizontal,
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          itemCount: controller.serviceController.selectedServiceTitle.length <= 4
-                              ? controller.serviceController.selectedServiceTitle.length + 1
-                              : controller.serviceController.selectedServiceTitle.length,
+                          itemCount: controller.fastServiceController.selectedServiceTitle.length <= 4
+                              ? controller.fastServiceController.selectedServiceTitle.length + 1
+                              : controller.fastServiceController.selectedServiceTitle.length,
+
                           itemBuilder: (context, index) {
-                            if (controller.serviceController.selectedServiceTitle.length <= 4 &&
-                                index == controller.serviceController.selectedServiceTitle.length) {
+
+                            final isSelected = controller.lastTap == HomeTapType.fastOperation &&
+                                controller.lastFastServiceTapIndex == index;
+
+                            if (controller.fastServiceController.selectedServiceTitle.length <= 4 &&
+                                index == controller.fastServiceController.selectedServiceTitle.length) {
                               return GestureDetector(
                                 onTap: () {
                                   Get.toNamed(ServiceSettingsScreen.route);
@@ -306,7 +297,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                             return GestureDetector(
                               onTap: () {
-                                controller.onServiceTap(index);
+                                controller.onFastServiceTap(index);
                               },
                               child: Container(
                                 width: 90.w,
@@ -317,19 +308,31 @@ class _HomeScreenState extends State<HomeScreen> {
                                 margin: EdgeInsets.only(
                                   right: AppDimensions.marginMedium.w,
                                 ),
-                                decoration: boxDecoration,
+                                decoration:  BoxDecoration(
+                                  borderRadius: BorderRadius.circular(
+                                    AppDimensions.borderRadiusMedium.r,
+                                  ),
+                                  border: Border.all(color: AppColors.dividerColor, width: 1.w, style: BorderStyle.solid),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: AppColors.dividerColor,
+                                      blurRadius: 4.r,
+                                    ),
+                                  ],
+                                  color: isSelected ? AppColors.green : AppColors.white,
+                                ),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                                   children: [
                                     SvgPicture.asset(
-                                      controller.serviceController.selectedServiceIcons[index],
+                                      controller.fastServiceController.selectedServiceIcons[index],
                                       width: 30.w,
-                                      color: AppColors.green,
+                                      color: isSelected ? AppColors.white : AppColors.green,
                                     ),
                                     Text(
-                                      controller.serviceController.selectedServiceTitle[index],
+                                      controller.fastServiceController.selectedServiceTitle[index],
                                       style: TextStyle(
-                                        color: AppColors.blackText,
+                                        color: isSelected ? AppColors.white : AppColors.blackText,
                                         fontSize: 14.sp,
                                         fontFamily: AppFonts.secondaryFont,
                                       ),
@@ -346,7 +349,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       GestureDetector(
                         onTap: (){
-                          Get.toNamed(FoundationScreen.route);
+                          controller.onFoundationTap();
                         },
                         child: Container(
                           padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
@@ -354,25 +357,40 @@ class _HomeScreenState extends State<HomeScreen> {
                               .of(context)
                               .size
                               .width,
-                          decoration: boxDecoration,
+                          decoration:  BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              AppDimensions.borderRadiusMedium.r,
+                            ),
+                            border: Border.all(color: AppColors.dividerColor, width: 1.w, style: BorderStyle.solid),
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppColors.dividerColor,
+                                blurRadius: 4.r,
+                              ),
+                            ],
+                            color: controller.lastTap == HomeTapType.foundation ? AppColors.green : AppColors.white,
+                          ),
                           child: Row(
                             children: [
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      r'charitable_foundation'.tr,
-                                      style: TextStyle(
-                                        color: AppColors.blackText,
-                                        fontSize: 17.sp,
+                                    SizedBox(
+                                      width: 200,
+                                      child: Text(
+                                        r'charitable_foundation'.tr,
+                                        style: TextStyle(
+                                          color:  controller.lastTap == HomeTapType.foundation ? AppColors.white : AppColors.blackText,
+                                          fontSize: 17.sp,
+                                        ),
                                       ),
                                     ),
                                     SizedBox(height: AppDimensions.paddingMedium.w),
                                     Text(
                                       r'donations_of_any_amount'.tr,
                                       style: TextStyle(
-                                        color: AppColors.blackText,
+                                        color: controller.lastTap == HomeTapType.foundation ? AppColors.lightGreen : AppColors.blackText,
                                         fontSize: 14.sp,
                                         fontFamily: AppFonts.secondaryFont,
                                       ),
@@ -383,13 +401,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                         Text(
                                           r'donate'.tr,
                                           style: TextStyle(
-                                            color: AppColors.green,
+                                            color: controller.lastTap == HomeTapType.foundation ? AppColors.white : AppColors.green,
                                             fontSize: 14.sp,
                                           ),
                                         ),
                                         SvgPicture.asset(
                                           AppAssets.arrowRightIcon,
-                                          color: AppColors.green,
+                                          color: controller.lastTap == HomeTapType.foundation ? AppColors.white : AppColors.green,
                                           width: 14.w,
                                         ),
                                       ],
@@ -423,70 +441,96 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     padding: EdgeInsets.symmetric(horizontal: AppDimensions.paddingExtraLarge),
-                    itemCount: 2,
+                    itemCount: controller.serviceTitle.length,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
-                      return Container(
-                        padding: EdgeInsets.all(
-                          AppDimensions.paddingExtraLarge.w,
-                        ),
-                        margin: EdgeInsets.only(
-                            right: AppDimensions.marginMedium),
-                        width: 290.w,
-                        decoration: boxDecoration,
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Stack(
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          r'inquiries'.tr,
-                                          style: TextStyle(
-                                            color: AppColors.blackText,
-                                            fontSize: 14.sp,
-                                          ),
-                                        ),
 
-                                        Row(
+                      final isSelected = controller.lastTap == HomeTapType.service &&
+                          controller.lastServiceTapIndex == index;
+
+                      return GestureDetector(
+                        onTap: (){
+                          controller.onServiceTap(index);
+                        },
+                        child: Container(
+                          margin: EdgeInsets.only(
+                              right: AppDimensions.marginMedium),
+                          width: 290.w,
+                          decoration:  BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              AppDimensions.borderRadiusMedium.r,
+                            ),
+                            border: Border.all(color: AppColors.dividerColor, width: 1.w, style: BorderStyle.solid),
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppColors.dividerColor,
+                                blurRadius: 4.r,
+                              ),
+                            ],
+                            color: isSelected ? AppColors.green : AppColors.white,
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Stack(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.all(
+                                          AppDimensions.paddingExtraLarge.w,
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
-                                            SizedBox(
-                                              child: Text(
-                                                r'get_any_type_of_help'.tr,
-                                                style: TextStyle(
-                                                  color: AppColors.blackText,
-                                                  fontSize: 14.sp,
-                                                  fontFamily: AppFonts.secondaryFont,
-                                                ),
+                                            Text(
+                                              controller.serviceTitle[index],
+                                              style: TextStyle(
+                                                color: isSelected ? AppColors.white : AppColors.blackText,
+                                                fontSize: 14.sp,
                                               ),
                                             ),
 
-                                          ],
-                                        ),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 110.h,
+                                                  child: Text(
+                                                    r'get_any_type_of_help'.tr,
+                                                    style: TextStyle(
+                                                      color: isSelected ? AppColors.white : AppColors.blackText,
+                                                      fontSize: 14.sp,
+                                                      fontFamily: AppFonts.secondaryFont,
+                                                    ),
+                                                  ),
+                                                ),
 
-                                      ],),
-                                    Positioned(
-                                      bottom: 0,
-                                      left: 80,
-                                      child: Image.asset(
-                                          AppAssets.spreadsheet),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.bottomRight,
-                                      child: SvgPicture.asset(
-                                        AppAssets.arrowRightIcon,
-                                        color: AppColors.black,
-                                        width: 14.w,
+                                              ],
+                                            ),
+
+                                          ],),
                                       ),
-                                    ),
-                                  ]),
-                            ),
+                                      Positioned(
+                                        top: 0,
+                                        right: 0,
+                                        child: Image.asset(controller.serviceImage[index], ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(bottom: 20, right: 20),
+                                        child: Align(
+                                          alignment: Alignment.bottomRight,
+                                          child: SvgPicture.asset(
+                                            AppAssets.arrowRightIcon,
+                                            color: isSelected ? AppColors.white : AppColors.black,
+                                            width: 14.w,
+                                          ),
+                                        ),
+                                      ),
+                                    ]),
+                              ),
 
-                          ],
+                            ],
+                          ),
                         ),
                       );
                     },
@@ -507,7 +551,19 @@ class _HomeScreenState extends State<HomeScreen> {
                             .width,
                         height: 200,
                         padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
-                        decoration: boxDecoration,
+                        decoration:  BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                            AppDimensions.borderRadiusMedium.r,
+                          ),
+                          border: Border.all(color: AppColors.dividerColor, width: 1.w, style: BorderStyle.solid),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.dividerColor,
+                              blurRadius: 4.r,
+                            ),
+                          ],
+                          color: AppColors.white,
+                        ),
                         child: Column(
                           children: [
                             Image.asset(AppAssets.sandClock),
@@ -541,7 +597,19 @@ class _HomeScreenState extends State<HomeScreen> {
                               height: 90.h,
                               padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
                               margin: EdgeInsets.symmetric(vertical: 5),
-                              decoration: boxDecoration,
+                              decoration:  BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                  AppDimensions.borderRadiusMedium.r,
+                                ),
+                                border: Border.all(color: AppColors.dividerColor, width: 1.w, style: BorderStyle.solid),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppColors.dividerColor,
+                                    blurRadius: 4.r,
+                                  ),
+                                ],
+                                color: AppColors.white ,
+                              ),
                               child: Row(
                                 children: [
                                   Container(
@@ -598,7 +666,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       Container(
                         padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
-                        decoration: boxDecoration,
+                        decoration:  BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                            AppDimensions.borderRadiusMedium.r,
+                          ),
+                          border: Border.all(color: AppColors.dividerColor, width: 1.w, style: BorderStyle.solid),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.dividerColor,
+                              blurRadius: 4.r,
+                            ),
+                          ],
+                          color:  AppColors.white,
+                        ),
                         child: Column(
                           children: [
                             Row(

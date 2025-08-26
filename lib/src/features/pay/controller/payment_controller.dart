@@ -5,14 +5,15 @@ import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/service_settings/controller/service_settings_controller.dart';
 
-import '../../pay_verification/presentation/pay_verification_screen.dart';
+import '../../payment_verification/presentation/payment_verification_screen.dart';
 import '../model/pay_model.dart';
 
-class PayController extends GetxController with StateControlMixin {
+class PaymentController extends GetxController with StateControlMixin {
   final GlobalKey<FormState> key;
   bool continueEnabled = false;
+  bool check = false;
 
-  PayController(this.key);
+  PaymentController(this.key);
 
   late final TextEditingController phoneController;
   late final TextEditingController sumController;
@@ -55,7 +56,19 @@ class PayController extends GetxController with StateControlMixin {
       status = Status.completed;
 
       update();
-      Get.offNamed(PayVerificationScreen.route,);
+      Get.offNamed(PaymentVerificationScreen.route,);
+  }
+
+  void startBankVerification() {
+    check = true;
+    status = Status.loading;
+    update();
+    Future.delayed(Duration(seconds: 3),(){
+      status = Status.completed;
+      update();
+
+    });
+
   }
 
   Future<void> saveCard() async {

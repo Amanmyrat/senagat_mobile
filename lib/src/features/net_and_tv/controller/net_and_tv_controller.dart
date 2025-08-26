@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
-import 'package:senagat_mobile/src/features/pay/presentation/pay_screen.dart';
+import 'package:senagat_mobile/src/features/pay/presentation/payment_screen.dart';
 import '../../../utils/constants/app_assets.dart';
 
 class NetAndTvController extends GetxController with StateControlMixin {
@@ -25,7 +25,7 @@ class NetAndTvController extends GetxController with StateControlMixin {
   ];
 
   void onServiceTap(int index){
-    Get.toNamed(PayScreen.route, arguments: {
+    Get.toNamed(PaymentScreen.route, arguments: {
       'selectedServiceTitle': serviceTitle[index],
       'selectedServiceIcon': serviceIcons[index]
     });

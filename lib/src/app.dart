@@ -11,7 +11,7 @@ import 'package:senagat_mobile/src/features/foundation/presentation/foundation_s
 import 'package:senagat_mobile/src/features/home/controller/home_controller.dart';
 import 'package:senagat_mobile/src/features/net_and_tv/presentation/net_and_tv_screen.dart';
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
-import 'package:senagat_mobile/src/features/pay/presentation/pay_screen.dart';
+import 'package:senagat_mobile/src/features/pay/presentation/payment_screen.dart';
 import 'package:senagat_mobile/src/features/qr_code/presentation/qr_code_screen.dart';
 import 'package:senagat_mobile/src/features/register/presentation/register_screen.dart';
 import 'package:senagat_mobile/src/features/register_confirmation/presentation/register_confirmation.dart';
@@ -24,10 +24,11 @@ import 'package:senagat_mobile/src/utils/localization/controller/language_contro
 import 'package:senagat_mobile/src/utils/localization/localization_service.dart';
 import 'package:senagat_mobile/src/utils/theme/app_theme.dart';
 import 'package:senagat_mobile/src/utils/theme/controller/theme_controller.dart';
+import 'features/ Inquiries/presentation/inquiries_screen.dart';
 import 'features/add_card/controller/add_card_controller.dart';
 import 'features/dashboard/controller/dashboard_controller.dart';
 import 'features/dashboard/presentation/dashboard_screen.dart';
-import 'features/pay_verification/presentation/pay_verification_screen.dart';
+import 'features/payment_verification/presentation/payment_verification_screen.dart';
 
 class SenagatApp extends StatefulWidget {
   const SenagatApp({super.key});
@@ -78,7 +79,7 @@ class _SenagatAppState extends State<SenagatApp> {
             // darkTheme: AppTheme.darkTheme,
             debugShowCheckedModeBanner: false,
             themeMode: _initThemeMode(),
-            initialRoute: SplashScreen.route,
+            initialRoute: DashboardScreen.route,
             initialBinding: DashboardBinding(),
             defaultTransition: Transition.cupertino,
             getPages: [
@@ -119,12 +120,12 @@ class _SenagatAppState extends State<SenagatApp> {
                 page: () => const AddCardScreen(),
               ),
               GetPage(
-                name: PayScreen.route,
-                page: () => const PayScreen(),
+                name: PaymentScreen.route,
+                page: () => const PaymentScreen(),
               ),
               GetPage(
-                name: PayVerificationScreen.route,
-                page: () => const PayVerificationScreen(),
+                name: PaymentVerificationScreen.route,
+                page: () => const PaymentVerificationScreen(),
               ),
               GetPage(
                 name: ServiceSettingsScreen.route,
@@ -141,6 +142,10 @@ class _SenagatAppState extends State<SenagatApp> {
               GetPage(
                 name: NetAndTvScreen.route,
                 page: () => const NetAndTvScreen(),
+              ),
+              GetPage(
+                name: InquiriesScreen.route,
+                page: () => const InquiriesScreen(),
               ),
             ],
           ),
