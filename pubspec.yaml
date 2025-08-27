@@ -44,12 +44,12 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   mobile_scanner: ^6.0.2
-
+  flutter_map: ^7.0.2
+  latlong2: ^0.9.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
 
   flutter_lints: ^5.0.0
   freezed: ^2.5.7
@@ -63,8 +63,6 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
-
-
 
   fonts:
     - family: Kinetika

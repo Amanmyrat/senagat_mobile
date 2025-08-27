@@ -4,6 +4,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/features/%20Inquiries/presentation/select_tip_inquiries.dart';
 import 'package:senagat_mobile/src/features/add_card/presentation/add_card_screen.dart';
+import 'package:senagat_mobile/src/features/foundation/presentation/foundation_screen.dart';
+import 'package:senagat_mobile/src/features/map_search/presentation/map_search_screen.dart';
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
 import 'package:senagat_mobile/src/features/service_settings/presentation/service_settings_screen.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
@@ -23,6 +25,19 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
+  BoxDecoration boxDecoration = BoxDecoration(
+    borderRadius: BorderRadius.circular(
+      AppDimensions.borderRadiusMedium.r,
+    ),
+    border: Border.all(color: AppColors.dividerColor, width: 1.w, style: BorderStyle.solid),
+    boxShadow: [
+      BoxShadow(
+        color: AppColors.dividerColor,
+        blurRadius: 4.r,
+      ),
+    ],
+    color: AppColors.white,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +59,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           Expanded(
                             child: TextFormField(
+                              onTap: () {
+                                Get.toNamed(MapSearchScreen.route);
+                              },
+                              readOnly: true,
                               keyboardType: TextInputType.text,
                               maxLength: 8,
                               style: TextStyle(
@@ -58,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     AppDimensions.borderRadiusMedium,
                                   ),
                                   borderSide: BorderSide(
-                                    color: AppColors.green,
+                                    color: AppColors.white,
                                     width: 1.w,
                                   ),
                                 ),
@@ -97,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                              controller.onQrScanTap();
                             },
                             child: Container(
-                              padding: EdgeInsets.all(20.w),
+                              padding: EdgeInsets.all(16.w),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(
                                   AppDimensions.borderRadiusMedium.r,

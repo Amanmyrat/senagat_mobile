@@ -42,6 +42,8 @@ const Map<String, String> tmTm = {
   r'fund_balance': r'Gaznanyň balansi',
   r'fund_text': r'Çagalyk rak keselini bejermek bolýar. Biz Türkmenistanda her bir çaga zerur bejergini alyp bilsin diýip işleýäris.',
   r'find_an_ATM': r'Bankomat tap',
+  r'atm': r'Bankomatlar',
+  r'branch': r'Şahamçalar',
   r'add_a_card': r'Karta goş',
   r'tune': r'Sazla',
   r'fast_operations': r'Çalt amallar',

@@ -59,7 +59,6 @@ class _AuthSuccessScreenState extends State<AuthSuccessScreen> {
                             ),
                     ),
 
-
                   SizedBox(height: AppDimensions.paddingMedium.h),
 
                   Text(
