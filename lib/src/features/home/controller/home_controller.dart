@@ -5,6 +5,7 @@ import 'package:senagat_mobile/src/features/%20Inquiries/presentation/inquiries_
 import 'package:senagat_mobile/src/features/add_card/controller/add_card_controller.dart';
 import 'package:senagat_mobile/src/features/add_card/model/card_model.dart';
 import 'package:senagat_mobile/src/features/net_and_tv/presentation/net_and_tv_screen.dart';
+import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/payment_screen.dart';
 import '../../ Inquiries/presentation/select_tip_inquiries.dart';
 import '../../../utils/constants/app_assets.dart';
@@ -13,7 +14,7 @@ import '../../pay/model/pay_model.dart';
 import '../../qr_code/presentation/qr_code_screen.dart';
 import '../../service_settings/controller/service_settings_controller.dart';
 
-enum HomeTapType { none, qr, foundation, service, fastOperation }
+enum HomeTapType { none, qr, foundation, service, fastOperation, notification }
 
 class HomeController extends GetxController with StateControlMixin {
   HomeTapType lastTap = HomeTapType.none;
@@ -58,6 +59,11 @@ class HomeController extends GetxController with StateControlMixin {
     update();
     Get.toNamed(QrCodeScreen.route);
   }
+  void onNotificationScanTap() {
+    lastTap = HomeTapType.notification;
+    update();
+    Get.toNamed(NotificationsScreen.route);
+  }
 
   void onFoundationTap() {
     lastTap = HomeTapType.foundation;
@@ -73,7 +79,7 @@ class HomeController extends GetxController with StateControlMixin {
   }
 
   void onFastServiceTap(int index) {
-    lastTap = HomeTapType.service;
+    lastTap = HomeTapType.fastOperation;
     lastFastServiceTapIndex = index;
     update();
 

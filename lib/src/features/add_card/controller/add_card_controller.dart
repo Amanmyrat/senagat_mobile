@@ -21,7 +21,7 @@ class AddCardController extends GetxController with StateControlMixin {
   int selectedDesign = 0;
 
   List<String> cardDesigns = [
-      AppAssets.senagatIcon,
+      AppAssets.cardImage,
       AppAssets.cardImage,
       AppAssets.cardImage,
       AppAssets.cardImage,

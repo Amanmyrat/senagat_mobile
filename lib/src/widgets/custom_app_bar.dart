@@ -21,34 +21,28 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
 class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        if (widget.showBack) {
-          Navigator.pop(context);
-        }
-      },
-      splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
-      child: Padding(
-        padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
-        child: Row(
-          mainAxisAlignment: widget.actionWidget == null
-              ? MainAxisAlignment.start
-              : MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            if (widget.showBack) ...[
-              // Padding(
-              //   padding: const EdgeInsets.only(
-              //       right: AppDimensions.paddingSmall,
-              //       left: AppDimensions.paddingSmall),
-              //   child: SvgPicture.asset(
-              //     color: AppColors.white,
-              //     AppAssets.arrowLeftIcon,
-              //     height: 20.w,
-              //   ),
-              // ),
-            ],
-            Container(
+    return Padding(
+      padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
+      child: Row(
+        mainAxisAlignment: widget.actionWidget == null
+            ? MainAxisAlignment.start
+            : MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          if (widget.showBack) ...[
+            // Padding(
+            //   padding: const EdgeInsets.only(
+            //       right: AppDimensions.paddingSmall,
+            //       left: AppDimensions.paddingSmall),
+            //   child: SvgPicture.asset(
+            //     color: AppColors.white,
+            //     AppAssets.arrowLeftIcon,
+            //     height: 20.w,
+            //   ),
+            // ),
+          ],
+          GestureDetector(
+            onTap: () => Navigator.pop(context),
+            child: Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.r),
@@ -61,10 +55,10 @@ class _CustomAppBarState extends State<CustomAppBar> {
               ),
               child: SvgPicture.asset(AppAssets.arrowLeftIcon, width: 20.w),
             ),
-
-            if (widget.actionWidget != null) ...[widget.actionWidget!],
-          ],
-        ),
+          ),
+    
+          if (widget.actionWidget != null) ...[widget.actionWidget!],
+        ],
       ),
     );
   }

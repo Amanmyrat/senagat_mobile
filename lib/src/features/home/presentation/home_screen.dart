@@ -104,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                 counter: const SizedBox(),
                                 contentPadding: EdgeInsets.symmetric(
-                                  vertical: AppDimensions.paddingExtraLarge.h,
+                                  vertical: 16.h,
                                   horizontal: AppDimensions.paddingLarge.w,
                                 ),
                               ),
@@ -133,19 +133,20 @@ class _HomeScreenState extends State<HomeScreen> {
                           SizedBox(width: 4.w),
                           GestureDetector(
                             onTap: () {
-                              Get.toNamed(NotificationsScreen.route);
+                              controller.onNotificationScanTap();
                             },
                             child: Container(
-                              padding: EdgeInsets.all(16),
+                              padding: EdgeInsets.all(16.w),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(
                                   AppDimensions.borderRadiusMedium.r,
                                 ),
-                                color: AppColors.inputFillBackground,
+                                color: controller.lastTap == HomeTapType.notification ? AppColors.green : AppColors.inputFillBackground,
                               ),
                               child: SvgPicture.asset(
                                 AppAssets.bellSimpleIcon,
                                 width: 20.w,
+                                color: controller.lastTap == HomeTapType.notification ? AppColors.white : AppColors.black,
                               ),
                             ),
                           ),

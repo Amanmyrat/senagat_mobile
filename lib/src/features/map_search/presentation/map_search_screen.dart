@@ -217,7 +217,7 @@ class _MapSearchScreenState extends State<MapSearchScreen> {
   }) {
     // Selected = black background, Unselected = green background
     Color backgroundColor = selected ? const Color(0xFF2D2D2D) : AppColors.green;
-    Color textColor = Colors.white; // Always white text
+    Color textColor = AppColors.white; // Always white text
 
     return GestureDetector(
       onTap: onTap,
