@@ -23,7 +23,7 @@ const Map<String, String> ruRu = {
   r'create_password': r'Создайте надёжный пароль',
   r'password': r'Пароль',
   r'confirm': r'Подтвердить',
-  r'check_bank': r'Проверьте ту сторону банка',
+  r'check_bank': r'Проверька со сторону банка',
 
   r'home': r'Главная',
   r'catalog': r'Каталог',
