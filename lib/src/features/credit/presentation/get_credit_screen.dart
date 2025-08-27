@@ -1,10 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
+import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/constants/app_assets.dart';
@@ -21,6 +20,7 @@ class GetCreditScreen extends StatefulWidget {
 }
 
 class _GetCreditScreenState extends State<GetCreditScreen> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,8 +118,9 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                           style: TextStyle(
                                             fontSize: 14.sp,
                                             color: AppColors.blackText,
-                                          ),),
-                                        SizedBox(height: AppDimensions.paddingMedium,),
+                                          ),
+                                        ),
+                                        SizedBox(height: AppDimensions.paddingMedium.h,),
                                         TextField(
                                           controller: controller.sumController,
                                           textAlign: TextAlign.center,
@@ -158,13 +159,12 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                               elevation: 0,
                                             ),
                                             overlayShape: RoundSliderOverlayShape(
-                                              overlayRadius: 20,
+                                              overlayRadius: 0,
                                             ),
-                                            thumbSelector: (textDirection, values, tapValue, thumbSize, trackSize, dx) => Thumb.start,
                                             disabledThumbColor: AppColors.white,
                                             activeTrackColor: AppColors.green,
                                             inactiveTrackColor: Colors.green.shade100,
-                                            trackHeight: 3,
+                                            trackHeight: 2,
                                             valueIndicatorStrokeColor: AppColors.green,
                                             valueIndicatorColor: AppColors.green,
                                           ),
@@ -178,16 +178,149 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                             },
                                           ),
                                         ),
-
-                                        Expanded(
-                                          child: TabBarView(
-                                            controller: controller.tabBarController,
-                                            children: [
-                                            Tab(text: 'a',),
-                                            Tab(text: 'a',),
-                                            Tab(text: 'a',),
-                                          ],),
-                                        )
+                                        SizedBox(height: AppDimensions.paddingExtraLarge.h,),
+                                        Text(r'term'.tr,
+                                          style: TextStyle(
+                                            fontSize: 14.sp,
+                                            color: AppColors.blackText,
+                                          ),
+                                        ),
+                                        SizedBox(height: AppDimensions.paddingMedium.h,),
+                                        DefaultTabController(
+                                          length: 3,
+                                          child: Container(
+                                            height: 42,
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(
+                                                  AppDimensions.borderRadiusMedium.r,
+                                                ),
+                                              color: AppColors.lightGreen,
+                                            ),
+                                            child: TabBar(
+                                              dividerHeight: 0,
+                                              labelColor: AppColors.white,
+                                              unselectedLabelColor: AppColors.white,
+                                              labelStyle: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.primaryFont,),
+                                              indicatorSize: TabBarIndicatorSize.tab,
+                                              indicator: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(
+                                                  AppDimensions.borderRadiusMedium.r,
+                                                ),
+                                                color: AppColors.blackText
+                                              ),
+                                              tabs: [
+                                              Tab(text: '1 год',),
+                                              Tab(text: '2 года',),
+                                              Tab(text: '3 года',),
+                                            ],),
+                                          ),
+                                        ),
+                                        SizedBox(height: AppDimensions.paddingExtraLarge.h,),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            SizedBox(
+                                              width: 70.w,
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(r'Ставка'.tr,
+                                                    style: TextStyle(
+                                                      fontSize: 14.sp,
+                                                      color: AppColors.blackText,
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: AppDimensions.paddingMedium,),
+                                                  TextField(
+                                                    keyboardType: TextInputType.phone,
+                                                    maxLength: 5,
+                                                    style: TextStyle(
+                                                      fontSize: 14.sp,
+                                                      fontFamily: AppFonts.primaryFont,
+                                                    ),
+                                                    decoration: InputDecoration(
+                                                      hintText: r'Ставка'.tr,
+                                                      border: OutlineInputBorder(),
+                                                      focusedBorder: OutlineInputBorder(
+                                                        borderRadius: BorderRadius.circular(
+                                                          AppDimensions.borderRadiusMedium,
+                                                        ),
+                                                        borderSide: BorderSide(
+                                                          color: AppColors.green,
+                                                          width: 1.w,
+                                                        ),
+                                                      ),
+                                                      enabledBorder: OutlineInputBorder(
+                                                        borderRadius: BorderRadius.circular(
+                                                          AppDimensions.borderRadiusMedium,
+                                                        ),
+                                                        borderSide: BorderSide(
+                                                          color: AppColors.white,
+                                                          width: 1.w,
+                                                        ),
+                                                      ),
+                                                      counter: const SizedBox(),
+                                                      contentPadding: EdgeInsets.symmetric(
+                                                        vertical: AppDimensions.paddingExtraLarge.h,
+                                                        horizontal: AppDimensions.paddingLarge.w,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(width: AppDimensions.paddingMedium.h,),
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(r'Ежемесячный платеж'.tr,
+                                                    style: TextStyle(
+                                                      fontSize: 14.sp,
+                                                      color: AppColors.blackText,
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: AppDimensions.paddingMedium,),
+                                                  TextField(
+                                                    keyboardType: TextInputType.phone,
+                                                    maxLength: 5,
+                                                    style: TextStyle(
+                                                      fontSize: 14.sp,
+                                                      fontFamily: AppFonts.primaryFont,
+                                                    ),
+                                                    decoration: InputDecoration(
+                                                      hintText: r'Ежемесячный платеж'.tr,
+                                                      border: OutlineInputBorder(),
+                                                      focusedBorder: OutlineInputBorder(
+                                                        borderRadius: BorderRadius.circular(
+                                                          AppDimensions.borderRadiusMedium,
+                                                        ),
+                                                        borderSide: BorderSide(
+                                                          color: AppColors.green,
+                                                          width: 1.w,
+                                                        ),
+                                                      ),
+                                                      enabledBorder: OutlineInputBorder(
+                                                        borderRadius: BorderRadius.circular(
+                                                          AppDimensions.borderRadiusMedium,
+                                                        ),
+                                                        borderSide: BorderSide(
+                                                          color: AppColors.white,
+                                                          width: 1.w,
+                                                        ),
+                                                      ),
+                                                      counter: const SizedBox(),
+                                                      contentPadding: EdgeInsets.symmetric(
+                                                        vertical: AppDimensions.paddingExtraLarge.h,
+                                                        horizontal: AppDimensions.paddingLarge.w,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -208,11 +341,9 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                         child: ElevatedButtonWithState(
                           isLoading: controller.status == Status.loading,
                           isError: controller.status == Status.error,
-                          onPressed: controller.continueEnabled
-                              ? () {
+                          onPressed: controller.continueEnabled ? () {
 
-                          }
-                              : null,
+                          } : null,
                           child: Text(r'Далее'.tr),
                         ),
                       ),

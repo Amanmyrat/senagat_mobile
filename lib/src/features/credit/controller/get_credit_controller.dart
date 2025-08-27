@@ -35,7 +35,6 @@ class GetCreditController extends GetxController with StateControlMixin {
 
   @override
   void onInit() {
-
     sumController = TextEditingController();
     sumController.text = NumberFormat('#,###').format(currentValue);
     super.onInit();
