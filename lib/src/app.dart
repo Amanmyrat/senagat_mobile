@@ -152,6 +152,10 @@ class _SenagatAppState extends State<SenagatApp> {
                 name: MapSearchScreen.route,
                 page: () => const MapSearchScreen(),
               ),
+              GetPage(
+                name: GetCreditScreen.route,
+                page: () => const GetCreditScreen(),
+              ),
             ],
           ),
         );
