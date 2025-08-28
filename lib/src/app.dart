@@ -10,6 +10,7 @@ import 'package:senagat_mobile/src/features/auth_success/presentation/auth_succe
 import 'package:senagat_mobile/src/features/credit/presentation/get_credit_screen.dart';
 import 'package:senagat_mobile/src/features/foundation/presentation/foundation_screen.dart';
 import 'package:senagat_mobile/src/features/home/controller/home_controller.dart';
+import 'package:senagat_mobile/src/features/loan/presentation/loan_screen.dart';
 import 'package:senagat_mobile/src/features/net_and_tv/presentation/net_and_tv_screen.dart';
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/pay_screen.dart';
@@ -146,6 +147,10 @@ class _SenagatAppState extends State<SenagatApp> {
               GetPage(
                 name: GetCreditScreen.route,
                 page: () => const GetCreditScreen(),
+              ),
+              GetPage(
+                name: LoanScreen.route,
+                page: () => const LoanScreen(),
               ),
             ],
           ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:senagat_mobile/src/features/loan/presentation/loan_screen.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
@@ -52,7 +53,7 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                 ),
                                 SizedBox(height: AppDimensions.padding40,),
 
-                                Text('Выберите тип кредита', style: TextStyle(fontSize: 14.sp, color: AppColors.blackText),),
+                                Text(r'Выберите тип кредита'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.blackText),),
                                 SizedBox(height: 16.h,),
                                 Theme(
                                   data: Theme.of(context).copyWith(
@@ -95,7 +96,7 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
 
                                 SizedBox(height: AppDimensions.padding40,),
 
-                                if(controller.continueEnabled)
+                                if(controller.selectedDropdownValue != null)
                                   Container(
                                     padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
                                     decoration: BoxDecoration(
@@ -189,7 +190,7 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                         DefaultTabController(
                                           length: 3,
                                           child: Container(
-                                            height: 42,
+                                            height: 42.h,
                                             decoration: BoxDecoration(
                                                 borderRadius: BorderRadius.circular(
                                                   AppDimensions.borderRadiusMedium.r,
@@ -232,8 +233,10 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                                   ),
                                                   SizedBox(height: AppDimensions.paddingMedium,),
                                                   TextField(
-                                                    keyboardType: TextInputType.phone,
-                                                    maxLength: 5,
+                                                    controller: controller.bidController,
+                                                    keyboardType: TextInputType.number,
+                                                    textAlign: TextAlign.center,
+                                                    onChanged: (v)=> controller.onTextIsNotEmpty(v),
                                                     style: TextStyle(
                                                       fontSize: 14.sp,
                                                       fontFamily: AppFonts.primaryFont,
@@ -282,8 +285,9 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                                   ),
                                                   SizedBox(height: AppDimensions.paddingMedium,),
                                                   TextField(
-                                                    keyboardType: TextInputType.phone,
-                                                    maxLength: 5,
+                                                    controller: controller.paymentController,
+                                                    keyboardType: TextInputType.number,
+                                                    onChanged: (v)=> controller.onTextIsNotEmpty(v),
                                                     style: TextStyle(
                                                       fontSize: 14.sp,
                                                       fontFamily: AppFonts.primaryFont,
@@ -342,7 +346,7 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                           isLoading: controller.status == Status.loading,
                           isError: controller.status == Status.error,
                           onPressed: controller.continueEnabled ? () {
-
+                            Get.toNamed(LoanScreen.route);
                           } : null,
                           child: Text(r'Далее'.tr),
                         ),

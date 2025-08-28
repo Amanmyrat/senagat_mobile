@@ -8,8 +8,10 @@ class GetCreditController extends GetxController with StateControlMixin {
 
   double currentValue = 10000;
   late final TextEditingController sumController;
+  late final TextEditingController bidController;
+  late final TextEditingController paymentController;
 
-  late TabController tabBarController ;
+  late TabController tabBarController;
 
   String? selectedDropdownValue;
   bool continueEnabled = false;
@@ -23,8 +25,20 @@ class GetCreditController extends GetxController with StateControlMixin {
 
   void setDropdownValue(String? value) {
     selectedDropdownValue = value;
-    continueEnabled = true;
+    onTextIsNotEmpty(value);
     update();
+  }
+
+  void onTextIsNotEmpty(String? v){
+    if(sumController.text.isNotEmpty &&
+        bidController.text.isNotEmpty &&
+        paymentController.text.isNotEmpty){
+      continueEnabled = true;
+      update();
+    }else{
+      continueEnabled = false;
+      update();
+    }
   }
 
   void updateText(double value) {
@@ -36,6 +50,8 @@ class GetCreditController extends GetxController with StateControlMixin {
   @override
   void onInit() {
     sumController = TextEditingController();
+    bidController = TextEditingController(text: '%');
+    paymentController = TextEditingController();
     sumController.text = NumberFormat('#,###').format(currentValue);
     super.onInit();
   }
