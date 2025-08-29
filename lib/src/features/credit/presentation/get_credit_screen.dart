@@ -1,3 +1,4 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -66,18 +67,25 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                       ),
                                     ),
                                   ),
-                                  child: DropdownButtonFormField<String>(
+                                  child: DropdownButtonFormField2<String>(
                                     value: controller.selectedDropdownValue,
-                                    hint: Text(
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.fromLTRB(AppDimensions.paddingMedium.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.h, ),
+                                    ),
+                                    dropdownStyleData: DropdownStyleData(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+
+                                      ),
+                                      elevation: 2,
+
+                                    ),
+                                    hint:  Text(
                                       r"Тип кридита".tr,
-                                      style: TextStyle(fontSize: 14.sp),
+                                      style: TextStyle(fontSize: 14.sp, color: AppColors.greyInactive),
                                     ),
-                                    icon: SvgPicture.asset(
-                                      AppAssets.caretDownIcon,
-                                      width: 18.w,
-                                    ),
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: AppDimensions.paddingExtraLarge.h,
+                                    iconStyleData: IconStyleData(
+                                      icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18,),
                                     ),
                                     onChanged: (v) => controller.setDropdownValue(v),
                                     items: controller.dropdownItems
@@ -89,8 +97,7 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                           style: TextStyle(fontSize: 14.sp),
                                         ),
                                       ),
-                                    )
-                                        .toList(),
+                                    ).toList(),
                                   ),
                                 ),
 
