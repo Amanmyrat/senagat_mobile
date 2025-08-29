@@ -1,3 +1,4 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -564,18 +565,25 @@ class _LoanScreenState extends State<LoanScreen> {
                                                 ),
                                               ),
                                             ),
-                                            child: DropdownButtonFormField<String>(
+                                            child: DropdownButtonFormField2<String>(
                                               value: controller.selectedDropdownCity,
                                               hint: Text(
                                                 r"Выберите город".tr,
                                                 style: TextStyle(fontSize: 14.sp),
                                               ),
-                                              icon: SvgPicture.asset(
-                                                AppAssets.caretDownIcon,
-                                                width: 18.w,
+                                              decoration: InputDecoration(
+                                                contentPadding: EdgeInsets.fromLTRB(AppDimensions.paddingMedium.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.h, ),
                                               ),
-                                              padding: EdgeInsets.symmetric(
-                                                vertical: AppDimensions.paddingExtraLarge.h,
+                                              dropdownStyleData: DropdownStyleData(
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(10),
+
+                                                ),
+                                                elevation: 2,
+
+                                              ),
+                                              iconStyleData: IconStyleData(
+                                                icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18,),
                                               ),
                                               onChanged: (v) => controller.setDropdownCity(v),
                                               items: controller.citySelection
@@ -606,19 +614,26 @@ class _LoanScreenState extends State<LoanScreen> {
                                                 ),
                                               ),
                                             ),
-                                            child: DropdownButtonFormField<String>(
+                                            child: DropdownButtonFormField2<String>(
                                               value: controller.selectedDropdownBank,
                                               hint: Text(r"Выберите банк".tr, style: TextStyle(
                                                 fontSize: 14.sp,),
                                               ),
-                    
-                                              icon: SvgPicture.asset(
-                                                AppAssets.caretDownIcon,
-                                                width: 18.w,
+                                              decoration: InputDecoration(
+                                                contentPadding: EdgeInsets.fromLTRB(AppDimensions.paddingMedium.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.h, ),
                                               ),
-                                              padding: EdgeInsets.symmetric(
-                                                vertical: AppDimensions.paddingExtraLarge.h,
+                                              dropdownStyleData: DropdownStyleData(
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(10),
+
+                                                ),
+                                                elevation: 2,
+
                                               ),
+                                              iconStyleData: IconStyleData(
+                                                icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18,),
+                                              ),
+
                                               onChanged: (v) => controller.setDropdownBank(v),
                                               items: controller.bankSelection
                                                   .map(
@@ -629,6 +644,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                                   ),),
                                                 ),
                                               ).toList(),
+
                                             ),
                                           ),
                     
