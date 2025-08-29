@@ -34,6 +34,7 @@ class AppAssets {
   static const deleteIcon = 'assets/icons/X.svg';
   static const crossHairIcon = 'assets/icons/Crosshair.svg';
   static const linkIcon = 'assets/icons/Link.svg';
+  static const thumbIcon = 'assets/icons/thumbIcon.svg';
 
 
   static const navigationCreditCardIcon = 'assets/icons/CreditCard.svg';

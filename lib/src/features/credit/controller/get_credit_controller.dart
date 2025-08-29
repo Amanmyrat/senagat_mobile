@@ -50,7 +50,7 @@ class GetCreditController extends GetxController with StateControlMixin {
   @override
   void onInit() {
     sumController = TextEditingController();
-    bidController = TextEditingController(text: '%');
+    bidController = TextEditingController();
     paymentController = TextEditingController();
     sumController.text = NumberFormat('#,###').format(currentValue);
     super.onInit();
