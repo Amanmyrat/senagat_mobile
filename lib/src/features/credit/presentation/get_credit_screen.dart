@@ -1,7 +1,9 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_xlider/flutter_xlider.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/features/loan/presentation/loan_screen.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
@@ -160,32 +162,34 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                           ),
                                         ),
                                         SizedBox(height: AppDimensions.paddingMedium.h,),
-                                        SliderTheme(
-                                          data: SliderTheme.of(context).copyWith(
-                                            thumbShape: RoundSliderThumbShape(
-                                              enabledThumbRadius: 12,
-                                              elevation: 0,
-                                            ),
-                                            overlayShape: RoundSliderOverlayShape(
-                                              overlayRadius: 0,
-                                            ),
-                                            disabledThumbColor: AppColors.white,
-                                            activeTrackColor: AppColors.green,
-                                            inactiveTrackColor: Colors.green.shade100,
-                                            trackHeight: 2,
-                                            valueIndicatorStrokeColor: AppColors.green,
-                                            valueIndicatorColor: AppColors.green,
-                                          ),
-                                          child: Slider(
-                                            value: controller.currentValue,
+                                        FlutterSlider(
+                                            values: [controller.currentValue],
                                             min: 1000,
                                             max: 20000,
-                                            divisions: (20000 - 1000) ~/ 100,
-                                            onChanged: (value) {
-                                              controller.updateText(value);
+                                            step: FlutterSliderStep(
+                                              step: 100, // 👈 this replaces divisions
+                                            ),
+                                            tooltip: FlutterSliderTooltip(
+                                              disabled: true,
+                                            ),
+                                            trackBar: FlutterSliderTrackBar(
+                                              activeTrackBar: BoxDecoration(
+                                                color: AppColors.green,
+                                              ),
+                                              inactiveTrackBar: BoxDecoration(
+                                                color: AppColors.lightGreen
+                                              )
+                                            ),
+                                            handlerWidth: 22,
+                                            handlerHeight: 22,
+                                            handler: FlutterSliderHandler(
+                                              child: SvgPicture.asset(AppAssets.thumbIcon),
+
+                                            ),
+                                            onDragging: (handlerIndex, lowerValue, upperValue){
+                                              controller.updateText(lowerValue);
                                             },
                                           ),
-                                        ),
                                         SizedBox(height: AppDimensions.paddingExtraLarge.h,),
                                         Text(r'term'.tr,
                                           style: TextStyle(
@@ -240,6 +244,9 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                                   ),
                                                   SizedBox(height: AppDimensions.paddingMedium,),
                                                   TextField(
+                                                    inputFormatters: [
+                                                      FilteringTextInputFormatter.digitsOnly, // allow only numbers
+                                                    ],
                                                     controller: controller.bidController,
                                                     keyboardType: TextInputType.number,
                                                     textAlign: TextAlign.center,
@@ -251,6 +258,8 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                                     decoration: InputDecoration(
                                                       hintText: r'Ставка'.tr,
                                                       border: OutlineInputBorder(),
+                                                      suffixText: '%',
+                                                      suffixStyle: TextStyle(color: AppColors.blackText),
                                                       focusedBorder: OutlineInputBorder(
                                                         borderRadius: BorderRadius.circular(
                                                           AppDimensions.borderRadiusMedium,
