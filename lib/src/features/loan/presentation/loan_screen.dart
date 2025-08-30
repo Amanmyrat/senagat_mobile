@@ -143,7 +143,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                                                     SizedBox(height: AppDimensions.paddingMedium.h,),
                                                                     TextFormField(
                                                                       textInputAction: TextInputAction.next,
-                                                                      keyboardType: TextInputType.name,
+                                                                      keyboardType: TextInputType.number,
                                                                       controller: controller.patentNumController,
                                                                       onChanged:(v) => controller.onInformationNotEmpty(v),
                                                                       style: TextStyle(
@@ -187,7 +187,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                                                     SizedBox(height: AppDimensions.paddingMedium.h,),
                                                                     TextFormField(
                                                                       textInputAction: TextInputAction.next,
-                                                                      keyboardType: TextInputType.name,
+                                                                      keyboardType: TextInputType.number,
                                                                       controller: controller.registrNumController,
                                                                       onChanged:(v) => controller.onInformationNotEmpty(v),
                                                                       style: TextStyle(

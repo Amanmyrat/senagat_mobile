@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:senagat_mobile/src/features/%20Inquiries/presentation/select_tip_inquiries.dart';
 import 'package:senagat_mobile/src/features/add_card/presentation/add_card_screen.dart';
-import 'package:senagat_mobile/src/features/foundation/presentation/foundation_screen.dart';
 import 'package:senagat_mobile/src/features/map_search/presentation/map_search_screen.dart';
-import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
 import 'package:senagat_mobile/src/features/service_settings/presentation/service_settings_screen.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
@@ -351,6 +348,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     Text(
                                       controller.fastServiceController.selectedServiceTitle[index],
+                                      maxLines: 1,
+                                      textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: isSelected ? AppColors.white : AppColors.blackText,
                                         fontSize: 14.sp,
@@ -563,7 +562,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: AppDimensions.padding40.h),
-                      controller.payBox.isEmpty?
+                      controller.payBox.isEmpty ?
                       Container(
                         width: MediaQuery
                             .of(context)
@@ -611,7 +610,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               shrinkWrap: true,
                               itemCount: controller.payBox.length,
                               physics: NeverScrollableScrollPhysics(),
-                              itemBuilder: (context,index){
+                              itemBuilder: (context, index){
                             return Container(
                               width: MediaQuery.of(context).size.width,
                               height: 90.h,

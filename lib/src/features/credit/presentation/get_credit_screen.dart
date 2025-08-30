@@ -82,12 +82,12 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                       elevation: 2,
 
                                     ),
+                                    iconStyleData: IconStyleData(
+                                      icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18,),
+                                    ),
                                     hint:  Text(
                                       r"Тип кридита".tr,
                                       style: TextStyle(fontSize: 14.sp, color: AppColors.greyInactive),
-                                    ),
-                                    iconStyleData: IconStyleData(
-                                      icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18,),
                                     ),
                                     onChanged: (v) => controller.setDropdownValue(v),
                                     items: controller.dropdownItems
@@ -362,7 +362,7 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                           isLoading: controller.status == Status.loading,
                           isError: controller.status == Status.error,
                           onPressed: controller.continueEnabled ? () {
-                            Get.toNamed(LoanScreen.route);
+                            Get.offAndToNamed(LoanScreen.route);
                           } : null,
                           child: Text(r'Далее'.tr),
                         ),

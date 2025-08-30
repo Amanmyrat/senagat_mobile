@@ -110,7 +110,7 @@ class _ServiceSettingsScreenState extends State<ServiceSettingsScreen> {
                                                   child: Row(
                                                     children: [
                                                       Expanded(child: Text(controller.selectedServiceTitle[index].tr,
-                                                        style: TextStyle(color: AppColors.blackText,),
+                                                        style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),
                                                       ),),
                                                       SvgPicture.asset(AppAssets.listIcon, color: AppColors.greyInactive, width: 18.w,),
                                                     ],
@@ -167,10 +167,8 @@ class _ServiceSettingsScreenState extends State<ServiceSettingsScreen> {
                                           children: [
                                             Padding(
                                               padding: EdgeInsets.all(AppDimensions.paddingMedium.w),
-                                              child: Expanded(
-                                                  child: Text(controller.serviceTitle[index],
-                                                    style: TextStyle(color: AppColors.blackText, fontSize: 14.sp),
-                                                  ),
+                                              child: Text(controller.serviceTitle[index],
+                                                style: TextStyle(color: AppColors.blackText, fontSize: 14.sp),
                                               ),
                                             ),
                                             Divider(color: AppColors.dividerColor, height: 1.h,),

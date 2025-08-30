@@ -45,7 +45,7 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               CustomAppBar(),
-                              if(controller.payBox.get(controller.payKey)?.serviceName == null)
+                              if(controller.serviceName!.isEmpty)
                                 Padding(
                                   padding: EdgeInsets.only(right: AppDimensions.paddingExtraLarge, top: 22),
                                   child: Align(alignment: Alignment.bottomRight,child:
@@ -91,18 +91,18 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                                                       child: Column(
                                                         crossAxisAlignment: CrossAxisAlignment.center,
                                                         children: [
-                                                          if(controller.payBox.get(controller.payKey)?.serviceIcon != null)
+                                                          if(controller.serviceIcon!.isNotEmpty)
                                                             Container(
                                                               padding:EdgeInsets.all(AppDimensions.paddingMedium.w) ,
                                                               decoration: BoxDecoration(
                                                                 shape: BoxShape.circle,
                                                                 color: AppColors.white,
                                                               ),
-                                                              child: SvgPicture.asset(controller.payBox.get(controller.payKey)?.serviceIcon ?? '', color: AppColors.green,),
+                                                              child: SvgPicture.asset(controller.serviceIcon ?? '', color: AppColors.green,),
                                                             ),
 
                                                           Text(
-                                                            controller.payBox.get(controller.payKey)?.serviceName == null ? r'Получение справки'.tr :controller.payBox.get(controller.payKey)?.serviceName ?? '',
+                                                            controller.serviceName!.isEmpty ? r'Получение справки'.tr : controller.serviceName ?? '',
                                                             style: TextStyle(
                                                               fontSize: 17.sp,
                                                               color: AppColors.white,
@@ -118,7 +118,7 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                                                           ),
                                                           SizedBox(height: 6.h,),
                                                           Text(
-                                                            controller.payBox.get(controller.payKey)?.sum ?? '',
+                                                            controller.sum ?? '',
                                                             style: TextStyle(
                                                               fontSize: 40.sp,
                                                               color: AppColors.white,
@@ -160,7 +160,7 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                                                                   ),
                                                                 ),
                                                                 Text(
-                                                                  controller.payBox.get(controller.payKey)?.number ?? '',
+                                                                  controller.number ?? '',
                                                                   style: TextStyle(
                                                                     fontSize: 14.sp,
                                                                     color: AppColors.blackText,
@@ -171,7 +171,7 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                                                             ),
                                                           ),
                                                           Divider(color: AppColors.dividerColor, height: 1.h,),
-                                                          controller.payBox.get(controller.payKey)?.serviceIcon == null ?
+                                                          controller.serviceIcon!.isEmpty ?
                                                           Column(
                                                             children: [
                                                               Padding(
@@ -188,7 +188,7 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                                                                       ),
                                                                     ),
                                                                     Text(
-                                                                      controller.payBox.get(controller.payKey)?.userName ?? 'a',
+                                                                      controller.userName ?? '',
                                                                       style: TextStyle(
                                                                         fontSize: 14.sp,
                                                                         color: AppColors.blackText,
@@ -258,7 +258,7 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                                                 ),
 
                                                 Positioned(
-                                                  top: controller.payBox.get(controller.payKey)?.serviceIcon == null ? 125 : 170,
+                                                  top: controller.serviceIcon!.isEmpty ? 125 : 170,
                                                   left: -10,
                                                   child: Container(
                                                     width: 30.w,
@@ -270,7 +270,7 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                                                   ),
                                                 ),
                                                 Positioned(
-                                                  top: controller.payBox.get(controller.payKey)?.serviceIcon == null ? 125 : 170,
+                                                  top: controller.serviceIcon!.isEmpty ? 125 : 170,
                                                   right: -10,
                                                   child: Container(
                                                     width: 30.w,
@@ -298,7 +298,7 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                               width: MediaQuery.of(context).size.width,
                               child: ElevatedButtonWithState(
                                 onPressed: (){
-                                  if(controller.payBox.get(controller.payKey)?.serviceName == null){
+                                  if(controller.serviceName!.isEmpty){
                                     Get.toNamed(PaymentScreen.route);
                                   }else {
                                     controller.startBankVerification();
@@ -306,7 +306,7 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                                 },
                                 isError: controller.status == Status.error,
                                 isLoading: controller.status == Status.loading,
-                                child: Text(controller.payBox.get(controller.payKey)?.serviceName == null ? r'next'.tr : r'pay'.tr),
+                                child: Text(controller.serviceName!.isEmpty ? r'next'.tr : r'pay'.tr),
                               ),
                             ),
                           ),
@@ -314,8 +314,8 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                       ),
                       if(controller.check == true)
                         CheckWidget(isLoading: controller.status == Status.loading,
-                          isTitle: false, route: controller.payBox.get(controller.payKey)?.serviceIcon == null ? FoundationScreen.route : DashboardScreen.route,
-                          buttonTitle:controller.payBox.get(controller.payKey)?.serviceIcon == null ? r'fund_page'.tr : r'home_page'.tr,
+                          isTitle: false, route: controller.serviceIcon!.isEmpty ? FoundationScreen.route : DashboardScreen.route,
+                          buttonTitle:controller.serviceIcon!.isEmpty ? r'fund_page'.tr : r'home_page'.tr,
                         ),
                     ],
                   ),

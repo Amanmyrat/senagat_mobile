@@ -8,9 +8,21 @@ class PaymentVerificationController extends GetxController with StateControlMixi
 
   bool check = false;
 
-  final payBox = Hive.box<PayModel>('payBox');
-  String payKey = 'pay';
+  late String? serviceName;
+  late String? serviceIcon;
+  late String? number;
+  late String? sum;
+  late String? userName;
 
+  @override
+  void onInit() {
+    serviceName = Get.arguments['serviceName'];
+    serviceIcon = Get.arguments['serviceIcon'];
+    number = Get.arguments['number'];
+    sum = Get.arguments['sum'];
+    userName = Get.arguments['userName'];
+    super.onInit();
+  }
 
   void startBankVerification() {
     saveCard();
@@ -26,13 +38,13 @@ class PaymentVerificationController extends GetxController with StateControlMixi
   }
 
   Future<void> saveCard() async {
-    final box = Hive.box<PayModel>(payBox.get(payKey)!.serviceIcon.isEmpty?'payFoundationBox': '');
+    final box = Hive.box<PayModel>(serviceIcon!.isEmpty ? 'payFoundationBox' : 'payBox');
     final pay = PayModel(
-      serviceName: payBox.get(payKey)?.serviceName ?? '',
-      serviceIcon: payBox.get(payKey)?.serviceIcon ?? '',
-      number: payBox.get(payKey)?.number ?? '',
-      sum: payBox.get(payKey)?.sum ?? '',
-      userName: payBox.get(payKey)?.userName ?? '',
+      serviceName: serviceName ?? '',
+      serviceIcon: serviceIcon ?? '',
+      number: number ?? '',
+      sum: sum ?? '',
+      userName: userName ?? '',
     );
     await box.add(pay);
   }

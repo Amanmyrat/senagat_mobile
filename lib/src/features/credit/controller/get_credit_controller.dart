@@ -7,9 +7,9 @@ import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 class GetCreditController extends GetxController with StateControlMixin {
 
   double currentValue = 10000;
-  late final TextEditingController sumController;
-  late final TextEditingController bidController;
-  late final TextEditingController paymentController;
+  late  TextEditingController sumController;
+  late  TextEditingController bidController;
+  late  TextEditingController paymentController;
 
   late TabController tabBarController;
 
@@ -52,7 +52,7 @@ class GetCreditController extends GetxController with StateControlMixin {
     sumController = TextEditingController();
     bidController = TextEditingController();
     paymentController = TextEditingController();
-    sumController.text = NumberFormat('#,###').format(currentValue);
+    sumController.text = NumberFormat('#,###', 'ru_Ru').format(currentValue);
     super.onInit();
   }
 

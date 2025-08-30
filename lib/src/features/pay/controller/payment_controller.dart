@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/service_settings/controller/service_settings_controller.dart';
-
 import '../../payment_verification/presentation/payment_verification_screen.dart';
-import '../model/pay_model.dart';
 
 class PaymentController extends GetxController with StateControlMixin {
   final GlobalKey<FormState> key;
@@ -47,8 +44,6 @@ class PaymentController extends GetxController with StateControlMixin {
   }
 
   void onPayTap() async {
-    saveCard();
-
     status = Status.loading;
       update();
       await Future.delayed( Duration(seconds: 2), (){
@@ -56,7 +51,14 @@ class PaymentController extends GetxController with StateControlMixin {
       status = Status.completed;
 
       update();
-      Get.offNamed(PaymentVerificationScreen.route,);
+      Get.offNamed(PaymentVerificationScreen.route,
+          arguments:
+          {'serviceName': serviceName,
+            'serviceIcon': serviceIcon,
+            'number': phoneController.text,
+            'sum': sumController.text,
+            'userName': nameController.text,
+      });
   }
 
   void startBankVerification() {
@@ -71,17 +73,17 @@ class PaymentController extends GetxController with StateControlMixin {
 
   }
 
-  Future<void> saveCard() async {
-    final box = Hive.box<PayModel>('payBox');
-    final pay = PayModel(
-      serviceName: serviceName,
-      serviceIcon: serviceIcon,
-      number: phoneController.text,
-      sum: sumController.text,
-      userName: nameController.text,
-    );
-    await box.put('pay', pay);
-  }
+  // Future<void> saveCard() async {
+  //   final box = Hive.box<PayModel>('payBox');
+  //   final pay = PayModel(
+  //     serviceName: serviceName,
+  //     serviceIcon: serviceIcon,
+  //     number: phoneController.text,
+  //     sum: sumController.text,
+  //     userName: nameController.text,
+  //   );
+  //   await box.put('pay', pay);
+  // }
 
   void isTextNotEmpty(){
     serviceIcon.isEmpty?

@@ -1,3 +1,4 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -78,29 +79,25 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                   SizedBox(height: 16.h,),
 
                                   SizedBox(height: AppDimensions.paddingMedium,),
-                                  Theme(
-                                    data: Theme.of(context).copyWith(
-                                      canvasColor: AppColors.inputFillBackground,
-                                      cardTheme:  CardThemeData(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(AppDimensions.borderRadiusMedium.r),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    child: DropdownButtonFormField<String>(
+                                  DropdownButtonFormField2<String>(
                                       value: controller.selectedDropdownType,
                                       hint: Text(
                                         r"Тип справки".tr,
                                         style: TextStyle(fontSize: 14.sp),
                                       ),
-                                      icon: SvgPicture.asset(
-                                        AppAssets.caretDownIcon,
-                                        width: 18.w,
+                                      decoration: InputDecoration(
+                                        contentPadding: EdgeInsets.fromLTRB(AppDimensions.paddingMedium.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.h, ),
                                       ),
-                                      padding: EdgeInsets.symmetric(
-                                        vertical: AppDimensions.paddingExtraLarge.h,
+                                      dropdownStyleData: DropdownStyleData(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10),
+
+                                        ),
+                                        elevation: 2,
+
+                                      ),
+                                      iconStyleData: IconStyleData(
+                                        icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18,),
                                       ),
                                       onChanged: (v) => controller.setDropdownType(v),
                                       items: controller.typeSelection
@@ -115,7 +112,6 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                       )
                                           .toList(),
                                     ),
-                                  ),
 
                                   if(controller.continueEnabled)
                                     Column(
@@ -207,29 +203,25 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                 ),
                                 Text(r'Место выдачи'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
                                 SizedBox(height: AppDimensions.paddingMedium,),
-                                Theme(
-                                  data: Theme.of(context).copyWith(
-                                    canvasColor: AppColors.inputFillBackground,
-                                    cardTheme:  CardThemeData(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(AppDimensions.borderRadiusMedium.r),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  child: DropdownButtonFormField<String>(
+                                DropdownButtonFormField2<String>(
                                     value: controller.selectedDropdownCity,
                                     hint: Text(r"Место выдачи".tr, style: TextStyle(
                                       fontSize: 14.sp,),
                                     ),
-                                    icon: SvgPicture.asset(
-                                      AppAssets.caretDownIcon,
-                                      width: 18.w,
+                                  decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.fromLTRB(AppDimensions.paddingMedium.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.h, ),
+                                  ),
+                                  dropdownStyleData: DropdownStyleData(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+
                                     ),
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: AppDimensions.paddingExtraLarge.h,
-                                    ),
+                                    elevation: 2,
+
+                                  ),
+                                  iconStyleData: IconStyleData(
+                                    icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18,),
+                                  ),
                                     onChanged:(v) => controller.setDropdownCity(v),
                                     items: controller.citySelection
                                         .map(
@@ -242,7 +234,7 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                     )
                                         .toList(),
                                   ),
-                                ),
+
                                 SizedBox(height: AppDimensions.padding30,),
                               ],
                             ),
@@ -264,29 +256,25 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                 Text(r'Филиал банка'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
                                 SizedBox(height: AppDimensions.paddingMedium,),
 
-                                Theme(
-                                  data: Theme.of(context).copyWith(
-                                    canvasColor: AppColors.inputFillBackground,
-                                    cardTheme:  CardThemeData(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(AppDimensions.borderRadiusMedium.r),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  child: DropdownButtonFormField<String>(
+                                DropdownButtonFormField2<String>(
                                     value: controller.selectedDropdownBranch,
                                     hint: Text(r"Филиал банка".tr, style: TextStyle(
                                       fontSize: 14.sp,),
                                     ),
 
-                                    icon: SvgPicture.asset(
-                                      AppAssets.caretDownIcon,
-                                      width: 18.w,
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.fromLTRB(AppDimensions.paddingMedium.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.h, ),
                                     ),
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: AppDimensions.paddingExtraLarge.h,
+                                    dropdownStyleData: DropdownStyleData(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+
+                                      ),
+                                      elevation: 2,
+
+                                    ),
+                                    iconStyleData: IconStyleData(
+                                      icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18,),
                                     ),
                                     onChanged: (v) => controller.setDropdownBranch(v),
                                     items: controller.branchSelection
@@ -299,7 +287,6 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                       ),
                                     ).toList(),
                                   ),
-                                ),
 
                                 SizedBox(height: 22.h,),
 

@@ -1,3 +1,4 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -100,17 +101,25 @@ class _PassportDetailsState extends State<PassportDetails> {
                     ),
                   ),
                 ),
-                child: DropdownButtonFormField<String>(
+                child: DropdownButtonFormField2<String>(
                   value: widget.controller.selectedDropdownIssuance,
                   hint: Text(r"Место выдачи".tr, style: TextStyle(
                     fontSize: 14.sp,),
                   ),
-                  icon: SvgPicture.asset(
-                    AppAssets.caretDownIcon,
-                    width: 18.w,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.fromLTRB(AppDimensions.paddingMedium.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.h, ),
                   ),
-                  padding: EdgeInsets.symmetric(
-                    vertical: AppDimensions.paddingExtraLarge.h,
+                  dropdownStyleData: DropdownStyleData(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+
+                    ),
+                    elevation: 2,
+
+                  ),
+
+                  iconStyleData: IconStyleData(
+                    icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18,),
                   ),
                   onChanged:(v) => widget.controller.setDropdownIssuance(v),
                   items: widget.controller.issuanceSelection

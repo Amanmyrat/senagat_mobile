@@ -10,14 +10,4 @@ class FoundationController extends GetxController with StateControlMixin {
 
   final payBox = Hive.box<PayModel>('payFoundationBox');
 
-  String payKey = 'pay';
-
-
-  @override
-  void onInit() {
-
-    super.onInit();
-  }
-
-
 }
