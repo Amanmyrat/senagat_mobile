@@ -27,6 +27,7 @@ import 'package:senagat_mobile/src/utils/theme/app_theme.dart';
 import 'package:senagat_mobile/src/utils/theme/controller/theme_controller.dart';
 import 'features/ Inquiries/presentation/inquiries_screen.dart';
 import 'features/add_card/controller/add_card_controller.dart';
+import 'features/credit/presentation/get_credit_screen.dart';
 import 'features/dashboard/controller/dashboard_controller.dart';
 import 'features/dashboard/presentation/dashboard_screen.dart';
 import 'features/payment_verification/presentation/payment_verification_screen.dart';
