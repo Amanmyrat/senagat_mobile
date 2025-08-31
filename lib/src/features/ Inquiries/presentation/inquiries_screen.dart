@@ -122,7 +122,7 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                             SvgPicture.asset(AppAssets.infoIcon,width: 18.w, color: AppColors.green,),
                                             SizedBox(width: 6.h,),
                                             Expanded(
-                                              child: Text(r'Подтвердить, что у вас есть учетная запись, личный кабинет или он закрыт'.tr,
+                                              child: Text(r'Confirm_that_you_have_an_account'.tr,
                                                 style: TextStyle(
                                                     fontSize: 14.sp,
                                                     color: AppColors.blackText,
@@ -143,7 +143,7 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  r'Данные паспорта'.tr,
+                                  r'Passport_details'.tr,
                                   style: TextStyle(
                                     fontSize: 24.sp,
                                     color: AppColors.blackText,
@@ -201,11 +201,11 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                       );
                                     }
                                 ),
-                                Text(r'Место выдачи'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+                                Text(r'Place_of_issue'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
                                 SizedBox(height: AppDimensions.paddingMedium,),
                                 DropdownButtonFormField2<String>(
                                     value: controller.selectedDropdownCity,
-                                    hint: Text(r"Место выдачи".tr, style: TextStyle(
+                                    hint: Text(r"Place_of_issue".tr, style: TextStyle(
                                       fontSize: 14.sp,),
                                     ),
                                   decoration: InputDecoration(
@@ -246,19 +246,19 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  r'Информация для справки'.tr,
+                                  r'Information_for_reference'.tr,
                                   style: TextStyle(
                                     fontSize: 24.sp,
                                     color: AppColors.blackText,
                                   ),
                                 ),
                                 SizedBox(height: 32.h,),
-                                Text(r'Филиал банка'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+                                Text(r'Bank_branch'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
                                 SizedBox(height: AppDimensions.paddingMedium,),
 
                                 DropdownButtonFormField2<String>(
                                     value: controller.selectedDropdownBranch,
-                                    hint: Text(r"Филиал банка".tr, style: TextStyle(
+                                    hint: Text(r"Bank_branch".tr, style: TextStyle(
                                       fontSize: 14.sp,),
                                     ),
 
@@ -291,7 +291,7 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                 SizedBox(height: 22.h,),
 
 
-                                Text(r'Домашний адрес'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+                                Text(r'Home_address'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
                                 SizedBox(height: AppDimensions.paddingMedium.h,),
                                 TextFormField(
                                   textInputAction: TextInputAction.next,
@@ -302,7 +302,7 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                     fontSize: 14.sp,
                                   ),
                                   decoration: InputDecoration(
-                                    hintText: r'Домашний адрес'.tr,
+                                    hintText: r'Home_address'.tr,
                                     border: OutlineInputBorder(),
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(
@@ -413,7 +413,7 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                           onPressed:() {
                             controller.onTap();
                           },
-                          child: Text(r'Далее'.tr),
+                          child: Text(r'next'.tr),
                         ),
                       ),
                     ),

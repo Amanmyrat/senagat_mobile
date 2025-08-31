@@ -48,7 +48,7 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  r'Получение кредита'.tr,
+                                  r'Getting_a_loan'.tr,
                                   style: TextStyle(
                                     fontSize: 24.sp,
                                     color: AppColors.blackText,
@@ -56,7 +56,7 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                 ),
                                 SizedBox(height: AppDimensions.padding40,),
 
-                                Text(r'Выберите тип кредита'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.blackText),),
+                                Text(r'Select_loan_type'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.blackText),),
                                 SizedBox(height: 16.h,),
                                 Theme(
                                   data: Theme.of(context).copyWith(
@@ -86,7 +86,7 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                       icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18,),
                                     ),
                                     hint:  Text(
-                                      r"Тип кридита".tr,
+                                      r"Loan_type".tr,
                                       style: TextStyle(fontSize: 14.sp, color: AppColors.greyInactive),
                                     ),
                                     onChanged: (v) => controller.setDropdownValue(v),
@@ -124,7 +124,7 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text(r'Калькулятор'.tr,
+                                        Text(r'Calculator'.tr,
                                           style: TextStyle(
                                             fontSize: 14.sp,
                                             color: AppColors.blackText,
@@ -221,9 +221,9 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                                 color: AppColors.blackText
                                               ),
                                               tabs: [
-                                              Tab(text: '1 год',),
-                                              Tab(text: '2 года',),
-                                              Tab(text: '3 года',),
+                                              Tab(text: '1_year',),
+                                              Tab(text: '2_years',),
+                                              Tab(text: '3_years',),
                                             ],),
                                           ),
                                         ),
@@ -236,7 +236,7 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                               child: Column(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(r'Ставка'.tr,
+                                                  Text(r'Bid'.tr,
                                                     style: TextStyle(
                                                       fontSize: 14.sp,
                                                       color: AppColors.blackText,
@@ -256,7 +256,7 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                                       fontFamily: AppFonts.primaryFont,
                                                     ),
                                                     decoration: InputDecoration(
-                                                      hintText: r'Ставка'.tr,
+                                                      hintText: r'Bid'.tr,
                                                       border: OutlineInputBorder(),
                                                       suffixText: '%',
                                                       suffixStyle: TextStyle(color: AppColors.blackText),
@@ -293,7 +293,7 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                               child: Column(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(r'Ежемесячный платеж'.tr,
+                                                  Text(r'Monthly_payment'.tr,
                                                     style: TextStyle(
                                                       fontSize: 14.sp,
                                                       color: AppColors.blackText,
@@ -309,7 +309,7 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                                       fontFamily: AppFonts.primaryFont,
                                                     ),
                                                     decoration: InputDecoration(
-                                                      hintText: r'Ежемесячный платеж'.tr,
+                                                      hintText: r'Monthly_payment'.tr,
                                                       border: OutlineInputBorder(),
                                                       focusedBorder: OutlineInputBorder(
                                                         borderRadius: BorderRadius.circular(
@@ -364,7 +364,7 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                           onPressed: controller.continueEnabled ? () {
                             Get.offAndToNamed(LoanScreen.route);
                           } : null,
-                          child: Text(r'Далее'.tr),
+                          child: Text(r'next'.tr),
                         ),
                       ),
                     ),
