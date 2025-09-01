@@ -115,5 +115,6 @@ const Map<String, String> enUs = {
   r'Select_city': r'Select city',
   r'Select_bank': r'Select bank',
   r'Bank': r'Bank',
+  r'payments': r'Payments',
 
 };

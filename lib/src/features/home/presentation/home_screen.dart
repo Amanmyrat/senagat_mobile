@@ -22,20 +22,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-  BoxDecoration boxDecoration = BoxDecoration(
-    borderRadius: BorderRadius.circular(
-      AppDimensions.borderRadiusMedium.r,
-    ),
-    border: Border.all(color: AppColors.dividerColor, width: 1.w, style: BorderStyle.solid),
-    boxShadow: [
-      BoxShadow(
-        color: AppColors.dividerColor,
-        blurRadius: 4.r,
-      ),
-    ],
-    color: AppColors.white,
-  );
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

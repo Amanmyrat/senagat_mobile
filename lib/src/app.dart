@@ -7,6 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:senagat_mobile/src/features/add_card/presentation/add_card_screen.dart';
 import 'package:senagat_mobile/src/features/auth_success/presentation/auth_success_screen.dart';
+import 'package:senagat_mobile/src/features/category/presentation/category_screen.dart';
 import 'package:senagat_mobile/src/features/foundation/presentation/foundation_screen.dart';
 import 'package:senagat_mobile/src/features/home/controller/home_controller.dart';
 import 'package:senagat_mobile/src/features/loan/presentation/loan_screen.dart';
@@ -161,6 +162,10 @@ class _SenagatAppState extends State<SenagatApp> {
               GetPage(
                 name: LoanScreen.route,
                 page: () => const LoanScreen(),
+              ),
+              GetPage(
+                name: CategoryScreen.route,
+                page: () => const CategoryScreen(),
               ),
             ],
           ),

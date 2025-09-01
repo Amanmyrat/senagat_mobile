@@ -7,6 +7,7 @@ import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
 import 'package:senagat_mobile/src/widgets/bottom_nav_bar.dart';
 import '../../../utils/constants/app_assets.dart';
+import '../../category/presentation/category_screen.dart';
 import '../controller/dashboard_controller.dart';
 import '../utils/custom_navigator.dart';
 import '../utils/nested_nav_ids.dart';
@@ -39,7 +40,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 nestedId: NestedNavigationIds.home,
               ),
               CustomNavigator(
-                initialRoute: BlankScreen(),
+                initialRoute: CategoryScreen(),
                 nestedId: NestedNavigationIds.catalog,
               ),
               CustomNavigator(
@@ -67,8 +68,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 label: r'home'.tr,
               ),
               BottomNavBarItem(
-                icon: AppAssets.navigationcardsThreeIcon,
-                label: r'catalog'.tr,
+                icon: AppAssets.arrowLeftRight,
+                label: r'payments'.tr,
               ),
               BottomNavBarItem(
                 icon: AppAssets.navigationCreditCardIcon,
