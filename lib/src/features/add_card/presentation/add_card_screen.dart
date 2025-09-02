@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/features/add_card/controller/add_card_controller.dart';
-import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/widgets/check_widget.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
@@ -407,7 +405,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                 ],
               ),
                   if(controller.check)
-                    CheckWidget(isLoading: controller.status == Status.loading, isTitle: true, route: DashboardScreen.route,),
+                    CheckWidget(isLoading: controller.status == Status.loading, isTitle: true, title: r'add_a_card',),
               ]
             );
           }

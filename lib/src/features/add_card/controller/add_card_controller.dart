@@ -5,7 +5,6 @@ import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import '../../../utils/constants/app_assets.dart';
-import '../../dashboard/presentation/dashboard_screen.dart';
 import '../model/card_model.dart';
 
 class AddCardController extends GetxController with StateControlMixin {
@@ -22,9 +21,9 @@ class AddCardController extends GetxController with StateControlMixin {
 
   List<String> cardDesigns = [
       AppAssets.cardImage,
-      AppAssets.cardImage,
-      AppAssets.cardImage,
-      AppAssets.cardImage,
+      AppAssets.cardImage2,
+      AppAssets.cardImage3,
+      AppAssets.cardImage4,
   ];
 
   late final cardNumberFormatter = MaskTextInputFormatter(
@@ -85,12 +84,16 @@ class AddCardController extends GetxController with StateControlMixin {
       expiryDate: termController.text,
       cardDesign: cardDesigns[selectedDesign],
     );
-    await box.put('card',card);
+    await box.add(card);
   }
 
   void _navigateToNextScreen() {
     try {
-      Get.toNamed(DashboardScreen.route,);
+      Get.back();
+      cardNumberController.clear();
+      nameController.clear();
+      termController.clear();
+      cvcController.clear();
     } catch (e) {
       status = Status.error;
     }

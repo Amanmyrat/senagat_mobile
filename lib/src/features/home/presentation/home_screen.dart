@@ -164,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.r),
                             image: DecorationImage(
-                              image: AssetImage(controller.cardBox.get(controller.cardKey)!.cardDesign),
+                              image: AssetImage(controller.cardBox.getAt(0)!.cardDesign),
                               fit: BoxFit.fill,
                             ),
                           ),
@@ -183,7 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               SizedBox(height: 72.h,),
                               Text(
-                                controller.cardBox.get(controller.cardKey)?.cardNumber ?? '',
+                                controller.cardBox.getAt(0)?.cardNumber ?? '',
                                 style: TextStyle(
                                   wordSpacing: 10.sp,
                                   fontSize: 24.sp,
@@ -195,14 +195,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    controller.cardBox.get(controller.cardKey)?.name ?? '',
+                                    controller.cardBox.getAt(0)?.name ?? '',
                                     style: TextStyle(
                                       fontSize: 14.sp,
                                       color: AppColors.white,
                                     ),
                                   ),
                                   Text(
-                                    controller.cardBox.get(controller.cardKey)?.expiryDate ?? '',
+                                    controller.cardBox.getAt(0)?.expiryDate ?? '',
                                     style: TextStyle(
                                       fontSize: 14.sp,
                                       color: AppColors.white,
