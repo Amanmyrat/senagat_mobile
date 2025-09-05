@@ -137,7 +137,7 @@ class _RegisterPasswordSetupScreenState extends State<RegisterPasswordSetupScree
                             onPressed: controller.isPasswordValid
                                 ? controller.confirmPassword
                                 : null,
-                            child: Text(r'confirm'.tr),
+                            child: Text(r'confirm'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.white),),
                           ),
                         ),
                       ),

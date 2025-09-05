@@ -74,7 +74,7 @@ class CheckWidget extends StatelessWidget {
                       },
                       isError: false,
                       isLoading: false,
-                      child: Text(buttonTitle ?? ''),
+                      child: Text(buttonTitle ?? '', style: TextStyle(fontSize: 14.sp, color: AppColors.white),),
                     ),
                   ),
                 ),

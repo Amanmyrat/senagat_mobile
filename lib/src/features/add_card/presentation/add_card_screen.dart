@@ -399,7 +399,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                           onPressed: (){
                               controller.startBankVerification();
                           },
-                          child: Text(r'confirm'.tr),
+                          child: Text(r'confirm'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.white),),
                         ),
                       ),
                     ),

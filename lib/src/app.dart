@@ -5,18 +5,24 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:overlay_support/overlay_support.dart';
+import 'package:senagat_mobile/src/features/about_us/presentation/about_us_screen.dart';
 import 'package:senagat_mobile/src/features/add_card/presentation/add_card_screen.dart';
 import 'package:senagat_mobile/src/features/auth_success/presentation/auth_success_screen.dart';
 import 'package:senagat_mobile/src/features/foundation/presentation/foundation_screen.dart';
 import 'package:senagat_mobile/src/features/home/controller/home_controller.dart';
+import 'package:senagat_mobile/src/features/identify/presentation/identify_screen.dart';
+import 'package:senagat_mobile/src/features/identity_verification/presentation/identity_verification_screen.dart';
+import 'package:senagat_mobile/src/features/lang_settings/presentation/lang_settings_screen.dart';
 import 'package:senagat_mobile/src/features/loan/presentation/loan_screen.dart';
 import 'package:senagat_mobile/src/features/net_and_tv/presentation/net_and_tv_screen.dart';
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
+import 'package:senagat_mobile/src/features/notifications_settings/presentation/notifications_settings_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/payment_screen.dart';
 import 'package:senagat_mobile/src/features/qr_code/presentation/qr_code_screen.dart';
 import 'package:senagat_mobile/src/features/register/presentation/register_screen.dart';
 import 'package:senagat_mobile/src/features/register_confirmation/presentation/register_confirmation.dart';
 import 'package:senagat_mobile/src/features/register_password_setup/presentation/register_password_setup_screen.dart';
+import 'package:senagat_mobile/src/features/service_numbers/presentation/service_number_screen.dart';
 import 'package:senagat_mobile/src/features/service_settings/controller/service_settings_controller.dart';
 import 'package:senagat_mobile/src/features/service_settings/presentation/service_settings_screen.dart';
 import 'package:senagat_mobile/src/features/welcome/presentation/welcome_screen.dart';
@@ -161,6 +167,30 @@ class _SenagatAppState extends State<SenagatApp> {
               GetPage(
                 name: LoanScreen.route,
                 page: () => const LoanScreen(),
+              ),
+              GetPage(
+                name: NotificationsSettingsScreen.route,
+                page: () => const NotificationsSettingsScreen(),
+              ),
+              GetPage(
+                name: LangSettingsScreen.route,
+                page: () => const LangSettingsScreen(),
+              ),
+              GetPage(
+                name: AboutUsScreen.route,
+                page: () => const AboutUsScreen(),
+              ),
+              GetPage(
+                name: ServiceNumberScreen.route,
+                page: () => const ServiceNumberScreen(),
+              ),
+              GetPage(
+                name: IdentifyScreen.route,
+                page: () => const IdentifyScreen(),
+              ),
+              GetPage(
+                name: IdentityVerificationScreen.route,
+                page: () => const IdentityVerificationScreen(),
               ),
             ],
           ),

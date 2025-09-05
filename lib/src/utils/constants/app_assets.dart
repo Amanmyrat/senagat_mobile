@@ -35,12 +35,17 @@ class AppAssets {
   static const crossHairIcon = 'assets/icons/Crosshair.svg';
   static const linkIcon = 'assets/icons/Link.svg';
   static const thumbIcon = 'assets/icons/thumbIcon.svg';
+  static const edit = 'assets/icons/PencilSimple.svg';
+  static const filledInfo = 'assets/icons/filledInfo.svg';
+  static const checkBoxIcon = 'assets/icons/CheckBoxIcon.svg';
+  static const pdfIcon = 'assets/icons/FilePdf.svg';
 
 
   static const navigationCreditCardIcon = 'assets/icons/CreditCard.svg';
   static const navigationSettingIcon = 'assets/icons/GearSix.svg';
   static const navigationhouseIcon = 'assets/icons/House.svg';
   static const navigationcardsThreeIcon = 'assets/icons/CardsThree.svg';
+  static const navProfile = 'assets/icons/User.svg';
 
   static const senagatIcon = 'assets/images/senagat.png';
   static const glowingObjectIcon = 'assets/images/glowingObjectIcon.png';

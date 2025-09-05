@@ -287,7 +287,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                       controller.startBankVerification();
                                     }
                                    },
-                                  child: Text(r'send_code'.tr),
+                                  child: Text(r'send_code'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.white),),
                                 ),
                               ),
                             ),
