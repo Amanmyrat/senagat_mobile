@@ -14,7 +14,7 @@ import '../../../widgets/check_widget.dart';
 import '../../../widgets/elevated_button_with_state.dart';
 
 class DeleteCardScreen extends StatefulWidget {
-  static const route = '/delete_card';
+  static const route = '/delete/card';
   const DeleteCardScreen({super.key});
 
   @override
@@ -64,7 +64,7 @@ class _DeleteCardScreenState extends State<DeleteCardScreen> {
                                           SvgPicture.asset(AppAssets.infoIcon, color: AppColors.green,),
                                           SizedBox(width: 6.w,),
                                           Flexible(
-                                            child: Text(r'Пополнение этой банковской карты наличными средствами не разрешается (перечисляется только заработная плата)'.tr,
+                                            child: Text(r'Replenishment_bank'.tr,
                                               style: TextStyle(fontSize: 14, color: AppColors.black, fontFamily: AppFonts.secondaryFont),
                                             ),
                                           ),
@@ -147,14 +147,14 @@ class _DeleteCardScreenState extends State<DeleteCardScreen> {
                                   onPressed: (){
                                     controller.startBankVerification();
                                   },
-                                  child: Text(r'delete'.tr),
+                                  child: Text(r'Remove_card'.tr),
                                 ),
                               ),
                             ),
                           ],
                         ),
                         if(controller.check)
-                          CheckWidget(isLoading: controller.status == Status.loading, isTitle: true, title: r'delete_a_card',),
+                          CheckWidget(isLoading: controller.status == Status.loading, isTitle: true, title: r'Remove_card',),
                       ],
                     ),
                   ),

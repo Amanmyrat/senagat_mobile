@@ -6,7 +6,7 @@ import 'package:senagat_mobile/src/features/about_us/presentation/about_us_scree
 import 'package:senagat_mobile/src/features/identify/presentation/identify_screen.dart';
 import 'package:senagat_mobile/src/features/lang_settings/presentation/lang_settings_screen.dart';
 import 'package:senagat_mobile/src/features/notifications_settings/presentation/notifications_settings_screen.dart';
-import 'package:senagat_mobile/src/features/service_numbers/presentation/service_number_screen.dart';
+import 'package:senagat_mobile/src/features/accounts/presentation/accounts.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
@@ -71,7 +71,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
                           color: AppColors.greyInactive,
                         ),
-                        child: Text(r'Не потвержден'.tr, style: TextStyle(fontSize: 14, color: AppColors.white, fontFamily: AppFonts.secondaryFont),),
+                        child: Text(r'Not_confirmed'.tr, style: TextStyle(fontSize: 14, color: AppColors.white, fontFamily: AppFonts.secondaryFont),),
                       ),
                       SizedBox(width: 10.w,),
                       Text('+99364626088', style: TextStyle(fontSize: 14, color: AppColors.black,),),
@@ -79,11 +79,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
                 SizedBox(height: 32.h,),
-                Text(r'Управление', style: TextStyle(fontSize: 14, color: AppColors.black,),),
+                Text(r'Control'.tr, style: TextStyle(fontSize: 14, color: AppColors.black,),),
                 SizedBox(height: 16.h,),
                 GestureDetector(
                   onTap: (){
-                    Get.toNamed(ServiceNumberScreen.route);
+                    Get.toNamed(AccountScreen.route);
                   },
                   child: Container(
                     padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
@@ -107,7 +107,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           children: [
                             SvgPicture.asset(AppAssets.edit,width: 24.w,),
                             SizedBox(width: 10.w,),
-                            Text(r'Учетные записи'.tr, style: TextStyle(fontSize: 14.sp.sp, color: AppColors.blackText, fontFamily: AppFonts.secondaryFont),),
+                            Text(r'Accounts'.tr, style: TextStyle(fontSize: 14.sp.sp, color: AppColors.blackText, fontFamily: AppFonts.secondaryFont),),
                           ],
                         ),
                         SvgPicture.asset(AppAssets.arrowRightIcon, color: AppColors.black, width: 16.w,)
@@ -146,7 +146,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 children: [
                                   SvgPicture.asset(AppAssets.bellSimpleIcon, color: AppColors.green, width: 24.w,),
                                   SizedBox(width: 10.w,),
-                                  Text(r'Уведомления'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.blackText, fontFamily: AppFonts.secondaryFont),),
+                                  Text(r'notifications'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.blackText, fontFamily: AppFonts.secondaryFont),),
                                 ],
                               ),
                               SvgPicture.asset(AppAssets.arrowRightIcon, color: AppColors.black, width: 16.w,)
@@ -168,7 +168,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 children: [
                                   SvgPicture.asset(AppAssets.globeIcon, color: AppColors.green, width: 24.w,),
                                   SizedBox(width: 10.w,),
-                                  Text(r'Язык'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.blackText, fontFamily: AppFonts.secondaryFont),),
+                                  Text(r'Language'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.blackText, fontFamily: AppFonts.secondaryFont),),
                                 ],
                               ),
                               SvgPicture.asset(AppAssets.arrowRightIcon, color: AppColors.black, width: 16.w,)
@@ -206,7 +206,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           children: [
                             SvgPicture.asset(AppAssets.filledInfo),
                             SizedBox(width: 10.w,),
-                            Text(r'О нас v2.0'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.blackText, fontFamily: AppFonts.secondaryFont),),
+                            Text(r'About_Us_v2.0'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.blackText, fontFamily: AppFonts.secondaryFont),),
                           ],
                         ),
                         SvgPicture.asset(AppAssets.arrowRightIcon, color: AppColors.black, width: 16.w,)

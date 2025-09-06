@@ -38,7 +38,7 @@ class _CardScreenState extends State<CardScreen> {
                 Expanded(
                   child: SingleChildScrollView(
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: AppDimensions.paddingExtraLarge.w,),
+                      padding: EdgeInsets.symmetric(horizontal: AppDimensions.paddingExtraLarge.w, vertical: AppDimensions.paddingMedium,),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -88,7 +88,7 @@ class _CardScreenState extends State<CardScreen> {
                                         width: 1.w,
                                       ),
                                     ),
-                    
+
                                     counter: const SizedBox(),
                                     contentPadding: EdgeInsets.symmetric(
                                       vertical: 16.h,
@@ -175,7 +175,9 @@ class _CardScreenState extends State<CardScreen> {
                           ),
                     
                           SizedBox(height: AppDimensions.padding40.h,),
-                    
+
+                          Text(r'Cards'.tr, style: TextStyle(fontSize: 17.sp, color: AppColors.black),),
+                          SizedBox(height: 16.h,),
                           AnimationLimiter(
                             child: ListView.builder(
                               scrollDirection: Axis.vertical,

@@ -32,9 +32,9 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(r'Реквизиты карты'.tr, style: TextStyle(color: AppColors.black, fontSize: 24.sp),),
+                            Text(r'Card_details'.tr, style: TextStyle(color: AppColors.black, fontSize: 24.sp),),
                             SizedBox(height: AppDimensions.padding40,),
-                            Text(r'Номер карты'.tr, style: TextStyle(color: AppColors.black, fontSize: 14.sp),),
+                            Text(r'Card_number'.tr, style: TextStyle(color: AppColors.black, fontSize: 14.sp),),
                             SizedBox(height: 10.h,),
                             Container(
                               padding: EdgeInsets.all(20),
@@ -50,7 +50,7 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(r'Имя на карте'.tr, style: TextStyle(color: AppColors.black, fontSize: 14.sp),),
+                                    Text(r'name_on_the_card'.tr, style: TextStyle(color: AppColors.black, fontSize: 14.sp),),
                                     SizedBox(height: 10.h,),
                                     Container(
                                       padding: EdgeInsets.all(20),
@@ -66,7 +66,7 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(r'Срок'.tr, style: TextStyle(color: AppColors.black, fontSize: 14.sp),),
+                                    Text(r'term'.tr, style: TextStyle(color: AppColors.black, fontSize: 14.sp),),
                                     SizedBox(height: 10.h,),
                                     Container(
                                       padding: EdgeInsets.all(20),

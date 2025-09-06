@@ -63,7 +63,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                 Padding(
                                   padding: EdgeInsets.only(right: AppDimensions.paddingExtraLarge, top: 22),
                                   child: Align(alignment: Alignment.bottomRight,child:
-                                  Text('Шаг ${controller.pageIndex} из 3'.tr, style: TextStyle(fontSize: 14.sp), )),
+                                  Text('step_of_3'.trParams({'page':controller.pageIndex.toString()}), style: TextStyle(fontSize: 14.sp), )),
                                 ),
                               ],
                             ),

@@ -23,12 +23,12 @@ class InquiriesController extends GetxController with StateControlMixin {
 
 
   List<String> textFieldTitle = [
-    r'Имя',
-    r'Фамилия',
-    r'Отчество',
-    r'Дата рождения',
-    r'Номер паспорта',
-    r'Дата выдачи',
+    r'name'.tr,
+    r'Last_name'.tr,
+    r'Surname'.tr,
+    r'Date_bith'.tr,
+    r'Passport_number'.tr,
+    r'date_issue'.tr,
   ];
 
   final List<String> typeSelection = [

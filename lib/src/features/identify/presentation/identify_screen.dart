@@ -163,7 +163,7 @@ class _IdentifyScreenState extends State<IdentifyScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(r'Проверка личности'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.blackText, fontFamily: AppFonts.secondaryFont),),
+                            Text(r'Identity_verification'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.blackText, fontFamily: AppFonts.secondaryFont),),
                             Row(
                               children: [
                                 Container(
@@ -172,7 +172,7 @@ class _IdentifyScreenState extends State<IdentifyScreen> {
                                     borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
                                     color: AppColors.greyInactive,
                                   ),
-                                  child: Text(r'Не потвержден'.tr, style: TextStyle(fontSize: 14, color: AppColors.white, fontFamily: AppFonts.secondaryFont),),
+                                  child: Text(r'Not_confirmed'.tr, style: TextStyle(fontSize: 14, color: AppColors.white, fontFamily: AppFonts.secondaryFont),),
                                 ),
                                 SizedBox(width: 10.w,),
                                 SvgPicture.asset(AppAssets.arrowRightIcon, color: AppColors.black, width: 16.sp,),
@@ -201,7 +201,7 @@ class _IdentifyScreenState extends State<IdentifyScreen> {
                   onPressed:() {
 
                   },
-                  child: Text(r'Выйти из акаунта'.tr,style: TextStyle(color: AppColors.black, fontSize: 14.sp),),
+                  child: Text(r'Logout'.tr,style: TextStyle(color: AppColors.black, fontSize: 14.sp),),
                 ),
               ),
             ),

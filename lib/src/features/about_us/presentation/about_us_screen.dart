@@ -37,7 +37,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                       children: [
                         Align(
                           alignment: Alignment.topLeft,
-                            child: Text(r'О нас'.tr, style: TextStyle(fontSize: 24.sp, color: AppColors.black),)),
+                            child: Text(r'About_Us'.tr, style: TextStyle(fontSize: 24.sp, color: AppColors.black),)),
                         SizedBox(height: 32.h,),
                         Column(
                           children: [
@@ -45,7 +45,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                             SizedBox(height: AppDimensions.paddingMedium,),
                             Text(r'Senagat töleg'.tr, style: TextStyle(fontSize: 24.sp, color: AppColors.black),),
                             SizedBox(height: 4.h,),
-                            Text(r'Version 2.0'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.black, fontFamily: AppFonts.secondaryFont),),
+                            Text(r'Version_2.0'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.black, fontFamily: AppFonts.secondaryFont),),
                           ],
                         ),
                         SizedBox(height: 18.h,),
@@ -67,7 +67,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(r'Обновление приложения v2.0'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.blackText,),),
+                              Text(r'Recommend_to_your_friends'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.blackText,),),
                               SizedBox(height: 16.h,),
                               SegmentedButton<int>(
                                 segments: List.generate(
@@ -124,7 +124,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                                       fontSize: 14.sp,
                                     ),
                                     decoration: InputDecoration(
-                                      hintText: r'Напиши ваш отзыв'.tr,
+                                      hintText: r'Write_your_review'.tr,
                                       border: OutlineInputBorder(),
                                       focusedBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(
@@ -158,7 +158,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                                         borderRadius: BorderRadius.circular(AppDimensions.paddingMedium.r),
                                         color: AppColors.green
                                       ),
-                                      child: Text(r'Отправить'.tr, style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.secondaryFont, color: AppColors.white),),
+                                      child: Text(r'Send'.tr, style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.secondaryFont, color: AppColors.white),),
                                     ),
                                   ],
                                 ),
@@ -190,7 +190,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                                 Row(
                                   children: [
                                     SizedBox(width: 10.w,),
-                                    Text(r'Обновление приложения v2.0'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.blackText, fontFamily: AppFonts.secondaryFont),),
+                                    Text(r'Application_update_v2.0'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.blackText, fontFamily: AppFonts.secondaryFont),),
                                   ],
                                 ),
                                 SvgPicture.asset(AppAssets.arrowRightIcon, color: AppColors.black, width: 18.w,)

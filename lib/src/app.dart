@@ -27,7 +27,7 @@ import 'package:senagat_mobile/src/features/qr_code/presentation/qr_code_screen.
 import 'package:senagat_mobile/src/features/register/presentation/register_screen.dart';
 import 'package:senagat_mobile/src/features/register_confirmation/presentation/register_confirmation.dart';
 import 'package:senagat_mobile/src/features/register_password_setup/presentation/register_password_setup_screen.dart';
-import 'package:senagat_mobile/src/features/service_numbers/presentation/service_number_screen.dart';
+import 'package:senagat_mobile/src/features/accounts/presentation/accounts.dart';
 import 'package:senagat_mobile/src/features/service_settings/controller/service_settings_controller.dart';
 import 'package:senagat_mobile/src/features/service_settings/presentation/service_settings_screen.dart';
 import 'package:senagat_mobile/src/features/welcome/presentation/welcome_screen.dart';
@@ -187,8 +187,8 @@ class _SenagatAppState extends State<SenagatApp> {
                 page: () => const AboutUsScreen(),
               ),
               GetPage(
-                name: ServiceNumberScreen.route,
-                page: () => const ServiceNumberScreen(),
+                name: AccountScreen.route,
+                page: () => const AccountScreen(),
               ),
               GetPage(
                 name: IdentifyScreen.route,

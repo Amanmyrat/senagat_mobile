@@ -57,7 +57,7 @@ class CheckWidget extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ):
                 Text(
-                  r'Оплата прошла успешна'.tr,
+                  r'Payment_was_successful'.tr,
                   textAlign: TextAlign.center,
                 ),
 

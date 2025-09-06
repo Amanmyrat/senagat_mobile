@@ -20,10 +20,10 @@ class IdentityVerificationController extends GetxController with StateControlMix
 
 
   List<String> textFieldTitle = [
-    r'Имя',
-    r'Фамилия',
-    r'Отчество',
-    r'Дата рождения',
+    r'name'.tr,
+    r'Last_name'.tr,
+    r'Surname'.tr,
+    r'Date_birth'.tr,
   ];
 
 
@@ -47,10 +47,10 @@ class IdentityVerificationController extends GetxController with StateControlMix
         surNameController.text.isNotEmpty &&
         bothDateController.text.isNotEmpty &&
         passportNumberController.text.isNotEmpty){
-      continueEnabled = true;
+      check = true;
       update();
     }else{
-      continueEnabled = false;
+      check = false;
       update();
     }
   }

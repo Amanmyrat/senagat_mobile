@@ -38,7 +38,7 @@ class _CardExpensesScreenState extends State<CardExpensesScreen> {
                     children: [
                       Padding(
                         padding:  EdgeInsets.only(left: 20),
-                        child: Text(r'Траты'.tr, style: TextStyle(color: AppColors.black, fontSize: 24.sp),),
+                        child: Text(r'Spending'.tr, style: TextStyle(color: AppColors.black, fontSize: 24.sp),),
                       ),
                       SizedBox(height: 16.h,),
                       SizedBox(
@@ -167,7 +167,7 @@ class _CardExpensesScreenState extends State<CardExpensesScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(r'История'.tr, style: TextStyle(color: AppColors.black, fontSize: 14.sp),),
+                        Text(r'history'.tr, style: TextStyle(color: AppColors.black, fontSize: 14.sp),),
                       SizedBox(height: 16.h,),
                       Container(
                         padding: EdgeInsets.all(

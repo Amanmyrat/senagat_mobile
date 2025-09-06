@@ -42,7 +42,7 @@ class _IdentityVerificationScreenState extends State<IdentityVerificationScreen>
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  r'Проверка личности'.tr,
+                                  r'Identity_verification'.tr,
                                   style: TextStyle(
                                     fontSize: 24.sp,
                                     color: AppColors.blackText,
@@ -128,7 +128,7 @@ class _IdentityVerificationScreenState extends State<IdentityVerificationScreen>
                                           fontSize: 14.sp,
                                         ),
                                         decoration: InputDecoration(
-                                          hintText: r'Номер паспорта',
+                                          hintText: r'Passport_number',
                                           border: OutlineInputBorder(),
                                           focusedBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.circular(
@@ -162,7 +162,7 @@ class _IdentityVerificationScreenState extends State<IdentityVerificationScreen>
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(r'Скан паспорта'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+                                    Text(r'Passport_scan'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
                                     SizedBox(height: AppDimensions.paddingMedium.h,),
                                     SizedBox(
                                       width: MediaQuery.of(context).size.width,
@@ -180,7 +180,7 @@ class _IdentityVerificationScreenState extends State<IdentityVerificationScreen>
                                         child: Row(
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
-                                            Text(r'Скан паспорта'.tr,style: TextStyle(color: AppColors.greyInactive, fontSize: 14.sp),),
+                                            Text(r'Passport_scan'.tr,style: TextStyle(color: AppColors.greyInactive, fontSize: 14.sp),),
                                             SizedBox(width: AppDimensions.paddingMedium.w,),
                                             SvgPicture.asset(AppAssets.pdfIcon),
                                           ],
@@ -195,7 +195,7 @@ class _IdentityVerificationScreenState extends State<IdentityVerificationScreen>
                         ),
                       ),
                       if(controller.check)
-                        CheckWidget(isLoading: controller.status == Status.loading, isTitle: true, route: DashboardScreen.route,),
+                        CheckWidget(isLoading: controller.status == Status.loading, isTitle: true, title: r'Identity_verification'.tr,),
                     ],
                   ),
                 ),

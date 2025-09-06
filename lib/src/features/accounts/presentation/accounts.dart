@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:senagat_mobile/src/features/service_numbers/controller/service_number_controller.dart';
+import 'package:senagat_mobile/src/features/accounts/controller/accounts_controller.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
 
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
 import '../../../utils/theme/constants/app_fonts.dart';
 
-class ServiceNumberScreen extends StatefulWidget {
-  static const route = '/service/numbers';
-  const ServiceNumberScreen({super.key});
+class AccountScreen extends StatefulWidget {
+  static const route = '/accounts';
+  const AccountScreen({super.key});
 
   @override
-  State<ServiceNumberScreen> createState() => _ServiceNumberScreenState();
+  State<AccountScreen> createState() => _AccountScreenState();
 }
 
-class _ServiceNumberScreenState extends State<ServiceNumberScreen> {
+class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child: GetBuilder<ServiceNumberController>(
-            init: ServiceNumberController(),
+          child: GetBuilder<AccountsController>(
+            init: AccountsController(),
             builder: (controller) {
               return Column(
                 children: [
@@ -34,7 +34,7 @@ class _ServiceNumberScreenState extends State<ServiceNumberScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(r'Учетные записи'.tr, style: TextStyle(fontSize: 24.sp, color: AppColors.black),),
+                            Text(r'Accounts'.tr, style: TextStyle(fontSize: 24.sp, color: AppColors.black),),
                             SizedBox(height: 32.h,),
                             ListView.builder(
                               itemCount: 6,
@@ -66,7 +66,7 @@ class _ServiceNumberScreenState extends State<ServiceNumberScreen> {
                                           child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Text(r'Гос номер'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.blackText,),),
+                                              Text(r'State_number'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.blackText,),),
                                               SizedBox(height: 10.h,),
                                               Column(
                                                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -117,7 +117,7 @@ class _ServiceNumberScreenState extends State<ServiceNumberScreen> {
                                                               borderRadius: BorderRadius.circular(AppDimensions.paddingMedium.r),
                                                               color: AppColors.green
                                                           ),
-                                                          child: Text(r'Сохранить'.tr, style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.secondaryFont, color: AppColors.white),),
+                                                          child: Text(r'Save'.tr, style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.secondaryFont, color: AppColors.white),),
                                                         ),
                                                       ],
                                                     ),

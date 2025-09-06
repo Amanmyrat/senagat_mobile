@@ -6,7 +6,7 @@ import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_scr
 import '../../../core/states/stateful_data.dart';
 
 
-class ServiceNumberController extends GetxController with StateControlMixin, GetSingleTickerProviderStateMixin {
+class AccountsController extends GetxController with StateControlMixin, GetSingleTickerProviderStateMixin {
 
   late final TextEditingController nameController;
   late final TextEditingController lastNameController;
@@ -23,12 +23,12 @@ class ServiceNumberController extends GetxController with StateControlMixin, Get
   int pageIndex = 1;
 
   List<String> serviceNames = [
-    r'ГАИ',
-    r'water',
-    r'gas',
-    r'ligth',
-    r'Интернет',
-    r'Дом. телефон',
+    r'state_traffic_safety_inspectorate'.tr,
+    r'water'.tr,
+    r'gas'.tr,
+    r'ligth'.tr,
+    r'Internet'.tr,
+    r'Home_phone'.tr,
   ];
 
 

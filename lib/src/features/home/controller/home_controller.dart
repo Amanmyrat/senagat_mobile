@@ -43,8 +43,8 @@ class HomeController extends GetxController with StateControlMixin {
 
   final List<String> serviceTitle = [
     r'inquiries'.tr,
-    'Карты',
-    'Кредит',
+    r'Cards'.tr,
+    r'Credits'.tr,
   ];
 
   final List<String> serviceImage = [

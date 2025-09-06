@@ -221,9 +221,9 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                                 color: AppColors.blackText
                                               ),
                                               tabs: [
-                                              Tab(text: '1_year',),
-                                              Tab(text: '2_years',),
-                                              Tab(text: '3_years',),
+                                              Tab(text: r'1_year'.tr,),
+                                              Tab(text: r'2_years'.tr,),
+                                              Tab(text: r'3_years'.tr,),
                                             ],),
                                           ),
                                         ),

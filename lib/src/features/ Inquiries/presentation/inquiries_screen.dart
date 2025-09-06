@@ -59,7 +59,7 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                               Padding(
                                 padding: EdgeInsets.only(right: AppDimensions.paddingExtraLarge, top: 22),
                                 child: Align(alignment: Alignment.bottomRight,child:
-                                Text('Шаг ${controller.pageIndex} из 5'.tr, style: TextStyle(fontSize: 14.sp), )),
+                                Text('step_of_5'.trParams({'page': controller.pageIndex.toString()}), style: TextStyle(fontSize: 14.sp), )),
                               ),
                             ],
                           ),
@@ -70,7 +70,7 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    r'Выберите тип справки'.tr,
+                                    r'Select_the_type_of_certificate'.tr,
                                     style: TextStyle(
                                       fontSize: 24.sp,
                                       color: AppColors.blackText,
@@ -82,7 +82,7 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                   DropdownButtonFormField2<String>(
                                       value: controller.selectedDropdownType,
                                       hint: Text(
-                                        r"Тип справки".tr,
+                                        r"Type_of_certificate".tr,
                                         style: TextStyle(fontSize: 14.sp),
                                       ),
                                       decoration: InputDecoration(

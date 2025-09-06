@@ -27,12 +27,12 @@ class _NotificationsSettingsScreenState extends State<NotificationsSettingsScree
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(r'Уведомления'.tr, style: TextStyle(fontSize: 24.sp, color: AppColors.black),),
+                    Text(r'notifications'.tr, style: TextStyle(fontSize: 24.sp, color: AppColors.black),),
                     SizedBox(height: 32.h,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(r'СМС'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.black,),),
+                        Text(r'SMS'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.black,),),
                         FlutterSwitch(
                           width: 47.w,
                           height: 27.h,
@@ -55,7 +55,7 @@ class _NotificationsSettingsScreenState extends State<NotificationsSettingsScree
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(r'Пуш уведомления'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.black,),),
+                        Text(r'Push_notifications'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.black,),),
                         FlutterSwitch(
                           width: 47.w,
                           height: 27.h,

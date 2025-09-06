@@ -30,7 +30,7 @@ class _PassportDetailsState extends State<PassportDetails> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                r'Данные паспорта'.tr,
+                r'Passport_details'.tr,
                 style: TextStyle(
                   fontSize: 24.sp,
                   color: AppColors.blackText,
@@ -88,7 +88,7 @@ class _PassportDetailsState extends State<PassportDetails> {
                     );
                   }
               ),
-              Text(r'Место выдачи'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+              Text(r'Place_of_issue'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
               SizedBox(height: AppDimensions.paddingMedium,),
               Theme(
                 data: Theme.of(context).copyWith(
@@ -103,7 +103,7 @@ class _PassportDetailsState extends State<PassportDetails> {
                 ),
                 child: DropdownButtonFormField2<String>(
                   value: widget.controller.selectedDropdownIssuance,
-                  hint: Text(r"Место выдачи".tr, style: TextStyle(
+                  hint: Text(r"Place_of_issue".tr, style: TextStyle(
                     fontSize: 14.sp,),
                   ),
                   decoration: InputDecoration(
