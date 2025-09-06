@@ -248,7 +248,7 @@ class _FoundationScreenState extends State<FoundationScreen> {
                               'selectedServiceTitle': r'charitable_foundation'.tr,
                             });
                           },
-                          child: Text(r'donate'.tr),
+                          child: Text(r'donate'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.white),),
                         ),
                       ),
                     ),

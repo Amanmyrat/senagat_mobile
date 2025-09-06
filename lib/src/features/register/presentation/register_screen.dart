@@ -222,7 +222,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   : controller.continueEnabled
                                   ? controller.onLoginTap
                                   : null,
-                              child: Text(r'send_code'.tr),
+                              child: Text(r'send_code'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.white),),
                             ),
                           ),
                         ),

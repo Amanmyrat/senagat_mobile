@@ -88,7 +88,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                                     },
                                     isError: false,
                                     isLoading: false,
-                                    child: Text(r'go_to_catologist'.tr),
+                                    child: Text(r'go_to_catologist'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.white),),
                                   ),
                                 ),
                               ],

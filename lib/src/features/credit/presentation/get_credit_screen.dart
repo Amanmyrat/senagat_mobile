@@ -364,7 +364,7 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                           onPressed: controller.continueEnabled ? () {
                             Get.offAndToNamed(LoanScreen.route);
                           } : null,
-                          child: Text(r'next'.tr),
+                          child: Text(r'next'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.white),),
                         ),
                       ),
                     ),

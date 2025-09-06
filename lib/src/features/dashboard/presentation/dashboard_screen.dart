@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:senagat_mobile/src/features/blank/presentation/blank_screen.dart';
 import 'package:senagat_mobile/src/features/card/presentation/card_screen.dart';
 import 'package:senagat_mobile/src/features/home/presentation/home_screen.dart';
+import 'package:senagat_mobile/src/features/profile/presentation/profile_screen.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
 import 'package:senagat_mobile/src/widgets/bottom_nav_bar.dart';
@@ -49,7 +50,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 nestedId: NestedNavigationIds.card,
               ),
               CustomNavigator(
-                initialRoute: BlankScreen(),
+                initialRoute: ProfileScreen(),
                 nestedId: NestedNavigationIds.settings,
               ),
             ],
@@ -77,8 +78,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 label: r'card'.tr,
               ),
               BottomNavBarItem(
-                icon: AppAssets.navigationSettingIcon,
-                label: r'settings'.tr,
+                icon: AppAssets.navProfile,
+                label: r'proflie'.tr,
               ),
             ],
           ),

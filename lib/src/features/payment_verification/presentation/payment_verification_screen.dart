@@ -306,7 +306,7 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                                 },
                                 isError: controller.status == Status.error,
                                 isLoading: controller.status == Status.loading,
-                                child: Text(controller.serviceName!.isEmpty ? r'next'.tr : r'pay'.tr),
+                                child: Text(controller.serviceName!.isEmpty ? r'next'.tr : r'pay'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.white),),
                               ),
                             ),
                           ),

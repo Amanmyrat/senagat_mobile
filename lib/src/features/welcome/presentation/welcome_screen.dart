@@ -74,18 +74,18 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           Theme(
                             data: Theme.of(context).copyWith(
                               canvasColor: AppColors.green,
-                              cardTheme: const CardThemeData(
+                              cardTheme: CardThemeData(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.all(
-                                    Radius.circular(12),
+                                    Radius.circular(12.r),
                                   ),
                                 ),
                               ),
                             ),
                             child: Container(
-                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              padding: EdgeInsets.symmetric(horizontal: AppDimensions.paddingMedium.w),
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.r),
+                                borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
                                 color: AppColors.green,
                               ),
                               child: DropdownButton<String>(
@@ -116,7 +116,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                       code,
                                       style:  TextStyle(
                                         fontSize: 12.sp,
-                                        color: Colors.white,
+                                        color: AppColors.white,
                                       ),
                                     ),
                                   );
@@ -129,7 +129,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       ),
                       SizedBox(height: 32.h),
                       ClipRRect(
-                        borderRadius: BorderRadius.circular(20.r),
+                        borderRadius: BorderRadius.circular(AppDimensions.borderRadiusExtraLarge.r),
                         child: BackdropFilter(
                           filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
 
@@ -140,7 +140,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                               AppDimensions.paddingExtraLarge,
                             ),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.r),
+                              borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
                               color: Colors.transparent.withOpacity(0.05),
                             ),
                             child: Column(
@@ -238,7 +238,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           isLoading: controller.status == Status.loading,
                           isError: controller.status == Status.error,
                           onPressed: controller.navigateToCreateAccount,
-                          child: Text(r'create_account'.tr),
+                          child: Text(r'create_account'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.white),),
                         ),
                       ),
                       SizedBox(height: AppDimensions.paddingExtraLarge.h),

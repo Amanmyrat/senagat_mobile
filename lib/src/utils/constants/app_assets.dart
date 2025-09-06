@@ -35,6 +35,10 @@ class AppAssets {
   static const crossHairIcon = 'assets/icons/Crosshair.svg';
   static const linkIcon = 'assets/icons/Link.svg';
   static const thumbIcon = 'assets/icons/thumbIcon.svg';
+  static const edit = 'assets/icons/PencilSimple.svg';
+  static const filledInfo = 'assets/icons/filledInfo.svg';
+  static const checkBoxIcon = 'assets/icons/CheckBoxIcon.svg';
+  static const pdfIcon = 'assets/icons/FilePdf.svg';
   static const beletIcon = 'assets/icons/beletIcon.png';
   static const airTicket = 'assets/icons/airTicket.png';
   static const railwayTickets = 'assets/icons/railwayTickets.png';
@@ -49,6 +53,7 @@ class AppAssets {
   static const navigationSettingIcon = 'assets/icons/GearSix.svg';
   static const navigationhouseIcon = 'assets/icons/House.svg';
   static const navigationcardsThreeIcon = 'assets/icons/CardsThree.svg';
+  static const navProfile = 'assets/icons/User.svg';
 
   static const senagatIcon = 'assets/images/senagat.png';
   static const senagatIconMini = 'assets/images/senagatIconMini.png';

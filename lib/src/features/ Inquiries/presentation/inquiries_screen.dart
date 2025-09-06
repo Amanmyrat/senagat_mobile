@@ -413,7 +413,7 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                           onPressed:() {
                             controller.onTap();
                           },
-                          child: Text(r'next'.tr),
+                          child: Text(r'next'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.white),),
                         ),
                       ),
                     ),
