@@ -40,6 +40,9 @@ class AppAssets {
   static const railwayTickets = 'assets/icons/railwayTickets.png';
   static const awtoTicket = 'assets/icons/awtoTicket.png';
   static const arrowLeftRight = 'assets/icons/ArrowsLeftRight.svg';
+  static const trash = 'assets/icons/Trash.svg';
+  static const edit = 'assets/icons/PencilSimple.svg';
+  static const diagram = 'assets/icons/diagramma.svg';
 
 
   static const navigationCreditCardIcon = 'assets/icons/CreditCard.svg';
@@ -48,6 +51,7 @@ class AppAssets {
   static const navigationcardsThreeIcon = 'assets/icons/CardsThree.svg';
 
   static const senagatIcon = 'assets/images/senagat.png';
+  static const senagatIconMini = 'assets/images/senagatIconMini.png';
   static const glowingObjectIcon = 'assets/images/glowingObjectIcon.png';
   static const spreadsheet = 'assets/images/3DSpreadsheet.png';
   static const sandClock = 'assets/images/sandClock.png';
@@ -55,6 +59,9 @@ class AppAssets {
   static const threeDPercent = 'assets/images/3DPercent.png';
 
   static const cardImage = 'assets/images/cardImage.jpg';
+  static const cardImage2 = 'assets/images/cardImage2.jpg';
+  static const cardImage3 = 'assets/images/cardImage3.jpg';
+  static const cardImage4 = 'assets/images/cardImage4.jpg';
 
   static const ruIcon = 'assets/icons/RU.png';
   static const enIcon = 'assets/icons/US.png';

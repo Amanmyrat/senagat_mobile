@@ -7,6 +7,10 @@ import 'package:get_storage/get_storage.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:senagat_mobile/src/features/add_card/presentation/add_card_screen.dart';
 import 'package:senagat_mobile/src/features/auth_success/presentation/auth_success_screen.dart';
+import 'package:senagat_mobile/src/features/card_detials/presentation/card_details_screen.dart';
+import 'package:senagat_mobile/src/features/card_expenses/presentation/card_expenses_screen.dart';
+import 'package:senagat_mobile/src/features/card_settings/presentation/card_settings_screen.dart';
+import 'package:senagat_mobile/src/features/delete_card/presentation/delete_card_screen.dart';
 import 'package:senagat_mobile/src/features/category/presentation/category_screen.dart';
 import 'package:senagat_mobile/src/features/foundation/presentation/foundation_screen.dart';
 import 'package:senagat_mobile/src/features/home/controller/home_controller.dart';
@@ -28,6 +32,7 @@ import 'package:senagat_mobile/src/utils/theme/app_theme.dart';
 import 'package:senagat_mobile/src/utils/theme/controller/theme_controller.dart';
 import 'features/ Inquiries/presentation/inquiries_screen.dart';
 import 'features/add_card/controller/add_card_controller.dart';
+import 'features/card/presentation/card_screen.dart';
 import 'features/credit/presentation/get_credit_screen.dart';
 import 'features/dashboard/controller/dashboard_controller.dart';
 import 'features/dashboard/presentation/dashboard_screen.dart';
@@ -162,6 +167,22 @@ class _SenagatAppState extends State<SenagatApp> {
               GetPage(
                 name: LoanScreen.route,
                 page: () => const LoanScreen(),
+              ),
+              GetPage(
+                name: CardSettingsScreen.route,
+                page: () => const CardSettingsScreen(),
+              ),
+              GetPage(
+                name: DeleteCardScreen.route,
+                page: () => const DeleteCardScreen(),
+              ),
+              GetPage(
+                name: CardDetailsScreen.route,
+                page: () => const CardDetailsScreen(),
+              ),
+              GetPage(
+                name: CardExpensesScreen.route,
+                page: () => const CardExpensesScreen(),
               ),
               GetPage(
                 name: CategoryScreen.route,

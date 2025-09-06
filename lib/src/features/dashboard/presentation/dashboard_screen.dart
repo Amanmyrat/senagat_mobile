@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/features/blank/presentation/blank_screen.dart';
+import 'package:senagat_mobile/src/features/card/presentation/card_screen.dart';
 import 'package:senagat_mobile/src/features/home/presentation/home_screen.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
@@ -44,7 +45,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 nestedId: NestedNavigationIds.catalog,
               ),
               CustomNavigator(
-                initialRoute: BlankScreen(),
+                initialRoute: CardScreen(),
                 nestedId: NestedNavigationIds.card,
               ),
               CustomNavigator(

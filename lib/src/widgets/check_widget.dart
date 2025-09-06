@@ -13,10 +13,11 @@ class CheckWidget extends StatelessWidget {
 
   final bool isTitle;
   final bool isLoading;
-  final String route;
+  final String? route;
   final String? buttonTitle;
+  final String? title;
 
-  const CheckWidget({super.key, required this.isTitle, required this.isLoading, required this.route,  this.buttonTitle,});
+  const CheckWidget({super.key, required this.isTitle, required this.isLoading, this.route,  this.buttonTitle, this.title,});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class CheckWidget extends StatelessWidget {
                   SizedBox(height: 22.h,),
 
                 if (isTitle == true)
-                  Text(r'Добавление карты'.tr, style: TextStyle(color: AppColors.blackText, fontSize: 24.sp),),
+                  Text(title ?? '', style: TextStyle(color: AppColors.blackText, fontSize: 24.sp),),
 
                 SizedBox(height: 22.h),
                 isLoading ? SizedBox(
@@ -70,7 +71,7 @@ class CheckWidget extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                     child: ElevatedButtonWithState(
                       onPressed: (){
-                        Get.offNamed(route);
+                        Get.offNamed(route ?? '');
                       },
                       isError: false,
                       isLoading: false,
