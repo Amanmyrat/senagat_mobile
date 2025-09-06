@@ -38,7 +38,7 @@ class _CardScreenState extends State<CardScreen> {
                 Expanded(
                   child: SingleChildScrollView(
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: AppDimensions.paddingExtraLarge.w,),
+                      padding: EdgeInsets.symmetric(horizontal: AppDimensions.paddingExtraLarge.w, vertical: AppDimensions.paddingMedium,),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
