@@ -117,4 +117,6 @@ const Map<String, String> tmTm = {
   r'Select_city': r'Şäher saýlaň',
   r'Select_bank': r'Bank saýlaň',
   r'Bank': r'Bank',
+  r'payments': r'Tölegler',
+
 };

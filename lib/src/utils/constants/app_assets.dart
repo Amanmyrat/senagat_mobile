@@ -35,6 +35,11 @@ class AppAssets {
   static const crossHairIcon = 'assets/icons/Crosshair.svg';
   static const linkIcon = 'assets/icons/Link.svg';
   static const thumbIcon = 'assets/icons/thumbIcon.svg';
+  static const beletIcon = 'assets/icons/beletIcon.png';
+  static const airTicket = 'assets/icons/airTicket.png';
+  static const railwayTickets = 'assets/icons/railwayTickets.png';
+  static const awtoTicket = 'assets/icons/awtoTicket.png';
+  static const arrowLeftRight = 'assets/icons/ArrowsLeftRight.svg';
 
 
   static const navigationCreditCardIcon = 'assets/icons/CreditCard.svg';

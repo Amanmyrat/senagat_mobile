@@ -117,4 +117,6 @@ const Map<String, String> ruRu = {
   r'Select_city': r'Выберите город',
   r'Select_bank': r'Выберите банк',
   r'Bank': r'Банк',
+  r'payments': r'Платежи',
+
 };
