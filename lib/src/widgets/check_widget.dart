@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
+import 'package:senagat_mobile/src/features/foundation/presentation/foundation_screen.dart';
 
 import '../utils/constants/app_assets.dart';
 import '../utils/theme/constants/app_colors.dart';
@@ -38,10 +39,13 @@ class CheckWidget extends StatelessWidget {
               children:  [
                 Image.asset(AppAssets.senagatIcon),
                 if (isTitle == true)
-                  SizedBox(height: 22.h,),
-
-                if (isTitle == true)
-                  Text(title ?? '', style: TextStyle(color: AppColors.blackText, fontSize: 24.sp),),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 22.h,),
+                      Text(title ?? '', style: TextStyle(color: AppColors.blackText, fontSize: 24.sp),),
+                    ],
+                  ),
 
                 SizedBox(height: 22.h),
                 isLoading ? SizedBox(
@@ -71,7 +75,11 @@ class CheckWidget extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                     child: ElevatedButtonWithState(
                       onPressed: (){
-                        Get.offNamed(route ?? '');
+                        if(route == FoundationScreen.route){
+                          Get.offNamed(route ?? '');
+                        }else {
+                          Get.offAllNamed(route ?? '');
+                        }
                       },
                       isError: false,
                       isLoading: false,

@@ -116,7 +116,10 @@ class InquiriesController extends GetxController with StateControlMixin {
       continueEnabled = false;
       update();
     }else if(pageIndex == 3 && continueEnabled){
-      Get.toNamed(PaymentVerificationScreen.route);
+      Get.toNamed(PaymentVerificationScreen.route, arguments: {
+        'serviceName': 'inquiries',
+        'isInquiries': true
+      });
       update();
     }
 

@@ -163,7 +163,7 @@ class _IdentifyScreenState extends State<IdentifyScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(r'Identity_verification'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.blackText, fontFamily: AppFonts.secondaryFont),),
+                            Expanded(child: Text(r'Identity_verification'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.blackText, fontFamily: AppFonts.secondaryFont),)),
                             Row(
                               children: [
                                 Container(

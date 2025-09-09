@@ -246,6 +246,8 @@ class _FoundationScreenState extends State<FoundationScreen> {
                           onPressed: (){
                             Get.offNamed(PaymentScreen.route, arguments: {
                               'selectedServiceTitle': r'charitable_foundation'.tr,
+                              'isInquiries': false,
+
                             });
                           },
                           child: Text(r'donate'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.white),),

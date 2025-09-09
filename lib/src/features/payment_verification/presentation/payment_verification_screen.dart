@@ -45,7 +45,7 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               CustomAppBar(),
-                              if(controller.serviceName!.isEmpty)
+                              if(controller.isInquiries)
                                 Padding(
                                   padding: EdgeInsets.only(right: AppDimensions.paddingExtraLarge, top: 22),
                                   child: Align(alignment: Alignment.bottomRight,child:
@@ -91,7 +91,7 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                                                       child: Column(
                                                         crossAxisAlignment: CrossAxisAlignment.center,
                                                         children: [
-                                                          if(controller.serviceIcon!.isNotEmpty)
+                                                          if(controller.isInquiries == false)
                                                             Container(
                                                               padding:EdgeInsets.all(AppDimensions.paddingMedium.w) ,
                                                               decoration: BoxDecoration(
@@ -102,7 +102,7 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                                                             ),
 
                                                           Text(
-                                                            controller.serviceName!.isEmpty ? r'Получение справки'.tr : controller.serviceName ?? '',
+                                                            controller.isInquiries ? r'Получение справки'.tr : controller.serviceName ?? '',
                                                             style: TextStyle(
                                                               fontSize: 17.sp,
                                                               color: AppColors.white,
@@ -171,7 +171,7 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                                                             ),
                                                           ),
                                                           Divider(color: AppColors.dividerColor, height: 1.h,),
-                                                          controller.serviceIcon!.isEmpty ?
+                                                          controller.isInquiries ?
                                                           Column(
                                                             children: [
                                                               Padding(
@@ -258,7 +258,7 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                                                 ),
 
                                                 Positioned(
-                                                  top: controller.serviceIcon!.isEmpty ? 125 : 170,
+                                                  top: controller.isInquiries ? 125 : 170,
                                                   left: -10,
                                                   child: Container(
                                                     width: 30.w,
@@ -270,7 +270,7 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                                                   ),
                                                 ),
                                                 Positioned(
-                                                  top: controller.serviceIcon!.isEmpty ? 125 : 170,
+                                                  top: controller.isInquiries ? 125 : 170,
                                                   right: -10,
                                                   child: Container(
                                                     width: 30.w,
@@ -298,7 +298,7 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                               width: MediaQuery.of(context).size.width,
                               child: ElevatedButtonWithState(
                                 onPressed: (){
-                                  if(controller.serviceName!.isEmpty){
+                                  if(controller.isInquiries){
                                     Get.toNamed(PaymentScreen.route);
                                   }else {
                                     controller.startBankVerification();
@@ -306,7 +306,7 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                                 },
                                 isError: controller.status == Status.error,
                                 isLoading: controller.status == Status.loading,
-                                child: Text(controller.serviceName!.isEmpty ? r'next'.tr : r'pay'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.white),),
+                                child: Text(controller.isInquiries ? r'next'.tr : r'pay'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.white),),
                               ),
                             ),
                           ),
@@ -314,8 +314,8 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                       ),
                       if(controller.check == true)
                         CheckWidget(isLoading: controller.status == Status.loading,
-                          isTitle: false, route: controller.serviceIcon!.isEmpty ? FoundationScreen.route : DashboardScreen.route,
-                          buttonTitle:controller.serviceIcon!.isEmpty ? r'fund_page'.tr : r'home_page'.tr,
+                          isTitle: false, route: controller.isInquiries ? FoundationScreen.route : DashboardScreen.route,
+                          buttonTitle:controller.isInquiries ? r'fund_page'.tr : r'home_page'.tr,
                         ),
                     ],
                   ),

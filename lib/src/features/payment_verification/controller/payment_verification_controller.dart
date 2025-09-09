@@ -13,14 +13,20 @@ class PaymentVerificationController extends GetxController with StateControlMixi
   late String? number;
   late String? sum;
   late String? userName;
+  late bool isInquiries;
 
   @override
   void onInit() {
-    serviceName = Get.arguments['serviceName'];
-    serviceIcon = Get.arguments['serviceIcon'];
-    number = Get.arguments['number'];
-    sum = Get.arguments['sum'];
-    userName = Get.arguments['userName'];
+    try{
+      serviceName = Get.arguments['serviceName'];
+      serviceIcon = Get.arguments['serviceIcon'];
+      isInquiries = Get.arguments['isInquiries'];
+      number = Get.arguments['number'];
+      sum = Get.arguments['sum'];
+      userName = Get.arguments['userName'];
+    }catch (e){
+      print(e);
+    }
     super.onInit();
   }
 

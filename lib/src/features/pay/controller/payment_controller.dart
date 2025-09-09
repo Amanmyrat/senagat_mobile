@@ -19,6 +19,7 @@ class PaymentController extends GetxController with StateControlMixin {
 
   String serviceName = '';
   String serviceIcon = '';
+  bool isInquiries = true;
 
 
   late final FocusNode phoneFocus;
@@ -28,6 +29,7 @@ class PaymentController extends GetxController with StateControlMixin {
     try{
       serviceName = Get.arguments['selectedServiceTitle'];
       serviceIcon = Get.arguments['selectedServiceIcon'];
+      isInquiries = Get.arguments['isInquiries'];
     }catch(e){
       print(e);
     }
@@ -58,6 +60,7 @@ class PaymentController extends GetxController with StateControlMixin {
             'number': phoneController.text,
             'sum': sumController.text,
             'userName': nameController.text,
+            'isInquiries': isInquiries,
       });
   }
 

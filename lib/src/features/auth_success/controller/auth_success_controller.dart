@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
@@ -28,7 +29,8 @@ class AuthSuccessController extends GetxController with StateControlMixin{
 
   void _navigateToNextScreen() {
     try {
-      Get.toNamed(DashboardScreen.route);
+      Navigator.of(Get.context!).pushNamedAndRemoveUntil(
+          DashboardScreen.route, (Route<dynamic> route) => false);
     } catch (e) {
       status = Status.error;
       print('Error navigating to next screen: $e');

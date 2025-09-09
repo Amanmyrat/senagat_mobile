@@ -594,7 +594,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                           ListView.builder(
                               shrinkWrap: true,
-                              itemCount: controller.payBox.length,
+                              itemCount: controller.payBox.length > 3 ? 3 : controller.payBox.length,
                               physics: NeverScrollableScrollPhysics(),
                               itemBuilder: (context, index){
                             return Container(

@@ -79,7 +79,7 @@ class _CardExpensesScreenState extends State<CardExpensesScreen> {
                                       "200,00",
                                       style: TextStyle(fontSize: 24.sp, color: AppColors.black),
                                     ),
-                                    SizedBox(height: 20),
+                                    SizedBox(height: 20.h),
                                     SizedBox(
                                       height: 145.h,
                                       child: BarChart(
@@ -87,8 +87,8 @@ class _CardExpensesScreenState extends State<CardExpensesScreen> {
                                           alignment: BarChartAlignment.spaceAround,
                                           barGroups: [
                                             makeGroupData(0, 1, isActive: false),
-                                            makeGroupData(1, 4),
-                                            makeGroupData(2, 4),
+                                            makeGroupData(1, 1000),
+                                            makeGroupData(2, 2000),
                                             makeGroupData(3, 5000),
                                             makeGroupData(4, 10000),
                                           ],
@@ -102,9 +102,9 @@ class _CardExpensesScreenState extends State<CardExpensesScreen> {
                                                   switch (value.toInt()) {
                                                     case 0:
                                                       return Text("0 tmt", style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.secondaryFont));
-                                                    case 10:
+                                                    case 1000:
                                                       return Text("10 tmt", style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.secondaryFont));
-                                                    case 40:
+                                                    case 2000:
                                                       return Text("40 tmt", style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.secondaryFont));
                                                     case 5000:
                                                       return Text("100 tmt", style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.secondaryFont));
