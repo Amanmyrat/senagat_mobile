@@ -5,6 +5,7 @@ import 'package:senagat_mobile/src/features/%20Inquiries/presentation/inquiries_
 import 'package:senagat_mobile/src/features/add_card/controller/add_card_controller.dart';
 import 'package:senagat_mobile/src/features/add_card/model/card_model.dart';
 import 'package:senagat_mobile/src/features/credit/presentation/get_credit_screen.dart';
+import 'package:senagat_mobile/src/features/get_card/presentation/get_card_screen.dart';
 import 'package:senagat_mobile/src/features/net_and_tv/presentation/net_and_tv_screen.dart';
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/payment_screen.dart';
@@ -55,7 +56,7 @@ class HomeController extends GetxController with StateControlMixin {
 
   final List<String> serviceRoute = [
     InquiriesScreen.route,
-    InquiriesScreen.route,
+    GetCardScreen.route,
     GetCreditScreen.route,
   ];
 

@@ -61,6 +61,8 @@ class AppAssets {
   static const sandClock = 'assets/images/sandClock.png';
   static const threeDCard = 'assets/images/3DCard.png';
   static const threeDPercent = 'assets/images/3DPercent.png';
+  static const paymentCardImage = 'assets/images/payment_card_image.png';
+  static const paymentCardImage2 = 'assets/images/payment_card_image2.png';
 
   static const cardImage = 'assets/images/cardImage.jpg';
   static const cardImage2 = 'assets/images/cardImage2.jpg';

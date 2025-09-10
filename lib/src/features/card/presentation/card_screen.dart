@@ -162,7 +162,7 @@ class _CardScreenState extends State<CardScreen> {
                                         fontSize: 24.sp,
                                         color: AppColors.white
                                       ),),
-                                      Text(r'Траты за Август'.tr, style: TextStyle(
+                                      Text(r'Expenses_per_month'.tr, style: TextStyle(
                                           fontSize: 14.sp,
                                           color: AppColors.greyInactive
                                       ),)
@@ -173,97 +173,106 @@ class _CardScreenState extends State<CardScreen> {
                               ),
                             ),
                           ),
-                    
+
                           SizedBox(height: AppDimensions.padding40.h,),
 
                           Text(r'Cards'.tr, style: TextStyle(fontSize: 17.sp, color: AppColors.black),),
                           SizedBox(height: 16.h,),
-                          AnimationLimiter(
-                            child: ListView.builder(
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: controller.cardBox.length,
-                              itemBuilder: (context, index) {
-                               return AnimationConfiguration.staggeredList(
-                                 position: index,
-                                 duration: 3.seconds,
-                                 child: SlideAnimation(
-                                   verticalOffset: 50,
-                                   child: FadeInAnimation(
-                                     child: Row(
-                                       children: [
-                                         Expanded(
-                                           child: GestureDetector(
-                                             onTap:(){
-                                               Get.toNamed(CardSettingsScreen.route);
-                                             },
-                                             child: Container(
-                                                padding: EdgeInsets.all(
-                                                  AppDimensions.paddingExtraLarge,),
-                                                margin: EdgeInsets.only(bottom: 10),
-                                                decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(10.r),
-                                                  image: DecorationImage(
-                                                    image: AssetImage(controller.cardBox.getAt(index)!.cardDesign),
-                                                    fit: BoxFit.cover,),),
-                                                child: Column(
-                                                  children: [
-                                                    Align(alignment: Alignment.topLeft,
-                                                      child: Text('Senagat Bank', style:
-                                                      TextStyle(
-                                                        color: AppColors.white, fontSize: 14,),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: AppDimensions.paddingExtraLarge.h,),
-                                                    Row(children: [
-                                                      Text('xxxx', style: TextStyle(
-                                                        fontSize: 24.sp, color: AppColors.white,),
-                                                      ),
-                                                      SizedBox(
-                                                        width: AppDimensions.paddingExtraLarge.h,),
-                                                      Text('0689', style: TextStyle(
-                                                        fontSize: 24.sp, color: AppColors.white,),
-                                                      ),
-                                                      SizedBox(
-                                                        width: AppDimensions.paddingExtraLarge.h,),
-                                                    ],),
-                                                  ],
-                                                ),
+
+                          controller.cardBox.length == 0 ?
+                          GestureDetector(
+                              onTap: () {
+                                Get.toNamed(AddCardScreen.route);
+                              },
+                              child: Container(
+                                height: 120.h,
+                                width:  MediaQuery.of(context).size.width,
+                                margin: EdgeInsets.only(bottom: 10),
+                                decoration:  BoxDecoration(
+                                  borderRadius: BorderRadius.circular(
+                                    AppDimensions.borderRadiusMedium.r,
+                                  ),
+                                  color: AppColors.inputFillBackground,
+                                ),
+                                child:  Center(
+                                  child: SvgPicture.asset(AppAssets.plusIcon,width: 30.w, color: AppColors.black),
+                                ),
+                              ) ):
+                          ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: controller.cardBox.length,
+                            itemBuilder: (context, index) {
+                             return Row(
+                               children: [
+                                 Expanded(
+                                   child: GestureDetector(
+                                     onTap:(){
+                                       Get.toNamed(CardSettingsScreen.route);
+                                     },
+                                     child: Container(
+                                        padding: EdgeInsets.all(
+                                          AppDimensions.paddingExtraLarge,),
+                                        margin: EdgeInsets.only(bottom: 10),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10.r),
+                                          image: DecorationImage(
+                                            image: AssetImage(controller.cardBox.getAt(index)!.cardDesign),
+                                            fit: BoxFit.cover,),),
+                                        child: Column(
+                                          children: [
+                                            Align(alignment: Alignment.topLeft,
+                                              child: Text('Senagat Bank', style:
+                                              TextStyle(
+                                                color: AppColors.white, fontSize: 14,),
                                               ),
-                                           ),
-                                         ),
-                                         SizedBox(width: 10.w,),
-                                         if(controller.cardBox.length == 2)
-                                           GestureDetector(
-                                           onTap: () {
-                                             Get.toNamed(AddCardScreen.route);
-                                           },
-                                           child: Container(
-                                             height: 120.h,
-                                             width: 90.w,
-                                             margin: EdgeInsets.only(bottom: 10),
-                                             decoration:  BoxDecoration(
-                                               borderRadius: BorderRadius.circular(
-                                                 AppDimensions.borderRadiusMedium.r,
-                                               ),
-                                               color: AppColors.inputFillBackground,
-                                             ),
-                                             child:  Center(
-                                               child: SvgPicture.asset(AppAssets.plusIcon,width: 30.w, color: AppColors.black),
-                                             ),
-                                           ),
-                                         ),
-                                       ],
+                                            ),
+                                            SizedBox(
+                                              height: AppDimensions.paddingExtraLarge.h,),
+                                            Row(children: [
+                                              Text('xxxx', style: TextStyle(
+                                                fontSize: 24.sp, color: AppColors.white,),
+                                              ),
+                                              SizedBox(
+                                                width: AppDimensions.paddingExtraLarge.h,),
+                                              Text('0689', style: TextStyle(
+                                                fontSize: 24.sp, color: AppColors.white,),
+                                              ),
+                                              SizedBox(
+                                                width: AppDimensions.paddingExtraLarge.h,),
+                                            ],),
+                                          ],
+                                        ),
+                                      ),
+                                   ),
+                                 ),
+                                 SizedBox(width: 10.w,),
+                                 if(controller.cardBox.length == 1)
+                                   GestureDetector(
+                                   onTap: () {
+                                     Get.toNamed(AddCardScreen.route);
+                                   },
+                                   child: Container(
+                                     height: 120.h,
+                                     width: 90.w,
+                                     margin: EdgeInsets.only(bottom: AppDimensions.paddingMedium.h),
+                                     decoration:  BoxDecoration(
+                                       borderRadius: BorderRadius.circular(
+                                         AppDimensions.borderRadiusMedium.r,
+                                       ),
+                                       color: AppColors.inputFillBackground,
+                                     ),
+                                     child:  Center(
+                                       child: SvgPicture.asset(AppAssets.plusIcon,width: 30.w, color: AppColors.black),
                                      ),
                                    ),
                                  ),
-                               );
-                              }
-                            ),
+                               ],
+                             );
+                            }
                           ),
-                    
+
                         ],
                       ),
                     ),

@@ -40,11 +40,11 @@ class _DeleteCardScreenState extends State<DeleteCardScreen> {
                             CustomAppBar(),
                             Expanded(
                               child: Padding(
-                                padding: EdgeInsets.all(20),
+                                padding: EdgeInsets.all(AppDimensions.paddingExtraLarge),
                                 child: Column(
                                   children: [
                                     Container(
-                                      padding: EdgeInsets.all(20.w),
+                                      padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(
                                           AppDimensions.borderRadiusMedium.r,
@@ -65,7 +65,7 @@ class _DeleteCardScreenState extends State<DeleteCardScreen> {
                                           SizedBox(width: 6.w,),
                                           Flexible(
                                             child: Text(r'Replenishment_bank'.tr,
-                                              style: TextStyle(fontSize: 14, color: AppColors.black, fontFamily: AppFonts.secondaryFont),
+                                              style: TextStyle(fontSize: 14.sp, color: AppColors.black, fontFamily: AppFonts.secondaryFont),
                                             ),
                                           ),
                                         ],
@@ -79,7 +79,7 @@ class _DeleteCardScreenState extends State<DeleteCardScreen> {
                                       ),
 
                                       decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10.r),
+                                        borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
                                         image: DecorationImage(
                                           image: AssetImage(AppAssets.cardImage),
                                           fit: BoxFit.fill,

@@ -395,7 +395,9 @@ class _AddCardScreenState extends State<AddCardScreen> {
                           isLoading: false,
                           isError: false,
                           onPressed: (){
+                            if(controller.continueEnabled) {
                               controller.startBankVerification();
+                            }
                           },
                           child: Text(r'confirm'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.white),),
                         ),
@@ -405,7 +407,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                 ],
               ),
                   if(controller.check)
-                    CheckWidget(isLoading: controller.status == Status.loading, isTitle: true, title: r'add_a_card',),
+                    CheckWidget(isLoading: controller.status == Status.loading, isTitle: true, title: r'add_a_card'.tr,),
               ]
             );
           }

@@ -47,9 +47,9 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                               CustomAppBar(),
                               if(controller.isInquiries)
                                 Padding(
-                                  padding: EdgeInsets.only(right: AppDimensions.paddingExtraLarge, top: 22),
+                                  padding: EdgeInsets.only(right: AppDimensions.paddingExtraLarge, top: 22.h),
                                   child: Align(alignment: Alignment.bottomRight,child:
-                                  Text('Шаг 4 из 5'.tr, style: TextStyle(fontSize: 14.sp), )),
+                                  Text('step_4_of_5'.tr, style: TextStyle(fontSize: 14.sp), )),
                                 ),
                             ],
                           ),
@@ -102,7 +102,7 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                                                             ),
 
                                                           Text(
-                                                            controller.isInquiries ? r'Получение справки'.tr : controller.serviceName ?? '',
+                                                            controller.isInquiries ? r'Getting_help'.tr : controller.serviceName ?? '',
                                                             style: TextStyle(
                                                               fontSize: 17.sp,
                                                               color: AppColors.white,
@@ -118,7 +118,7 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                                                           ),
                                                           SizedBox(height: 6.h,),
                                                           Text(
-                                                            controller.sum ?? '',
+                                                            controller.sum ?? '100',
                                                             style: TextStyle(
                                                               fontSize: 40.sp,
                                                               color: AppColors.white,

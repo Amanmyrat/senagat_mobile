@@ -4,7 +4,7 @@ import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/payment_verification/presentation/payment_verification_screen.dart';
 
 
-class InquiriesController extends GetxController with StateControlMixin {
+class GetCardDetailsController extends GetxController with StateControlMixin {
 
   late final TextEditingController nameController;
   late final TextEditingController lastNameController;
@@ -15,9 +15,10 @@ class InquiriesController extends GetxController with StateControlMixin {
   late final TextEditingController addressController;
   late final TextEditingController phoneController;
 
+  String? selectedCard;
   String? selectedDropdownType;
-  String? selectedDropdownCity;
   String? selectedDropdownBranch;
+  String? selectedDropdownIssuance;
   bool continueEnabled = false;
   int pageIndex = 1;
 
@@ -37,13 +38,14 @@ class InquiriesController extends GetxController with StateControlMixin {
     "Option 3",
   ];
 
-  final List<String> citySelection = [
+
+  final List<String> branchSelection = [
     "Option 1",
     "Option 2",
     "Option 3",
   ];
 
-  final List<String> branchSelection = [
+  final List<String> issuanceSelection = [
     "Option 1",
     "Option 2",
     "Option 3",
@@ -54,6 +56,7 @@ class InquiriesController extends GetxController with StateControlMixin {
   @override
   void onInit() {
     super.onInit();
+    selectedCard = Get.arguments['selectedCard'];
     controllers = [
       nameController = TextEditingController(),
       lastNameController = TextEditingController(),
@@ -73,8 +76,8 @@ class InquiriesController extends GetxController with StateControlMixin {
         surNameController.text.isNotEmpty &&
         bothDateController.text.isNotEmpty &&
         passportNumberController.text.isNotEmpty &&
-      dateIssueController.text.isNotEmpty &&
-        selectedDropdownCity != null){
+        dateIssueController.text.isNotEmpty &&
+        selectedDropdownIssuance != null){
       continueEnabled = true;
       update();
     }else{
@@ -94,12 +97,6 @@ class InquiriesController extends GetxController with StateControlMixin {
     }
   }
 
-  void setDropdownCity(String? value) {
-    selectedDropdownCity = value;
-    onTextIsNotEmpty(value);
-    update();
-  }
-
   void setDropdownType(String? value) {
     selectedDropdownType = value;
     continueEnabled = true;
@@ -112,10 +109,6 @@ class InquiriesController extends GetxController with StateControlMixin {
       continueEnabled = false;
       update();
     }else if(pageIndex == 2 && continueEnabled){
-      pageIndex = 3;
-      continueEnabled = false;
-      update();
-    }else if(pageIndex == 3 && continueEnabled){
       Get.toNamed(PaymentVerificationScreen.route, arguments: {
         'serviceName': 'inquiries',
         'isInquiries': true
@@ -128,16 +121,17 @@ class InquiriesController extends GetxController with StateControlMixin {
     if(pageIndex == 1){
       Get.back();
       update();
-    }else if(pageIndex == 2 ){
+    }else if(pageIndex == 2 ) {
       pageIndex = 1;
       update();
-    }else if(pageIndex == 3){
-      pageIndex = 2;
-      update();
     }
-
   }
 
+  void setDropdownIssuance(String? value) {
+    selectedDropdownIssuance = value;
+    onTextIsNotEmpty(value);
+    update();
+  }
 
   void setDropdownBranch(String? value) {
     selectedDropdownBranch = value;

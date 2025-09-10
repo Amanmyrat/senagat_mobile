@@ -47,10 +47,10 @@ class IdentityVerificationController extends GetxController with StateControlMix
         surNameController.text.isNotEmpty &&
         bothDateController.text.isNotEmpty &&
         passportNumberController.text.isNotEmpty){
-      check = true;
+      continueEnabled = true;
       update();
     }else{
-      check = false;
+      continueEnabled = false;
       update();
     }
   }

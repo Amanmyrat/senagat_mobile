@@ -4,6 +4,7 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
+import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
 import '../../../utils/constants/app_assets.dart';
 import '../model/card_model.dart';
 
@@ -94,6 +95,7 @@ class AddCardController extends GetxController with StateControlMixin {
       nameController.clear();
       termController.clear();
       cvcController.clear();
+      continueEnabled = false;
     } catch (e) {
       status = Status.error;
     }

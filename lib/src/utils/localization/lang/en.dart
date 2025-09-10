@@ -14,6 +14,7 @@ const Map<String, String> enUs = {
   r'step_2_of_2': r'Step 2 of 2',
   r'step_of_5': r'Step @page of 5',
   r'step_of_3': r'Step @page of 3',
+  r'step_4_of_5': r'Step 4 of 5',
   r'send_sms': r'We will send you an SMS with a confirmation code.',
   r'send_code': r'Send code',
   r'OTP': r'OTP',
@@ -156,5 +157,20 @@ const Map<String, String> enUs = {
   r'Select_the_type_of_certificate': r'Select the type of certificate',
   r'Type_of_certificate': r'Type of certificate',
   r'Payment_was_successful': r'Payment was successful',
+  r'Submit_for_review': r'Submit for review',
+  r'Getting_help': r'Getting help',
+  r'Details_for_obtaining': r'Details for obtaining',
+  r'Home_phone_number': r'Home phone number',
+  r'Apply_for_a_card': r'Apply for a card',
+  r'Deposit_card': r'Deposit card',
+  r'Cash_withdrawal_fee': r'Cash withdrawal fee',
+  r'Annual_interest_rate': r'Annual interest rate',
+  r'Daily_limit_of_non_cash_transactions': r'Daily limit of non-cash transactions',
+  r'Salary': r'Salary',
+  r'Deposit': r'Deposit',
+  r'Family': r'Family',
+  r'Overdraft': r'Overdraft',
+  r'Expenses_per_month': r'Expenses per month',
+
 
 };

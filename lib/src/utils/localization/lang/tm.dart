@@ -15,6 +15,8 @@ const Map<String, String> tmTm = {
   r'step_2_of_2': r'2-nji ädim (2-den)',
   r'step_of_5': r'@page ädim (5-den)',
   r'step_of_3': r'@page ädim (3-den)',
+  r'step_4_of_5': r'4 ädim (5-den)',
+
 
   r'send_sms': r'Size tassyklama kody bilen SMS ibereris.',
   r'send_code': r'Kody iber',
@@ -158,4 +160,6 @@ const Map<String, String> tmTm = {
   r'Select_the_type_of_certificate': r'Spravkanyň görnüşini saýlaň',
   r'Type_of_certificate': r'Spravkanyň görnüşi',
   r'Payment_was_successful': r'Töleg üstünlikli boldy',
+  r'Submit_for_review': r'Syn üçin iberiň',
+  r'Expenses_per_month': r'Aýda çykdajylar',
 };

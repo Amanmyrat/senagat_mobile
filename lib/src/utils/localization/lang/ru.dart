@@ -15,6 +15,7 @@ const Map<String, String> ruRu = {
   r'step_2_of_2': r'Шаг 2 из 2',
   r'step_of_5': r'Шаг @page из 5',
   r'step_of_3': r'Шаг @page из 3',
+  r'step_4_of_5': r'Шаг 4 из 5',
 
   r'send_sms': r'Мы отправим вам SMS с кодом подтверждения.',
   r'send_code': r'Отправить код',
@@ -158,4 +159,19 @@ const Map<String, String> ruRu = {
   r'Select_the_type_of_certificate': r'Выберите тип справки',
   r'Type_of_certificate': r'Тип справки',
   r'Payment_was_successful': r'Оплата прошла успешно',
+  r'Submit_for_review': r'Отправить на проверку',
+  r'Getting_help': r'Получение справки',
+  r'Home_phone_number': r'Номер домашнего телефона',
+  r'Apply_for_a_card': r'Оформить карту',
+  r'Deposit_card': r'Депозитная карта',
+  r'Cash_withdrawal_fee': r'Комиссия за снятие наличных',
+  r'Annual_interest_rate': r'Годовая проц. ставка',
+  r'Daily_limit_of_non_cash_transactionsv': r'Ежедневный лимит безнал. транзакций',
+  r'Salary': r'Зарплатная',
+  r'Deposit': r'Депозитная',
+  r'Family': r'Семейная',
+  r'Overdraft': r'Овердрафт',
+  r'Expenses_per_month': r'Траты за месяц',
+
+
 };

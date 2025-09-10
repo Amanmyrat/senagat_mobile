@@ -14,6 +14,7 @@ import 'package:senagat_mobile/src/features/card_settings/presentation/card_sett
 import 'package:senagat_mobile/src/features/delete_card/presentation/delete_card_screen.dart';
 import 'package:senagat_mobile/src/features/category/presentation/category_screen.dart';
 import 'package:senagat_mobile/src/features/foundation/presentation/foundation_screen.dart';
+import 'package:senagat_mobile/src/features/get_card_details/presentation/get_card_details_screen.dart';
 import 'package:senagat_mobile/src/features/home/controller/home_controller.dart';
 import 'package:senagat_mobile/src/features/identify/presentation/identify_screen.dart';
 import 'package:senagat_mobile/src/features/identity_verification/presentation/identity_verification_screen.dart';
@@ -42,6 +43,7 @@ import 'features/card/presentation/card_screen.dart';
 import 'features/credit/presentation/get_credit_screen.dart';
 import 'features/dashboard/controller/dashboard_controller.dart';
 import 'features/dashboard/presentation/dashboard_screen.dart';
+import 'features/get_card/presentation/get_card_screen.dart';
 import 'features/payment_verification/presentation/payment_verification_screen.dart';
 import 'features/map_search/presentation/map_search_screen.dart';
 
@@ -217,6 +219,14 @@ class _SenagatAppState extends State<SenagatApp> {
               GetPage(
                 name: CategoryScreen.route,
                 page: () => const CategoryScreen(),
+              ),
+              GetPage(
+                name: GetCardScreen.route,
+                page: () => const GetCardScreen(),
+              ),
+              GetPage(
+                name: GetCardDetailsScreen.route,
+                page: () => const GetCardDetailsScreen(),
               ),
             ],
           ),
