@@ -1,7 +1,5 @@
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
-import 'package:senagat_mobile/src/features/%20Inquiries/presentation/inquiries_screen.dart';
-import 'package:senagat_mobile/src/features/credit/presentation/get_credit_screen.dart';
 import 'package:senagat_mobile/src/features/net_and_tv/presentation/net_and_tv_screen.dart';
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/payment_screen.dart';
@@ -46,16 +44,11 @@ class CategoryController extends GetxController with StateControlMixin {
 
   final List<String> serviceTitle = [
     r'Belet'.tr,
-    r'Авиа билеты'.tr,
-    r'ЖД билеты'.tr,
-    r'Авто билеты'.tr,
+    r'Air_tickets'.tr,
+    r'Railway_tickets'.tr,
+    r'Auto_tickets'.tr,
   ];
 
-  final List<String> serviceRoute = [
-    InquiriesScreen.route,
-    InquiriesScreen.route,
-    GetCreditScreen.route,
-  ];
 
 
   void onQrScanTap() {
@@ -69,13 +62,6 @@ class CategoryController extends GetxController with StateControlMixin {
     Get.toNamed(NotificationsScreen.route);
   }
 
-
-  void onServiceTap(int index) {
-    lastTap = CategoryTapType.service;
-    lastServiceTapIndex = index;
-    update();
-    Get.toNamed(serviceRoute[index]);
-  }
 
   void onFastServiceTap(int index) {
     lastTap = CategoryTapType.fastOperation;

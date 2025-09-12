@@ -190,7 +190,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                     SizedBox(width: AppDimensions.paddingMedium.w,),
                                     Expanded(
                                       child: Text(
-                                        controller.paymentsTitle[index],
+                                        controller.paymentsTitle[index].tr,
                                         style: TextStyle(
                                           color: isSelected ? AppColors.white : AppColors.blackText,
                                           fontSize: 14.sp,
@@ -250,7 +250,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                     SizedBox(width: AppDimensions.paddingMedium.w,),
                                     Expanded(
                                       child: Text(
-                                        controller.serviceTitle[index],
+                                        controller.serviceTitle[index].tr,
                                         style: TextStyle(
                                           color: isSelected ? AppColors.white : AppColors.blackText,
                                           fontSize: 14.sp,

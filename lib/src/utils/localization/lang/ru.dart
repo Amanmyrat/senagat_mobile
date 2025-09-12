@@ -172,6 +172,8 @@ const Map<String, String> ruRu = {
   r'Family': r'Семейная',
   r'Overdraft': r'Овердрафт',
   r'Expenses_per_month': r'Траты за месяц',
-
+  r'Air_tickets': r'Авиа билеты',
+  r'Railway_tickets': r'ЖД билеты',
+  r'Auto_tickets': r'Авто билеты',
 
 };

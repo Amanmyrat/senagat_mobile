@@ -19,13 +19,13 @@ class ServiceSettingsController extends GetxController with StateControlMixin {
   ];
 
   final List<String> serviceTitle = [
-    r'Altyn Asyr'.tr,
-    r'Net_and_TV'.tr,
-    r'gas'.tr,
-    r'water'.tr,
-    r'state_traffic_safety_inspectorate'.tr,
-    r'light'.tr,
-    r'communal_apartment'.tr,
+    r'Altyn Asyr',
+    r'Net_and_TV',
+    r'gas',
+    r'water',
+    r'state_traffic_safety_inspectorate',
+    r'light',
+    r'communal_apartment',
   ];
 
   late Box _box;

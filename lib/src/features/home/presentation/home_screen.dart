@@ -333,7 +333,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       color: isSelected ? AppColors.white : AppColors.green,
                                     ),
                                     Text(
-                                      controller.fastServiceController.selectedServiceTitle[index],
+                                      controller.fastServiceController.selectedServiceTitle[index].tr,
                                       maxLines: 1,
                                       textAlign: TextAlign.center,
                                       style: TextStyle(

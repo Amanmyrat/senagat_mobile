@@ -171,6 +171,9 @@ const Map<String, String> enUs = {
   r'Family': r'Family',
   r'Overdraft': r'Overdraft',
   r'Expenses_per_month': r'Expenses per month',
+  r'Air_tickets': r'Air tickets',
+  r'Railway_tickets': r'Railway tickets',
+  r'Auto_tickets': r'Auto tickets',
 
 
 };

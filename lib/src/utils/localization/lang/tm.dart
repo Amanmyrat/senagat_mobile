@@ -162,4 +162,7 @@ const Map<String, String> tmTm = {
   r'Payment_was_successful': r'Töleg üstünlikli boldy',
   r'Submit_for_review': r'Syn üçin iberiň',
   r'Expenses_per_month': r'Aýda çykdajylar',
+  r'Air_tickets': r'Howa biletleri',
+  r'Railway_tickets': r'Demir ýol biletleri',
+  r'Auto_tickets': r'Auto biletleri',
 };
