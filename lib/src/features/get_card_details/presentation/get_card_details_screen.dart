@@ -41,7 +41,7 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                           padding: EdgeInsets.all(AppDimensions.paddingMedium),
                           margin: EdgeInsets.all(AppDimensions.paddingExtraLarge),
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.r),
+                              borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
                               border: Border.all(
                                 color: AppColors.greyInactive,
                                 width: 1.w,
@@ -53,7 +53,7 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(right: AppDimensions.paddingExtraLarge, top: 22),
+                        padding: EdgeInsets.only(right: AppDimensions.paddingExtraLarge, top: 22.h),
                         child: Align(alignment: Alignment.bottomRight,child:
                         Text('step_of_5'.trParams({'page': controller.pageIndex.toString()}), style: TextStyle(fontSize: 14.sp), )),
                       ),
@@ -160,14 +160,14 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                               ),
                               dropdownStyleData: DropdownStyleData(
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
+                                  borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
 
                                 ),
                                 elevation: 2,
 
                               ),
                               iconStyleData: IconStyleData(
-                                icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18,),
+                                icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18.w,),
                               ),
                               onChanged: (v) => controller.setDropdownBranch(v),
                               items: controller.branchSelection
@@ -304,7 +304,7 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                                                     ),
                                                   ),
                                                 ),
-                                                SizedBox(width: 4.sp,),
+                                                SizedBox(width: 4.w,),
                                                 Expanded(
                                                   child: TextFormField(
                                                     textInputAction: TextInputAction.next,
@@ -418,7 +418,7 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                                   ),
                                   dropdownStyleData: DropdownStyleData(
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
+                                      borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
 
                                     ),
                                     elevation: 2,
@@ -426,7 +426,7 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                                   ),
 
                                   iconStyleData: IconStyleData(
-                                    icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18,),
+                                    icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18.w,),
                                   ),
                                   onChanged:(v) => controller.setDropdownIssuance(v),
                                   items: controller.issuanceSelection

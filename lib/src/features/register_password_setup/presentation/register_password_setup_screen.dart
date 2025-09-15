@@ -74,7 +74,7 @@ class _RegisterPasswordSetupScreenState extends State<RegisterPasswordSetupScree
                       Text(
                         r'create_password'.tr,
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 14.sp,
                           color: AppColors.greyInactive,
                           fontFamily: AppFonts.secondaryFont,
                         ),

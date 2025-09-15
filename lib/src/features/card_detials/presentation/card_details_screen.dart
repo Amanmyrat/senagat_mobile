@@ -37,9 +37,9 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                             Text(r'card_number'.tr, style: TextStyle(color: AppColors.black, fontSize: 14.sp),),
                             SizedBox(height: 10.h,),
                             Container(
-                              padding: EdgeInsets.all(20),
+                              padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.r),
+                                borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
                                 color: AppColors.inputFillBackground
                               ),
                               child: Text(r'3576 1239 1234 0689'.tr, style: TextStyle(color: AppColors.black, fontSize: 14.sp),),
@@ -53,9 +53,9 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                                     Text(r'name_on_the_card'.tr, style: TextStyle(color: AppColors.black, fontSize: 14.sp),),
                                     SizedBox(height: 10.h,),
                                     Container(
-                                      padding: EdgeInsets.all(20),
+                                      padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
                                       decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10.r),
+                                          borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
                                           color: AppColors.inputFillBackground
                                       ),
                                       child: Text(r'Mergen Jumayew'.tr, style: TextStyle(color: AppColors.black, fontSize: 14.sp),),
@@ -67,11 +67,11 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(r'term'.tr, style: TextStyle(color: AppColors.black, fontSize: 14.sp),),
-                                    SizedBox(height: 10.h,),
+                                    SizedBox(height: AppDimensions.paddingMedium.h,),
                                     Container(
-                                      padding: EdgeInsets.all(20),
+                                      padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
                                       decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10.r),
+                                          borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
                                           color: AppColors.inputFillBackground
                                       ),
                                       child: Text(r'11/27'.tr, style: TextStyle(color: AppColors.black, fontSize: 14.sp),),

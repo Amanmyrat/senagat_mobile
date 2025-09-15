@@ -110,7 +110,7 @@ class _RegisterConfirmationScreenState extends State<RegisterConfirmationScreen>
 
                         pinTheme: PinTheme(
                           shape: PinCodeFieldShape.box,
-                          borderRadius: BorderRadius.circular(10.r),
+                          borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
                           fieldHeight: 64.h,
                           fieldWidth: 74.w,
                           activeColor:

@@ -18,10 +18,10 @@ class NetAndTvController extends GetxController with StateControlMixin {
   ];
 
   final List<String> serviceTitle = [
-    r'telecom_internet'.tr,
-    r'AŞTU_internet'.tr,
-    r'AŞTU_IPTV'.tr,
-    r'cable_TV'.tr,
+    r'telecom_internet',
+    r'AŞTU internet',
+    r'AŞTU IPTV',
+    r'cable_TV',
   ];
 
   void onServiceTap(int index){

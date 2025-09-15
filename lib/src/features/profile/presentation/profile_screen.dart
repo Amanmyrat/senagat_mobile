@@ -37,7 +37,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   Center(
                     child: Container(
-                      margin: EdgeInsets.only(top: 40),
+                      margin: EdgeInsets.only(top: 40.h),
                       width: 110.w,
                       height: 110.h,
                       decoration: BoxDecoration(
@@ -58,7 +58,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(r'Имя Фамилия'.tr, style: TextStyle(fontSize: 24, color: AppColors.black),),
+                      Text(r'Имя Фамилия'.tr, style: TextStyle(fontSize: 24.sp, color: AppColors.black),),
                       SvgPicture.asset(AppAssets.arrowRightIcon, color: AppColors.black, width: 18.w,)
                     ],
                   ),
@@ -66,19 +66,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: AppDimensions.paddingMedium.w, vertical: 4),
+                          padding: EdgeInsets.symmetric(horizontal: AppDimensions.paddingMedium.w, vertical: 4.h),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
                             color: AppColors.greyInactive,
                           ),
-                          child: Text(r'not_confirmed'.tr, style: TextStyle(fontSize: 14, color: AppColors.white, fontFamily: AppFonts.secondaryFont),),
+                          child: Text(r'not_confirmed'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.white, fontFamily: AppFonts.secondaryFont),),
                         ),
                         SizedBox(width: 10.w,),
-                        Text('+99364626088', style: TextStyle(fontSize: 14, color: AppColors.black,),),
+                        Text('+99364626088', style: TextStyle(fontSize: 14.sp, color: AppColors.black,),),
                       ],
                     ),
                   SizedBox(height: 32.h,),
-                  Text(r'control'.tr, style: TextStyle(fontSize: 14, color: AppColors.black,),),
+                  Text(r'control'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.black,),),
                   SizedBox(height: 16.h,),
                   GestureDetector(
                     onTap: (){

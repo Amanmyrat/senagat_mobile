@@ -79,18 +79,6 @@ class PaymentController extends GetxController with StateControlMixin {
 
   }
 
-  // Future<void> saveCard() async {
-  //   final box = Hive.box<PayModel>('payBox');
-  //   final pay = PayModel(
-  //     serviceName: serviceName,
-  //     serviceIcon: serviceIcon,
-  //     number: phoneController.text,
-  //     sum: sumController.text,
-  //     userName: nameController.text,
-  //   );
-  //   await box.put('pay', pay);
-  // }
-
   void isTextNotEmpty(){
     serviceIcon.isEmpty?
     phoneController.text.length >= 8 && sumController.text.isNotEmpty && nameController.text.isNotEmpty ? continueEnabled = true: continueEnabled = false:

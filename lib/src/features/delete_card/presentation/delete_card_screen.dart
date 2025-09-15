@@ -94,7 +94,7 @@ class _DeleteCardScreenState extends State<DeleteCardScreen> {
                                               'Senagat Bank',
                                               style: TextStyle(
                                                 color: AppColors.white,
-                                                fontSize: 14,
+                                                fontSize: 14.sp,
                                               ),
                                             ),
                                           ),
@@ -154,7 +154,7 @@ class _DeleteCardScreenState extends State<DeleteCardScreen> {
                           ],
                         ),
                         if(controller.check)
-                          CheckWidget(isLoading: controller.status == Status.loading, isTitle: true, title: r'remove_card',),
+                          CheckWidget(isLoading: controller.status == Status.loading, isTitle: true, title: r'remove_card'.tr,),
                       ],
                     ),
                   ),
