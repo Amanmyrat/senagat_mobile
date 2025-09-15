@@ -43,7 +43,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                               CustomAppBar(),
                               if(controller.serviceName.isEmpty)
                                 Padding(
-                                  padding: EdgeInsets.only(right: AppDimensions.paddingExtraLarge, top: 22),
+                                  padding: EdgeInsets.only(right: AppDimensions.paddingExtraLarge, top: 22.h),
                                   child: Align(alignment: Alignment.bottomRight,child:
                                   Text('step_5_of_5'.tr, style: TextStyle(fontSize: 14.sp), )),
                                 ),
@@ -63,7 +63,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                         Column(
                                           children: [
                                             Text(
-                                              controller.serviceName,
+                                              controller.serviceName.tr,
                                               style: TextStyle(
                                                 fontSize: 24.sp,
                                                 color: AppColors.blackText,
@@ -83,14 +83,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                       Container(
                                         padding: EdgeInsets.all( AppDimensions.paddingExtraLarge, ),
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10.r),
+                                          borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
                                           image: DecorationImage(
                                             image: AssetImage(AppAssets.cardImage),
                                             fit: BoxFit.cover, ), ),
                                         child: Column( children: [
                                           Align( alignment: Alignment.topLeft,
                                             child: Text( 'Senagat Bank', style:
-                                            TextStyle( color: AppColors.white, fontSize: 14, ),
+                                            TextStyle( color: AppColors.white, fontSize: 14.sp, ),
                                             ),
                                           ),
                                           SizedBox(height: AppDimensions.paddingExtraLarge.h,),

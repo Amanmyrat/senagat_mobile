@@ -38,7 +38,7 @@ class _NetAndTvScreenState extends State<NetAndTvScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              controller.serviceName,
+                              controller.serviceName.tr,
                               style: TextStyle(
                                 fontSize: 24.sp,
                                 color: AppColors.blackText,
@@ -76,7 +76,7 @@ class _NetAndTvScreenState extends State<NetAndTvScreen> {
                                               children: [
                                                 Padding(
                                                   padding: EdgeInsets.all(AppDimensions.paddingMedium.w),
-                                                  child: Text(controller.serviceTitle[index],
+                                                  child: Text(controller.serviceTitle[index].tr,
                                                     style: TextStyle(color: AppColors.blackText, fontSize: 14.sp),
                                                   ),
                                                 ),

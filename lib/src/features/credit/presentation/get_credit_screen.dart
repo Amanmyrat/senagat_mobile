@@ -76,14 +76,14 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                     ),
                                     dropdownStyleData: DropdownStyleData(
                                       decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
+                                        borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
 
                                       ),
                                       elevation: 2,
 
                                     ),
                                     iconStyleData: IconStyleData(
-                                      icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18,),
+                                      icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18.w,),
                                     ),
                                     hint:  Text(
                                       r"loan_type".tr,
@@ -154,7 +154,7 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                                 color: AppColors.greyInactive,
                                                 fontSize: 14.sp
                                             ),
-                                            contentPadding: EdgeInsets.all(20),
+                                            contentPadding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
                                           ),
                                           style: TextStyle(
                                               fontSize: 24,

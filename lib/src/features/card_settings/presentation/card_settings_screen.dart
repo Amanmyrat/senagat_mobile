@@ -123,7 +123,7 @@ class _CardSettingsScreenState extends State<CardSettingsScreen> {
                                             child: SizedBox(
                                               width: MediaQuery.of(context).size.width,
                                               child: Padding(
-                                                  padding: EdgeInsets.symmetric(vertical: 40.h, horizontal: 20.h),
+                                                  padding: EdgeInsets.symmetric(vertical: 40.h, horizontal: 20.w),
                                                 child: Column(
                                                   mainAxisSize: MainAxisSize.min,
                                                   children: [
@@ -198,8 +198,8 @@ class _CardSettingsScreenState extends State<CardSettingsScreen> {
                                                     ):
                                                     (controller.status == Status.loading)?
                                                       SizedBox(
-                                                          width: 24,
-                                                          height: 24,
+                                                          width: 24.w,
+                                                          height: 24.h,
                                                           child: CircularProgressIndicator(color: AppColors.green,)):
                                                       SizedBox()
                                                   ],

@@ -47,8 +47,8 @@ class CheckWidget extends StatelessWidget {
 
                 SizedBox(height: 22.h),
                 isLoading ? SizedBox(
-                      width: 24,
-                      height: 24,
+                      width: 24.w,
+                      height: 24.h,
                       child: CircularProgressIndicator(color: AppColors.green,)):
                   SvgPicture.asset(AppAssets.checkIcon, color: AppColors.green, width: 24.w,),
 
@@ -76,7 +76,7 @@ class CheckWidget extends StatelessWidget {
                         if(route == FoundationScreen.route){
                           Get.offNamed(route ?? '');
                         }else {
-                          Get.offAllNamed(route ?? '');
+                          Get.offNamed(route ?? '');
                         }
                       },
                       isError: false,

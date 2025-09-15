@@ -95,7 +95,7 @@ class HomeController extends GetxController with StateControlMixin {
     lastFastServiceTapIndex = index;
     update();
 
-    if (fastServiceController.selectedServiceTitle[index] == r'net_and_TV'.tr) {
+    if (fastServiceController.selectedServiceTitle[index] == r'net_and_TV') {
       Get.toNamed(NetAndTvScreen.route, arguments: {
         'selectedServiceTitle': fastServiceController.selectedServiceTitle[index],
       });

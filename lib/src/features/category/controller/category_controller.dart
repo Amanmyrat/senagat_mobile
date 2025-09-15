@@ -44,9 +44,9 @@ class CategoryController extends GetxController with StateControlMixin {
 
   final List<String> serviceTitle = [
     r'Belet',
-    r'air_tickets'.tr,
-    r'railway_tickets'.tr,
-    r'auto_tickets'.tr,
+    r'air_tickets',
+    r'railway_tickets',
+    r'auto_tickets',
   ];
 
 

@@ -36,55 +36,70 @@ class _LangSettingsScreenState extends State<LangSettingsScreen> {
                       children: [
                         Text(r'language'.tr, style: TextStyle(fontSize: 24.sp, color: AppColors.black),),
                         SizedBox(height: 32.h,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(r'Русский'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.black,),),
-                            RoundCheckBox(
-                              size: 27.w,
-                              checkedColor: Colors.transparent,
-                              checkedWidget: SvgPicture.asset(AppAssets.checkBoxIcon, color: AppColors.green, width: 12.w,),
-                              border: Border.all(color: AppColors.black),
-                              isChecked: controller.currentLang == 'RU',
-                              onTap: (value) {
-                                controller.updateLanguage('RU');
-                              }
-                              ),
-                          ],
-                        ),
-                        SizedBox(height: 32.h,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(r'Turkmen'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.black,),),
-                            RoundCheckBox(
-                                size: 27.w,
-                                checkedColor: Colors.transparent,
-                                checkedWidget: SvgPicture.asset(AppAssets.checkBoxIcon, color: AppColors.green,),
-                                border: Border.all(color: AppColors.black),
-                                isChecked: controller.currentLang == 'TM',
-                                onTap: (value) {
-                                  controller.updateLanguage('TM');
-                                }
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 32.h,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(r'English'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.black,),),
-                            RoundCheckBox(
+                        GestureDetector(
+                          onTap: (){
+                            controller.updateLanguage('RU');
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(r'Русский'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.black,),),
+                              RoundCheckBox(
                                 size: 27.w,
                                 checkedColor: Colors.transparent,
                                 checkedWidget: SvgPicture.asset(AppAssets.checkBoxIcon, color: AppColors.green, width: 12.w,),
                                 border: Border.all(color: AppColors.black),
-                                isChecked: controller.currentLang == 'EN',
+                                isChecked: controller.currentLang == 'RU',
                                 onTap: (value) {
-                                  controller.updateLanguage('EN');
+                                  controller.updateLanguage('RU');
                                 }
-                            ),
-                          ],
+                                ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 32.h,),
+                        GestureDetector(
+                          onTap: (){
+                            controller.updateLanguage('TM');
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(r'Turkmen'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.black,),),
+                              RoundCheckBox(
+                                  size: 27.w,
+                                  checkedColor: Colors.transparent,
+                                  checkedWidget: SvgPicture.asset(AppAssets.checkBoxIcon, color: AppColors.green,),
+                                  border: Border.all(color: AppColors.black),
+                                  isChecked: controller.currentLang == 'TM',
+                                  onTap: (value) {
+                                    controller.updateLanguage('TM');
+                                  }
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 32.h,),
+                        GestureDetector(
+                          onTap: (){
+                            controller.updateLanguage('EN');
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(r'English'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.black,),),
+                              RoundCheckBox(
+                                  size: 27.w,
+                                  checkedColor: Colors.transparent,
+                                  checkedWidget: SvgPicture.asset(AppAssets.checkBoxIcon, color: AppColors.green, width: 12.w,),
+                                  border: Border.all(color: AppColors.black),
+                                  isChecked: controller.currentLang == 'EN',
+                                  onTap: (value) {
+                                    controller.updateLanguage('EN');
+                                  }
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),

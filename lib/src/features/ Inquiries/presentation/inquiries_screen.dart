@@ -90,14 +90,14 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                       ),
                                       dropdownStyleData: DropdownStyleData(
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10),
+                                          borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
 
                                         ),
                                         elevation: 2,
 
                                       ),
                                       iconStyleData: IconStyleData(
-                                        icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18,),
+                                        icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18.w,),
                                       ),
                                       onChanged: (v) => controller.setDropdownType(v),
                                       items: controller.typeSelection
@@ -314,14 +314,14 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                   ),
                                   dropdownStyleData: DropdownStyleData(
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
+                                      borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
 
                                     ),
                                     elevation: 2,
 
                                   ),
                                   iconStyleData: IconStyleData(
-                                    icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18,),
+                                    icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18.w,),
                                   ),
                                     onChanged:(v) => controller.setDropdownCity(v),
                                     items: controller.citySelection
@@ -368,14 +368,14 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                     ),
                                     dropdownStyleData: DropdownStyleData(
                                       decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
+                                        borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
 
                                       ),
                                       elevation: 2,
 
                                     ),
                                     iconStyleData: IconStyleData(
-                                      icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18,),
+                                      icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18.w,),
                                     ),
                                     onChanged: (v) => controller.setDropdownBranch(v),
                                     items: controller.branchSelection
