@@ -8,7 +8,6 @@ import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
-import '../../../widgets/check_widget.dart';
 import '../../../widgets/elevated_button_with_state.dart';
 import '../../dashboard/presentation/dashboard_screen.dart';
 
@@ -39,7 +38,7 @@ class _IdentityVerificationScreenState extends State<IdentityVerificationScreen>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            r'Identity_verification'.tr,
+                            r'identity_verification'.tr,
                             style: TextStyle(
                               fontSize: 24.sp,
                               color: AppColors.blackText,
@@ -54,18 +53,21 @@ class _IdentityVerificationScreenState extends State<IdentityVerificationScreen>
                                 return  Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(controller.textFieldTitle[index], style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+                                    Text(controller.textFieldTitle[index].tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
                                     SizedBox(height: AppDimensions.paddingMedium.h,),
                                     TextFormField(
                                       textInputAction: TextInputAction.next,
-                                      keyboardType: TextInputType.name,
+                                      keyboardType: (index == controller.controllers.length - 2 ||
+                                          index == controller.controllers.length - 4)
+                                          ? TextInputType.number
+                                          : TextInputType.name,
                                       controller: controller.controllers[index],
                                       onChanged:(v) => controller.onTextIsNotEmpty(v),
                                       style: TextStyle(
                                         fontSize: 14.sp,
                                       ),
                                       decoration: InputDecoration(
-                                        hintText: controller.textFieldTitle[index],
+                                        hintText: controller.textFieldTitle[index].tr,
                                         border: OutlineInputBorder(),
                                         focusedBorder: OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(
@@ -99,33 +101,60 @@ class _IdentityVerificationScreenState extends State<IdentityVerificationScreen>
                           ),
                           Row(
                             children: [
-                              Container(
-                                padding: EdgeInsets.all(
-                                  AppDimensions.paddingExtraLarge.w,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: AppColors.inputFillBackground,
-                                  borderRadius: BorderRadius.circular(
-                                    AppDimensions.borderRadiusMedium,
+                              SizedBox(
+                                width: 72.w,
+                                height: 62.h,
+                                child: TextFormField(
+                                  textAlign: TextAlign.center,
+                                  textInputAction: TextInputAction.next,
+                                  keyboardType: TextInputType.name,
+                                  controller: controller.asController,
+                                  onChanged:(v) => controller.onTextIsNotEmpty(v),
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
                                   ),
-                                ),
-                                child: Text(
-                                  'AS',
-                                  style: TextStyle(fontSize: 14.sp),
+                                  decoration: InputDecoration(
+                                    hintText: r'AS',
+                                    hintStyle: TextStyle(color: AppColors.black, fontSize: 14.sp),
+                                    border: OutlineInputBorder(),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(
+                                        AppDimensions.borderRadiusMedium,
+                                      ),
+                                      borderSide: BorderSide(
+                                        color: AppColors.green,
+                                        width: 1.w,
+                                      ),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(
+                                        AppDimensions.borderRadiusMedium,
+                                      ),
+                                      borderSide: BorderSide(
+                                        color: AppColors.white,
+                                        width: 1.w,
+                                      ),
+                                    ),
+                                    counter: const SizedBox(),
+                                    contentPadding: EdgeInsets.symmetric(
+                                      vertical: AppDimensions.paddingExtraLarge.h,
+                                      horizontal: AppDimensions.paddingLarge.w,
+                                    ),
+                                  ),
                                 ),
                               ),
                               SizedBox(width: 4.sp,),
                               Expanded(
                                 child: TextFormField(
                                   textInputAction: TextInputAction.next,
-                                  keyboardType: TextInputType.name,
+                                  keyboardType: TextInputType.number,
                                   controller: controller.passportNumberController,
                                   onChanged:(v) => controller.onTextIsNotEmpty(v),
                                   style: TextStyle(
                                     fontSize: 14.sp,
                                   ),
                                   decoration: InputDecoration(
-                                    hintText: r'Passport_number',
+                                    hintText: r'passport_number'.tr,
                                     border: OutlineInputBorder(),
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(
@@ -159,7 +188,7 @@ class _IdentityVerificationScreenState extends State<IdentityVerificationScreen>
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(r'Passport_scan'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+                              Text(r'passport_scan'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
                               SizedBox(height: AppDimensions.paddingMedium.h,),
                               SizedBox(
                                 width: MediaQuery.of(context).size.width,
@@ -177,7 +206,7 @@ class _IdentityVerificationScreenState extends State<IdentityVerificationScreen>
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text(r'Passport_scan'.tr,style: TextStyle(color: AppColors.greyInactive, fontSize: 14.sp),),
+                                      Text(r'passport_scan'.tr,style: TextStyle(color: AppColors.greyInactive, fontSize: 14.sp),),
                                       SizedBox(width: AppDimensions.paddingMedium.w,),
                                       SvgPicture.asset(AppAssets.pdfIcon),
                                     ],
@@ -203,7 +232,7 @@ class _IdentityVerificationScreenState extends State<IdentityVerificationScreen>
                         onPressed:() {
                           Get.offAllNamed(DashboardScreen.route);
                         },
-                        child: Text(r'Submit_for_review'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.white),),
+                        child: Text(r'submit_for_review'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.white),),
                       ),
                     ),
                   ),

@@ -83,7 +83,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  r'Job_information'.tr,
+                                                  r'job_information'.tr,
                                                   style: TextStyle(
                                                     fontSize: 24.sp,
                                                     color: AppColors.blackText,
@@ -121,8 +121,8 @@ class _LoanScreenState extends State<LoanScreen> {
                                                         color: AppColors.blackText
                                                     ),
                                                     tabs: [
-                                                      Tab(text: r'Entrepreneur'.tr,),
-                                                      Tab(text: r'Manager'.tr,),
+                                                      Tab(text: r'entrepreneur'.tr,),
+                                                      Tab(text: r'manager'.tr,),
                                                     ],),
                                                 ),
                                                 SizedBox(height: AppDimensions.padding40,),
@@ -139,7 +139,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                                                 Column(
                                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                                   children: [
-                                                                    Text(r'Patent_number'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+                                                                    Text(r'patent_number'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
                                                                     SizedBox(height: AppDimensions.paddingMedium.h,),
                                                                     TextFormField(
                                                                       textInputAction: TextInputAction.next,
@@ -150,7 +150,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                                                         fontSize: 14.sp,
                                                                       ),
                                                                       decoration: InputDecoration(
-                                                                        hintText: r'Patent_number'.tr,
+                                                                        hintText: r'patent_number'.tr,
                                                                         border: OutlineInputBorder(),
                                                                         focusedBorder: OutlineInputBorder(
                                                                           borderRadius: BorderRadius.circular(
@@ -183,18 +183,18 @@ class _LoanScreenState extends State<LoanScreen> {
                                                                 Column(
                                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                                   children: [
-                                                                    Text(r'Registration_number'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+                                                                    Text(r'registration_number'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
                                                                     SizedBox(height: AppDimensions.paddingMedium.h,),
                                                                     TextFormField(
                                                                       textInputAction: TextInputAction.next,
                                                                       keyboardType: TextInputType.number,
-                                                                      controller: controller.registrNumController,
+                                                                      controller: controller.registerNumController,
                                                                       onChanged:(v) => controller.onInformationNotEmpty(v),
                                                                       style: TextStyle(
                                                                         fontSize: 14.sp,
                                                                       ),
                                                                       decoration: InputDecoration(
-                                                                        hintText: r'Registration_number'.tr,
+                                                                        hintText: r'registration_number'.tr,
                                                                         border: OutlineInputBorder(),
                                                                         focusedBorder: OutlineInputBorder(
                                                                           borderRadius: BorderRadius.circular(
@@ -227,7 +227,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                                                 Column(
                                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                                   children: [
-                                                                    Text(r'Work_address'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+                                                                    Text(r'work_address'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
                                                                     SizedBox(height: AppDimensions.paddingMedium.h,),
                                                                     TextFormField(
                                                                       textInputAction: TextInputAction.next,
@@ -238,7 +238,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                                                         fontSize: 14.sp,
                                                                       ),
                                                                       decoration: InputDecoration(
-                                                                        hintText: r'Work_address'.tr,
+                                                                        hintText: r'work_address'.tr,
                                                                         border: OutlineInputBorder(),
                                                                         focusedBorder: OutlineInputBorder(
                                                                           borderRadius: BorderRadius.circular(
@@ -282,7 +282,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                                                 Column(
                                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                                   children: [
-                                                                    Text(r'Workplace'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+                                                                    Text(r'workplace'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
                                                                     SizedBox(height: AppDimensions.paddingMedium.h,),
                                                                     TextFormField(
                                                                       textInputAction: TextInputAction.next,
@@ -293,7 +293,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                                                         fontSize: 14.sp,
                                                                       ),
                                                                       decoration: InputDecoration(
-                                                                        hintText: r'Workplace'.tr,
+                                                                        hintText: r'workplace'.tr,
                                                                         border: OutlineInputBorder(),
                                                                         focusedBorder: OutlineInputBorder(
                                                                           borderRadius: BorderRadius.circular(
@@ -326,7 +326,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                                                 Column(
                                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                                   children: [
-                                                                    Text(r'Job_title'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+                                                                    Text(r'job_title'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
                                                                     SizedBox(height: AppDimensions.paddingMedium.h,),
                                                                     TextFormField(
                                                                       textInputAction: TextInputAction.next,
@@ -337,7 +337,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                                                         fontSize: 14.sp,
                                                                       ),
                                                                       decoration: InputDecoration(
-                                                                        hintText: r'Job_title'.tr,
+                                                                        hintText: r'job_title'.tr,
                                                                         border: OutlineInputBorder(),
                                                                         focusedBorder: OutlineInputBorder(
                                                                           borderRadius: BorderRadius.circular(
@@ -370,7 +370,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                                                 Column(
                                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                                   children: [
-                                                                    Text(r'Work_address'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+                                                                    Text(r'work_address'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
                                                                     SizedBox(height: AppDimensions.paddingMedium.h,),
                                                                     TextFormField(
                                                                       textInputAction: TextInputAction.next,
@@ -381,7 +381,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                                                         fontSize: 14.sp,
                                                                       ),
                                                                       decoration: InputDecoration(
-                                                                        hintText: r'Work_address'.tr,
+                                                                        hintText: r'work_address'.tr,
                                                                         border: OutlineInputBorder(),
                                                                         focusedBorder: OutlineInputBorder(
                                                                           borderRadius: BorderRadius.circular(
@@ -481,7 +481,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                                                 Column(
                                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                                   children: [
-                                                                    Text(r'Wages'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+                                                                    Text(r'wages'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
                                                                     SizedBox(height: AppDimensions.paddingMedium.h,),
                                                                     TextFormField(
                                                                       textInputAction: TextInputAction.next,
@@ -492,7 +492,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                                                         fontSize: 14.sp,
                                                                       ),
                                                                       decoration: InputDecoration(
-                                                                        hintText: r'Wages'.tr,
+                                                                        hintText: r'wages'.tr,
                                                                         border: OutlineInputBorder(),
                                                                         focusedBorder: OutlineInputBorder(
                                                                           borderRadius: BorderRadius.circular(
@@ -544,7 +544,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            r'Bank_branch_for_application'.tr,
+                                            r'bank_branch_for_application'.tr,
                                             style: TextStyle(
                                               fontSize: 24.sp,
                                               color: AppColors.blackText,
@@ -552,7 +552,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                           ),
                                           SizedBox(height: 16.h,),
                     
-                                          Text(r'City'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+                                          Text(r'city'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
                                           SizedBox(height: AppDimensions.paddingMedium,),
                                           Theme(
                                             data: Theme.of(context).copyWith(
@@ -568,7 +568,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                             child: DropdownButtonFormField2<String>(
                                               value: controller.selectedDropdownCity,
                                               hint: Text(
-                                                r"Select_city".tr,
+                                                r"select_city".tr,
                                                 style: TextStyle(fontSize: 14.sp),
                                               ),
                                               decoration: InputDecoration(
@@ -600,7 +600,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                             ),
                                           ),
                                           SizedBox(height: 22.h,),
-                                          Text(r'Bank'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+                                          Text(r'bank'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
                                           SizedBox(height: AppDimensions.paddingMedium,),
                     
                                           Theme(
@@ -616,7 +616,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                             ),
                                             child: DropdownButtonFormField2<String>(
                                               value: controller.selectedDropdownBank,
-                                              hint: Text(r"Select_bank".tr, style: TextStyle(
+                                              hint: Text(r"select_bank".tr, style: TextStyle(
                                                 fontSize: 14.sp,),
                                               ),
                                               decoration: InputDecoration(

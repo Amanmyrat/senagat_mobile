@@ -247,6 +247,7 @@ class _FoundationScreenState extends State<FoundationScreen> {
                             Get.offNamed(PaymentScreen.route, arguments: {
                               'selectedServiceTitle': r'charitable_foundation'.tr,
                               'isInquiries': false,
+                              'isFoundation': true,
 
                             });
                           },

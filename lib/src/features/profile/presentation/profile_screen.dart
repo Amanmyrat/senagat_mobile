@@ -6,7 +6,7 @@ import 'package:senagat_mobile/src/features/about_us/presentation/about_us_scree
 import 'package:senagat_mobile/src/features/identify/presentation/identify_screen.dart';
 import 'package:senagat_mobile/src/features/lang_settings/presentation/lang_settings_screen.dart';
 import 'package:senagat_mobile/src/features/notifications_settings/presentation/notifications_settings_screen.dart';
-import 'package:senagat_mobile/src/features/accounts/presentation/accounts.dart';
+import 'package:senagat_mobile/src/features/accounts/presentation/accounts_screen.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
@@ -71,14 +71,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
                             color: AppColors.greyInactive,
                           ),
-                          child: Text(r'Not_confirmed'.tr, style: TextStyle(fontSize: 14, color: AppColors.white, fontFamily: AppFonts.secondaryFont),),
+                          child: Text(r'not_confirmed'.tr, style: TextStyle(fontSize: 14, color: AppColors.white, fontFamily: AppFonts.secondaryFont),),
                         ),
                         SizedBox(width: 10.w,),
                         Text('+99364626088', style: TextStyle(fontSize: 14, color: AppColors.black,),),
                       ],
                     ),
                   SizedBox(height: 32.h,),
-                  Text(r'Control'.tr, style: TextStyle(fontSize: 14, color: AppColors.black,),),
+                  Text(r'control'.tr, style: TextStyle(fontSize: 14, color: AppColors.black,),),
                   SizedBox(height: 16.h,),
                   GestureDetector(
                     onTap: (){
@@ -106,7 +106,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             children: [
                               SvgPicture.asset(AppAssets.edit,width: 24.w,),
                               SizedBox(width: 10.w,),
-                              Text(r'Accounts'.tr, style: TextStyle(fontSize: 14.sp.sp, color: AppColors.blackText, fontFamily: AppFonts.secondaryFont),),
+                              Text(r'accounts'.tr, style: TextStyle(fontSize: 14.sp.sp, color: AppColors.blackText, fontFamily: AppFonts.secondaryFont),),
                             ],
                           ),
                           SvgPicture.asset(AppAssets.arrowRightIcon, color: AppColors.black, width: 16.w,)
@@ -167,7 +167,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   children: [
                                     SvgPicture.asset(AppAssets.globeIcon, color: AppColors.green, width: 24.w,),
                                     SizedBox(width: 10.w,),
-                                    Text(r'Language'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.blackText, fontFamily: AppFonts.secondaryFont),),
+                                    Text(r'language'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.blackText, fontFamily: AppFonts.secondaryFont),),
                                   ],
                                 ),
                                 SvgPicture.asset(AppAssets.arrowRightIcon, color: AppColors.black, width: 16.w,)
@@ -205,7 +205,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             children: [
                               SvgPicture.asset(AppAssets.filledInfo),
                               SizedBox(width: 10.w,),
-                              Text(r'About_Us_v2.0'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.blackText, fontFamily: AppFonts.secondaryFont),),
+                              Text(r'about_Us_v2.0'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.blackText, fontFamily: AppFonts.secondaryFont),),
                             ],
                           ),
                           SvgPicture.asset(AppAssets.arrowRightIcon, color: AppColors.black, width: 16.w,)

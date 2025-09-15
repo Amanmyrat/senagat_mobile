@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
-import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
-
-import '../../../core/states/stateful_data.dart';
 
 
 class AccountsController extends GetxController with StateControlMixin, GetSingleTickerProviderStateMixin {
 
-  late final TextEditingController nameController;
-  late final TextEditingController lastNameController;
-  late final TextEditingController surNameController;
-  late final TextEditingController bothDateController;
-  late final TextEditingController passportNumberController;
-  late final TextEditingController dateIssueController;
+  late final TextEditingController stateTrafficController;
+  late final TextEditingController waterController;
+  late final TextEditingController gasController;
+  late final TextEditingController lightController;
+  late final TextEditingController internetController;
+  late final TextEditingController homePhoneController;
 
   String? selectedDropdownIssuance;
   String? selectedDropdownCity;
@@ -23,12 +20,12 @@ class AccountsController extends GetxController with StateControlMixin, GetSingl
   int pageIndex = 1;
 
   List<String> serviceNames = [
-    r'state_traffic_safety_inspectorate'.tr,
-    r'water'.tr,
-    r'gas'.tr,
-    r'ligth'.tr,
-    r'Internet'.tr,
-    r'Home_phone'.tr,
+    r'state_traffic_safety_inspectorate',
+    r'water',
+    r'gas',
+    r'light',
+    r'internet',
+    r'home_phone',
   ];
 
 
@@ -38,12 +35,12 @@ class AccountsController extends GetxController with StateControlMixin, GetSingl
   void onInit() {
     super.onInit();
     controllers = [
-      nameController = TextEditingController(),
-      lastNameController = TextEditingController(),
-      surNameController = TextEditingController(),
-      bothDateController = TextEditingController(),
-      passportNumberController = TextEditingController(),
-      dateIssueController = TextEditingController(),
+      stateTrafficController = TextEditingController(),
+      waterController = TextEditingController(),
+      gasController = TextEditingController(),
+      lightController = TextEditingController(),
+      internetController = TextEditingController(),
+      homePhoneController = TextEditingController(),
     ];
 
   }

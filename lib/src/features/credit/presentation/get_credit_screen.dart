@@ -48,7 +48,7 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  r'Getting_a_loan'.tr,
+                                  r'getting_a_loan'.tr,
                                   style: TextStyle(
                                     fontSize: 24.sp,
                                     color: AppColors.blackText,
@@ -56,7 +56,7 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                 ),
                                 SizedBox(height: AppDimensions.padding40,),
 
-                                Text(r'Select_loan_type'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.blackText),),
+                                Text(r'select_loan_type'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.blackText),),
                                 SizedBox(height: 16.h,),
                                 Theme(
                                   data: Theme.of(context).copyWith(
@@ -86,7 +86,7 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                       icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18,),
                                     ),
                                     hint:  Text(
-                                      r"Loan_type".tr,
+                                      r"loan_type".tr,
                                       style: TextStyle(fontSize: 14.sp, color: AppColors.greyInactive),
                                     ),
                                     onChanged: (v) => controller.setDropdownValue(v),
@@ -124,7 +124,7 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text(r'Calculator'.tr,
+                                        Text(r'calculator'.tr,
                                           style: TextStyle(
                                             fontSize: 14.sp,
                                             color: AppColors.blackText,
@@ -236,7 +236,7 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                               child: Column(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(r'Bid'.tr,
+                                                  Text(r'bid'.tr,
                                                     style: TextStyle(
                                                       fontSize: 14.sp,
                                                       color: AppColors.blackText,
@@ -256,7 +256,7 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                                       fontFamily: AppFonts.primaryFont,
                                                     ),
                                                     decoration: InputDecoration(
-                                                      hintText: r'Bid'.tr,
+                                                      hintText: r'bid'.tr,
                                                       border: OutlineInputBorder(),
                                                       suffixText: '%',
                                                       suffixStyle: TextStyle(color: AppColors.blackText),
@@ -293,7 +293,7 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                               child: Column(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(r'Monthly_payment'.tr,
+                                                  Text(r'monthly_payment'.tr,
                                                     style: TextStyle(
                                                       fontSize: 14.sp,
                                                       color: AppColors.blackText,
@@ -309,7 +309,7 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                                       fontFamily: AppFonts.primaryFont,
                                                     ),
                                                     decoration: InputDecoration(
-                                                      hintText: r'Monthly_payment'.tr,
+                                                      hintText: r'monthly_payment'.tr,
                                                       border: OutlineInputBorder(),
                                                       focusedBorder: OutlineInputBorder(
                                                         borderRadius: BorderRadius.circular(

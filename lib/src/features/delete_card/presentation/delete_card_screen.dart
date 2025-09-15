@@ -64,7 +64,7 @@ class _DeleteCardScreenState extends State<DeleteCardScreen> {
                                           SvgPicture.asset(AppAssets.infoIcon, color: AppColors.green,),
                                           SizedBox(width: 6.w,),
                                           Flexible(
-                                            child: Text(r'Replenishment_bank'.tr,
+                                            child: Text(r'replenishment_bank'.tr,
                                               style: TextStyle(fontSize: 14.sp, color: AppColors.black, fontFamily: AppFonts.secondaryFont),
                                             ),
                                           ),
@@ -147,14 +147,14 @@ class _DeleteCardScreenState extends State<DeleteCardScreen> {
                                   onPressed: (){
                                     controller.startBankVerification();
                                   },
-                                  child: Text(r'Remove_card'.tr),
+                                  child: Text(r'remove_card'.tr),
                                 ),
                               ),
                             ),
                           ],
                         ),
                         if(controller.check)
-                          CheckWidget(isLoading: controller.status == Status.loading, isTitle: true, title: r'Remove_card',),
+                          CheckWidget(isLoading: controller.status == Status.loading, isTitle: true, title: r'remove_card',),
                       ],
                     ),
                   ),

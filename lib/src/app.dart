@@ -28,7 +28,7 @@ import 'package:senagat_mobile/src/features/qr_code/presentation/qr_code_screen.
 import 'package:senagat_mobile/src/features/register/presentation/register_screen.dart';
 import 'package:senagat_mobile/src/features/register_confirmation/presentation/register_confirmation.dart';
 import 'package:senagat_mobile/src/features/register_password_setup/presentation/register_password_setup_screen.dart';
-import 'package:senagat_mobile/src/features/accounts/presentation/accounts.dart';
+import 'package:senagat_mobile/src/features/accounts/presentation/accounts_screen.dart';
 import 'package:senagat_mobile/src/features/service_settings/controller/service_settings_controller.dart';
 import 'package:senagat_mobile/src/features/service_settings/presentation/service_settings_screen.dart';
 import 'package:senagat_mobile/src/features/welcome/presentation/welcome_screen.dart';
@@ -39,7 +39,6 @@ import 'package:senagat_mobile/src/utils/theme/app_theme.dart';
 import 'package:senagat_mobile/src/utils/theme/controller/theme_controller.dart';
 import 'features/ Inquiries/presentation/inquiries_screen.dart';
 import 'features/add_card/controller/add_card_controller.dart';
-import 'features/card/presentation/card_screen.dart';
 import 'features/credit/presentation/get_credit_screen.dart';
 import 'features/dashboard/controller/dashboard_controller.dart';
 import 'features/dashboard/presentation/dashboard_screen.dart';

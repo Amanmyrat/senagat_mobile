@@ -11,6 +11,7 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
   late final TextEditingController surNameController;
   late final TextEditingController bothDateController;
   late final TextEditingController passportNumberController;
+  late final TextEditingController asController;
   late final TextEditingController dateIssueController;
   late final TextEditingController addressController;
   late final TextEditingController phoneController;
@@ -25,10 +26,10 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
 
   List<String> textFieldTitle = [
     r'name'.tr,
-    r'Last_name'.tr,
-    r'Surname'.tr,
-    r'Date_birth'.tr,
-    r'Passport_number'.tr,
+    r'last_name'.tr,
+    r'surname'.tr,
+    r'date_birth'.tr,
+    r'passport_number'.tr,
     r'date_issue'.tr,
   ];
 
@@ -64,6 +65,7 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
       bothDateController = TextEditingController(),
       passportNumberController = TextEditingController(),
       dateIssueController = TextEditingController(),
+      asController = TextEditingController(),
     ];
     addressController = TextEditingController();
     phoneController = TextEditingController();
@@ -77,6 +79,7 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
         bothDateController.text.isNotEmpty &&
         passportNumberController.text.isNotEmpty &&
         dateIssueController.text.isNotEmpty &&
+        asController.text.isNotEmpty &&
         selectedDropdownIssuance != null){
       continueEnabled = true;
       update();
@@ -121,7 +124,7 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
     if(pageIndex == 1){
       Get.back();
       update();
-    }else if(pageIndex == 2 ) {
+    }else if(pageIndex == 2) {
       pageIndex = 1;
       update();
     }

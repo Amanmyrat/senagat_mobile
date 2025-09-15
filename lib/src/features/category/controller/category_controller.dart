@@ -33,20 +33,20 @@ class CategoryController extends GetxController with StateControlMixin {
   ];
 
   final List<String> paymentsTitle = [
-    r'Altyn Asyr'.tr,
-    r'Net_and_TV'.tr,
-    r'gas'.tr,
-    r'water'.tr,
-    r'state_traffic_safety_inspectorate'.tr,
-    r'light'.tr,
-    r'communal_apartment'.tr,
+    r'Altyn Asyr',
+    r'net_and_TV',
+    r'gas',
+    r'water',
+    r'state_traffic_safety_inspectorate',
+    r'light',
+    r'communal_apartment',
   ];
 
   final List<String> serviceTitle = [
-    r'Belet'.tr,
-    r'Air_tickets'.tr,
-    r'Railway_tickets'.tr,
-    r'Auto_tickets'.tr,
+    r'Belet',
+    r'air_tickets'.tr,
+    r'railway_tickets'.tr,
+    r'auto_tickets'.tr,
   ];
 
 
@@ -68,14 +68,14 @@ class CategoryController extends GetxController with StateControlMixin {
     lastFastServiceTapIndex = index;
     update();
 
-    if (serviceTitle[index] == r'Net и Tv'.tr) {
+    if (paymentsTitle[index] == r'net_and_TV'.tr) {
       Get.toNamed(NetAndTvScreen.route, arguments: {
-        'selectedServiceTitle': serviceTitle[index],
+        'selectedServiceTitle': paymentsTitle[index],
       });
     } else {
       Get.toNamed(PaymentScreen.route, arguments: {
-        'selectedServiceTitle': serviceTitle[index],
-        'selectedServiceIcon': serviceIcons[index],
+        'selectedServiceTitle': paymentsTitle[index],
+        'selectedServiceIcon': paymentsIcons[index],
       });
     }
   }

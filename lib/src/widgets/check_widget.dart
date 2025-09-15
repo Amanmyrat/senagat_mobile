@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:senagat_mobile/src/features/foundation/presentation/foundation_screen.dart';
-
 import '../utils/constants/app_assets.dart';
 import '../utils/theme/constants/app_colors.dart';
 import '../utils/theme/constants/app_dimensions.dart';
@@ -61,7 +59,7 @@ class CheckWidget extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ):
                 Text(
-                  r'Payment_was_successful'.tr,
+                  r'payment_was_successful'.tr,
                   textAlign: TextAlign.center,
                 ),
 
@@ -69,7 +67,7 @@ class CheckWidget extends StatelessWidget {
                   SizedBox(height: 22.h,),
 
                if(isTitle == false)
-                 isLoading ? SizedBox() :Padding(
+                 isLoading ? SizedBox() : Padding(
                   padding: EdgeInsets.symmetric(horizontal: AppDimensions.paddingExtraLarge.w),
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width,

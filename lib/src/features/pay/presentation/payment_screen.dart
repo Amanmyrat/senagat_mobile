@@ -23,14 +23,12 @@ class PaymentScreen extends StatefulWidget {
 
 class _PaymentScreenState extends State<PaymentScreen> {
 
-  final _key = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: GetBuilder<PaymentController>(
-          init: PaymentController(_key),
+          init: PaymentController(),
           builder: (controller) {
             return Column(
               children: [
@@ -47,7 +45,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                 Padding(
                                   padding: EdgeInsets.only(right: AppDimensions.paddingExtraLarge, top: 22),
                                   child: Align(alignment: Alignment.bottomRight,child:
-                                  Text('Шаг 5 из 5'.tr, style: TextStyle(fontSize: 14.sp), )),
+                                  Text('step_5_of_5'.tr, style: TextStyle(fontSize: 14.sp), )),
                                 ),
                             ],
                           ),

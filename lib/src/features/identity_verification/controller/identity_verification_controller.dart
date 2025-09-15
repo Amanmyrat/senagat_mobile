@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
-import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
-
 import '../../../core/states/stateful_data.dart';
-
 
 class IdentityVerificationController extends GetxController with StateControlMixin, GetSingleTickerProviderStateMixin {
 
   late final TextEditingController nameController;
   late final TextEditingController lastNameController;
   late final TextEditingController surNameController;
-  late final TextEditingController bothDateController;
+  late final TextEditingController dateOfBirthController;
   late final TextEditingController passportNumberController;
+  late final TextEditingController asController;
 
 
   bool continueEnabled = false;
@@ -20,10 +18,10 @@ class IdentityVerificationController extends GetxController with StateControlMix
 
 
   List<String> textFieldTitle = [
-    r'name'.tr,
-    r'Last_name'.tr,
-    r'Surname'.tr,
-    r'Date_birth'.tr,
+    r'name',
+    r'last_name',
+    r'surname',
+    r'date_birth',
   ];
 
 
@@ -36,17 +34,19 @@ class IdentityVerificationController extends GetxController with StateControlMix
       nameController = TextEditingController(),
       lastNameController = TextEditingController(),
       surNameController = TextEditingController(),
-      bothDateController = TextEditingController(),
+      dateOfBirthController = TextEditingController(),
     ];
       passportNumberController = TextEditingController();
+      asController = TextEditingController();
   }
 
   void onTextIsNotEmpty(String? v){
     if(nameController.text.isNotEmpty &&
         lastNameController.text.isNotEmpty &&
         surNameController.text.isNotEmpty &&
-        bothDateController.text.isNotEmpty &&
-        passportNumberController.text.isNotEmpty){
+        dateOfBirthController.text.isNotEmpty &&
+        passportNumberController.text.isNotEmpty &&
+        asController.text.isNotEmpty){
       continueEnabled = true;
       update();
     }else{

@@ -99,7 +99,7 @@ class _CardSettingsScreenState extends State<CardSettingsScreen> {
                                     children: [
                                       SvgPicture.asset(AppAssets.navigationCreditCardIcon, width: 24.w, color: AppColors.green,),
                                       SizedBox(width: 10.w,),
-                                      Text(r'Card_details'.tr, style: TextStyle(color: AppColors.black, fontSize: 14.sp, fontFamily: AppFonts.secondaryFont),),
+                                      Text(r'card_details'.tr, style: TextStyle(color: AppColors.black, fontSize: 14.sp, fontFamily: AppFonts.secondaryFont),),
                                     ],
                                   ),
                                   SvgPicture.asset(AppAssets.arrowRightIcon, width: 16.w,)
@@ -127,7 +127,7 @@ class _CardSettingsScreenState extends State<CardSettingsScreen> {
                                                 child: Column(
                                                   mainAxisSize: MainAxisSize.min,
                                                   children: [
-                                                    Text(r'Card_name'.tr, style: TextStyle(color: AppColors.black, fontSize: 24.sp),),
+                                                    Text(r'card_name'.tr, style: TextStyle(color: AppColors.black, fontSize: 24.sp),),
                                                     SizedBox(height: 22.h,),
                                                     TextField(
                                                       keyboardType: TextInputType.name,
@@ -139,7 +139,7 @@ class _CardSettingsScreenState extends State<CardSettingsScreen> {
                                                         fontFamily: AppFonts.primaryFont,
                                                       ),
                                                       decoration: InputDecoration(
-                                                        hintText: r'Card_name'.tr,
+                                                        hintText: r'card_name'.tr,
                                                         border: OutlineInputBorder(),
                                                         focusedBorder: OutlineInputBorder(
                                                           borderRadius: BorderRadius.circular(
@@ -218,7 +218,7 @@ class _CardSettingsScreenState extends State<CardSettingsScreen> {
                                     children: [
                                       SvgPicture.asset(AppAssets.edit, width: 24.w,),
                                       SizedBox(width: 10.w,),
-                                      Text(r'Card_name'.tr, style: TextStyle(color: AppColors.black, fontSize: 14.sp,fontFamily: AppFonts.secondaryFont),),
+                                      Text(r'card_name'.tr, style: TextStyle(color: AppColors.black, fontSize: 14.sp,fontFamily: AppFonts.secondaryFont),),
                                     ],
                                   ),
                                   SvgPicture.asset(AppAssets.arrowRightIcon, width: 16.w,)
@@ -257,7 +257,7 @@ class _CardSettingsScreenState extends State<CardSettingsScreen> {
                                 children: [
                                   SvgPicture.asset(AppAssets.trash, width: 24.w,),
                                   SizedBox(width: 10.w,),
-                                  Text(r'Remove_card'.tr, style: TextStyle(color: AppColors.black, fontSize: 14.sp,fontFamily: AppFonts.secondaryFont),),
+                                  Text(r'remove_card'.tr, style: TextStyle(color: AppColors.black, fontSize: 14.sp,fontFamily: AppFonts.secondaryFont),),
                                 ],
                               ),
                               SvgPicture.asset(AppAssets.arrowRightIcon, width: 16.w,)

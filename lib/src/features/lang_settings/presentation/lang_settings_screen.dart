@@ -34,7 +34,7 @@ class _LangSettingsScreenState extends State<LangSettingsScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(r'Language'.tr, style: TextStyle(fontSize: 24.sp, color: AppColors.black),),
+                        Text(r'language'.tr, style: TextStyle(fontSize: 24.sp, color: AppColors.black),),
                         SizedBox(height: 32.h,),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

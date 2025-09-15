@@ -70,7 +70,7 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    r'Select_the_type_of_certificate'.tr,
+                                    r'select_the_type_of_certificate'.tr,
                                     style: TextStyle(
                                       fontSize: 24.sp,
                                       color: AppColors.blackText,
@@ -82,11 +82,11 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                   DropdownButtonFormField2<String>(
                                       value: controller.selectedDropdownType,
                                       hint: Text(
-                                        r"Type_of_certificate".tr,
-                                        style: TextStyle(fontSize: 14.sp),
+                                        r"type_of_certificate".tr,
+                                        style: TextStyle(fontSize: 14.sp, color: AppColors.greyInactive),
                                       ),
                                       decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.fromLTRB(AppDimensions.paddingMedium.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.h, ),
+                                        contentPadding: EdgeInsets.fromLTRB(0, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.h, ),
                                       ),
                                       dropdownStyleData: DropdownStyleData(
                                         decoration: BoxDecoration(
@@ -118,11 +118,12 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                       children: [
                                         SizedBox(height: 16.h,),
                                         Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             SvgPicture.asset(AppAssets.infoIcon,width: 18.w, color: AppColors.green,),
                                             SizedBox(width: 6.h,),
                                             Expanded(
-                                              child: Text(r'Confirm_that_you_have_an_account'.tr,
+                                              child: Text(r'confirm_that_you_have_an_account'.tr,
                                                 style: TextStyle(
                                                     fontSize: 14.sp,
                                                     color: AppColors.blackText,
@@ -143,7 +144,7 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  r'Passport_details'.tr,
+                                  r'passport_details'.tr,
                                   style: TextStyle(
                                     fontSize: 24.sp,
                                     color: AppColors.blackText,
@@ -155,21 +156,121 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                     shrinkWrap: true,
                                     physics: NeverScrollableScrollPhysics(),
                                     itemBuilder: (context, index){
+                                      if(controller.controllers[index] == controller.passportNumberController){
+                                        return Padding(
+                                          padding: EdgeInsets.only(bottom: 22.h),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(controller.textFieldTitle[index].tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+                                              SizedBox(height: AppDimensions.paddingMedium.h,),
+                                              Row(
+                                                children: [
+                                                  SizedBox(
+                                                    width: 72.w,
+                                                    height: 62.h,
+                                                    child: TextFormField(
+                                                      textAlign: TextAlign.center,
+                                                      textInputAction: TextInputAction.next,
+                                                      keyboardType: TextInputType.text,
+                                                      controller: controller.asController,
+                                                      onChanged:(v) => controller.onTextIsNotEmpty(v),
+                                                      style: TextStyle(
+                                                        fontSize: 14.sp,
+                                                      ),
+                                                      decoration: InputDecoration(
+                                                        hintText: r'AS',
+                                                        hintStyle: TextStyle(color: AppColors.black, fontSize: 14.sp),
+                                                        border: OutlineInputBorder(),
+                                                        focusedBorder: OutlineInputBorder(
+                                                          borderRadius: BorderRadius.circular(
+                                                            AppDimensions.borderRadiusMedium,
+                                                          ),
+                                                          borderSide: BorderSide(
+                                                            color: AppColors.green,
+                                                            width: 1.w,
+                                                          ),
+                                                        ),
+                                                        enabledBorder: OutlineInputBorder(
+                                                          borderRadius: BorderRadius.circular(
+                                                            AppDimensions.borderRadiusMedium,
+                                                          ),
+                                                          borderSide: BorderSide(
+                                                            color: AppColors.white,
+                                                            width: 1.w,
+                                                          ),
+                                                        ),
+                                                        counter: const SizedBox(),
+                                                        contentPadding: EdgeInsets.symmetric(
+                                                          vertical: AppDimensions.paddingExtraLarge.h,
+                                                          horizontal: AppDimensions.paddingLarge.w,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(width: 4.sp,),
+                                                  Expanded(
+                                                    child: TextFormField(
+                                                      textInputAction: TextInputAction.next,
+                                                      keyboardType: TextInputType.number,
+                                                      controller: controller.passportNumberController,
+                                                      onChanged:(v) => controller.onTextIsNotEmpty(v),
+                                                      style: TextStyle(
+                                                        fontSize: 14.sp,
+                                                      ),
+                                                      decoration: InputDecoration(
+                                                        hintText: r'passport_number'.tr,
+                                                        border: OutlineInputBorder(),
+                                                        focusedBorder: OutlineInputBorder(
+                                                          borderRadius: BorderRadius.circular(
+                                                            AppDimensions.borderRadiusMedium,
+                                                          ),
+                                                          borderSide: BorderSide(
+                                                            color: AppColors.green,
+                                                            width: 1.w,
+                                                          ),
+                                                        ),
+                                                        enabledBorder: OutlineInputBorder(
+                                                          borderRadius: BorderRadius.circular(
+                                                            AppDimensions.borderRadiusMedium,
+                                                          ),
+                                                          borderSide: BorderSide(
+                                                            color: AppColors.white,
+                                                            width: 1.w,
+                                                          ),
+                                                        ),
+                                                        counter: const SizedBox(),
+                                                        contentPadding: EdgeInsets.symmetric(
+                                                          vertical: AppDimensions.paddingExtraLarge.h,
+                                                          horizontal: AppDimensions.paddingLarge.w,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      }
                                       return  Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text(controller.textFieldTitle[index], style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+                                          Text(controller.textFieldTitle[index].tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
                                           SizedBox(height: AppDimensions.paddingMedium.h,),
                                           TextFormField(
                                             textInputAction: TextInputAction.next,
-                                            keyboardType: TextInputType.name,
+                                            keyboardType: (index == controller.controllers.length - 2 ||
+                                                index == controller.controllers.length - 4)
+                                                ? TextInputType.number
+                                                : TextInputType.name,
                                             controller: controller.controllers[index],
                                             onChanged:(v) => controller.onTextIsNotEmpty(v),
                                             style: TextStyle(
                                               fontSize: 14.sp,
                                             ),
                                             decoration: InputDecoration(
-                                              hintText: controller.textFieldTitle[index],
+                                              hintText: controller.textFieldTitle[index].tr,
                                               border: OutlineInputBorder(),
                                               focusedBorder: OutlineInputBorder(
                                                 borderRadius: BorderRadius.circular(
@@ -201,15 +302,15 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                       );
                                     }
                                 ),
-                                Text(r'Place_of_issue'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+                                Text(r'place_of_issue'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
                                 SizedBox(height: AppDimensions.paddingMedium,),
                                 DropdownButtonFormField2<String>(
                                     value: controller.selectedDropdownCity,
-                                    hint: Text(r"Place_of_issue".tr, style: TextStyle(
-                                      fontSize: 14.sp,),
+                                    hint: Text(r"place_of_issue".tr, style: TextStyle(
+                                      fontSize: 14.sp, color: AppColors.grey, fontFamily: AppFonts.primaryFont),
                                     ),
                                   decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.fromLTRB(AppDimensions.paddingMedium.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.h, ),
+                                    contentPadding: EdgeInsets.fromLTRB(0, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.h, ),
                                   ),
                                   dropdownStyleData: DropdownStyleData(
                                     decoration: BoxDecoration(
@@ -246,24 +347,24 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  r'Information_for_reference'.tr,
+                                  r'information_for_reference'.tr,
                                   style: TextStyle(
                                     fontSize: 24.sp,
                                     color: AppColors.blackText,
                                   ),
                                 ),
                                 SizedBox(height: 32.h,),
-                                Text(r'Bank_branch'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+                                Text(r'bank_branch'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
                                 SizedBox(height: AppDimensions.paddingMedium,),
 
                                 DropdownButtonFormField2<String>(
                                     value: controller.selectedDropdownBranch,
-                                    hint: Text(r"Bank_branch".tr, style: TextStyle(
-                                      fontSize: 14.sp,),
+                                    hint: Text(r"bank_branch".tr, style: TextStyle(
+                                      fontSize: 14.sp, fontFamily: AppFonts.primaryFont, color: AppColors.greyInactive),
                                     ),
 
                                     decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.fromLTRB(AppDimensions.paddingMedium.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.h, ),
+                                      contentPadding: EdgeInsets.fromLTRB(0, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.h, ),
                                     ),
                                     dropdownStyleData: DropdownStyleData(
                                       decoration: BoxDecoration(
@@ -291,7 +392,7 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                 SizedBox(height: 22.h,),
 
 
-                                Text(r'Home_address'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+                                Text(r'home_address'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
                                 SizedBox(height: AppDimensions.paddingMedium.h,),
                                 TextFormField(
                                   textInputAction: TextInputAction.next,
@@ -302,7 +403,7 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                     fontSize: 14.sp,
                                   ),
                                   decoration: InputDecoration(
-                                    hintText: r'Home_address'.tr,
+                                    hintText: r'home_address'.tr,
                                     border: OutlineInputBorder(),
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(

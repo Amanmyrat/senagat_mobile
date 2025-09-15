@@ -6,11 +6,9 @@ import 'package:senagat_mobile/src/features/service_settings/controller/service_
 import '../../payment_verification/presentation/payment_verification_screen.dart';
 
 class PaymentController extends GetxController with StateControlMixin {
-  final GlobalKey<FormState> key;
   bool continueEnabled = false;
   bool check = false;
 
-  PaymentController(this.key);
 
   late final TextEditingController phoneController;
   late final TextEditingController sumController;
@@ -19,21 +17,24 @@ class PaymentController extends GetxController with StateControlMixin {
 
   String serviceName = '';
   String serviceIcon = '';
-  bool isInquiries = true;
+  bool isInquiries = false;
+  bool isFoundation = false;
 
 
   late final FocusNode phoneFocus;
 
   @override
   void onInit() {
-    try{
-      serviceName = Get.arguments['selectedServiceTitle'];
-      serviceIcon = Get.arguments['selectedServiceIcon'];
-      isInquiries = Get.arguments['isInquiries'];
-    }catch(e){
-      print(e);
-    }
+    final args = Get.arguments;
 
+    if (args is Map<String, dynamic>) {
+      serviceName   = args['selectedServiceTitle'] as String? ?? '';
+      serviceIcon   = args['selectedServiceIcon'] as String? ?? '';
+      isInquiries   = args['isInquiries']   as bool? ?? false;
+      isFoundation  = args['isFoundation']  as bool? ?? false;
+    } else {
+      debugPrint('No or invalid arguments passed to this page');
+    }
 
     serviceSettingsController = Get.find<ServiceSettingsController>();
 
@@ -61,7 +62,9 @@ class PaymentController extends GetxController with StateControlMixin {
             'sum': sumController.text,
             'userName': nameController.text,
             'isInquiries': isInquiries,
+            'isFoundation': isFoundation,
       });
+
   }
 
   void startBankVerification() {

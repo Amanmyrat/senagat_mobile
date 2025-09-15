@@ -38,7 +38,7 @@ class _CardExpensesScreenState extends State<CardExpensesScreen> {
                     children: [
                       Padding(
                         padding:  EdgeInsets.only(left: 20),
-                        child: Text(r'Spending'.tr, style: TextStyle(color: AppColors.black, fontSize: 24.sp),),
+                        child: Text(r'spending'.tr, style: TextStyle(color: AppColors.black, fontSize: 24.sp),),
                       ),
                       SizedBox(height: 16.h,),
                       SizedBox(

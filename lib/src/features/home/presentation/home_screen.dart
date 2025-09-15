@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/features/add_card/presentation/add_card_screen.dart';
+import 'package:senagat_mobile/src/features/card_expenses/presentation/card_expenses_screen.dart';
 import 'package:senagat_mobile/src/features/map_search/presentation/map_search_screen.dart';
 import 'package:senagat_mobile/src/features/service_settings/presentation/service_settings_screen.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
@@ -26,7 +27,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
         child: SafeArea(
           child: GetBuilder<HomeController>(
             init: HomeController(),
@@ -136,68 +136,91 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                       SizedBox(height: 22.h),
-                      controller.cardBox.isNotEmpty ?
-                      GestureDetector(
-                        onTap: (){
-                          Get.toNamed(AddCardScreen.route);
-                        },
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          padding: EdgeInsets.all(
-                            AppDimensions.paddingExtraLarge,
+                      Container(
+                        padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
+                        decoration:  BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                            AppDimensions.borderRadiusMedium.r,
                           ),
-
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.r),
-                            image: DecorationImage(
-                              image: AssetImage(controller.cardBox.getAt(0)!.cardDesign),
-                              fit: BoxFit.fill,
+                          border: Border.all(color: AppColors.dividerColor, width: 1.w, style: BorderStyle.solid),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.dividerColor,
+                              blurRadius: 4.r,
                             ),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Align(
-                                alignment: Alignment.topLeft,
-                                child: Text(
-                                  'Senagat Bank',
-                                  style: TextStyle(
-                                    color: AppColors.white,
-                                    fontSize: 14,
-                                  ),
-                                ),
+                          ],
+                          color: AppColors.black,
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SvgPicture.asset(AppAssets.infoIcon, color: AppColors.greyInactive,),
+                            SizedBox(width: 6.w,),
+                            Flexible(
+                              child: Text(r'most_functions'.tr,
+                                style: TextStyle(fontSize: 14.sp, color: AppColors.white, fontFamily: AppFonts.secondaryFont),
                               ),
-                              SizedBox(height: 72.h,),
-                              Text(
-                                controller.cardBox.getAt(0)?.cardNumber ?? '',
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 22.h),
+                      controller.cardBox.isNotEmpty ?
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        padding: EdgeInsets.all(
+                          AppDimensions.paddingExtraLarge,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.r),
+                          image: DecorationImage(
+                            image: AssetImage(controller.cardBox.getAt(0)!.cardDesign),
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                'Senagat Bank',
                                 style: TextStyle(
-                                  wordSpacing: 10.sp,
-                                  fontSize: 24.sp,
                                   color: AppColors.white,
+                                  fontSize: 14,
                                 ),
                               ),
-                              SizedBox(height: 41.h,),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    controller.cardBox.getAt(0)?.name ?? '',
-                                    style: TextStyle(
-                                      fontSize: 14.sp,
-                                      color: AppColors.white,
-                                    ),
-                                  ),
-                                  Text(
-                                    controller.cardBox.getAt(0)?.expiryDate ?? '',
-                                    style: TextStyle(
-                                      fontSize: 14.sp,
-                                      color: AppColors.white,
-                                    ),
-                                  ),
-                                ],
+                            ),
+                            SizedBox(height: 72.h,),
+                            Text(
+                              controller.cardBox.getAt(0)?.cardNumber ?? '',
+                              style: TextStyle(
+                                wordSpacing: 10.sp,
+                                fontSize: 24.sp,
+                                color: AppColors.white,
                               ),
-                            ],
-                          ),
+                            ),
+                            SizedBox(height: 41.h,),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  controller.cardBox.getAt(0)?.name ?? '',
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    color: AppColors.white,
+                                  ),
+                                ),
+                                Text(
+                                  controller.cardBox.getAt(0)?.expiryDate ?? '',
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    color: AppColors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ) :
                       GestureDetector(
@@ -446,7 +469,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     padding: EdgeInsets.symmetric(horizontal: AppDimensions.paddingExtraLarge),
-                    itemCount: controller.serviceTitle.length,
+                    itemCount: controller.serviceTitles.length,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
 
@@ -488,7 +511,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              controller.serviceTitle[index],
+                                              controller.serviceTitles[index].tr,
                                               style: TextStyle(
                                                 color: isSelected ? AppColors.white : AppColors.blackText,
                                                 fontSize: 14.sp,
@@ -501,7 +524,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 SizedBox(
                                                   width: 110.h,
                                                   child: Text(
-                                                    r'get_any_type_of_help'.tr,
+                                                    controller.serviceSecondaryTitles[index].tr,
                                                     style: TextStyle(
                                                       color: isSelected ? AppColors.white : AppColors.blackText,
                                                       fontSize: 14.sp,
@@ -518,7 +541,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Positioned(
                                         top: 0,
                                         right: 0,
-                                        child: Image.asset(controller.serviceImage[index], ),
+                                        child: Image.asset(controller.serviceImage[index], width: 163.w, height: 200.h,),
                                       ),
                                       Padding(
                                         padding: EdgeInsets.only(bottom: 20, right: 20),
@@ -586,10 +609,31 @@ class _HomeScreenState extends State<HomeScreen> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(r'history'.tr, style: TextStyle(
-                            color: AppColors.blackText,
-                            fontSize: 17.sp,
-                          ),),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                r'history'.tr,
+                                style: TextStyle(
+                                color: AppColors.blackText,
+                                fontSize: 17.sp,
+                              ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Get.toNamed(CardExpensesScreen.route);
+                                },
+                                child: Text(
+                                  r'view_all'.tr,
+                                  style: TextStyle(
+                                    color: AppColors.green,
+                                    fontSize: 14.sp,
+                                    fontFamily: AppFonts.secondaryFont,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                           SizedBox(height: 6.h),
 
                           ListView.builder(

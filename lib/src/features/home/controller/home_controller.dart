@@ -42,10 +42,16 @@ class HomeController extends GetxController with StateControlMixin {
     'EUR',
   ];
 
-  final List<String> serviceTitle = [
-    r'inquiries'.tr,
-    r'Cards'.tr,
-    r'Credits'.tr,
+  final List<String> serviceTitles = [
+    r'inquiries',
+    r'cards',
+    r'credits',
+  ];
+
+  final List<String> serviceSecondaryTitles = [
+    r'get_any_type_of_help',
+    r'get_a_card_in_just_a_few_seconds',
+    r'get_a_credit_in_just_a_few_seconds',
   ];
 
   final List<String> serviceImage = [
@@ -89,7 +95,7 @@ class HomeController extends GetxController with StateControlMixin {
     lastFastServiceTapIndex = index;
     update();
 
-    if (fastServiceController.selectedServiceTitle[index] == r'Net и Tv'.tr) {
+    if (fastServiceController.selectedServiceTitle[index] == r'net_and_TV'.tr) {
       Get.toNamed(NetAndTvScreen.route, arguments: {
         'selectedServiceTitle': fastServiceController.selectedServiceTitle[index],
       });

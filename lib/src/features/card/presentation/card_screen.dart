@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/features/add_card/presentation/add_card_screen.dart';
@@ -162,7 +161,7 @@ class _CardScreenState extends State<CardScreen> {
                                         fontSize: 24.sp,
                                         color: AppColors.white
                                       ),),
-                                      Text(r'Expenses_per_month'.tr, style: TextStyle(
+                                      Text(r'expenses_per_month'.tr, style: TextStyle(
                                           fontSize: 14.sp,
                                           color: AppColors.greyInactive
                                       ),)
@@ -176,7 +175,7 @@ class _CardScreenState extends State<CardScreen> {
 
                           SizedBox(height: AppDimensions.padding40.h,),
 
-                          Text(r'Cards'.tr, style: TextStyle(fontSize: 17.sp, color: AppColors.black),),
+                          Text(r'cards'.tr, style: TextStyle(fontSize: 17.sp, color: AppColors.black),),
                           SizedBox(height: 16.h,),
 
                           controller.cardBox.length == 0 ?

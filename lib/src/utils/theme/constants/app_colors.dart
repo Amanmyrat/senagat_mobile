@@ -10,7 +10,7 @@ class AppColors {
   static const Color black = Color(0xff191B19);
   static const Color lightBlack = Color.fromRGBO(30, 30, 30, 1.0);
   static const Color white = Color(0xffEEF2ED);
-  static const Color grey = Color(0xff9DA1B1); // icons
+  static const Color grey = Color(0xff6F736D); // icons
   static const Color mediumGrey = Color.fromRGBO(227, 227, 227, 1);
   static const Color lighterGrey = Color.fromRGBO(248, 248, 248, 1);
   static const Color extraLightGrey = Color.fromRGBO(245, 242, 245, 1);

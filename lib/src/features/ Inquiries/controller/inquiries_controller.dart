@@ -9,9 +9,10 @@ class InquiriesController extends GetxController with StateControlMixin {
   late final TextEditingController nameController;
   late final TextEditingController lastNameController;
   late final TextEditingController surNameController;
-  late final TextEditingController bothDateController;
+  late final TextEditingController dateOfBirthController;
   late final TextEditingController passportNumberController;
   late final TextEditingController dateIssueController;
+  late final TextEditingController asController;
   late final TextEditingController addressController;
   late final TextEditingController phoneController;
 
@@ -23,12 +24,12 @@ class InquiriesController extends GetxController with StateControlMixin {
 
 
   List<String> textFieldTitle = [
-    r'name'.tr,
-    r'Last_name'.tr,
-    r'Surname'.tr,
-    r'Date_birth'.tr,
-    r'Passport_number'.tr,
-    r'date_issue'.tr,
+    r'name',
+    r'last_name',
+    r'surname',
+    r'date_birth',
+    r'passport_number',
+    r'date_issue',
   ];
 
   final List<String> typeSelection = [
@@ -58,9 +59,10 @@ class InquiriesController extends GetxController with StateControlMixin {
       nameController = TextEditingController(),
       lastNameController = TextEditingController(),
       surNameController = TextEditingController(),
-      bothDateController = TextEditingController(),
+      dateOfBirthController = TextEditingController(),
       passportNumberController = TextEditingController(),
       dateIssueController = TextEditingController(),
+      asController = TextEditingController(),
     ];
     addressController = TextEditingController();
     phoneController = TextEditingController();
@@ -71,9 +73,10 @@ class InquiriesController extends GetxController with StateControlMixin {
     if(nameController.text.isNotEmpty &&
         lastNameController.text.isNotEmpty &&
         surNameController.text.isNotEmpty &&
-        bothDateController.text.isNotEmpty &&
+        dateOfBirthController.text.isNotEmpty &&
         passportNumberController.text.isNotEmpty &&
       dateIssueController.text.isNotEmpty &&
+        asController.text.isNotEmpty &&
         selectedDropdownCity != null){
       continueEnabled = true;
       update();
@@ -117,8 +120,8 @@ class InquiriesController extends GetxController with StateControlMixin {
       update();
     }else if(pageIndex == 3 && continueEnabled){
       Get.toNamed(PaymentVerificationScreen.route, arguments: {
-        'serviceName': 'inquiries',
-        'isInquiries': true
+        'isInquiries': true,
+        'isFoundation': false,
       });
       update();
     }

@@ -71,7 +71,7 @@ class AppTheme {
         fontFamily: AppFonts.primaryFont,
       ),
       hintStyle: AppTextTheme.instance.lightTheme.bodySmall?.copyWith(
-        color: AppColors.grey,
+        color: AppColors.greyInactive,
         fontWeight: FontWeight.w400,
         fontSize: 14.0.sp,
         fontFamily: AppFonts.primaryFont,

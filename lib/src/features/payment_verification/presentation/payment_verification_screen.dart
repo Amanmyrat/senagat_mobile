@@ -91,7 +91,7 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                                                       child: Column(
                                                         crossAxisAlignment: CrossAxisAlignment.center,
                                                         children: [
-                                                          if(controller.isInquiries == false)
+                                                          if(controller.isFoundation == false && controller.isInquiries == false)
                                                             Container(
                                                               padding:EdgeInsets.all(AppDimensions.paddingMedium.w) ,
                                                               decoration: BoxDecoration(
@@ -102,7 +102,7 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                                                             ),
 
                                                           Text(
-                                                            controller.isInquiries ? r'Getting_help'.tr : controller.serviceName ?? '',
+                                                            controller.isInquiries == true ? r'getting_help'.tr : controller.serviceName ?? '',
                                                             style: TextStyle(
                                                               fontSize: 17.sp,
                                                               color: AppColors.white,
@@ -258,7 +258,7 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                                                 ),
 
                                                 Positioned(
-                                                  top: controller.isInquiries ? 125 : 170,
+                                                  top: controller.isInquiries || controller.isFoundation ? 125 : 170,
                                                   left: -10,
                                                   child: Container(
                                                     width: 30.w,
@@ -270,7 +270,7 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                                                   ),
                                                 ),
                                                 Positioned(
-                                                  top: controller.isInquiries ? 125 : 170,
+                                                  top: controller.isInquiries || controller.isFoundation ? 125 : 170,
                                                   right: -10,
                                                   child: Container(
                                                     width: 30.w,
@@ -315,7 +315,7 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                       if(controller.check == true)
                         CheckWidget(isLoading: controller.status == Status.loading,
                           isTitle: false, route: controller.isInquiries ? FoundationScreen.route : DashboardScreen.route,
-                          buttonTitle:controller.isInquiries ? r'fund_page'.tr : r'home_page'.tr,
+                          buttonTitle:controller.isFoundation ? r'fund_page'.tr : r'home_page'.tr,
                         ),
                     ],
                   ),

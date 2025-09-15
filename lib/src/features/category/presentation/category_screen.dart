@@ -143,7 +143,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           itemCount: controller.paymentsTitle.length,
                           itemBuilder: (context, index) {
 
-                            final isSelected = controller.lastTap == CategoryTapType.service &&
+                            final isSelected = controller.lastTap == CategoryTapType.fastOperation &&
                                 controller.lastFastServiceTapIndex == index;
 
                             return GestureDetector(
@@ -214,12 +214,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           itemCount: controller.serviceTitle.length,
                           itemBuilder: (context, index) {
 
-                            final isSelected = controller.lastTap == CategoryTapType.fastOperation &&
+                            final isSelected = controller.lastTap == CategoryTapType.service &&
                                 controller.lastFastServiceTapIndex == index;
 
                             return GestureDetector(
                               onTap: () {
-                                controller.onFastServiceTap(index);
+                                // controller.onFastServiceTap(index);
                               },
                               child: Container(
                                 width: 190.w,

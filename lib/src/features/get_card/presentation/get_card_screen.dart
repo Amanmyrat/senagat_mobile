@@ -92,7 +92,7 @@ class _GetCardScreenState extends State<GetCardScreen> {
                                           SvgPicture.asset(AppAssets.infoIcon, color: AppColors.green,),
                                           SizedBox(width: 6.w,),
                                           Flexible(
-                                            child: Text(r'Replenishment_bank'.tr,
+                                            child: Text(r'replenishment_bank'.tr,
                                               style: TextStyle(fontSize: 14.sp, color: AppColors.black,),
                                             ),
                                           ),
@@ -120,7 +120,7 @@ class _GetCardScreenState extends State<GetCardScreen> {
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
-                                                Text(r'Cash_withdrawal_fee'.tr,
+                                                Text(r'cash_withdrawal_fee'.tr,
                                                   style: TextStyle(fontSize: 14.sp, color: AppColors.grey,),
                                                 ),
                                                 Text(r'1%'.tr,
@@ -132,7 +132,7 @@ class _GetCardScreenState extends State<GetCardScreen> {
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
-                                                Text(r'Annual_interest_rate'.tr,
+                                                Text(r'annual_interest_rate'.tr,
                                                   style: TextStyle(fontSize: 14.sp, color: AppColors.grey,),
                                                 ),
                                                 Text(r'0.65%'.tr,
@@ -144,7 +144,7 @@ class _GetCardScreenState extends State<GetCardScreen> {
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
-                                                Text(r'Daily_limit_of_non_cash_transactionsv'.tr,
+                                                Text(r'daily_limit_of_non_cash_transactionsv'.tr,
                                                   style: TextStyle(fontSize: 14.sp, color: AppColors.grey,),
                                                 ),
                                                 Text(r'20000'.tr,
@@ -174,14 +174,14 @@ class _GetCardScreenState extends State<GetCardScreen> {
                                           SvgPicture.asset(AppAssets.infoIcon, color: AppColors.green,),
                                           SizedBox(width: 6.w,),
                                           Flexible(
-                                            child: Text(r'Replenishment_bank'.tr,
+                                            child: Text(r'replenishment_bank'.tr,
                                               style: TextStyle(fontSize: 14.sp, color: AppColors.black,),
                                             ),
                                           ),
                                         ],
                                       ),
                                       SizedBox(height: 99.h,),
-                                      Text(r'Deposit_card'.tr, style: TextStyle(fontSize: 24.w, color: AppColors.black),)
+                                      Text(r'deposit_card'.tr, style: TextStyle(fontSize: 24.w, color: AppColors.black),)
                                     ],
                                   ),
                                 ),
@@ -201,14 +201,14 @@ class _GetCardScreenState extends State<GetCardScreen> {
                                           SvgPicture.asset(AppAssets.infoIcon, color: AppColors.green,),
                                           SizedBox(width: 6.w,),
                                           Flexible(
-                                            child: Text(r'Replenishment_bank'.tr,
+                                            child: Text(r'replenishment_bank'.tr,
                                               style: TextStyle(fontSize: 14.sp, color: AppColors.black,),
                                             ),
                                           ),
                                         ],
                                       ),
                                       SizedBox(height: 99.h,),
-                                      Text(r'Deposit_card'.tr, style: TextStyle(fontSize: 24.w, color: AppColors.black),)
+                                      Text(r'deposit_card'.tr, style: TextStyle(fontSize: 24.w, color: AppColors.black),)
                                     ],
                                   ),
                                 ),
@@ -228,14 +228,14 @@ class _GetCardScreenState extends State<GetCardScreen> {
                                           SvgPicture.asset(AppAssets.infoIcon, color: AppColors.green,),
                                           SizedBox(width: 6.w,),
                                           Flexible(
-                                            child: Text(r'Replenishment_bank'.tr,
+                                            child: Text(r'replenishment_bank'.tr,
                                               style: TextStyle(fontSize: 14.sp, color: AppColors.black,),
                                             ),
                                           ),
                                         ],
                                       ),
                                       SizedBox(height: 99.h,),
-                                      Text(r'Deposit_card'.tr, style: TextStyle(fontSize: 24.w, color: AppColors.black),)
+                                      Text(r'deposit_card'.tr, style: TextStyle(fontSize: 24.w, color: AppColors.black),)
                                     ],
                                   ),
                                 ),
@@ -255,7 +255,7 @@ class _GetCardScreenState extends State<GetCardScreen> {
                         onPressed:() {
                           controller.onTap();
                         },
-                        child: Text(r'Apply_for_a_card'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.white),),
+                        child: Text(r'apply_for_a_card'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.white),),
                       ),
                     ),
                   ),

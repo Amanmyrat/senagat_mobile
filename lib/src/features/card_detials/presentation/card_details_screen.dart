@@ -32,9 +32,9 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(r'Card_details'.tr, style: TextStyle(color: AppColors.black, fontSize: 24.sp),),
+                            Text(r'card_details'.tr, style: TextStyle(color: AppColors.black, fontSize: 24.sp),),
                             SizedBox(height: AppDimensions.padding40,),
-                            Text(r'Card_number'.tr, style: TextStyle(color: AppColors.black, fontSize: 14.sp),),
+                            Text(r'card_number'.tr, style: TextStyle(color: AppColors.black, fontSize: 14.sp),),
                             SizedBox(height: 10.h,),
                             Container(
                               padding: EdgeInsets.all(20),

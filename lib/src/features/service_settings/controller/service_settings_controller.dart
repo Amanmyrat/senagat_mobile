@@ -20,7 +20,7 @@ class ServiceSettingsController extends GetxController with StateControlMixin {
 
   final List<String> serviceTitle = [
     r'Altyn Asyr',
-    r'Net_and_TV',
+    r'net_and_TV',
     r'gas',
     r'water',
     r'state_traffic_safety_inspectorate',
@@ -33,7 +33,7 @@ class ServiceSettingsController extends GetxController with StateControlMixin {
   @override
   void onInit() {
     super.onInit();
-    _box = Hive.box('fast_operations');
+    _box = Hive.box('fastOperations');
     _loadSavedData();
   }
 

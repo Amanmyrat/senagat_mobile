@@ -32,7 +32,7 @@ class _NotificationsSettingsScreenState extends State<NotificationsSettingsScree
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(r'SMS'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.black,),),
+                        Text(r'sms'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.black,),),
                         FlutterSwitch(
                           width: 47.w,
                           height: 27.h,
@@ -55,7 +55,7 @@ class _NotificationsSettingsScreenState extends State<NotificationsSettingsScree
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(r'Push_notifications'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.black,),),
+                        Text(r'push_notifications'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.black,),),
                         FlutterSwitch(
                           width: 47.w,
                           height: 27.h,

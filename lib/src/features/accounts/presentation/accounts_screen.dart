@@ -34,7 +34,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(r'Accounts'.tr, style: TextStyle(fontSize: 24.sp, color: AppColors.black),),
+                            Text(r'accounts'.tr, style: TextStyle(fontSize: 24.sp, color: AppColors.black),),
                             SizedBox(height: 32.h,),
                             ListView.builder(
                               itemCount: 6,
@@ -46,7 +46,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text(controller.serviceNames[index], style: TextStyle(fontSize: 24.sp, color: AppColors.black),),
+                                        Text(controller.serviceNames[index].tr, style: TextStyle(fontSize: 24.sp, color: AppColors.black),),
                                         SizedBox(height: 16.sp,),
                                         Container(
                                           padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
@@ -66,7 +66,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                           child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Text(r'State_number'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.blackText,),),
+                                              Text(r'state_number'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.blackText,),),
                                               SizedBox(height: 10.h,),
                                               Column(
                                                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -117,7 +117,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                                               borderRadius: BorderRadius.circular(AppDimensions.paddingMedium.r),
                                                               color: AppColors.green
                                                           ),
-                                                          child: Text(r'Save'.tr, style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.secondaryFont, color: AppColors.white),),
+                                                          child: Text(r'save'.tr, style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.secondaryFont, color: AppColors.white),),
                                                         ),
                                                       ],
                                                     ),

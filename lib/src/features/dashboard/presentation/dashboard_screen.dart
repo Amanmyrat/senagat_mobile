@@ -1,7 +1,6 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:senagat_mobile/src/features/blank/presentation/blank_screen.dart';
 import 'package:senagat_mobile/src/features/card/presentation/card_screen.dart';
 import 'package:senagat_mobile/src/features/home/presentation/home_screen.dart';
 import 'package:senagat_mobile/src/features/profile/presentation/profile_screen.dart';
@@ -57,7 +56,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         ),
         bottomNavigationBar: Padding(
-          padding: EdgeInsets.all(AppDimensions.paddingExtraLarge),
+          padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
           child: BottomNavBar(
             onTap: (index) {
               _controller.updateCurrentIndex(index);

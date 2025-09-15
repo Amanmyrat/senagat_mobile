@@ -18,7 +18,7 @@ void main() async {
   Hive.registerAdapter(CardModelAdapter());
   Hive.registerAdapter(PayModelAdapter());
 
-  await Hive.openBox('fast_operations');
+  await Hive.openBox('fastOperations');
   await Hive.openBox<CardModel>('cardsBox');
   await Hive.openBox<PayModel>('payBox');
   await Hive.openBox<PayModel>('payFoundationBox');

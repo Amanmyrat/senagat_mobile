@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
-import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
-
 import '../../../core/states/stateful_data.dart';
 
 
@@ -11,13 +9,14 @@ class LoanController extends GetxController with StateControlMixin, GetSingleTic
   late final TextEditingController nameController;
   late final TextEditingController lastNameController;
   late final TextEditingController surNameController;
-  late final TextEditingController bothDateController;
+  late final TextEditingController dateOfBirthController;
   late final TextEditingController passportNumberController;
   late final TextEditingController dateIssueController;
+  late final TextEditingController asController;
 
   late final TextEditingController patentNumController;
   late final TextEditingController workAddressController;
-  late final TextEditingController registrNumController;
+  late final TextEditingController registerNumController;
 
   late final TextEditingController workplaceController;
   late final TextEditingController positionAtWorkController;
@@ -36,12 +35,12 @@ class LoanController extends GetxController with StateControlMixin, GetSingleTic
   int selectedTabIndex = 0;
 
   List<String> textFieldTitle = [
-    r'name'.tr,
-    r'Last_name'.tr,
-    r'Surname'.tr,
-    r'Date_birth'.tr,
-    r'Passport_number'.tr,
-    r'date_issue'.tr,
+    r'name',
+    r'last_name',
+    r'surname',
+    r'date_birth',
+    r'passport_number',
+    r'date_issue',
   ];
 
   final List<String> issuanceSelection = [
@@ -71,13 +70,14 @@ class LoanController extends GetxController with StateControlMixin, GetSingleTic
       nameController = TextEditingController(),
       lastNameController = TextEditingController(),
       surNameController = TextEditingController(),
-      bothDateController = TextEditingController(),
+      dateOfBirthController = TextEditingController(),
       passportNumberController = TextEditingController(),
       dateIssueController = TextEditingController(),
+      asController = TextEditingController(),
     ];
     patentNumController = TextEditingController();
     workAddressController  = TextEditingController();
-    registrNumController  = TextEditingController();
+    registerNumController  = TextEditingController();
 
     workplaceController = TextEditingController();
     positionAtWorkController = TextEditingController();
@@ -96,9 +96,10 @@ class LoanController extends GetxController with StateControlMixin, GetSingleTic
     if(nameController.text.isNotEmpty &&
         lastNameController.text.isNotEmpty &&
         surNameController.text.isNotEmpty &&
-        bothDateController.text.isNotEmpty &&
+        dateOfBirthController.text.isNotEmpty &&
         passportNumberController.text.isNotEmpty &&
         dateIssueController.text.isNotEmpty &&
+        asController.text.isNotEmpty &&
         selectedDropdownIssuance != null){
       continueEnabled = true;
       update();
@@ -124,7 +125,7 @@ class LoanController extends GetxController with StateControlMixin, GetSingleTic
 
     }else if(selectedTabIndex == 0){
       if(patentNumController.text.isNotEmpty &&
-          registrNumController.text.isNotEmpty &&
+          registerNumController.text.isNotEmpty &&
           workAddressController.text.isNotEmpty) {
         continueEnabled = true;
         update();
