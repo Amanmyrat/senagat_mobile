@@ -96,11 +96,11 @@ class HomeController extends GetxController with StateControlMixin {
     update();
 
     if (fastServiceController.selectedServiceTitle[index] == r'net_and_TV') {
-      Get.toNamed(NetAndTvScreen.route, arguments: {
+      Get.offNamed(NetAndTvScreen.route, arguments: {
         'selectedServiceTitle': fastServiceController.selectedServiceTitle[index],
       });
     } else {
-      Get.toNamed(PaymentScreen.route, arguments: {
+      Get.offNamed(PaymentScreen.route, arguments: {
         'selectedServiceTitle': fastServiceController.selectedServiceTitle[index],
         'selectedServiceIcon': fastServiceController.selectedServiceIcons[index],
       });

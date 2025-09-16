@@ -76,7 +76,7 @@ class CheckWidget extends StatelessWidget {
                         if(route == FoundationScreen.route){
                           Get.offNamed(route ?? '');
                         }else {
-                          Get.offNamed(route ?? '');
+                          Get.offAllNamed(route ?? '');
                         }
                       },
                       isError: false,

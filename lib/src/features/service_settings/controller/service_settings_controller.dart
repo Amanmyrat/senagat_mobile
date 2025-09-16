@@ -40,7 +40,7 @@ class ServiceSettingsController extends GetxController with StateControlMixin {
   void saveData() {
     _box.put('selected_titles', selectedServiceTitle);
     _box.put('selected_icons', selectedServiceIcons);
-    Get.toNamed(DashboardScreen.route,);
+    Get.offAllNamed(DashboardScreen.route);
   }
 
   void _loadSavedData() {
