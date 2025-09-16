@@ -74,7 +74,7 @@ class _MapSearchScreenState extends State<MapSearchScreen> {
                           Navigator.pop(context);
                         },
                         child: Container(
-                          padding: EdgeInsets.all(15.w),
+                          padding: EdgeInsets.all(16.w),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.r),
                               border: Border.all(
@@ -87,7 +87,7 @@ class _MapSearchScreenState extends State<MapSearchScreen> {
                         ),
                       ),
                       SizedBox(width: 8.w),
-                                            Expanded(
+                      Expanded(
                         child: TextFormField(
                           controller: c.searchController,
                           focusNode: c.searchFocusNode,

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 
+import '../../../utils/theme/constants/app_colors.dart';
+import '../../../widgets/elevated_button_with_state.dart';
 import '../model/location_model.dart';
 
 class MapSearchController extends GetxController with StateControlMixin {
@@ -117,12 +120,64 @@ class MapSearchController extends GetxController with StateControlMixin {
         width: 40,
         height: 40,
         child: GestureDetector(
-          onTap: () {
-            Get.snackbar(
-              loc.name, 
-              loc.address,
-              duration: const Duration(seconds: 2),
-            );
+          onTap: (){
+            showModalBottomSheet(
+                isScrollControlled: true,
+                context: Get.context!,
+                backgroundColor: AppColors.inputFillBackground,
+                builder: (_){
+                  return Padding(
+                          padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(Get.context!).viewInsets.bottom,
+                          ),
+                          child: SizedBox(
+                            width: MediaQuery.of(Get.context!).size.width,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(r'bank'.tr, style: TextStyle(color: AppColors.black, fontSize: 24.sp),),
+                                  SizedBox(height: 22.h,),
+                                  Row(
+                                    children: [
+                                      Text(r'Проспект Махтумкули 43. Ашхабад'.tr, style: TextStyle(color: AppColors.greyInactive, fontSize: 14.sp),),
+                                    ],
+                                  ),
+                                  SizedBox(height: 22.h,),
+                                  Row(
+                                    children: [
+                                      Text(r'Открыто'.tr, style: TextStyle(color: AppColors.green, fontSize: 14.sp),),
+                                      SizedBox(width: 10.h,),
+                                      Text(r'Закроется в 18:00'.tr, style: TextStyle(color: AppColors.greyInactive, fontSize: 14.sp),),
+                                    ],
+                                  ),
+                                  SizedBox(height: 22.h,),
+                                  Row(
+                                    children: [
+                                      Text(r'Телефон тех поддержки'.tr, style: TextStyle(color: AppColors.blackText, fontSize: 14.sp),),
+                                      SizedBox(width: 10.h,),
+                                      Text('+993 12 345678'.tr, style: TextStyle(color: AppColors.blackText, fontSize: 14.sp),),
+                                    ],
+                                  ),
+                                  SizedBox(height: 22.h,),
+                                  SizedBox(
+                                      width: MediaQuery.of(Get.context!).size.width,
+                                      child: ElevatedButtonWithState(
+                                        isLoading: false,
+                                        isError: false,
+                                        onPressed: (){
+
+                                        },
+                                        child: Text(r'Позвонить'.tr, style: TextStyle(color: AppColors.white, fontSize: 14.sp),),
+                                      ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                });
           },
           child: Image.asset(
             iconPath,

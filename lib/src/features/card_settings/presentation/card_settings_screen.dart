@@ -192,7 +192,7 @@ class _CardSettingsScreenState extends State<CardSettingsScreen> {
                                                           onPressed: (){
                                                             controller.startBankVerification();
                                                           },
-                                                          child: Text(r'confirm'.tr),
+                                                          child: Text(r'confirm'.tr, style: TextStyle(color: AppColors.white, fontSize: 14.sp),),
                                                         ),
                                                       ),
                                                     ):
