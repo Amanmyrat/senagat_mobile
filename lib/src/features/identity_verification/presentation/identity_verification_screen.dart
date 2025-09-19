@@ -1,3 +1,4 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -8,6 +9,7 @@ import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
+import '../../../utils/theme/constants/app_fonts.dart';
 import '../../../widgets/elevated_button_with_state.dart';
 import '../../dashboard/presentation/dashboard_screen.dart';
 
@@ -46,10 +48,109 @@ class _IdentityVerificationScreenState extends State<IdentityVerificationScreen>
                           ),
                           SizedBox(height: 32.h,),
                           ListView.builder(
-                              itemCount: 4,
+                              itemCount: 6,
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
                               itemBuilder: (context, index){
+                                if(controller.controllers[index] == controller.passportNumberController){
+                                  return Padding(
+                                    padding: EdgeInsets.only(bottom: 22.h),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(controller.textFieldTitle[index].tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+                                        SizedBox(height: AppDimensions.paddingMedium.h,),
+                                        Row(
+                                          children: [
+                                            SizedBox(
+                                              width: 72.w,
+                                              height: 62.h,
+                                              child: TextFormField(
+                                                textAlign: TextAlign.center,
+                                                textInputAction: TextInputAction.next,
+                                                keyboardType: TextInputType.text,
+                                                maxLength: 2,
+                                                controller: controller.asController,
+                                                onChanged:(v) => controller.onTextIsNotEmpty(v),
+                                                style: TextStyle(
+                                                  fontSize: 14.sp,
+                                                ),
+                                                decoration: InputDecoration(
+                                                  hintText: r'AS',
+                                                  hintStyle: TextStyle(color: AppColors.black, fontSize: 14.sp),
+                                                  border: OutlineInputBorder(),
+                                                  focusedBorder: OutlineInputBorder(
+                                                    borderRadius: BorderRadius.circular(
+                                                      AppDimensions.borderRadiusMedium,
+                                                    ),
+                                                    borderSide: BorderSide(
+                                                      color: AppColors.green,
+                                                      width: 1.w,
+                                                    ),
+                                                  ),
+                                                  enabledBorder: OutlineInputBorder(
+                                                    borderRadius: BorderRadius.circular(
+                                                      AppDimensions.borderRadiusMedium,
+                                                    ),
+                                                    borderSide: BorderSide(
+                                                      color: AppColors.white,
+                                                      width: 1.w,
+                                                    ),
+                                                  ),
+                                                  counter: const SizedBox(),
+                                                  contentPadding: EdgeInsets.symmetric(
+                                                    vertical: AppDimensions.paddingExtraLarge.h,
+                                                    horizontal: AppDimensions.paddingLarge.w,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(width: 4.sp,),
+                                            Expanded(
+                                              child: TextFormField(
+                                                textInputAction: TextInputAction.next,
+                                                keyboardType: TextInputType.number,
+                                                maxLength: 7,
+                                                controller: controller.passportNumberController,
+                                                onChanged:(v) => controller.onTextIsNotEmpty(v),
+                                                style: TextStyle(
+                                                  fontSize: 14.sp,
+                                                ),
+                                                decoration: InputDecoration(
+                                                  hintText: r'passport_number'.tr,
+                                                  border: OutlineInputBorder(),
+                                                  focusedBorder: OutlineInputBorder(
+                                                    borderRadius: BorderRadius.circular(
+                                                      AppDimensions.borderRadiusMedium,
+                                                    ),
+                                                    borderSide: BorderSide(
+                                                      color: AppColors.green,
+                                                      width: 1.w,
+                                                    ),
+                                                  ),
+                                                  enabledBorder: OutlineInputBorder(
+                                                    borderRadius: BorderRadius.circular(
+                                                      AppDimensions.borderRadiusMedium,
+                                                    ),
+                                                    borderSide: BorderSide(
+                                                      color: AppColors.white,
+                                                      width: 1.w,
+                                                    ),
+                                                  ),
+                                                  counter: const SizedBox(),
+                                                  contentPadding: EdgeInsets.symmetric(
+                                                    vertical: AppDimensions.paddingExtraLarge.h,
+                                                    horizontal: AppDimensions.paddingLarge.w,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }
                                 return  Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -62,6 +163,7 @@ class _IdentityVerificationScreenState extends State<IdentityVerificationScreen>
                                           ? TextInputType.number
                                           : TextInputType.name,
                                       controller: controller.controllers[index],
+                                      inputFormatters: [?controller.controllers[index] == controller.dateOfBirthController ? controller.dateOfBirthFormatter : null],
                                       onChanged:(v) => controller.onTextIsNotEmpty(v),
                                       style: TextStyle(
                                         fontSize: 14.sp,
@@ -99,90 +201,39 @@ class _IdentityVerificationScreenState extends State<IdentityVerificationScreen>
                                 );
                               }
                           ),
-                          Row(
-                            children: [
-                              SizedBox(
-                                width: 72.w,
-                                height: 62.h,
-                                child: TextFormField(
-                                  textAlign: TextAlign.center,
-                                  textInputAction: TextInputAction.next,
-                                  keyboardType: TextInputType.name,
-                                  controller: controller.asController,
-                                  onChanged:(v) => controller.onTextIsNotEmpty(v),
-                                  style: TextStyle(
-                                    fontSize: 14.sp,
-                                  ),
-                                  decoration: InputDecoration(
-                                    hintText: r'AS',
-                                    hintStyle: TextStyle(color: AppColors.black, fontSize: 14.sp),
-                                    border: OutlineInputBorder(),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(
-                                        AppDimensions.borderRadiusMedium,
-                                      ),
-                                      borderSide: BorderSide(
-                                        color: AppColors.green,
-                                        width: 1.w,
-                                      ),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(
-                                        AppDimensions.borderRadiusMedium,
-                                      ),
-                                      borderSide: BorderSide(
-                                        color: AppColors.white,
-                                        width: 1.w,
-                                      ),
-                                    ),
-                                    counter: const SizedBox(),
-                                    contentPadding: EdgeInsets.symmetric(
-                                      vertical: AppDimensions.paddingExtraLarge.h,
-                                      horizontal: AppDimensions.paddingLarge.w,
-                                    ),
-                                  ),
-                                ),
+
+                          Text(r'place_of_issue'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+                          SizedBox(height: AppDimensions.paddingMedium,),
+                          DropdownButtonFormField2<String>(
+                            value: controller.selectedDropdownCity,
+                            hint: Text(r"place_of_issue".tr, style: TextStyle(
+                                fontSize: 14.sp, color: AppColors.grey, fontFamily: AppFonts.primaryFont),
+                            ),
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.fromLTRB(0, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.h, ),
+                            ),
+                            dropdownStyleData: DropdownStyleData(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
+
                               ),
-                              SizedBox(width: 4.sp,),
-                              Expanded(
-                                child: TextFormField(
-                                  textInputAction: TextInputAction.next,
-                                  keyboardType: TextInputType.number,
-                                  controller: controller.passportNumberController,
-                                  onChanged:(v) => controller.onTextIsNotEmpty(v),
-                                  style: TextStyle(
-                                    fontSize: 14.sp,
-                                  ),
-                                  decoration: InputDecoration(
-                                    hintText: r'passport_number'.tr,
-                                    border: OutlineInputBorder(),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(
-                                        AppDimensions.borderRadiusMedium,
-                                      ),
-                                      borderSide: BorderSide(
-                                        color: AppColors.green,
-                                        width: 1.w,
-                                      ),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(
-                                        AppDimensions.borderRadiusMedium,
-                                      ),
-                                      borderSide: BorderSide(
-                                        color: AppColors.white,
-                                        width: 1.w,
-                                      ),
-                                    ),
-                                    counter: const SizedBox(),
-                                    contentPadding: EdgeInsets.symmetric(
-                                      vertical: AppDimensions.paddingExtraLarge.h,
-                                      horizontal: AppDimensions.paddingLarge.w,
-                                    ),
-                                  ),
-                                ),
+                              elevation: 2,
+
+                            ),
+                            iconStyleData: IconStyleData(
+                              icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18.w,),
+                            ),
+                            onChanged:(v) => controller.setDropdownCity(v),
+                            items: controller.citySelection
+                                .map(
+                                  (item) => DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(item, style: TextStyle(
+                                  fontSize: 14.sp,
+                                ),),
                               ),
-                            ],
+                            )
+                                .toList(),
                           ),
                           SizedBox(height: 22.h,),
                           Column(

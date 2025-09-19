@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import '../../../core/states/stateful_data.dart';
 
@@ -33,6 +34,11 @@ class LoanController extends GetxController with StateControlMixin, GetSingleTic
 
   late TabController tabController;
   int selectedTabIndex = 0;
+
+  final passportFormatter = MaskTextInputFormatter(
+    mask: '##-##-####',
+    filter: { "#": RegExp(r'[0-9]') },
+  );
 
   List<String> textFieldTitle = [
     r'name',
@@ -171,9 +177,11 @@ class LoanController extends GetxController with StateControlMixin, GetSingleTic
       update();
     }else if(pageIndex == 2 ){
       pageIndex = 1;
+      continueEnabled = true;
       update();
     }else if(pageIndex == 3){
       pageIndex = 2;
+      continueEnabled = true;
       update();
     }
 

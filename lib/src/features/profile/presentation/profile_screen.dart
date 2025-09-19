@@ -143,8 +143,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         onTap: (){
                           Get.toNamed(NotificationsSettingsScreen.route);
                         },
-                        child: Padding(
+                        child: Container(
                           padding: EdgeInsets.symmetric(vertical: AppDimensions.paddingMedium.h),
+                          color: AppColors.white,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -165,8 +166,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         onTap: (){
                           Get.toNamed(LangSettingsScreen.route);
                         },
-                        child: Padding(
+                        child: Container(
                           padding: EdgeInsets.symmetric(vertical: AppDimensions.paddingMedium.h),
+                          color: AppColors.white,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

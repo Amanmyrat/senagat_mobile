@@ -57,7 +57,7 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.only(right: AppDimensions.paddingExtraLarge, top: 22),
+                                padding: EdgeInsets.only(right: AppDimensions.paddingExtraLarge, top: 22.h),
                                 child: Align(alignment: Alignment.bottomRight,child:
                                 Text('step_of_5'.trParams({'page': controller.pageIndex.toString()}), style: TextStyle(fontSize: 14.sp), )),
                               ),
@@ -173,6 +173,7 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                                       textAlign: TextAlign.center,
                                                       textInputAction: TextInputAction.next,
                                                       keyboardType: TextInputType.text,
+                                                      maxLength: 2,
                                                       controller: controller.asController,
                                                       onChanged:(v) => controller.onTextIsNotEmpty(v),
                                                       style: TextStyle(
@@ -213,6 +214,7 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                                     child: TextFormField(
                                                       textInputAction: TextInputAction.next,
                                                       keyboardType: TextInputType.number,
+                                                      maxLength: 7,
                                                       controller: controller.passportNumberController,
                                                       onChanged:(v) => controller.onTextIsNotEmpty(v),
                                                       style: TextStyle(
@@ -265,6 +267,7 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                                 ? TextInputType.number
                                                 : TextInputType.name,
                                             controller: controller.controllers[index],
+                                            inputFormatters: [?controller.controllers[index] == controller.dateOfBirthController ? controller.dateOfBirthFormatter : null],
                                             onChanged:(v) => controller.onTextIsNotEmpty(v),
                                             style: TextStyle(
                                               fontSize: 14.sp,

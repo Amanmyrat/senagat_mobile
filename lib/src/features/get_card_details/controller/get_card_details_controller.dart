@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/payment_verification/presentation/payment_verification_screen.dart';
 
@@ -9,7 +10,7 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
   late final TextEditingController nameController;
   late final TextEditingController lastNameController;
   late final TextEditingController surNameController;
-  late final TextEditingController bothDateController;
+  late final TextEditingController dateOfBirthController;
   late final TextEditingController passportNumberController;
   late final TextEditingController asController;
   late final TextEditingController dateIssueController;
@@ -23,6 +24,10 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
   bool continueEnabled = false;
   int pageIndex = 1;
 
+  final dateOfBirthFormatter = MaskTextInputFormatter(
+    mask: '##-##-####',
+    filter: { "#": RegExp(r'[0-9]') },
+  );
 
   List<String> textFieldTitle = [
     r'name'.tr,
@@ -62,7 +67,7 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
       nameController = TextEditingController(),
       lastNameController = TextEditingController(),
       surNameController = TextEditingController(),
-      bothDateController = TextEditingController(),
+      dateOfBirthController = TextEditingController(),
       passportNumberController = TextEditingController(),
       dateIssueController = TextEditingController(),
       asController = TextEditingController(),
@@ -76,7 +81,7 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
     if(nameController.text.isNotEmpty &&
         lastNameController.text.isNotEmpty &&
         surNameController.text.isNotEmpty &&
-        bothDateController.text.isNotEmpty &&
+        dateOfBirthController.text.isNotEmpty &&
         passportNumberController.text.isNotEmpty &&
         dateIssueController.text.isNotEmpty &&
         asController.text.isNotEmpty &&
@@ -126,6 +131,7 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
       update();
     }else if(pageIndex == 2) {
       pageIndex = 1;
+      continueEnabled = true;
       update();
     }
   }

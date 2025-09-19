@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/payment_verification/presentation/payment_verification_screen.dart';
-
 
 class InquiriesController extends GetxController with StateControlMixin {
 
@@ -22,6 +22,10 @@ class InquiriesController extends GetxController with StateControlMixin {
   bool continueEnabled = false;
   int pageIndex = 1;
 
+  final dateOfBirthFormatter = MaskTextInputFormatter(
+    mask: '##-##-####',
+    filter: { "#": RegExp(r'[0-9]') },
+  );
 
   List<String> textFieldTitle = [
     r'name',
@@ -75,7 +79,7 @@ class InquiriesController extends GetxController with StateControlMixin {
         surNameController.text.isNotEmpty &&
         dateOfBirthController.text.isNotEmpty &&
         passportNumberController.text.isNotEmpty &&
-      dateIssueController.text.isNotEmpty &&
+        dateIssueController.text.isNotEmpty &&
         asController.text.isNotEmpty &&
         selectedDropdownCity != null){
       continueEnabled = true;
@@ -134,8 +138,11 @@ class InquiriesController extends GetxController with StateControlMixin {
     }else if(pageIndex == 2 ){
       pageIndex = 1;
       update();
+      continueEnabled = true;
+      update();
     }else if(pageIndex == 3){
       pageIndex = 2;
+      continueEnabled = true;
       update();
     }
 

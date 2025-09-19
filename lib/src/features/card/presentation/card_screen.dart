@@ -287,7 +287,7 @@ class _CardScreenState extends State<CardScreen> {
                       onPressed: (){
                         Get.toNamed(AddCardScreen.route);
                       },
-                      child: Text(r'add_a_card'.tr),
+                      child: Text(r'add_a_card'.tr, style: TextStyle(fontSize: 14.sp),),
                     ),
                   ),
                 ),

@@ -106,21 +106,14 @@ class _IdentifyScreenState extends State<IdentifyScreen> {
                           child: TextFormField(
                             keyboardType: TextInputType.phone,
                             maxLength: 8,
+                            readOnly: true,
                             style: TextStyle(
                               fontSize: 14.sp,
                             ),
                             decoration: InputDecoration(
                               hintText: r'enter_number'.tr,
                               border: OutlineInputBorder(),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(
-                                  AppDimensions.borderRadiusMedium,
-                                ),
-                                borderSide: BorderSide(
-                                  color: AppColors.green,
-                                  width: 1.w,
-                                ),
-                              ),
+
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(
                                   AppDimensions.borderRadiusMedium,
@@ -129,6 +122,14 @@ class _IdentifyScreenState extends State<IdentifyScreen> {
                                   color: AppColors.white,
                                   width: 1.w,
                                 ),
+                              ),
+                              suffixIconConstraints: BoxConstraints(
+                                maxWidth: 40.w,
+                                maxHeight: 40.h
+                              ),
+                              suffixIcon: Padding(
+                                padding: EdgeInsets.only(right: 20.w),
+                                child: SvgPicture.asset(AppAssets.lock),
                               ),
                               counter: const SizedBox(),
                               contentPadding: EdgeInsets.symmetric(
@@ -143,7 +144,7 @@ class _IdentifyScreenState extends State<IdentifyScreen> {
                     SizedBox(height: 16.h,),
                     GestureDetector(
                       onTap: (){
-                        Get.offNamed(IdentityVerificationScreen.route);
+                        Get.toNamed(IdentityVerificationScreen.route);
                       },
                       child: Container(
                         padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),

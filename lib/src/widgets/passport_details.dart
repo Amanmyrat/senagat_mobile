@@ -60,6 +60,7 @@ class _PassportDetailsState extends State<PassportDetails> {
                                     textAlign: TextAlign.center,
                                     textInputAction: TextInputAction.next,
                                     keyboardType: TextInputType.name,
+                                    maxLength: 2,
                                     controller: widget.controller.asController,
                                     onChanged:(v) => widget.controller.onTextIsNotEmpty(v),
                                     style: TextStyle(
@@ -102,6 +103,7 @@ class _PassportDetailsState extends State<PassportDetails> {
                                     keyboardType: TextInputType.number,
                                     controller: widget.controller.passportNumberController,
                                     onChanged:(v) => widget.controller.onTextIsNotEmpty(v),
+                                    maxLength: 7,
                                     style: TextStyle(
                                       fontSize: 14.sp,
                                     ),
@@ -152,6 +154,7 @@ class _PassportDetailsState extends State<PassportDetails> {
                               ? TextInputType.number
                               : TextInputType.name,
                           controller: widget.controller.controllers[index],
+                          inputFormatters: [ ?widget.controller.controllers[index] == widget.controller.dateOfBirthController ? widget.controller.passportFormatter : null],
                           onChanged:(v) => widget.controller.onTextIsNotEmpty(v),
                           style: TextStyle(
                             fontSize: 14.sp,

@@ -269,6 +269,7 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                                                     textAlign: TextAlign.center,
                                                     textInputAction: TextInputAction.next,
                                                     keyboardType: TextInputType.name,
+                                                    maxLength: 2,
                                                     controller: controller.asController,
                                                     onChanged:(v) => controller.onTextIsNotEmpty(v),
                                                     style: TextStyle(
@@ -309,6 +310,7 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                                                   child: TextFormField(
                                                     textInputAction: TextInputAction.next,
                                                     keyboardType: TextInputType.number,
+                                                    maxLength: 7,
                                                     controller: controller.passportNumberController,
                                                     onChanged:(v) => controller.onTextIsNotEmpty(v),
                                                     style: TextStyle(
@@ -358,6 +360,7 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                                           textInputAction: TextInputAction.next,
                                           keyboardType: TextInputType.name,
                                           controller: controller.controllers[index],
+                                          inputFormatters: [?controller.controllers[index] == controller.dateOfBirthController ?controller.dateOfBirthFormatter : null],
                                           onChanged:(v) => controller.onTextIsNotEmpty(v),
                                           style: TextStyle(
                                             fontSize: 14.sp,
