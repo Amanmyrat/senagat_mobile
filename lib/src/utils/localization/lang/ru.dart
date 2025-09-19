@@ -93,7 +93,7 @@ const Map<String, String> ruRu = {
   r'all': r'Все',
   r'next': r'Далее',
   r'monthly_payment': r'Ежемесячный платеж',
-  r'bid': r'Заявка',
+  r'bid': r'Ставка',
   r'1_year': r'1 год',
   r'2_years': r'2 года',
   r'3_years': r'3 года',
@@ -177,6 +177,7 @@ const Map<String, String> ruRu = {
   r'get_a_credit_in_just_a_few_seconds': r'Оформите кредит за пару секунд',
   r'most_functions': r'Большинство функций будет работать после заполнения профиля',
   r'view_all': r'Посмотреть все',
+  r'details_for_obtaining': r'Данные для получения',
 
 
 };

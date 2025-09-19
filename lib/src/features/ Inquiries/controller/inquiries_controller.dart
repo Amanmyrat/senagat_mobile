@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/payment_verification/presentation/payment_verification_screen.dart';
 
-
 class InquiriesController extends GetxController with StateControlMixin {
 
   late final TextEditingController nameController;
@@ -134,8 +133,11 @@ class InquiriesController extends GetxController with StateControlMixin {
     }else if(pageIndex == 2 ){
       pageIndex = 1;
       update();
+      continueEnabled = true;
+      update();
     }else if(pageIndex == 3){
       pageIndex = 2;
+      continueEnabled = true;
       update();
     }
 

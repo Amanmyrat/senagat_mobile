@@ -57,7 +57,7 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.only(right: AppDimensions.paddingExtraLarge, top: 22),
+                                padding: EdgeInsets.only(right: AppDimensions.paddingExtraLarge, top: 22.h),
                                 child: Align(alignment: Alignment.bottomRight,child:
                                 Text('step_of_5'.trParams({'page': controller.pageIndex.toString()}), style: TextStyle(fontSize: 14.sp), )),
                               ),

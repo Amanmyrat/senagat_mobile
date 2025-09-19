@@ -144,7 +144,7 @@ class _GetCardScreenState extends State<GetCardScreen> {
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
-                                                Text(r'daily_limit_of_non_cash_transactionsv'.tr,
+                                                Text(r'daily_limit_of_non_cash_transactions'.tr,
                                                   style: TextStyle(fontSize: 14.sp, color: AppColors.grey,),
                                                 ),
                                                 Text(r'20000'.tr,

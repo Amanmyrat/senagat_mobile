@@ -47,7 +47,10 @@ class _LangSettingsScreenState extends State<LangSettingsScreen> {
                               RoundCheckBox(
                                 size: 27.w,
                                 checkedColor: Colors.transparent,
-                                checkedWidget: SvgPicture.asset(AppAssets.checkBoxIcon, color: AppColors.green, width: 12.w,),
+                                checkedWidget: Padding(
+                                  padding: EdgeInsets.all(2.w),
+                                  child: SvgPicture.asset(AppAssets.checkBoxIcon, color: AppColors.green, width: 12.w,),
+                                ),
                                 border: Border.all(color: AppColors.black),
                                 isChecked: controller.currentLang == 'RU',
                                 onTap: (value) {

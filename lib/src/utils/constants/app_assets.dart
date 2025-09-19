@@ -46,6 +46,7 @@ class AppAssets {
   static const arrowLeftRight = 'assets/icons/ArrowsLeftRight.svg';
   static const trash = 'assets/icons/Trash.svg';
   static const diagram = 'assets/icons/diagramma.svg';
+  static const lock = 'assets/icons/Lock.svg';
 
 
   static const navigationCreditCardIcon = 'assets/icons/CreditCard.svg';

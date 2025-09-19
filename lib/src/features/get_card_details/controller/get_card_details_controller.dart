@@ -126,6 +126,7 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
       update();
     }else if(pageIndex == 2) {
       pageIndex = 1;
+      continueEnabled = true;
       update();
     }
   }

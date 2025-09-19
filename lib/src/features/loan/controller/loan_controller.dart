@@ -171,9 +171,11 @@ class LoanController extends GetxController with StateControlMixin, GetSingleTic
       update();
     }else if(pageIndex == 2 ){
       pageIndex = 1;
+      continueEnabled = true;
       update();
     }else if(pageIndex == 3){
       pageIndex = 2;
+      continueEnabled = true;
       update();
     }
 
