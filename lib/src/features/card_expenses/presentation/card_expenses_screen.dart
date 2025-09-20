@@ -196,12 +196,14 @@ class _CardExpensesScreenState extends State<CardExpensesScreen> {
                               child: Row(
                                 children: [
                                   Container(
+                                    width: 50.w,
+                                    height: 50.h,
                                     padding:EdgeInsets.all(AppDimensions.paddingMedium.w) ,
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                       color: AppColors.green,
                                     ),
-                                    child: SvgPicture.asset(AppAssets.deviceMobileIcon, color: AppColors.white,),
+                                    child: SvgPicture.asset(AppAssets.deviceMobileIcon, color: AppColors.white, width: 30.w,),
                                   ),
                                   SizedBox(width: AppDimensions.paddingMedium.w),
                                   Expanded(

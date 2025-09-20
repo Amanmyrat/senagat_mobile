@@ -662,6 +662,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Row(
                                 children: [
                                   Container(
+                                    width: 50.w,
+                                    height: 50.h,
                                     padding:EdgeInsets.all(AppDimensions.paddingMedium.w) ,
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
