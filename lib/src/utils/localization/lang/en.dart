@@ -6,16 +6,17 @@ const Map<String, String> enUs = {
   r'create_account': r'Create account',
   r'do_you_have_account': r'Do you have account?',
   r'sign_in': r'Sign in',
+
   r'step_1_of_3': r'Step 1 of 3',
   r'step_2_of_3': r'Step 2 of 3',
   r'step_3_of_3': r'Step 3 of 3',
 
   r'step_1_of_2': r'Step 1 of 2',
   r'step_2_of_2': r'Step 2 of 2',
-  r'step_of_5': r'Step @page of 5',
-  r'step_of_3': r'Step @page of 3',
-  r'step_4_of_5': r'Step 4 of 5',
-  r'step_5_of_5': r'Step 5 of 5',
+  r'step_of_5': r'Step @page of 4',
+  r'step_of_3': r'Step @page of 2',
+  r'step_4_of_5': r'Step 3 of 4',
+  r'step_5_of_5': r'Step 4 of 4',
 
   r'send_sms': r'We will send you an SMS with a confirmation code.',
   r'send_code': r'Send code',
@@ -29,7 +30,7 @@ const Map<String, String> enUs = {
   r'create_password': r'Create a strong password',
   r'password': r'Password',
   r'confirm': r'Confirm',
-  r'check_bank': r'Check out that side of the bank',
+  r'check_bank': r'Verification by the bank',
 
   r'home': r'Home',
   r'catalog': r'Catalog',
@@ -157,7 +158,6 @@ const Map<String, String> enUs = {
   r'type_of_certificate': r'Type of certificate',
   r'payment_was_successful': r'Payment was successful',
   r'submit_for_review': r'Submit for review',
-  r'getting_help': r'Getting help',
   r'details_for_obtaining': r'Details for obtaining',
   r'home_phone_number': r'Home phone number',
   r'apply_for_a_card': r'Apply for a card',
@@ -177,5 +177,15 @@ const Map<String, String> enUs = {
   r'get_a_credit_in_just_a_few_seconds': r'Apply for a loan in just a few seconds',
   r'most_functions': r'Most functions will work after you complete your profile',
   r'view_all': r'View all',
+  r'profile': r'Profile',
+  r'get_a_card': r'Receiving a card',
+  r'obtain_certificate': r'Obtain a certificate about the bank account',
+  r'letter_stating_that_there_is_no_debt': r'Letter stating that there is no debt',
+  r'about_the_wage_situation': r'About the wage situation',
+  r'certificate_of_loan_balance': r'Certificate of loan balance',
+  r'credit_for_newlyweds': r'Credit for newlyweds',
+  r'consumer_credit': r'Consumer credit',
+  r'student_loan': r'Student loan',
+
 
 };

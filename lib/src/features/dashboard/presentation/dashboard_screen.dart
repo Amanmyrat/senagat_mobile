@@ -74,11 +74,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
               BottomNavBarItem(
                 icon: AppAssets.navigationCreditCardIcon,
-                label: r'card'.tr,
+                label: r'cards'.tr,
               ),
               BottomNavBarItem(
                 icon: AppAssets.navProfile,
-                label: r'proflie'.tr,
+                label: r'profile'.tr,
               ),
             ],
           ),

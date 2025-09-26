@@ -84,8 +84,9 @@ class _ServiceSettingsScreenState extends State<ServiceSettingsScreen> {
                                         onTap: (){
                                           controller.removeSelectedService(controller.selectedServiceTitle[index], controller.selectedServiceIcons[index]);
                                         },
-                                        child: Padding(
+                                        child: Container(
                                           padding: EdgeInsets.symmetric(vertical: AppDimensions.paddingMedium.h),
+                                          color: AppColors.white,
                                           child: Row(
                                             children: [
                                               SvgPicture.asset(AppAssets.minusCircleIcon, color: AppColors.redDark,),
@@ -146,8 +147,9 @@ class _ServiceSettingsScreenState extends State<ServiceSettingsScreen> {
                                     onTap: (){
                                       controller.addSelectedService(controller.serviceTitle[index], controller.serviceIcons[index]);
                                     },
-                                    child: Padding(
+                                    child: Container(
                                       padding: EdgeInsets.only(bottom: AppDimensions.paddingExtraLarge.h),
+                                      color: AppColors.white,
                                       child: Row(
                                         children: [
                                           SvgPicture.asset(AppAssets.plusCircleIcon, color: AppColors.green,),

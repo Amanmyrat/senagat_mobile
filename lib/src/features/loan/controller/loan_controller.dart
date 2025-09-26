@@ -162,10 +162,6 @@ class LoanController extends GetxController with StateControlMixin, GetSingleTic
       continueEnabled = false;
       update();
     }else if(pageIndex == 2 && continueEnabled){
-      pageIndex = 3;
-      continueEnabled = false;
-      update();
-    }else if(pageIndex == 3 && continueEnabled){
       startBankVerification();
       update();
     }
@@ -175,12 +171,8 @@ class LoanController extends GetxController with StateControlMixin, GetSingleTic
     if(pageIndex == 1){
       Get.back();
       update();
-    }else if(pageIndex == 2 ){
+    }else if(pageIndex == 2){
       pageIndex = 1;
-      continueEnabled = true;
-      update();
-    }else if(pageIndex == 3){
-      pageIndex = 2;
       continueEnabled = true;
       update();
     }

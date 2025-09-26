@@ -102,7 +102,7 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                                                             ),
 
                                                           Text(
-                                                            controller.isInquiries == true ? r'getting_help'.tr : controller.serviceName?.tr ?? '',
+                                                            controller.serviceName?.tr ?? '',
                                                             style: TextStyle(
                                                               fontSize: 17.sp,
                                                               color: AppColors.white,

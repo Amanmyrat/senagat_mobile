@@ -71,8 +71,6 @@ class _LoanScreenState extends State<LoanScreen> {
                               child: Column(
                                 children: [
                                   if(controller.pageIndex == 1)
-                                    PassportDetails(controller: controller,),
-                                  if(controller.pageIndex == 2)
                                     Expanded(
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -537,7 +535,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                         ],
                                       ),
                                     ),
-                                  if(controller.pageIndex == 3)
+                                  if(controller.pageIndex == 2)
                                     Padding(
                                       padding: EdgeInsets.symmetric(horizontal: AppDimensions.paddingExtraLarge.w),
                                       child: Column(

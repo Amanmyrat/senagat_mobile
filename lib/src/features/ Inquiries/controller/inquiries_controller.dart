@@ -37,9 +37,10 @@ class InquiriesController extends GetxController with StateControlMixin {
   ];
 
   final List<String> typeSelection = [
-    "Option 1",
-    "Option 2",
-    "Option 3",
+    r'obtain_certificate',
+    r'letter_stating_that_there_is_no_debt',
+    r'about_the_wage_situation',
+    r'certificate_of_loan_balance',
   ];
 
   final List<String> citySelection = [
@@ -119,10 +120,6 @@ class InquiriesController extends GetxController with StateControlMixin {
       continueEnabled = false;
       update();
     }else if(pageIndex == 2 && continueEnabled){
-      pageIndex = 3;
-      continueEnabled = false;
-      update();
-    }else if(pageIndex == 3 && continueEnabled){
       Get.toNamed(PaymentVerificationScreen.route, arguments: {
         'isInquiries': true,
         'isFoundation': false,
@@ -135,13 +132,8 @@ class InquiriesController extends GetxController with StateControlMixin {
     if(pageIndex == 1){
       Get.back();
       update();
-    }else if(pageIndex == 2 ){
+    }else if(pageIndex == 2){
       pageIndex = 1;
-      update();
-      continueEnabled = true;
-      update();
-    }else if(pageIndex == 3){
-      pageIndex = 2;
       continueEnabled = true;
       update();
     }

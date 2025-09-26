@@ -47,6 +47,7 @@ class AppAssets {
   static const trash = 'assets/icons/Trash.svg';
   static const diagram = 'assets/icons/diagramma.svg';
   static const lock = 'assets/icons/Lock.svg';
+  static const foundation = 'assets/images/foundation.webp';
 
 
   static const navigationCreditCardIcon = 'assets/icons/CreditCard.svg';

@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
-
 
 class GetCreditController extends GetxController with StateControlMixin {
 
   double currentValue = 10000;
-  late  TextEditingController sumController;
-  late  TextEditingController bidController;
-  late  TextEditingController paymentController;
+
+  late MoneyMaskedTextController sumController;
+
+  late TextEditingController bidController;
+  late TextEditingController paymentController;
 
   late TabController tabBarController;
 
@@ -17,11 +18,10 @@ class GetCreditController extends GetxController with StateControlMixin {
   bool continueEnabled = false;
 
   final List<String> dropdownItems = [
-    "Option 1",
-    "Option 2",
-    "Option 3",
+    r'credit_for_newlyweds',
+    r'consumer_credit',
+    r'student_loan',
   ];
-
 
   void setDropdownValue(String? value) {
     selectedDropdownValue = value;
@@ -29,30 +29,37 @@ class GetCreditController extends GetxController with StateControlMixin {
     update();
   }
 
-  void onTextIsNotEmpty(String? v){
-    if(sumController.text.isNotEmpty &&
+  void onTextIsNotEmpty(String? v) {
+    if (sumController.text.isNotEmpty &&
         bidController.text.isNotEmpty &&
-        paymentController.text.isNotEmpty){
+        paymentController.text.isNotEmpty) {
       continueEnabled = true;
-      update();
-    }else{
+    } else {
       continueEnabled = false;
-      update();
     }
+    update();
   }
 
   void updateText(double value) {
     currentValue = value;
-    sumController.text = NumberFormat('#,###').format(currentValue);
+    sumController.updateValue(currentValue);
     update();
   }
 
   @override
   void onInit() {
-    sumController = TextEditingController();
+    sumController = MoneyMaskedTextController(
+      decimalSeparator: '',
+      thousandSeparator: ',',
+      precision: 0,
+    );
+    sumController.updateValue(currentValue);
+
     bidController = TextEditingController();
+    bidController.text = '1%';
     paymentController = TextEditingController();
-    sumController.text = NumberFormat('#,###', 'ru_Ru').format(currentValue);
+    paymentController.text = '100';
+
     super.onInit();
   }
 
@@ -61,6 +68,4 @@ class GetCreditController extends GetxController with StateControlMixin {
     tabBarController.dispose();
     super.dispose();
   }
-
-
 }

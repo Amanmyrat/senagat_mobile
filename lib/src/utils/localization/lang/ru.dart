@@ -13,10 +13,10 @@ const Map<String, String> ruRu = {
 
   r'step_1_of_2': r'Шаг 1 из 2',
   r'step_2_of_2': r'Шаг 2 из 2',
-  r'step_of_5': r'Шаг @page из 5',
-  r'step_of_3': r'Шаг @page из 3',
-  r'step_4_of_5': r'Шаг 4 из 5',
-  r'step_5_of_5': r'Шаг 5 из 5',
+  r'step_of_5': r'Шаг @page из 4',
+  r'step_of_3': r'Шаг @page из 2',
+  r'step_4_of_5': r'Шаг 3 из 4',
+  r'step_5_of_5': r'Шаг 4 из 4',
 
   r'send_sms': r'Мы отправим вам SMS с кодом подтверждения.',
   r'send_code': r'Отправить код',
@@ -51,6 +51,7 @@ const Map<String, String> ruRu = {
   r'atm': r'Банкоматы',
   r'branch': r'Филиалы',
   r'add_a_card': r'Добавить карту',
+  r'adding_a_card': r'Добавить карту',
   r'tune': r'Настроить',
   r'fast_operations': r'Быстрые операции',
   r'donations_of_any_amount': r'Пожертвования любой суммы приветствуются.',
@@ -158,7 +159,6 @@ const Map<String, String> ruRu = {
   r'type_of_certificate': r'Тип справки',
   r'payment_was_successful': r'Оплата прошла успешно',
   r'submit_for_review': r'Отправить на проверку',
-  r'getting_help': r'Получение справки',
   r'home_phone_number': r'Номер домашнего телефона',
   r'apply_for_a_card': r'Оформить карту',
   r'deposit_card': r'Депозитная карта',
@@ -178,6 +178,14 @@ const Map<String, String> ruRu = {
   r'most_functions': r'Большинство функций будет работать после заполнения профиля',
   r'view_all': r'Посмотреть все',
   r'details_for_obtaining': r'Данные для получения',
-
+  r'profile': r'Профиль',
+  r'get_a_card': r'Получение карты',
+  r'obtain_certificate': r'О статусе аккаунта',
+  r'letter_stating_that_there_is_no_debt': r'Об отсутствии долга',
+  r'about_the_wage_situation': r'О состоянии заработной платы',
+  r'certificate_of_loan_balance': r'Справка об остатке кредита',
+  r'credit_for_newlyweds': r'Кредит для молодоженов',
+  r'consumer_credit': r'Потребительский кредит',
+  r'student_loan': r'Студенческий кредит',
 
 };

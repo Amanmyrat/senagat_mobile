@@ -405,7 +405,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     SizedBox(
-                                      width: 200,
+                                      width: 200.w,
                                       child: Text(
                                         r'charitable_foundation'.tr,
                                         style: TextStyle(
@@ -443,7 +443,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ],
                                 ),
                               ),
-                              Image.asset(AppAssets.glowingObjectIcon,),
+                              Image.asset(AppAssets.foundation, width: 150.w,),
                             ],
                           ),
                         ),

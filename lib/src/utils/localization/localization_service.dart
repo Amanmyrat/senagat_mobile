@@ -14,16 +14,16 @@ class LocalizationService extends Translations {
 
   static const Locale fallbackLocale = Locale('ru', 'RU');
 
-  static final List<String> langs = ['RU', 'EN', 'TM'];
+  static final List<String> langs = ['TM', 'RU', 'EN'];
 
   static const String _selectedLocaleStringKey = 'selected_locale_key';
 
   final GetStorage _box = GetStorage();
 
   static final List<Locale> availableLocales = [
+    const Locale('tm', 'TM'),
     const Locale('ru', 'RU'),
     const Locale('en', 'En'),
-    const Locale('tm', 'TM'),
   ];
 
   static Iterable<LocalizationsDelegate> localizationsDelegate() {
@@ -51,7 +51,7 @@ class LocalizationService extends Translations {
   }
 
   @override
-  Map<String, Map<String, String>> get keys => {russian: ruRu, english: enUs, turkmen: tmTm};
+  Map<String, Map<String, String>> get keys => { turkmen: tmTm, russian: ruRu, english: enUs,};
 
   Locale _getLocaleFromLanguage(String? lang) {
     for (int pos = 0; pos < availableLocales.length; pos++) {

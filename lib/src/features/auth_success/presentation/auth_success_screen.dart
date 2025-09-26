@@ -63,7 +63,7 @@ class _AuthSuccessScreenState extends State<AuthSuccessScreen> {
 
                   Text(
                     r'check_bank'.tr,
-                    style: TextStyle(color: AppColors.blackText, fontSize: 17.sp),
+                    style: TextStyle(color: AppColors.blackText, fontSize: 14.sp),
                   ),
                 ],
               ),

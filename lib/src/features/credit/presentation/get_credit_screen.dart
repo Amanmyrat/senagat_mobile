@@ -95,7 +95,7 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                           (item) => DropdownMenuItem<String>(
                                         value: item,
                                         child: Text(
-                                          item,
+                                          item.tr,
                                           style: TextStyle(fontSize: 14.sp),
                                         ),
                                       ),
@@ -163,6 +163,7 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                         ),
                                         SizedBox(height: AppDimensions.paddingMedium.h,),
                                         FlutterSlider(
+
                                             values: [controller.currentValue],
                                             min: 1000,
                                             max: 20000,
@@ -244,6 +245,7 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                                   ),
                                                   SizedBox(height: AppDimensions.paddingMedium,),
                                                   TextField(
+                                                    readOnly: true,
                                                     inputFormatters: [
                                                       FilteringTextInputFormatter.digitsOnly, // allow only numbers
                                                     ],
@@ -256,16 +258,14 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                                       fontFamily: AppFonts.primaryFont,
                                                     ),
                                                     decoration: InputDecoration(
-                                                      hintText: r'bid'.tr,
                                                       border: OutlineInputBorder(),
-                                                      suffixText: '%',
                                                       suffixStyle: TextStyle(color: AppColors.blackText),
                                                       focusedBorder: OutlineInputBorder(
                                                         borderRadius: BorderRadius.circular(
                                                           AppDimensions.borderRadiusMedium,
                                                         ),
                                                         borderSide: BorderSide(
-                                                          color: AppColors.green,
+                                                          color: AppColors.white,
                                                           width: 1.w,
                                                         ),
                                                       ),
@@ -301,6 +301,7 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                                   ),
                                                   SizedBox(height: AppDimensions.paddingMedium,),
                                                   TextField(
+                                                    readOnly: true,
                                                     controller: controller.paymentController,
                                                     keyboardType: TextInputType.number,
                                                     onChanged: (v)=> controller.onTextIsNotEmpty(v),
@@ -309,14 +310,14 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                                       fontFamily: AppFonts.primaryFont,
                                                     ),
                                                     decoration: InputDecoration(
-                                                      hintText: r'monthly_payment'.tr,
+                                                      hintText: '200',
                                                       border: OutlineInputBorder(),
                                                       focusedBorder: OutlineInputBorder(
                                                         borderRadius: BorderRadius.circular(
                                                           AppDimensions.borderRadiusMedium,
                                                         ),
                                                         borderSide: BorderSide(
-                                                          color: AppColors.green,
+                                                          color: AppColors.white,
                                                           width: 1.w,
                                                         ),
                                                       ),
@@ -362,7 +363,7 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                           isLoading: controller.status == Status.loading,
                           isError: controller.status == Status.error,
                           onPressed: controller.continueEnabled ? () {
-                            Get.offAndToNamed(LoanScreen.route);
+                            Get.toNamed(LoanScreen.route);
                           } : null,
                           child: Text(r'next'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.white),),
                         ),
