@@ -62,6 +62,17 @@ class CategoryController extends GetxController with StateControlMixin {
     Get.toNamed(NotificationsScreen.route);
   }
 
+  void onServiceTap(int index){
+    lastTap = CategoryTapType.service;
+    lastServiceTapIndex = index;
+    update();
+    Get.toNamed(PaymentScreen.route, arguments: {
+      'selectedServiceTitle': serviceTitle[index],
+      'selectedServiceIcon': serviceIcons[index],
+    });
+
+  }
+
 
   void onFastServiceTap(int index) {
     lastTap = CategoryTapType.fastOperation;

@@ -215,11 +215,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           itemBuilder: (context, index) {
 
                             final isSelected = controller.lastTap == CategoryTapType.service &&
-                                controller.lastFastServiceTapIndex == index;
+                                controller.lastServiceTapIndex == index;
 
                             return GestureDetector(
                               onTap: () {
-                                // controller.onFastServiceTap(index);
+                                controller.onServiceTap(index);
                               },
                               child: Container(
                                 width: 190.w,

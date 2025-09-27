@@ -51,7 +51,7 @@ const Map<String, String> ruRu = {
   r'atm': r'Банкоматы',
   r'branch': r'Филиалы',
   r'add_a_card': r'Добавить карту',
-  r'adding_a_card': r'Добавить карту',
+  r'adding_a_card': r'Добавление карты',
   r'tune': r'Настроить',
   r'fast_operations': r'Быстрые операции',
   r'donations_of_any_amount': r'Пожертвования любой суммы приветствуются.',

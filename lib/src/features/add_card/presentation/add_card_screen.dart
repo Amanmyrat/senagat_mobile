@@ -407,7 +407,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                 ],
               ),
                   if(controller.check)
-                    CheckWidget(isLoading: controller.status == Status.loading, isTitle: true, title: r'add_a_card'.tr,),
+                    CheckWidget(isLoading: controller.status == Status.loading, isTitle: true, title: r'adding_a_card'.tr,),
               ]
             );
           }

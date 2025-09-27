@@ -51,6 +51,7 @@ const Map<String, String> enUs = {
   r'atm': r'ATMs',
   r'branch': r'Branchs',
   r'add_a_card': r'Add a card',
+  r'adding_a_card': r'Adding a card',
   r'tune': r'Tune',
   r'fast_operations': r'Fast Operations',
   r'donations_of_any_amount': r'Donations of any amount are welcome.',
@@ -186,6 +187,5 @@ const Map<String, String> enUs = {
   r'credit_for_newlyweds': r'Credit for newlyweds',
   r'consumer_credit': r'Consumer credit',
   r'student_loan': r'Student loan',
-
 
 };

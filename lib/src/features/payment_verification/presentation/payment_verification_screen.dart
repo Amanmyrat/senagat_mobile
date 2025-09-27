@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
@@ -9,6 +8,7 @@ import 'package:senagat_mobile/src/features/pay/presentation/payment_screen.dart
 import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
 import 'package:senagat_mobile/src/widgets/check_widget.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
+import 'package:universal_image/universal_image.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
 import '../../../widgets/elevated_button_with_state.dart';
@@ -93,14 +93,15 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                                                         children: [
                                                           if(controller.isFoundation == false && controller.isInquiries == false)
                                                             Container(
-                                                              padding:EdgeInsets.all(AppDimensions.paddingMedium.w) ,
+                                                              width: 50.w,
+                                                              padding: EdgeInsets.symmetric(vertical: AppDimensions.paddingMedium.w, horizontal: 10),
                                                               decoration: BoxDecoration(
                                                                 shape: BoxShape.circle,
                                                                 color: AppColors.white,
                                                               ),
-                                                              child: SvgPicture.asset(controller.serviceIcon ?? '', color: AppColors.green,),
+                                                              child: UniversalImage(controller.serviceIcon ?? '', width: 30.w,),
                                                             ),
-
+                                                          SizedBox(height: 6.h,),
                                                           Text(
                                                             controller.serviceName?.tr ?? '',
                                                             style: TextStyle(

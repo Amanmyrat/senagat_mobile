@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/features/identity_verification/presentation/identity_verification_screen.dart';
+import 'package:senagat_mobile/src/features/welcome/presentation/welcome_screen.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
 
@@ -200,7 +201,7 @@ class _IdentifyScreenState extends State<IdentifyScreen> {
                   isLoading: false,
                   isError: false,
                   onPressed:() {
-
+                    Get.toNamed(WelcomeScreen.route);
                   },
                   child: Text(r'logout'.tr,style: TextStyle(color: AppColors.black, fontSize: 14.sp),),
                 ),

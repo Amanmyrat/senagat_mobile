@@ -54,7 +54,7 @@ class PaymentController extends GetxController with StateControlMixin {
       status = Status.completed;
 
       update();
-      Get.offNamed(PaymentVerificationScreen.route,
+      Get.toNamed(PaymentVerificationScreen.route,
           arguments:
           {'serviceName': serviceName,
             'serviceIcon': serviceIcon,
