@@ -30,23 +30,17 @@ class HomeController extends GetxController with StateControlMixin {
 
   String cardKey = 'card';
 
+  bool isProfileRequired = true;
+
   final List<String> flags = [
     AppAssets.ruIcon,
     AppAssets.enIcon,
     AppAssets.euIcon,
   ];
 
-  final List<String> currency = [
-    'RUB',
-    'USD',
-    'EUR',
-  ];
+  final List<String> currency = ['RUB', 'USD', 'EUR'];
 
-  final List<String> serviceTitles = [
-    r'inquiries',
-    r'cards',
-    r'credits',
-  ];
+  final List<String> serviceTitles = [r'inquiries', r'cards', r'credits'];
 
   final List<String> serviceSecondaryTitles = [
     r'get_any_type_of_help',
@@ -71,6 +65,7 @@ class HomeController extends GetxController with StateControlMixin {
     update();
     Get.toNamed(QrCodeScreen.route);
   }
+
   void onNotificationScanTap() {
     lastTap = HomeTapType.notification;
     update();
@@ -96,14 +91,23 @@ class HomeController extends GetxController with StateControlMixin {
     update();
 
     if (fastServiceController.selectedServiceTitle[index] == r'net_and_TV') {
-      Get.offNamed(NetAndTvScreen.route, arguments: {
-        'selectedServiceTitle': fastServiceController.selectedServiceTitle[index],
-      });
+      Get.offNamed(
+        NetAndTvScreen.route,
+        arguments: {
+          'selectedServiceTitle':
+              fastServiceController.selectedServiceTitle[index],
+        },
+      );
     } else {
-      Get.offNamed(PaymentScreen.route, arguments: {
-        'selectedServiceTitle': fastServiceController.selectedServiceTitle[index],
-        'selectedServiceIcon': fastServiceController.selectedServiceIcons[index],
-      });
+      Get.offNamed(
+        PaymentScreen.route,
+        arguments: {
+          'selectedServiceTitle':
+              fastServiceController.selectedServiceTitle[index],
+          'selectedServiceIcon':
+              fastServiceController.selectedServiceIcons[index],
+        },
+      );
     }
   }
 
@@ -112,5 +116,16 @@ class HomeController extends GetxController with StateControlMixin {
     fastServiceController = Get.find<ServiceSettingsController>();
     addCardController = Get.find<AddCardController>();
     super.onInit();
+  }
+
+  getFastOperationsCount() {
+    return fastServiceController.selectedServiceTitle.length <= 4
+        ? fastServiceController.selectedServiceTitle.length + 1
+        : fastServiceController.selectedServiceTitle.length;
+  }
+
+  setProfileRequiredFalse(){
+    isProfileRequired = false;
+    update();
   }
 }

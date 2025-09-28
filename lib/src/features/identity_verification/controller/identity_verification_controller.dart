@@ -11,10 +11,10 @@ class IdentityVerificationController extends GetxController with StateControlMix
   late final TextEditingController surNameController;
   late final TextEditingController dateOfBirthController;
   late final TextEditingController dateIssueController;
+  late final TextEditingController placeIssueController;
   late final TextEditingController passportNumberController;
   late final TextEditingController asController;
 
-  String? selectedDropdownCity;
 
   bool continueEnabled = false;
   bool check = false;
@@ -51,6 +51,7 @@ class IdentityVerificationController extends GetxController with StateControlMix
       dateOfBirthController = TextEditingController(),
       passportNumberController = TextEditingController(),
       dateIssueController = TextEditingController(),
+      placeIssueController = TextEditingController(),
       asController = TextEditingController(),
     ];
   }
@@ -63,19 +64,13 @@ class IdentityVerificationController extends GetxController with StateControlMix
         passportNumberController.text.isNotEmpty &&
         dateIssueController.text.isNotEmpty &&
         asController.text.isNotEmpty &&
-        selectedDropdownCity != null){
+        placeIssueController.text.isNotEmpty){
       continueEnabled = true;
       update();
     }else{
       continueEnabled = false;
       update();
     }
-  }
-
-  void setDropdownCity(String? value) {
-    selectedDropdownCity = value;
-    onTextIsNotEmpty(value);
-    update();
   }
 
 

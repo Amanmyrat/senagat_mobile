@@ -204,36 +204,41 @@ class _IdentityVerificationScreenState extends State<IdentityVerificationScreen>
 
                           Text(r'place_of_issue'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
                           SizedBox(height: AppDimensions.paddingMedium,),
-                          DropdownButtonFormField2<String>(
-                            value: controller.selectedDropdownCity,
-                            hint: Text(r"place_of_issue".tr, style: TextStyle(
-                                fontSize: 14.sp, color: AppColors.grey, fontFamily: AppFonts.primaryFont),
+                          TextFormField(
+                            textInputAction: TextInputAction.next,
+                            keyboardType: TextInputType.name,
+                            controller: controller.placeIssueController,
+                            onChanged:(v) => controller.onTextIsNotEmpty(v),
+                            style: TextStyle(
+                              fontSize: 14.sp,
                             ),
                             decoration: InputDecoration(
-                              contentPadding: EdgeInsets.fromLTRB(0, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.h, ),
-                            ),
-                            dropdownStyleData: DropdownStyleData(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
-
+                              hintText: 'place_of_issue'.tr,
+                              border: OutlineInputBorder(),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(
+                                  AppDimensions.borderRadiusMedium,
+                                ),
+                                borderSide: BorderSide(
+                                  color: AppColors.green,
+                                  width: 1.w,
+                                ),
                               ),
-                              elevation: 2,
-
-                            ),
-                            iconStyleData: IconStyleData(
-                              icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18.w,),
-                            ),
-                            onChanged:(v) => controller.setDropdownCity(v),
-                            items: controller.citySelection
-                                .map(
-                                  (item) => DropdownMenuItem<String>(
-                                value: item,
-                                child: Text(item, style: TextStyle(
-                                  fontSize: 14.sp,
-                                ),),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(
+                                  AppDimensions.borderRadiusMedium,
+                                ),
+                                borderSide: BorderSide(
+                                  color: AppColors.white,
+                                  width: 1.w,
+                                ),
                               ),
-                            )
-                                .toList(),
+                              counter: const SizedBox(),
+                              contentPadding: EdgeInsets.symmetric(
+                                vertical: AppDimensions.paddingExtraLarge.h,
+                                horizontal: AppDimensions.paddingLarge.w,
+                              ),
+                            ),
                           ),
                           SizedBox(height: 22.h,),
                           Column(

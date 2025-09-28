@@ -104,39 +104,23 @@ class _IdentifyScreenState extends State<IdentifyScreen> {
                         ),
                         SizedBox(width: AppDimensions.paddingSmall.w),
                         Expanded(
-                          child: TextFormField(
-                            keyboardType: TextInputType.phone,
-                            maxLength: 8,
-                            readOnly: true,
-                            style: TextStyle(
-                              fontSize: 14.sp,
+                          child: Container(
+                            padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                AppDimensions.borderRadiusMedium,
+                              ),
+                              color: AppColors.inputFillBackground
                             ),
-                            decoration: InputDecoration(
-                              hintText: r'enter_number'.tr,
-                              border: OutlineInputBorder(),
-
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(
-                                  AppDimensions.borderRadiusMedium,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  '12345678',
+                                  style: TextStyle(fontSize: 14.sp, color: AppColors.blackText),
                                 ),
-                                borderSide: BorderSide(
-                                  color: AppColors.white,
-                                  width: 1.w,
-                                ),
-                              ),
-                              suffixIconConstraints: BoxConstraints(
-                                maxWidth: 40.w,
-                                maxHeight: 40.h
-                              ),
-                              suffixIcon: Padding(
-                                padding: EdgeInsets.only(right: 20.w),
-                                child: SvgPicture.asset(AppAssets.lock),
-                              ),
-                              counter: const SizedBox(),
-                              contentPadding: EdgeInsets.symmetric(
-                                vertical: AppDimensions.paddingExtraLarge.h,
-                                horizontal: AppDimensions.paddingLarge.w,
-                              ),
+                                SvgPicture.asset(AppAssets.lock, width: 18.w, color: AppColors.black,),
+                              ],
                             ),
                           ),
                         ),
