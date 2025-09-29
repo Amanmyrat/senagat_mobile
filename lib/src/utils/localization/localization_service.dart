@@ -10,9 +10,9 @@ import 'lang/en.dart';
 import 'supported_localizations.dart';
 
 class LocalizationService extends Translations {
-  static const Locale defaultLocale = Locale('ru', 'RU');
+  static const Locale defaultLocale = Locale('tm', 'TM');
 
-  static const Locale fallbackLocale = Locale('ru', 'RU');
+  static const Locale fallbackLocale = Locale('tm', 'TM');
 
   static final List<String> langs = ['TM', 'RU', 'EN'];
 

@@ -20,7 +20,7 @@ class CardExpensesScreen extends StatefulWidget {
 }
 
 class _CardExpensesScreenState extends State<CardExpensesScreen> {
-  final List<int> values = [0, 0, 100, 40, 0];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +37,7 @@ class _CardExpensesScreenState extends State<CardExpensesScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding:  EdgeInsets.only(left: 20),
+                        padding:  EdgeInsets.only(left: 20.w),
                         child: Text(r'spending'.tr, style: TextStyle(color: AppColors.black, fontSize: 24.sp),),
                       ),
                       SizedBox(height: 16.h,),
@@ -87,9 +87,9 @@ class _CardExpensesScreenState extends State<CardExpensesScreen> {
                                           alignment: BarChartAlignment.spaceAround,
                                           barGroups: [
                                             makeGroupData(0, 1, isActive: false),
-                                            makeGroupData(1, 1000),
-                                            makeGroupData(2, 2000),
-                                            makeGroupData(3, 5000),
+                                            makeGroupData(1, 2500),
+                                            makeGroupData(2, 5000),
+                                            makeGroupData(3, 7500),
                                             makeGroupData(4, 10000),
                                           ],
                                           titlesData: FlTitlesData(
@@ -97,17 +97,17 @@ class _CardExpensesScreenState extends State<CardExpensesScreen> {
                                               sideTitles: SideTitles(
                                                 showTitles: true,
                                                 reservedSize: 70,
-                                                interval: 40,
+                                                interval: 2500,
                                                 getTitlesWidget: (value, meta) {
                                                   switch (value.toInt()) {
                                                     case 0:
                                                       return Text("0 tmt", style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.secondaryFont));
-                                                    case 1000:
-                                                      return Text("10 tmt", style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.secondaryFont));
-                                                    case 2000:
-                                                      return Text("40 tmt", style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.secondaryFont));
+                                                    case 2500:
+                                                      return Text("1000 tmt", style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.secondaryFont));
                                                     case 5000:
-                                                      return Text("100 tmt", style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.secondaryFont));
+                                                      return Text("2500 tmt", style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.secondaryFont));
+                                                    case 7500:
+                                                      return Text("5000 tmt", style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.secondaryFont));
                                                     case 10000:
                                                       return Text("10000 tmt", style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.secondaryFont));
                                                   }

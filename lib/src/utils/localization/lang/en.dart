@@ -57,7 +57,7 @@ const Map<String, String> enUs = {
   r'donations_of_any_amount': r'Donations of any amount are welcome.',
   r'services': r'Services',
   r'inquiries': r'Inquiries',
-  r'get_any_type_of_help': r'Get any type of help',
+  r'get_any_type_of_help': r'Get any type of inquiries',
   r'history_is_empty': r'History is empty',
   r'history': r'History',
   r'exchange_rates': r'Exchange rates',
@@ -187,5 +187,9 @@ const Map<String, String> enUs = {
   r'credit_for_newlyweds': r'Credit for newlyweds',
   r'consumer_credit': r'Consumer credit',
   r'student_loan': r'Student loan',
+  r'remainder': r'Remainder',
+  r'monthly_payment2': r'Monthly pay.',
+  r'name_lastName': r'Name Last Name',
+
 
 };
