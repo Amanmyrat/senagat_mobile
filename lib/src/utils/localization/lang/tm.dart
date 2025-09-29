@@ -186,5 +186,8 @@ const Map<String, String> tmTm = {
   r'credit_for_newlyweds': r'Ýaş maşgalalar üçin karzy',
   r'consumer_credit': r'Sarp ediş karzy',
   r'student_loan': r'Talyp karzy',
+  r'remainder': r'Galyndy',
+  r'monthly_payment2': r'Aýlyk töleg',
+  r'name_lastName': r'Ady Familiýa',
 
 };

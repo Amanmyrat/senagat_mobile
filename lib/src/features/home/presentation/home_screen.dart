@@ -10,6 +10,7 @@ import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
+import '../../../widgets/header_widget.dart';
 import '../controller/home_controller.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -40,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      headerWidget(controller),
+                      HeaderWidget(),
 
                       if(controller.isProfileRequired)...[
                         profileIsRequiredWidget(controller),
@@ -49,6 +50,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       cardsWidget(controller),
                       fastOperationsWidget(controller),
                       charityFoundationWidget(controller),
+                      inquiriesWidget(),
+                      creditsWidget(),
 
                       Text(
                         r'services'.tr,
@@ -518,107 +521,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget headerWidget(HomeController controller) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 22.h),
-      child: Row(
-        children: [
-          Expanded(
-            child: TextFormField(
-              onTap: () {
-                Get.toNamed(MapSearchScreen.route);
-              },
-              readOnly: true,
-              keyboardType: TextInputType.text,
-              maxLength: 8,
-              style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.primaryFont),
-              decoration: InputDecoration(
-                hintText: r'find_an_ATM'.tr,
-                border: OutlineInputBorder(),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(
-                    AppDimensions.borderRadiusMedium,
-                  ),
-                  borderSide: BorderSide(color: AppColors.white, width: 1.w),
-                ),
-                prefixIconConstraints: BoxConstraints(
-                  minWidth: 20.w,
-                  minHeight: 20.h,
-                ),
-                prefixIcon: Padding(
-                  padding: EdgeInsets.only(
-                    left: AppDimensions.paddingExtraLarge.w,
-                    right: AppDimensions.paddingMedium.w,
-                  ),
-                  child: SvgPicture.asset(AppAssets.searchIcon, width: 20.w),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(
-                    AppDimensions.borderRadiusMedium,
-                  ),
-                  borderSide: BorderSide(color: AppColors.white, width: 1.w),
-                ),
-
-                counter: const SizedBox(),
-                contentPadding: EdgeInsets.symmetric(
-                  vertical: 16.h,
-                  horizontal: AppDimensions.paddingLarge.w,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(width: 4.w),
-          GestureDetector(
-            onTap: () {
-              controller.onQrScanTap();
-            },
-            child: Container(
-              padding: EdgeInsets.all(16.w),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(
-                  AppDimensions.borderRadiusMedium.r,
-                ),
-                color: controller.lastTap == HomeTapType.qr
-                    ? AppColors.green
-                    : AppColors.inputFillBackground,
-              ),
-              child: SvgPicture.asset(
-                AppAssets.qrCodeIcon,
-                width: 20.w,
-                color: controller.lastTap == HomeTapType.qr
-                    ? AppColors.white
-                    : AppColors.black,
-              ),
-            ),
-          ),
-          SizedBox(width: 4.w),
-          GestureDetector(
-            onTap: () {
-              controller.onNotificationScanTap();
-            },
-            child: Container(
-              padding: EdgeInsets.all(16.w),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(
-                  AppDimensions.borderRadiusMedium.r,
-                ),
-                color: controller.lastTap == HomeTapType.notification
-                    ? AppColors.green
-                    : AppColors.inputFillBackground,
-              ),
-              child: SvgPicture.asset(
-                AppAssets.bellSimpleIcon,
-                width: 20.w,
-                color: controller.lastTap == HomeTapType.notification
-                    ? AppColors.white
-                    : AppColors.black,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
   Widget profileIsRequiredWidget(HomeController controller) {
     return GestureDetector(
@@ -657,90 +559,109 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget charityFoundationWidget(HomeController controller) {
+  Widget cardsWidget(HomeController controller){
     return Padding(
-      padding:  EdgeInsets.only(bottom: 40.h),
-      child: GestureDetector(
-        onTap: () {
-          controller.onFoundationTap();
-        },
-        child: Container(
-          padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(
-              AppDimensions.borderRadiusMedium.r,
+      padding: EdgeInsets.only(bottom: AppDimensions.padding40.h),
+      child: Column(children: [
+        if (controller.cardBox.isNotEmpty) ...[
+          Container(
+            width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.all(
+              AppDimensions.paddingExtraLarge,
             ),
-            border: Border.all(
-              color: AppColors.dividerColor,
-              width: 1.w,
-              style: BorderStyle.solid,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.r),
+              image: DecorationImage(
+                image: AssetImage(
+                  controller.cardBox.getAt(0)!.cardDesign,
+                ),
+                fit: BoxFit.fill,
+              ),
             ),
-            boxShadow: [
-              BoxShadow(color: AppColors.dividerColor, blurRadius: 4.r),
-            ],
-            color: controller.lastTap == HomeTapType.foundation
-                ? AppColors.green
-                : AppColors.white,
-          ),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    'Senagat Bank',
+                    style: TextStyle(
+                      color: AppColors.white,
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 72.h),
+                Text(
+                  controller.cardBox.getAt(0)?.cardNumber ?? '',
+                  style: TextStyle(
+                    wordSpacing: 10.sp,
+                    fontSize: 24.sp,
+                    color: AppColors.white,
+                  ),
+                ),
+                SizedBox(height: 41.h),
+                Row(
+                  mainAxisAlignment:
+                  MainAxisAlignment.spaceBetween,
                   children: [
-                    SizedBox(
-                      width: 200.w,
-                      child: Text(
-                        r'charitable_foundation'.tr,
-                        style: TextStyle(
-                          color: controller.lastTap == HomeTapType.foundation
-                              ? AppColors.white
-                              : AppColors.blackText,
-                          fontSize: 17.sp,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: AppDimensions.paddingMedium.w),
                     Text(
-                      r'donations_of_any_amount'.tr,
+                      controller.cardBox.getAt(0)?.name ?? '',
                       style: TextStyle(
-                        color: controller.lastTap == HomeTapType.foundation
-                            ? AppColors.lightGreen
-                            : AppColors.blackText,
                         fontSize: 14.sp,
-                        fontFamily: AppFonts.secondaryFont,
+                        color: AppColors.white,
                       ),
                     ),
-                    SizedBox(height: AppDimensions.paddingMedium.h),
-                    Row(
-                      children: [
-                        Text(
-                          r'donate'.tr,
-                          style: TextStyle(
-                            color: controller.lastTap == HomeTapType.foundation
-                                ? AppColors.white
-                                : AppColors.green,
-                            fontSize: 14.sp,
-                          ),
-                        ),
-                        SvgPicture.asset(
-                          AppAssets.arrowRightIcon,
-                          color: controller.lastTap == HomeTapType.foundation
-                              ? AppColors.white
-                              : AppColors.green,
-                          width: 14.w,
-                        ),
-                      ],
+                    Text(
+                      controller.cardBox.getAt(0)?.expiryDate ??
+                          '',
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        color: AppColors.white,
+                      ),
                     ),
                   ],
                 ),
-              ),
-              Image.asset(AppAssets.foundation, width: 150.w),
-            ],
+              ],
+            ),
           ),
-        ),
-      ),
+        ] else ...[
+          GestureDetector(
+            onTap: () {
+              Get.toNamed(AddCardScreen.route);
+            },
+            child: Container(
+              width: 390.w,
+              height: 220.h,
+              decoration: BoxDecoration(
+                color: AppColors.inputFillBackground,
+                borderRadius: BorderRadius.circular(
+                  AppDimensions.borderRadiusMedium.r,
+                ),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    AppAssets.plusIcon,
+                    width: 32.w,
+                  ),
+
+                  SizedBox(height: AppDimensions.paddingMedium),
+
+                  Text(
+                    r'add_a_card'.tr,
+                    style: TextStyle(
+                      color: AppColors.blackText,
+                      fontSize: 17.sp,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ],),
     );
   }
 
@@ -911,65 +832,283 @@ class _HomeScreenState extends State<HomeScreen> {
      );
   }
 
-  Widget cardsWidget(HomeController controller){
+  Widget charityFoundationWidget(HomeController controller) {
     return Padding(
-      padding: EdgeInsets.only(bottom: AppDimensions.padding40.h),
-      child: Column(children: [
-        if (controller.cardBox.isNotEmpty) ...[
-          Container(
-            width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.all(
-              AppDimensions.paddingExtraLarge,
+      padding:  EdgeInsets.only(bottom: 40.h),
+      child: GestureDetector(
+        onTap: () {
+          controller.onFoundationTap();
+        },
+        child: Container(
+          padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(
+              AppDimensions.borderRadiusMedium.r,
             ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.r),
-              image: DecorationImage(
-                image: AssetImage(
-                  controller.cardBox.getAt(0)!.cardDesign,
-                ),
-                fit: BoxFit.fill,
-              ),
+            border: Border.all(
+              color: AppColors.dividerColor,
+              width: 1.w,
+              style: BorderStyle.solid,
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    'Senagat Bank',
-                    style: TextStyle(
-                      color: AppColors.white,
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 72.h),
-                Text(
-                  controller.cardBox.getAt(0)?.cardNumber ?? '',
-                  style: TextStyle(
-                    wordSpacing: 10.sp,
-                    fontSize: 24.sp,
-                    color: AppColors.white,
-                  ),
-                ),
-                SizedBox(height: 41.h),
-                Row(
-                  mainAxisAlignment:
-                  MainAxisAlignment.spaceBetween,
+            boxShadow: [
+              BoxShadow(color: AppColors.dividerColor, blurRadius: 4.r),
+            ],
+            color: controller.lastTap == HomeTapType.foundation
+                ? AppColors.green
+                : AppColors.white,
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      controller.cardBox.getAt(0)?.name ?? '',
+                      r'charitable_foundation'.tr,
                       style: TextStyle(
-                        fontSize: 14.sp,
-                        color: AppColors.white,
+                        color: controller.lastTap == HomeTapType.foundation
+                            ? AppColors.white
+                            : AppColors.blackText,
+                        fontSize: 17.sp,
                       ),
                     ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: AppDimensions.paddingMedium.h),
+                      child: Text(
+                        r'donations_of_any_amount'.tr,
+                        style: TextStyle(
+                          color: controller.lastTap == HomeTapType.foundation
+                              ? AppColors.lightGreen
+                              : AppColors.blackText,
+                          fontSize: 14.sp,
+                          fontFamily: AppFonts.secondaryFont,
+                        ),
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          r'donate'.tr,
+                          style: TextStyle(
+                            color: controller.lastTap == HomeTapType.foundation
+                                ? AppColors.white
+                                : AppColors.green,
+                            fontSize: 14.sp,
+                          ),
+                        ),
+                        SvgPicture.asset(
+                          AppAssets.arrowRightIcon,
+                          color: controller.lastTap == HomeTapType.foundation
+                              ? AppColors.white
+                              : AppColors.green,
+                          width: 14.w,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 10.h),
+                child: Image.asset(AppAssets.foundation, width: 125.w),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget inquiriesWidget(){
+    return Padding(
+      padding: EdgeInsetsGeometry.only(bottom: AppDimensions.padding40.h),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            r'inquiries'.tr,
+            style: TextStyle(
+              color: AppColors.blackText,
+              fontSize: 17.sp,
+            ),
+          ),
+          SizedBox(height: 16.h),
+          Container(
+            padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
+                color: AppColors.orange
+            ),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
                     Text(
-                      controller.cardBox.getAt(0)?.expiryDate ??
-                          '',
+                      r'inquiries'.tr,
                       style: TextStyle(
-                        fontSize: 14.sp,
                         color: AppColors.white,
+                        fontSize: 14.sp,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          r'01 Августа, 10:15'.tr,
+                          style: TextStyle(
+                            color: AppColors.orangeLight,
+                            fontSize: 14.sp,
+                          ),
+                        ),
+                        SizedBox(width: 6.w,),
+                        SvgPicture.asset(AppAssets.arrowRightIcon, width: 14.w, color: AppColors.white,)
+                      ],
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget creditsWidget(){
+    return Padding(
+      padding: EdgeInsetsGeometry.only(bottom: AppDimensions.padding40.h),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            r'credits'.tr,
+            style: TextStyle(
+              color: AppColors.blackText,
+              fontSize: 17.sp,
+            ),
+          ),
+          SizedBox(height: 16.h),
+          Container(
+            padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
+              color: AppColors.blue
+            ),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      r'credit_for_newlyweds'.tr,
+                      style: TextStyle(
+                        color: AppColors.white,
+                        fontSize: 14.sp,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          r'01 Августа, 10:15'.tr,
+                          style: TextStyle(
+                            color: AppColors.blueLight,
+                            fontSize: 14.sp,
+                          ),
+                        ),
+                        SizedBox(width: 6.w,),
+                        SvgPicture.asset(AppAssets.arrowRightIcon, width: 14.w, color: AppColors.white,)
+                      ],
+                    )
+                  ],
+                ),
+                SizedBox(height: AppDimensions.paddingExtraLarge.h,),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            r'sum'.tr,
+                            style: TextStyle(
+                              color: AppColors.white,
+                              fontSize: 14.sp,
+                              fontFamily: AppFonts.secondaryFont,
+                            ),
+                          ),
+                          SizedBox(height: 4.h,),
+                          Text(
+                            r'10,000'.tr,
+                            style: TextStyle(
+                              color: AppColors.white,
+                              fontSize: 17.sp,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    Container(
+                      width: 1.w,
+                      height: 44.h,
+                      margin: EdgeInsets.symmetric(horizontal: AppDimensions.paddingExtraLarge.w),
+                      color: AppColors.white,
+                    ),
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            r'monthly_payment2'.tr,
+                            style: TextStyle(
+                              color: AppColors.white,
+                              fontSize: 14.sp,
+                              fontFamily: AppFonts.secondaryFont,
+                            ),
+                            maxLines: 1,
+                          ),
+                          SizedBox(height: 4.h,),
+                          Text(
+                            r'1,000'.tr,
+                            style: TextStyle(
+                              color: AppColors.white,
+                              fontSize: 17.sp,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    Container(
+                      width: 1.w,
+                      height: 44.h,
+                      margin: EdgeInsets.symmetric(horizontal: AppDimensions.paddingExtraLarge.w),
+                      color: AppColors.white,
+                    ),
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            r'remainder'.tr,
+                            style: TextStyle(
+                              color: AppColors.white,
+                              fontSize: 14.sp,
+                              fontFamily: AppFonts.secondaryFont,
+                            ),
+                          ),
+                          SizedBox(height: 4.h,),
+                          Text(
+                            r'8,000'.tr,
+                            style: TextStyle(
+                              color: AppColors.white,
+                              fontSize: 17.sp,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -977,43 +1116,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-        ] else ...[
-          GestureDetector(
-            onTap: () {
-              Get.toNamed(AddCardScreen.route);
-            },
-            child: Container(
-              width: 390.w,
-              height: 220.h,
-              decoration: BoxDecoration(
-                color: AppColors.inputFillBackground,
-                borderRadius: BorderRadius.circular(
-                  AppDimensions.borderRadiusMedium.r,
-                ),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    AppAssets.plusIcon,
-                    width: 32.w,
-                  ),
-
-                  SizedBox(height: AppDimensions.paddingMedium),
-
-                  Text(
-                    r'add_a_card'.tr,
-                    style: TextStyle(
-                      color: AppColors.blackText,
-                      fontSize: 17.sp,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
         ],
-      ],),
+      ),
     );
   }
+
 }

@@ -18,10 +18,11 @@ class AppColors {
   static const Color transparent = Color.fromRGBO(0, 0, 0, 0);
   static const Color redMedium = Color.fromRGBO(200, 80, 64, 1);
   static const Color redLight = Color.fromARGB(255, 240, 138, 138);
-  static const Color orange = Color.fromRGBO(238, 116, 20, 1);
-  static const Color blue = Color(0xff5879FA);
+  static const Color orange = Color(0xffB97E00);
+  static const Color orangeLight = Color(0xffD4A43B);
+  static const Color blue = Color(0xff5B85EE);
   static const Color greyInactive = Color(0xff6F736D);
-  static const Color blueLight = Color(0xff6690B9);
+  static const Color blueLight = Color(0xffC0CDEF);
   static const Color lightBackground = Color(0xffEEF2ED);
   static const Color green = Color(0xff2C702C);
   static const Color lightGreen = Color(0xff769983);

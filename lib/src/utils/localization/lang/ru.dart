@@ -187,5 +187,8 @@ const Map<String, String> ruRu = {
   r'credit_for_newlyweds': r'Кредит для молодоженов',
   r'consumer_credit': r'Потребительский кредит',
   r'student_loan': r'Студенческий кредит',
+  r'remainder': r'Остаток',
+  r'monthly_payment2': r'Плата в мес.',
+  r'name_lastName': r'Имя Фамилия',
 
 };

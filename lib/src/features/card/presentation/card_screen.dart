@@ -11,6 +11,7 @@ import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
+import 'package:senagat_mobile/src/widgets/header_widget.dart';
 import '../../../widgets/elevated_button_with_state.dart';
 
 class CardScreen extends StatefulWidget {
@@ -40,104 +41,7 @@ class _CardScreenState extends State<CardScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: TextFormField(
-                                  onTap: () {
-                                    Get.toNamed(MapSearchScreen.route);
-                                  },
-                                  readOnly: true,
-                                  keyboardType: TextInputType.text,
-                                  maxLength: 8,
-                                  style: TextStyle(
-                                    fontSize: 14.sp,
-                                    fontFamily: AppFonts.primaryFont,
-                                  ),
-                                  decoration: InputDecoration(
-                                    hintText: r'find_an_ATM'.tr,
-                                    border: OutlineInputBorder(),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(
-                                        AppDimensions.borderRadiusMedium,
-                                      ),
-                                      borderSide: BorderSide(
-                                        color: AppColors.white,
-                                        width: 1.w,
-                                      ),
-                                    ),
-                                    prefixIconConstraints: BoxConstraints(
-                                      minWidth: 20.w,
-                                      minHeight: 20.h,
-                                    ),
-                                    prefixIcon: Padding(
-                                      padding: EdgeInsets.only(left: AppDimensions.paddingExtraLarge.w, right: AppDimensions.paddingMedium.w),
-                                      child: SvgPicture.asset(
-                                        AppAssets.searchIcon,
-                                        width: 20.w,
-                                      ),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(
-                                        AppDimensions.borderRadiusMedium,
-                                      ),
-                                      borderSide: BorderSide(
-                                        color: AppColors.white,
-                                        width: 1.w,
-                                      ),
-                                    ),
-
-                                    counter: const SizedBox(),
-                                    contentPadding: EdgeInsets.symmetric(
-                                      vertical: 16.h,
-                                      horizontal: AppDimensions.paddingLarge.w,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 4.w),
-                              GestureDetector(
-                                onTap: (){
-                                  controller.onQrScanTap();
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(16.w),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(
-                                      AppDimensions.borderRadiusMedium.r,
-                                    ),
-                                    color: controller.lastTap == CardTapType.qr ? AppColors.green : AppColors.inputFillBackground,
-                                  ),
-                                  child: SvgPicture.asset(
-                                    AppAssets.qrCodeIcon,
-                                    width: 20.w,
-                                    color: controller.lastTap == CardTapType.qr ? AppColors.white : AppColors.black,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 4.w),
-                              GestureDetector(
-                                onTap: () {
-                                  controller.onNotificationScanTap();
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(16.w),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(
-                                      AppDimensions.borderRadiusMedium.r,
-                                    ),
-                                    color: controller.lastTap == CardTapType.notification ? AppColors.green : AppColors.inputFillBackground,
-                                  ),
-                                  child: SvgPicture.asset(
-                                    AppAssets.bellSimpleIcon,
-                                    width: 20.w,
-                                    color: controller.lastTap == CardTapType.notification ? AppColors.white : AppColors.black,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 22.h),
+                          HeaderWidget(),
                           GestureDetector(
                             onTap: (){
                               Get.toNamed(CardExpensesScreen.route);

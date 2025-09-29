@@ -61,7 +61,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(r'Имя Фамилия'.tr, style: TextStyle(fontSize: 24.sp, color: AppColors.black),),
+                          Text(r'name_lastName'.tr, style: TextStyle(fontSize: 24.sp, color: AppColors.black),),
                           SvgPicture.asset(AppAssets.arrowRightIcon, color: AppColors.black, width: 18.w,)
                         ],
                       ),
