@@ -189,5 +189,7 @@ const Map<String, String> tmTm = {
   r'remainder': r'Galyndy',
   r'monthly_payment2': r'Aýlyk töleg',
   r'name_lastName': r'Ady Familiýa',
+  r'scan_sent': r'Skan iberildi',
+
 
 };

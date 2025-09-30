@@ -1,4 +1,3 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -9,7 +8,6 @@ import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
-import '../../../utils/theme/constants/app_fonts.dart';
 import '../../../widgets/elevated_button_with_state.dart';
 import '../../dashboard/presentation/dashboard_screen.dart';
 
@@ -158,8 +156,8 @@ class _IdentityVerificationScreenState extends State<IdentityVerificationScreen>
                                     SizedBox(height: AppDimensions.paddingMedium.h,),
                                     TextFormField(
                                       textInputAction: TextInputAction.next,
-                                      keyboardType: (index == controller.controllers.length - 2 ||
-                                          index == controller.controllers.length - 4)
+                                      keyboardType: (controller.controllers[index] == controller.controllers[3]  ||
+                                          controller.controllers[index] == controller.controllers[5])
                                           ? TextInputType.number
                                           : TextInputType.name,
                                       controller: controller.controllers[index],
@@ -257,14 +255,18 @@ class _IdentityVerificationScreenState extends State<IdentityVerificationScreen>
                                   isLoading: false,
                                   isError: false,
                                   onPressed:() {
-
+                                    controller.pickPdf();
                                   },
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text(r'passport_scan'.tr,style: TextStyle(color: AppColors.greyInactive, fontSize: 14.sp),),
+                                      if(controller.pdfPath == null)...[
+                                        Text(r'passport_scan'.tr,style: TextStyle(color: AppColors.greyInactive, fontSize: 14.sp),),
+                                      ]else...[
+                                        Text(r'scan_sent'.tr,style: TextStyle(color: AppColors.blackText, fontSize: 14.sp),),
+                                      ],
                                       SizedBox(width: AppDimensions.paddingMedium.w,),
-                                      SvgPicture.asset(AppAssets.pdfIcon),
+                                      SvgPicture.asset(controller.pdfPath == null ? AppAssets.pdfIcon : AppAssets.checkIcon, width: 18.w, color: controller.pdfPath == null ? AppColors.grey : AppColors.green,),
                                     ],
                                   ),
                                 ),

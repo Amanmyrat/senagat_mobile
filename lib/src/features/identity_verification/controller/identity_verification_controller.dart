@@ -1,3 +1,4 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -64,7 +65,7 @@ class IdentityVerificationController extends GetxController with StateControlMix
         passportNumberController.text.isNotEmpty &&
         dateIssueController.text.isNotEmpty &&
         asController.text.isNotEmpty &&
-        placeIssueController.text.isNotEmpty){
+        placeIssueController.text.isNotEmpty && pdfPath != null){
       continueEnabled = true;
       update();
     }else{
@@ -84,6 +85,20 @@ class IdentityVerificationController extends GetxController with StateControlMix
 
     });
 
+  }
+
+  String? pdfPath;
+
+  Future<void> pickPdf() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf'],
+    );
+
+    if (result != null && result.files.single.path != null) {
+      pdfPath = result.files.single.path;
+      update();
+    }
   }
 
   @override
