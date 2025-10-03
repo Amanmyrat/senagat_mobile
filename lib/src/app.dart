@@ -39,6 +39,7 @@ import 'package:senagat_mobile/src/utils/theme/app_theme.dart';
 import 'package:senagat_mobile/src/utils/theme/controller/theme_controller.dart';
 import 'features/ Inquiries/presentation/inquiries_screen.dart';
 import 'features/add_card/controller/add_card_controller.dart';
+import 'features/auth/controller/auth_controller.dart';
 import 'features/credit/presentation/get_credit_screen.dart';
 import 'features/dashboard/controller/dashboard_controller.dart';
 import 'features/dashboard/presentation/dashboard_screen.dart';
@@ -95,7 +96,7 @@ class _SenagatAppState extends State<SenagatApp> {
             // darkTheme: AppTheme.darkTheme,
             debugShowCheckedModeBanner: false,
             themeMode: _initThemeMode(),
-            initialRoute: DashboardScreen.route,
+            initialRoute: SplashScreen.route,
             initialBinding: DashboardBinding(),
             defaultTransition: Transition.cupertino,
             getPages: [
@@ -241,6 +242,7 @@ class DashboardBinding extends Bindings {
     Get.put(ThemeController(), permanent: true);
     Get.put(LanguageController(), permanent: true);
     Get.put(DashboardController(), permanent: true);
+    Get.put(AuthController(), permanent: true);
     Get.put(ServiceSettingsController());
     Get.put(AddCardController());
     Get.put(HomeController());

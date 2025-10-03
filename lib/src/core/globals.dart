@@ -14,8 +14,8 @@ import 'networking/interceptors/logging_interceptor.dart';
 class Configs {
   const Configs._();
 
-  static const rootIpAddress = '109.207.172.16';
-  static const baseUrl = "http://$rootIpAddress/api";
+  static const rootIpAddress = '109.207.172.16:4433';
+  static const baseUrl = "http://$rootIpAddress/api/v1";
 }
 
 class ApiServices {

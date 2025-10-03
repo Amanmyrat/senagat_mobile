@@ -100,53 +100,53 @@ class RefreshTokenInterceptor extends Interceptor {
   ///
   /// ** The structure of response is dependant on the API and may not always
   /// be the same. It might need changing according to your own API. **
-  Future<String?> _refreshTokenRequest({
-    required DioError dioError,
-    required ErrorInterceptorHandler handler,
-    required Dio tokenDio,
-    required JSON data,
-  }) async {
-    debugPrint('--> REFRESHING TOKEN');
-    try {
-      debugPrint('\tBody: $data');
-
-      final response = await tokenDio.post<JSON>(
-        ApiEndpoint.auth(AuthEndpoint.AUTHORIZE),
-        data: data,
-      );
-
-      debugPrint('\tStatus code:${response.statusCode}');
-      debugPrint('\tResponse: ${response.data}');
-
-      // Check new token success
-      final success = response.statusCode == 200;
-
-      if (success) {
-        debugPrint('<-- END REFRESH');
-        return response.data?['access'] as String;
-      } else {
-        throw Exception(response.data);
-      }
-    } on Exception catch (ex) {
-      // only caught here for logging
-      // forward to try-catch in dio_service for handling
-      debugPrint('\t--> ERROR');
-      if (ex is DioError) {
-        final de = ex;
-        debugPrint('\t\t--> Exception: ${de.error}');
-        debugPrint('\t\t--> Message: ${de.message}');
-        debugPrint('\t\t--> Response: ${de.response}');
-      } else {
-        debugPrint('\t\t--> Exception: $ex');
-      }
-      debugPrint('\t<-- END ERROR');
-      debugPrint('<-- END REFRESH');
-
-      return null;
-    } finally {
-      // _dio
-      //   ..unlock()
-      //   ..clear();
-    }
-  }
+  // Future<String?> _refreshTokenRequest({
+  //   required DioError dioError,
+  //   required ErrorInterceptorHandler handler,
+  //   required Dio tokenDio,
+  //   required JSON data,
+  // }) async {
+  //   debugPrint('--> REFRESHING TOKEN');
+  //   try {
+  //     debugPrint('\tBody: $data');
+  //
+  //     final response = await tokenDio.post<JSON>(
+  //       ApiEndpoint.auth(AuthEndpoint.AUTHORIZE),
+  //       data: data,
+  //     );
+  //
+  //     debugPrint('\tStatus code:${response.statusCode}');
+  //     debugPrint('\tResponse: ${response.data}');
+  //
+  //     // Check new token success
+  //     final success = response.statusCode == 200;
+  //
+  //     if (success) {
+  //       debugPrint('<-- END REFRESH');
+  //       return response.data?['access'] as String;
+  //     } else {
+  //       throw Exception(response.data);
+  //     }
+  //   } on Exception catch (ex) {
+  //     // only caught here for logging
+  //     // forward to try-catch in dio_service for handling
+  //     debugPrint('\t--> ERROR');
+  //     if (ex is DioError) {
+  //       final de = ex;
+  //       debugPrint('\t\t--> Exception: ${de.error}');
+  //       debugPrint('\t\t--> Message: ${de.message}');
+  //       debugPrint('\t\t--> Response: ${de.response}');
+  //     } else {
+  //       debugPrint('\t\t--> Exception: $ex');
+  //     }
+  //     debugPrint('\t<-- END ERROR');
+  //     debugPrint('<-- END REFRESH');
+  //
+  //     return null;
+  //   } finally {
+  //     // _dio
+  //     //   ..unlock()
+  //     //   ..clear();
+  //   }
+  // }
 }

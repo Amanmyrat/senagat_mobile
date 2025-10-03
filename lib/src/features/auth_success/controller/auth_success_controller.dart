@@ -20,7 +20,7 @@ class AuthSuccessController extends GetxController with StateControlMixin{
   void _startBankVerification() {
     status = Status.loading;
     // Simulate bank verification process
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 2), () {
       _isBankVerificationComplete = true;
       status = Status.completed;
       _navigateToNextScreen();

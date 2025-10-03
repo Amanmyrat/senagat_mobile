@@ -1,3 +1,8 @@
+import 'dart:convert';
+
+import 'package:senagat_mobile/src/features/register_confirmation/models/account_model.dart';
+
+import '../typedefs.dart';
 import 'key_value_storage_base.dart';
 
 /// A service class for providing methods to store and retrieve key-value data
@@ -36,6 +41,19 @@ class KeyValueStorageService {
   /// use `await` and let it execute in the background.
   void setAuthToken(String token) {
     _keyValueStorage.setEncrypted(_authTokenKey, token);
+  }
+
+  AccountModel? getAuthUser() {
+    final user = _keyValueStorage.getCommon<String>(_authUserKey);
+    if (user == null) return null;
+    return AccountModel.fromJson(jsonDecode(user) as JSON);
+  }
+
+  /// Sets the authenticated user to this value. Even though this method is
+  /// asynchronous, we don't care about it's completion which is why we don't
+  /// use `await` and let it execute in the background.
+  void setAuthUser(AccountModel user) {
+    _keyValueStorage.setCommon<String>(_authUserKey, jsonEncode(user.toMap()));
   }
 
   /// Resets the authentication. Even though these methods are asynchronous, we

@@ -7,8 +7,16 @@ import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/features/auth_success/presentation/auth_success_screen.dart';
 import 'package:senagat_mobile/src/features/register_password_setup/presentation/register_password_setup_screen.dart';
 
+import '../../../utils/services/show_snack.dart';
+import '../../auth/controller/auth_controller.dart';
+import '../../auth/repository/auth_repository.dart';
+import '../models/login_model.dart';
+
 class RegisterConfirmationController extends GetxController
     with StateControlMixin {
+
+  final AuthRepository repository;
+
   String phoneNumber = '';
 
   final int otpLength = 5;
@@ -18,10 +26,14 @@ class RegisterConfirmationController extends GetxController
   late final TextEditingController otpController;
   late final FocusNode otpFocus;
 
+  final authController = Get.find<AuthController>();
+
   Timer? _timer;
   int secondsLeft = 60;
   bool pinLengthError = false;
   bool login = false;
+
+  RegisterConfirmationController(this.repository);
 
   bool get isPinFull => otpController.text.length == otpLength;
 
@@ -60,18 +72,35 @@ class RegisterConfirmationController extends GetxController
     update();
   }
 
+  Future<LoginModel> _getLoginModel() async {
+    return LoginModel(phone: phoneNumber, otpNumber: otpController.text);
+  }
+
+
   void applyOtpCode() async {
-    if (formKey.currentState?.validate() != true) return;
+    if (formKey.currentState?.validate() ?? false) {
+      status = Status.loading;
 
-    status = Status.loading;
-    update();
+      formKey.currentState!.save();
+      update();
 
-    await Future.delayed(const Duration(seconds: 2));
+      final loginModel = await _getLoginModel();
+      await repository.login(data: loginModel.toMap()).then((value) {
+        status = Status.completed;
+        update();
 
-    status = Status.completed;
-    update();
+        authController.onAccountUpdate(value);
+        authController.onTokenUpdate(value);
 
-    Get.toNamed(login ? AuthSuccessScreen.route : RegisterPasswordSetupScreen.route);
+        Get.toNamed(login ? AuthSuccessScreen.route : RegisterPasswordSetupScreen.route);
+      }).catchError((e) {
+        status = Status.error;
+        update();
+        ShowSnack.showSnack(r'error'.tr, SnackType.error);
+
+        debugPrint(e.toString());
+      });
+    }
   }
 
   void resendOtpCode() async {
