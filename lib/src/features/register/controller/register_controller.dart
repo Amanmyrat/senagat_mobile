@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
+import 'package:senagat_mobile/src/features/register/models/request_otp.dart';
 
 import '../../../utils/services/show_snack.dart';
 import '../../register_confirmation/presentation/register_confirmation.dart';
@@ -13,7 +14,7 @@ class RegisterController extends GetxController with StateControlMixin {
 
   final GlobalKey<FormState> key;
   bool continueEnabled = false;
-  bool login = false;
+  late bool login;
 
   bool isPasswordVisible = false;
   bool isPasswordValid = false;
@@ -38,6 +39,34 @@ class RegisterController extends GetxController with StateControlMixin {
 
   Future<PreLoginModel> _getPreLoginModel() async {
     return PreLoginModel(phone: phoneController.text, password: passwordController.text);
+  }
+  Future<RequestModel> _getRequestModel() async {
+    return RequestModel(phone: phoneController.text, purpose: login ? 'login' : 'register');
+  }
+
+  void onRegisterTap() async {
+    if (key.currentState?.validate() ?? false) {
+      status = Status.loading;
+
+      key.currentState!.save();
+      update();
+
+      final requestModel = await _getRequestModel();
+      await repository.requestOTP(data: requestModel.toMap()).then((value) {
+        status = Status.completed;
+        update();
+        Get.toNamed(
+          RegisterConfirmationScreen.route,
+          arguments: {'phone': phoneController.text, 'login': login},
+        );
+      }).catchError((e) {
+        status = Status.error;
+        update();
+        ShowSnack.showSnack(r'error'.tr, SnackType.error);
+
+        debugPrint(e.toString());
+      });
+    }
   }
 
   void onLoginTap() async {

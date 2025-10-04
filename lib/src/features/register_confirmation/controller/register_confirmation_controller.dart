@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/features/auth_success/presentation/auth_success_screen.dart';
+import 'package:senagat_mobile/src/features/register_confirmation/models/verify_otp_model.dart';
+import 'package:senagat_mobile/src/features/register_confirmation/models/verify_otp_model.dart';
 import 'package:senagat_mobile/src/features/register_password_setup/presentation/register_password_setup_screen.dart';
 
 import '../../../utils/services/show_snack.dart';
@@ -31,7 +33,7 @@ class RegisterConfirmationController extends GetxController
   Timer? _timer;
   int secondsLeft = 60;
   bool pinLengthError = false;
-  bool login = false;
+  late bool login;
 
   RegisterConfirmationController(this.repository);
 
@@ -75,7 +77,9 @@ class RegisterConfirmationController extends GetxController
   Future<LoginModel> _getLoginModel() async {
     return LoginModel(phone: phoneNumber, otpNumber: otpController.text);
   }
-
+  Future<VerifyOtpModel> _getVerifyOtpModel() async {
+    return VerifyOtpModel(phone: phoneNumber, code: otpController.text, purpose: login ? 'login' : 'register');
+  }
 
   void applyOtpCode() async {
     if (formKey.currentState?.validate() ?? false) {
@@ -93,6 +97,32 @@ class RegisterConfirmationController extends GetxController
         authController.onTokenUpdate(value);
 
         Get.toNamed(login ? AuthSuccessScreen.route : RegisterPasswordSetupScreen.route);
+      }).catchError((e) {
+        status = Status.error;
+        update();
+        ShowSnack.showSnack(r'error'.tr, SnackType.error);
+
+        debugPrint(e.toString());
+      });
+    }
+  }
+
+  Future<void> verifyOtp() async {
+    if (formKey.currentState?.validate() ?? false) {
+      status = Status.loading;
+
+      formKey.currentState!.save();
+      update();
+
+      final verifyOtpModel = await _getVerifyOtpModel();
+      await repository.verifyOTP(data: verifyOtpModel.toMap()).then((value) {
+        status = Status.completed;
+        update();
+        print(value);
+
+        Get.toNamed(RegisterPasswordSetupScreen.route, arguments: {
+          'otpToken': value,
+        });
       }).catchError((e) {
         status = Status.error;
         update();

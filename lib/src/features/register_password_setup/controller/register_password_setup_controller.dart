@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/features/auth_success/presentation/auth_success_screen.dart';
-import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../core/control_state_variable_mixin.dart';
+import '../../../utils/services/show_snack.dart';
+import '../../auth/controller/auth_controller.dart';
+import '../../auth/repository/auth_repository.dart';
+import '../models/register_model.dart';
 
 class RegisterPasswordSetupController extends GetxController with StateControlMixin {
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> key = GlobalKey<FormState>();
+  final authController = Get.find<AuthController>();
+
+  final AuthRepository repository;
+
+  late final String otpToken;
 
   bool isPasswordVisible = false;
   bool isPasswordValid = false;
@@ -16,8 +24,11 @@ class RegisterPasswordSetupController extends GetxController with StateControlMi
 
   int currentStep = 3;
 
+  RegisterPasswordSetupController(this.repository,);
+
   @override
   void onInit() {
+    otpToken = Get.arguments['otpToken'];
     passwordController = TextEditingController();
     passwordFocus = FocusNode();
     super.onInit();
@@ -33,18 +44,32 @@ class RegisterPasswordSetupController extends GetxController with StateControlMi
     update();
   }
 
+  Future<RegisterModel> _getRegisterModel() async {
+    return RegisterModel(otpToken: otpToken, password: passwordController.text);
+  }
+
   Future<void> confirmPassword() async {
-    if (formKey.currentState?.validate() ?? false) {
-      formKey.currentState!.save();
+    if (key.currentState?.validate() ?? false) {
+      key.currentState!.save();
       status = Status.loading;
       update();
 
-      await Future.delayed(const Duration(seconds: 2));
+      final registerModel = await _getRegisterModel();
+      await repository.register(data: registerModel.toMap()).then((value) {
+        status = Status.completed;
+        update();
+        authController.onAccountUpdate(value);
+        authController.onTokenUpdate(value);
 
-      status = Status.completed;
-      update();
+        Get.toNamed(AuthSuccessScreen.route);
+      }).catchError((e) {
+        status = Status.error;
+        update();
+        ShowSnack.showSnack(r'error'.tr, SnackType.error);
 
-      Get.toNamed(AuthSuccessScreen.route);
+        debugPrint(e.toString());
+      });
+
     }
   }
   @override

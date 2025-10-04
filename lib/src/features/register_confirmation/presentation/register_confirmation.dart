@@ -147,9 +147,13 @@ class _RegisterConfirmationScreenState extends State<RegisterConfirmationScreen>
                           child: ElevatedButtonWithState(
                             isLoading: controller.status == Status.loading,
                             isError: controller.status == Status.error,
-                            onPressed: controller.isPinFull
-                                ? controller.applyOtpCode
-                                : null,
+                            onPressed:(){
+                              if(controller.login && controller.isPinFull){
+                                controller.applyOtpCode();
+                              }else if(controller.login == false && controller.isPinFull){
+                               controller.verifyOtp();
+                              }
+                            },
                             child: Text(
                               r'apply'.tr,
                               style: TextStyle(

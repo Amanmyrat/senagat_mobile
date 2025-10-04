@@ -6,9 +6,11 @@ import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
+import '../../../core/globals.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
 import '../../../widgets/elevated_button_with_state.dart';
+import '../../auth/repository/auth_repository.dart';
 import '../controller/register_password_setup_controller.dart';
 
 class RegisterPasswordSetupScreen extends StatefulWidget {
@@ -27,9 +29,11 @@ class _RegisterPasswordSetupScreenState extends State<RegisterPasswordSetupScree
     return Scaffold(
       body: SafeArea(
         child: GetBuilder<RegisterPasswordSetupController>(
-          init: RegisterPasswordSetupController(),
+          init: RegisterPasswordSetupController(
+            AuthRepository(apiService: ApiServices.apiService),
+          ),
           builder: (controller) => Form(
-            key: controller.formKey,
+            key: controller.key,
             child: Column(
               children: [
                 const CustomAppBar(),

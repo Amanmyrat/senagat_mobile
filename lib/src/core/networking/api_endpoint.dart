@@ -28,8 +28,14 @@ class ApiEndpoint {
     switch (endpoint) {
       case AuthEndpoint.PRE_LOGIN:
         return '$path/users/auth/pre-login';
+      case AuthEndpoint.REQUEST_OTP:
+        return '$path/users/auth/request-otp';
+      case AuthEndpoint.VERIFY_OTP:
+        return '$path/users/auth/verify-otp';
       case AuthEndpoint.LOGIN:
         return '$path/users/auth/login';
+      case AuthEndpoint.REGISTER:
+        return '$path/users/auth/register';
     }
   }
 }
@@ -38,5 +44,8 @@ class ApiEndpoint {
 enum AuthEndpoint {
   /// An endpoint for auth requests.
   PRE_LOGIN,
+  REQUEST_OTP,
   LOGIN,
+  VERIFY_OTP,
+  REGISTER,
 }

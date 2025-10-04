@@ -37,7 +37,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 horizontal: AppDimensions.paddingExtraLarge,
               ),
               child: GetBuilder<RegisterController>(
-                init: RegisterController(AuthRepository(apiService: ApiServices.apiService), _key),
+                init: RegisterController(
+                  AuthRepository(apiService: ApiServices.apiService),
+                  _key,
+                ),
                 builder: (controller) {
                   return Form(
                     key: controller.key,
@@ -231,14 +234,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             child: ElevatedButtonWithState(
                               isLoading: controller.status == Status.loading,
                               isError: controller.status == Status.error,
-                              onPressed: controller.login
-                                  ? controller.continueEnabled &&
-                                            controller.isPasswordValid
-                                        ? controller.onLoginTap
-                                        : null
-                                  : controller.continueEnabled
-                                  ? controller.onLoginTap
-                                  : null,
+                              onPressed: controller.login ? controller.continueEnabled && controller.isPasswordValid ? controller.onLoginTap : null : controller.continueEnabled ? controller.onRegisterTap : null,
                               child: Text(
                                 r'send_code'.tr,
                                 style: TextStyle(

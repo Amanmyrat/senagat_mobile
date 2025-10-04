@@ -20,9 +20,39 @@ class AuthRepository {
     );
   }
 
+  Future<String> verifyOTP({required JSON data}) async {
+    return _apiService.setData<String>(
+      endpoint: ApiEndpoint.auth(AuthEndpoint.VERIFY_OTP),
+      data: data,
+      converter: (response) {
+        return response.body['otp_session_token'];
+      },
+    );
+  }
+
+  Future<bool> requestOTP({required JSON data}) async {
+    return _apiService.setData<bool>(
+      endpoint: ApiEndpoint.auth(AuthEndpoint.REQUEST_OTP),
+      data: data,
+      converter: (response) {
+        return response.body['success'];
+      },
+    );
+  }
+
   Future<AccountModel> login({required JSON data}) async {
     return _apiService.setData<AccountModel>(
       endpoint: ApiEndpoint.auth(AuthEndpoint.LOGIN),
+      data: data,
+      converter: (response) {
+        return AccountModel.fromJson(response.body['data']);
+      },
+    );
+  }
+
+  Future<AccountModel> register({required JSON data}) async {
+    return _apiService.setData<AccountModel>(
+      endpoint: ApiEndpoint.auth(AuthEndpoint.REGISTER),
       data: data,
       converter: (response) {
         return AccountModel.fromJson(response.body['data']);
