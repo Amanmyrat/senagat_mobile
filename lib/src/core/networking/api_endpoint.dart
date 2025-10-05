@@ -36,6 +36,8 @@ class ApiEndpoint {
         return '$path/users/auth/login';
       case AuthEndpoint.REGISTER:
         return '$path/users/auth/register';
+      case AuthEndpoint.PROFILE:
+        return '$path/profile';
     }
   }
 }
@@ -48,4 +50,5 @@ enum AuthEndpoint {
   LOGIN,
   VERIFY_OTP,
   REGISTER,
+  PROFILE,
 }

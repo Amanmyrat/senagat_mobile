@@ -13,9 +13,7 @@ class RefreshTokenInterceptor extends Interceptor {
   /// An instance of [Dio] for network requests
   final Dio _dio;
 
-  RefreshTokenInterceptor({
-    required Dio dioClient,
-  }) : _dio = dioClient;
+  RefreshTokenInterceptor({required Dio dioClient}) : _dio = dioClient;
 
   /// The name of the exception on which this interceptor is triggered.
   // ignore: non_constant_identifier_names
@@ -41,12 +39,12 @@ class RefreshTokenInterceptor extends Interceptor {
     ErrorInterceptorHandler handler,
   ) async {
     if (dioError.response != null) {
-      if (dioError.response!.data != null) {
-        // final headers = dioError.response!.data['headers'] as JSON;
-        if (dioError.response!.data is! String &&
-            dioError.response!.data.containsKey('code')) {
+      final responseData = dioError.response!.data;
+      if (responseData != null) {
+        // final headers = responseData['headers'] as JSON;
+        if (responseData is! String && responseData.containsKey('code')) {
           // Check error type to be token expired error
-          final code = dioError.response!.data['code'] as String;
+          final code = responseData['code'] as String;
 
           if (code == TokenExpiredException) {
             // Make new dio and lock old one

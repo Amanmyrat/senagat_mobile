@@ -55,8 +55,8 @@ class CustomException implements Exception {
     int? statusCode,
     required this.message,
     this.exceptionType = ExceptionType.ApiException,
-  })  : statusCode = statusCode ?? 500,
-        name = exceptionType.name;
+  }) : statusCode = statusCode ?? 500,
+       name = exceptionType.name;
 
   factory CustomException.fromDioException(Exception error) {
     try {
@@ -94,7 +94,7 @@ class CustomException implements Exception {
                 message: 'Authentication credentials were not provided.',
               );
             }
-            if (error.message!.contains('Unauthenticated')) {
+            if (error.message?.contains('Unauthenticated') ?? false) {
               return CustomException(
                 exceptionType: ExceptionType.UnauthorizedException,
                 statusCode: error.response?.statusCode,
@@ -106,7 +106,8 @@ class CustomException implements Exception {
               message: 'Response error',
             );
           case DioErrorType.unknown:
-            if (error.message!.contains(ExceptionType.SocketException.name)) {
+            if (error.message?.contains(ExceptionType.SocketException.name) ??
+                false) {
               return CustomException(
                 exceptionType: ExceptionType.FetchDataException,
                 statusCode: error.response?.statusCode,

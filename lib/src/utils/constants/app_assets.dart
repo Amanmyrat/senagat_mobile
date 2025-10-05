@@ -78,4 +78,5 @@ class AppAssets {
 
   static const mapPinBlackIcon = 'assets/icons/pin_black.png';
   static const mapPinGreenIcon = 'assets/icons/pin_green.png';
+  static const pdf = 'assets/images/Nurmuhammet Andalyp~Goşgular-2010`MGI.pdf';
 }

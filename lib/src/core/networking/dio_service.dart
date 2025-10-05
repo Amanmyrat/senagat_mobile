@@ -37,8 +37,8 @@ class DioService {
     this.globalCacheOptions,
     Iterable<Interceptor>? interceptors,
     HttpClientAdapter? httpClientAdapter,
-  })  : _dio = dioClient,
-        _cancelToken = CancelToken() {
+  }) : _dio = dioClient,
+       _cancelToken = CancelToken() {
     if (interceptors != null) _dio.interceptors.addAll(interceptors);
     if (httpClientAdapter != null) _dio.httpClientAdapter = httpClientAdapter;
   }
@@ -85,7 +85,11 @@ class DioService {
       ),
       cancelToken: cancelToken ?? _cancelToken,
     );
-    return ResponseModel<R>.fromJson(response.data!);
+    if (response.data != null) {
+      return ResponseModel<R>.fromJson(response.data!);
+    } else {
+      throw Exception('Response data is null');
+    }
   }
 
   /// This method sends a `POST` request to the [endpoint], **decodes**
@@ -115,7 +119,11 @@ class DioService {
       cancelToken: cancelToken ?? _cancelToken,
     );
 
-    return ResponseModel<R>.fromJson(response.data!);
+    if (response.data != null) {
+      return ResponseModel<R>.fromJson(response.data!);
+    } else {
+      throw Exception('Response data is null');
+    }
   }
 
   /// This method sends a `PATCH` request to the [endpoint], **decodes**
@@ -142,7 +150,11 @@ class DioService {
       options: options,
       cancelToken: cancelToken ?? _cancelToken,
     );
-    return ResponseModel<R>.fromJson(response.data!);
+    if (response.data != null) {
+      return ResponseModel<R>.fromJson(response.data!);
+    } else {
+      throw Exception('Response data is null');
+    }
   }
 
   /// This method sends a `PUT` request to the [endpoint], **decodes**
@@ -169,7 +181,11 @@ class DioService {
       options: options,
       cancelToken: cancelToken ?? _cancelToken,
     );
-    return ResponseModel<R>.fromJson(response.data!);
+    if (response.data != null) {
+      return ResponseModel<R>.fromJson(response.data!);
+    } else {
+      throw Exception('Response data is null');
+    }
   }
 
   /// This method sends a `DELETE` request to the [endpoint], **decodes**
@@ -196,7 +212,11 @@ class DioService {
       options: options,
       cancelToken: cancelToken ?? _cancelToken,
     );
-    return ResponseModel<R>.fromJson(response.data!);
+    if (response.data != null) {
+      return ResponseModel<R>.fromJson(response.data!);
+    } else {
+      throw Exception('Response data is null');
+    }
   }
 
   // /// A utility method to merge [globalCacheOptions] and request

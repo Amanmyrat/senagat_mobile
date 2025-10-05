@@ -16,6 +16,7 @@ class AccountModel {
       id: json['id'],
       phoneNumber: json['phone'],
       token: json['token'],
+      profile: json['profile'],
     );
   }
 

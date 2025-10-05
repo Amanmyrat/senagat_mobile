@@ -1,67 +1,27 @@
 import 'package:dio/dio.dart';
+import 'package:senagat_mobile/src/features/identity_verification/models/profile_model.dart';
 import '../../../core/networking/api_endpoint.dart';
 import '../../../core/networking/api_service.dart';
 import '../../../core/typedefs.dart';
-import '../../identity_verification/models/profile_model.dart';
-import '../../register_confirmation/models/account_model.dart';
 
-class AuthRepository {
+class ProfileRepository {
   final ApiService _apiService;
 
-  const AuthRepository({required ApiService apiService})
+  const ProfileRepository({required ApiService apiService})
     : _apiService = apiService;
 
-  Future<bool> preLogin({required JSON data}) async {
-    return _apiService.setData<bool>(
-      endpoint: ApiEndpoint.auth(AuthEndpoint.PRE_LOGIN),
-      data: data,
-      converter: (response) {
-        return response.body['success'];
-      },
-    );
-  }
-
-  Future<String> verifyOTP({required JSON data}) async {
-    return _apiService.setData<String>(
-      endpoint: ApiEndpoint.auth(AuthEndpoint.VERIFY_OTP),
-      data: data,
-      converter: (response) {
-        return response.body['otp_session_token'];
-      },
-    );
-  }
-
-  Future<bool> requestOTP({required JSON data}) async {
-    return _apiService.setData<bool>(
-      endpoint: ApiEndpoint.auth(AuthEndpoint.REQUEST_OTP),
-      data: data,
-      converter: (response) {
-        return response.body['success'];
-      },
-    );
-  }
-
-  Future<AccountModel> login({required JSON data}) async {
-    return _apiService.setData<AccountModel>(
-      endpoint: ApiEndpoint.auth(AuthEndpoint.LOGIN),
-      data: data,
-      converter: (response) {
-        return AccountModel.fromJson(response.body['data']);
-      },
-    );
-  }
-
-  Future<AccountModel> register({required JSON data}) async {
-    return _apiService.setData<AccountModel>(
-      endpoint: ApiEndpoint.auth(AuthEndpoint.REGISTER),
-      data: data,
-      converter: (response) {
-        return AccountModel.fromJson(response.body['data']);
-      },
-    );
-  }
-
   Future<ProfileModel> createProfile({required JSON data}) async {
+    print('=== API Request Debug ===');
+    print('Endpoint: ${ApiEndpoint.auth(AuthEndpoint.PROFILE)}');
+    print('Data keys: ${data.keys.toList()}');
+    print('Data size: ${data.toString().length} characters');
+    if (data['scan_passport'] != null) {
+      print(
+        'Scan passport length: ${data['scan_passport'].toString().length} characters',
+      );
+    }
+    print('=== End API Request Debug ===');
+
     return _apiService.setData<ProfileModel>(
       endpoint: ApiEndpoint.auth(AuthEndpoint.PROFILE),
       data: data,

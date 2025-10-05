@@ -9,6 +9,7 @@ import 'package:senagat_mobile/src/features/get_card/presentation/get_card_scree
 import 'package:senagat_mobile/src/features/net_and_tv/presentation/net_and_tv_screen.dart';
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/payment_screen.dart';
+import 'package:senagat_mobile/src/features/register_confirmation/models/account_model.dart';
 import '../../../utils/constants/app_assets.dart';
 import '../../foundation/presentation/foundation_screen.dart';
 import '../../pay/model/pay_model.dart';
@@ -21,6 +22,7 @@ class HomeController extends GetxController with StateControlMixin {
   HomeTapType lastTap = HomeTapType.none;
   int? lastFastServiceTapIndex;
   int? lastServiceTapIndex;
+  AccountModel accountModel = AccountModel();
 
   late ServiceSettingsController fastServiceController;
   late AddCardController addCardController;
@@ -113,9 +115,18 @@ class HomeController extends GetxController with StateControlMixin {
 
   @override
   void onInit() {
+    checkProfile();
     fastServiceController = Get.find<ServiceSettingsController>();
     addCardController = Get.find<AddCardController>();
     super.onInit();
+  }
+
+  checkProfile(){
+    if(accountModel.profile == null){
+      isProfileRequired = true;
+    }else{
+      isProfileRequired = false;
+    }
   }
 
   getFastOperationsCount() {
