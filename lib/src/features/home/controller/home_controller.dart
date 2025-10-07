@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
-import 'package:senagat_mobile/src/features/%20Inquiries/presentation/inquiries_screen.dart';
 import 'package:senagat_mobile/src/features/add_card/controller/add_card_controller.dart';
 import 'package:senagat_mobile/src/features/add_card/model/card_model.dart';
 import 'package:senagat_mobile/src/features/credit/presentation/get_credit_screen.dart';
@@ -12,6 +11,7 @@ import 'package:senagat_mobile/src/features/pay/presentation/payment_screen.dart
 import 'package:senagat_mobile/src/features/register_confirmation/models/account_model.dart';
 import '../../../utils/constants/app_assets.dart';
 import '../../foundation/presentation/foundation_screen.dart';
+import '../../inquiries/presentation/inquiries_screen.dart';
 import '../../pay/model/pay_model.dart';
 import '../../qr_code/presentation/qr_code_screen.dart';
 import '../../service_settings/controller/service_settings_controller.dart';

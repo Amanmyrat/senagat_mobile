@@ -40,6 +40,19 @@ class ApiEndpoint {
         return '$path/profile';
     }
   }
+
+  static Future<String> inquiries(InquiriesEndpoint endpoint, {int? id, String? date}) async {
+    const path = '';
+    switch (endpoint) {
+      case InquiriesEndpoint.CERTIFICATE_TYPES:
+        return '$path/certificate-types';
+
+      case InquiriesEndpoint.CERTIFICATE_ORDER:
+        return '$path/certificate-order';
+    }
+  }
+
+
 }
 
 /// A collection of endpoints used for authentication purposes.
@@ -51,4 +64,10 @@ enum AuthEndpoint {
   VERIFY_OTP,
   REGISTER,
   PROFILE,
+}
+
+enum InquiriesEndpoint {
+  CERTIFICATE_TYPES,
+  CERTIFICATE_ORDER,
+
 }

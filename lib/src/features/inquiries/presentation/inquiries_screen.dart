@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:senagat_mobile/src/features/%20Inquiries/controller/inquiries_controller.dart';
+import 'package:senagat_mobile/src/core/globals.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/constants/app_assets.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_fonts.dart';
 import '../../../widgets/elevated_button_with_state.dart';
+import '../controller/inquiries_controller.dart';
+import '../repository/inquiries_repository.dart';
 
 class InquiriesScreen extends StatefulWidget {
   static const route = '/inquiries';
@@ -20,12 +22,17 @@ class InquiriesScreen extends StatefulWidget {
 }
 
 class _InquiriesScreenState extends State<InquiriesScreen> {
+  final _key = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: GetBuilder<InquiriesController>(
-          init: InquiriesController(),
+          init: InquiriesController(
+            InquiriesRepository(apiService: ApiServices.apiService),
+            _key,
+          ),
           builder: (controller) {
             return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,7 +86,7 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                   SizedBox(height: 16.h,),
 
                                   SizedBox(height: AppDimensions.paddingMedium,),
-                                  DropdownButtonFormField2<String>(
+                                  DropdownButtonFormField2<int>(
                                       value: controller.selectedDropdownType,
                                       hint: Text(
                                         r"type_of_certificate".tr,
@@ -100,12 +107,12 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                         icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18.w,),
                                       ),
                                       onChanged: (v) => controller.setDropdownType(v),
-                                      items: controller.typeSelection
+                                      items: controller.typeSelection.entries
                                           .map(
-                                            (item) => DropdownMenuItem<String>(
-                                          value: item,
+                                            (item) => DropdownMenuItem<int>(
+                                          value: item.key,
                                           child: Text(
-                                            item.tr,
+                                            item.value.tr,
                                             style: TextStyle(fontSize: 14.sp),
                                           ),
                                         ),

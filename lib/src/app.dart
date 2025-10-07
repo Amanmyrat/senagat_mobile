@@ -37,13 +37,13 @@ import 'package:senagat_mobile/src/utils/localization/controller/language_contro
 import 'package:senagat_mobile/src/utils/localization/localization_service.dart';
 import 'package:senagat_mobile/src/utils/theme/app_theme.dart';
 import 'package:senagat_mobile/src/utils/theme/controller/theme_controller.dart';
-import 'features/ Inquiries/presentation/inquiries_screen.dart';
 import 'features/add_card/controller/add_card_controller.dart';
 import 'features/auth/controller/auth_controller.dart';
 import 'features/credit/presentation/get_credit_screen.dart';
 import 'features/dashboard/controller/dashboard_controller.dart';
 import 'features/dashboard/presentation/dashboard_screen.dart';
 import 'features/get_card/presentation/get_card_screen.dart';
+import 'features/inquiries/presentation/inquiries_screen.dart';
 import 'features/payment_verification/presentation/payment_verification_screen.dart';
 import 'features/map_search/presentation/map_search_screen.dart';
 
