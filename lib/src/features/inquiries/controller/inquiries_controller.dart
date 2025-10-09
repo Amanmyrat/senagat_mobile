@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
-import 'package:senagat_mobile/src/features/inquiries/models/inquiries_model.dart';
 import 'package:senagat_mobile/src/features/inquiries/models/inquiries_model.dart';
 import 'package:senagat_mobile/src/features/inquiries/repository/inquiries_repository.dart';
 import 'package:senagat_mobile/src/features/payment_verification/presentation/payment_verification_screen.dart';
@@ -18,9 +16,14 @@ class InquiriesController extends GetxController with StateControlMixin {
 
   InquiriesRepository repository;
   final GlobalKey<FormState> key;
-  final box = Hive.box<InquiriesModel>('inquiries');
+  final _inquiries = <InquiriesModel>[];
 
-  int? selectedDropdownType;
+  late int inquiriesId;
+  late String inquiriesPrice;
+  List<InquiriesModel> get inquiries => _inquiries;
+
+
+  String? selectedDropdownType;
   String? selectedDropdownBranch;
   bool continueEnabled = false;
   int pageIndex = 1;
@@ -29,6 +32,7 @@ class InquiriesController extends GetxController with StateControlMixin {
     mask: '##-##-####',
     filter: {"#": RegExp(r'[0-9]')},
   );
+
 
   List<String> textFieldTitle = [
     r'name',
@@ -52,15 +56,14 @@ class InquiriesController extends GetxController with StateControlMixin {
     "Option 3",
   ];
 
-  InquiriesController(this.repository, this.key);
+  InquiriesController(this.repository, this.key,);
 
   @override
   void onInit() {
     super.onInit();
     addressController = TextEditingController();
     phoneController = TextEditingController();
-    repository.getInquiriesTypes();
-
+    getInquiries();
   }
 
   void onInformationNotEmpty(v) {
@@ -75,15 +78,16 @@ class InquiriesController extends GetxController with StateControlMixin {
     }
   }
 
-  void setDropdownType(int? value) {
+  void setDropdownType(String? value) {
     selectedDropdownType = value;
     continueEnabled = true;
     update();
   }
 
   Future<InquiriesOrderModel> _getInquiriesOrderModel() async {
+    getInquiriesId();
     return InquiriesOrderModel(
-      typeId: selectedDropdownType,
+      typeId: inquiriesId,
       phoneNumber: phoneController.text,
       homeAddress: addressController.text,
       bankBranch: selectedDropdownBranch,
@@ -93,22 +97,25 @@ class InquiriesController extends GetxController with StateControlMixin {
   Future<void> onTap() async {
     if (pageIndex == 1 && continueEnabled) {
       pageIndex = 2;
+
+      print(inquiriesId);
       continueEnabled = false;
       update();
     } else if (pageIndex == 2 && continueEnabled) {
 
         status = Status.loading;
         update();
-
         final requestModel = await _getInquiriesOrderModel();
         await repository
             .createInquiresOrder(data: requestModel.toMap())
             .then((value) {
               status = Status.completed;
               update();
+              getInquiriesPrice();
+
               Get.toNamed(
                 PaymentVerificationScreen.route,
-                arguments: {'isInquiries': true, 'isFoundation': false},
+                arguments: {'isInquiries': true, 'isFoundation': false, 'serviceName': r'get_inquiries', 'sum': inquiriesPrice},
               );
             })
             .catchError((e) {
@@ -119,6 +126,42 @@ class InquiriesController extends GetxController with StateControlMixin {
               debugPrint(e.toString());
             });
     }
+  }
+  void getInquiries() async{
+    status = Status.loading;
+    update();
+    await repository.getInquiriesTypes().then((value){
+      status = Status.completed;
+      update();
+      _inquiries.addAll(value);
+    }).catchError((e){
+      status = Status.error;
+      update();
+      ShowSnack.showSnack(r'error'.tr, SnackType.error);
+
+      debugPrint(e.toString());
+    });
+  }
+  getInquiriesId(){
+    final selectedType = selectedDropdownType; // e.g. "obtain_certificate"
+
+    final selectedInquiry = _inquiries.firstWhere(
+          (inquiry) => inquiry.title == selectedType, // or any matching field
+      orElse: () => InquiriesModel(id: -1, title: ''), // fallback if not found
+    );
+
+    inquiriesId = selectedInquiry.id!;
+  }
+
+  getInquiriesPrice(){
+    final selectedType = selectedDropdownType; // e.g. "obtain_certificate"
+
+    final selectedInquiry = _inquiries.firstWhere(
+          (inquiry) => inquiry.title == selectedType, // or any matching field
+      orElse: () => InquiriesModel(id: -1, title: ''), // fallback if not found
+    );
+
+    inquiriesPrice = selectedInquiry.price!;
   }
 
   void onBack() {

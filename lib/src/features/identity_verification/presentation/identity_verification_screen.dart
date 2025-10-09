@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:senagat_mobile/src/features/auth/repository/auth_repository.dart';
 import 'package:senagat_mobile/src/features/identity_verification/controller/identity_verification_controller.dart';
+import 'package:senagat_mobile/src/features/identity_verification/repository/profile_repository.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
 import '../../../core/globals.dart';
@@ -31,7 +31,7 @@ class _IdentityVerificationScreenState
       body: SafeArea(
         child: GetBuilder<IdentityVerificationController>(
           init: IdentityVerificationController(
-            AuthRepository(apiService: ApiServices.apiService),
+            ProfileRepository(apiService: ApiServices.apiService),
             _key,
           ),
           builder: (controller) {

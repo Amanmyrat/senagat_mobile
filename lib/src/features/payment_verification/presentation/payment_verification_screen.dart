@@ -259,7 +259,7 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                                                 ),
 
                                                 Positioned(
-                                                  top: controller.isInquiries || controller.isFoundation ? 125 : 170,
+                                                  top: controller.isInquiries || controller.isFoundation ? 130 : 170,
                                                   left: -10,
                                                   child: Container(
                                                     width: 30.w,
@@ -271,7 +271,7 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                                                   ),
                                                 ),
                                                 Positioned(
-                                                  top: controller.isInquiries || controller.isFoundation ? 125 : 170,
+                                                  top: controller.isInquiries || controller.isFoundation ? 130 : 170,
                                                   right: -10,
                                                   child: Container(
                                                     width: 30.w,

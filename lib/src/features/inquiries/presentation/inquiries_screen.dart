@@ -32,6 +32,7 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
           init: InquiriesController(
             InquiriesRepository(apiService: ApiServices.apiService),
             _key,
+
           ),
           builder: (controller) {
             return Column(
@@ -86,7 +87,7 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                   SizedBox(height: 16.h,),
 
                                   SizedBox(height: AppDimensions.paddingMedium,),
-                                  DropdownButtonFormField2<int>(
+                                  DropdownButtonFormField2<String>(
                                       value: controller.selectedDropdownType,
                                       hint: Text(
                                         r"type_of_certificate".tr,
@@ -107,12 +108,12 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                         icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18.w,),
                                       ),
                                       onChanged: (v) => controller.setDropdownType(v),
-                                      items: controller.typeSelection.entries
+                                      items: controller.inquiries
                                           .map(
-                                            (item) => DropdownMenuItem<int>(
-                                          value: item.key,
+                                            (item) => DropdownMenuItem<String>(
+                                          value: item.title,
                                           child: Text(
-                                            item.value.tr,
+                                            item.title!.tr,
                                             style: TextStyle(fontSize: 14.sp),
                                           ),
                                         ),

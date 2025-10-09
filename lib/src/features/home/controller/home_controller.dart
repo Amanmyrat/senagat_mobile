@@ -32,7 +32,7 @@ class HomeController extends GetxController with StateControlMixin {
 
   String cardKey = 'card';
 
-  bool isProfileRequired = true;
+  late bool isProfileRequired;
 
   final List<String> flags = [
     AppAssets.ruIcon,

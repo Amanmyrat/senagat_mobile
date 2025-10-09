@@ -12,6 +12,7 @@ import 'package:senagat_mobile/src/features/register_password_setup/presentation
 import '../../../utils/services/show_snack.dart';
 import '../../auth/controller/auth_controller.dart';
 import '../../auth/repository/auth_repository.dart';
+import '../models/account_model.dart';
 import '../models/login_model.dart';
 
 class RegisterConfirmationController extends GetxController
@@ -34,6 +35,8 @@ class RegisterConfirmationController extends GetxController
   int secondsLeft = 60;
   bool pinLengthError = false;
   late bool login;
+
+  late AccountModel accountModel;
 
   RegisterConfirmationController(this.repository);
 
@@ -96,6 +99,7 @@ class RegisterConfirmationController extends GetxController
         authController.onAccountUpdate(value);
         authController.onTokenUpdate(value);
 
+        accountModel = value;
         Get.toNamed(login ? AuthSuccessScreen.route : RegisterPasswordSetupScreen.route);
       }).catchError((e) {
         status = Status.error;

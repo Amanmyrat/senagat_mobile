@@ -1,20 +1,19 @@
-import 'dart:convert';
 import 'dart:io';
+import 'package:dio/dio.dart' as dio;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
-import 'package:senagat_mobile/src/features/auth/repository/auth_repository.dart';
 import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
-import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
+import 'package:senagat_mobile/src/features/identity_verification/repository/profile_repository.dart';
 import '../../../core/states/stateful_data.dart';
-import '../../../utils/services/show_snack.dart';
-import '../../../core/networking/custom_exception.dart';
 import '../models/profile_model.dart';
 
 class IdentityVerificationController extends GetxController
     with StateControlMixin, GetSingleTickerProviderStateMixin {
+
   late final TextEditingController nameController;
   late final TextEditingController lastNameController;
   late final TextEditingController surNameController;
@@ -24,7 +23,9 @@ class IdentityVerificationController extends GetxController
   late final TextEditingController passportNumberController;
   late final TextEditingController asController;
 
-  final AuthRepository repository;
+  final profileBox = Hive.box<ProfileModel>('profileBox');
+
+  final ProfileRepository repository;
   final GlobalKey<FormState> key;
 
   bool continueEnabled = false;
@@ -48,154 +49,94 @@ class IdentityVerificationController extends GetxController
 
   late List<TextEditingController> controllers;
 
+  File? pdfFile;
+
+
   IdentityVerificationController(this.repository, this.key);
 
   @override
   void onInit() {
     super.onInit();
+    final savedProfile = profileBox.get('currentProfile');
+    final firstTwoLetters = savedProfile?.passportNumber?.substring(0, 2);
+
     controllers = [
-      nameController = TextEditingController(),
-      lastNameController = TextEditingController(),
-      surNameController = TextEditingController(),
-      dateOfBirthController = TextEditingController(),
-      passportNumberController = TextEditingController(),
-      dateIssueController = TextEditingController(),
-      placeIssueController = TextEditingController(),
-      asController = TextEditingController(),
+      nameController = TextEditingController(text: savedProfile?.firstName),
+      lastNameController = TextEditingController(text: savedProfile?.lastName),
+      surNameController = TextEditingController(text: savedProfile?.middleName),
+      dateOfBirthController = TextEditingController(text: savedProfile?.birthDate),
+      passportNumberController = TextEditingController(text: savedProfile?.passportNumber),
+      dateIssueController = TextEditingController(text: savedProfile?.issuedDate),
+      placeIssueController = TextEditingController(text: savedProfile?.issuedBy),
+      asController = TextEditingController(text: firstTwoLetters),
     ];
   }
 
   void onTextIsNotEmpty(String? v) {
-    if (nameController.text.isNotEmpty &&
-        lastNameController.text.isNotEmpty &&
-        surNameController.text.isNotEmpty &&
-        dateOfBirthController.text.isNotEmpty &&
-        passportNumberController.text.isNotEmpty &&
-        dateIssueController.text.isNotEmpty &&
-        asController.text.isNotEmpty &&
-        placeIssueController.text.isNotEmpty &&
-        pdfFile != null) {
-      continueEnabled = true;
-      update();
-    } else {
-      continueEnabled = false;
-      update();
-    }
+    continueEnabled =
+        controllers.every((c) => c.text.isNotEmpty) && pdfFile != null;
+    update();
   }
 
-  String? _encodeFileToBase64(File? file) {
-    if (file == null) return null;
-    final bytes = file.readAsBytesSync();
-    return base64Encode(bytes);
-  }
+  Future<ProfileModel> _getProfileModel() async {
+    final passportFile = await _parseImage();
 
-  ProfileModel _getProfileModel() {
     return ProfileModel(
       firstName: nameController.text,
       lastName: lastNameController.text,
       middleName: surNameController.text,
       birthDate: dateOfBirthController.text,
-      passportNumber: passportNumberController.text,
+      passportNumber: asController.text + passportNumberController.text,
       issuedDate: dateIssueController.text,
       issuedBy: placeIssueController.text,
       gender: 'male',
-      passportScan: File(AppAssets.pdf),
+      passportScan: passportFile,
     );
   }
 
-  // Future<void> startBankVerification() async {
-  //   // if (key.currentState?.validate() ?? false) {
-  //   //   key.currentState!.save();
-  //
-  //   final profileModel = _getProfileModel();
-  //   await repository
-  //       .createProfileWithFile(profileModel: profileModel)
-  //       .then((value) {
-  //         status = Status.completed;
-  //         print(value);
-  //         update();
-  //         Get.offAllNamed(DashboardScreen.route);
-  //       })
-  //       .catchError((e) {
-  //         status = Status.error;
-  //         update();
-  //
-  //         // Enhanced error logging
-  //         debugPrint('=== Profile Creation Error ===');
-  //         debugPrint('Error type: ${e.runtimeType}');
-  //         debugPrint('Error message: $e');
-  //
-  //         // Check if it's a CustomException and get detailed info
-  //         if (e is CustomException) {
-  //           debugPrint('CustomException name: ${e.name}');
-  //           debugPrint('CustomException message: ${e.message}');
-  //           debugPrint('CustomException exceptionType: ${e.exceptionType}');
-  //           debugPrint('CustomException statusCode: ${e.statusCode}');
-  //           debugPrint('CustomException code: ${e.code}');
-  //         } else {
-  //           debugPrint('Exception is not a CustomException: ${e.runtimeType}');
-  //         }
-  //
-  //         debugPrint('Profile model: ${profileModel.toString()}');
-  //         debugPrint('=== End Error Details ===');
-  //
-  //         // Show user-friendly error message
-  //         String errorMessage = r'error'.tr;
-  //         if (e is CustomException && e.message.contains('413')) {
-  //           errorMessage = 'File is too large. Please try with a smaller file.';
-  //         }
-  //         ShowSnack.showSnack(errorMessage, SnackType.error);
-  //       });
-  //   // }
-  // }
   Future<void> startBankVerification() async {
-    // if (key.currentState?.validate() ?? false) {
-    //   key.currentState!.save();
-    final profileModel = _getProfileModel();
-    await repository
-        .createProfile(data: await profileModel.toMap())
-        .then((value) {
-          status = Status.completed;
-          update();
-          Get.offAllNamed(DashboardScreen.route);
-        })
-        .catchError((e) {
+    try {
+      status = Status.loading;
+      update();
+
+      final model = await _getProfileModel();
+      final formData = dio.FormData.fromMap(await model.toMap());
+
+      await repository.createProfile(formData);
+
+      status = Status.completed;
+      update();
+      await profileBox.put('currentProfile', model);
+
+      Get.offAllNamed(DashboardScreen.route);
+    } catch (e) {
       status = Status.error;
       update();
 
-      if (e is CustomException) {
-        debugPrint('=== CustomException ===');
-        debugPrint('Name: ${e.name}');
-        debugPrint('Message: ${e.message}');
-        debugPrint('StatusCode: ${e.statusCode}');
-        debugPrint('Code: ${e.code}');
-        debugPrint('Type: ${e.exceptionType}');
-        debugPrint('=======================');
-
-        ShowSnack.showSnack(e.message.isNotEmpty ? e.message : 'Unknown error', SnackType.error);
-      } else {
-        debugPrint('Unhandled exception: $e');
-        ShowSnack.showSnack('Unexpected error occurred', SnackType.error);
-      }
-    });
-
-    // }
+    }
   }
-
-  File? pdfFile;
 
   Future<void> pickPdf() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
-      allowedExtensions: ['pdf'],
+      allowedExtensions: ['pdf', 'png', 'jpg', 'jpeg'],
     );
 
     if (result != null &&
         result.files.isNotEmpty &&
         result.files.single.path != null) {
       pdfFile = File(result.files.single.path!);
+      onTextIsNotEmpty(null);
       update();
     }
+  }
+
+  Future<dio.MultipartFile> _parseImage() async {
+    final fileName = pdfFile!.path.split('/').last;
+    return await dio.MultipartFile.fromFile(
+      pdfFile!.path,
+      filename: fileName,
+    );
   }
 
   @override

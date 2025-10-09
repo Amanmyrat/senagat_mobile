@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       HeaderWidget(),
 
-                      if(controller.isProfileRequired)...[
+                      if(controller.isProfileRequired == true)...[
                         profileIsRequiredWidget(controller),
                       ],
 
