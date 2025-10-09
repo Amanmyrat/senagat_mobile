@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/inquiries/models/inquiries_model.dart';
@@ -17,6 +18,7 @@ class InquiriesController extends GetxController with StateControlMixin {
 
   InquiriesRepository repository;
   final GlobalKey<FormState> key;
+  final box = Hive.box<InquiriesModel>('inquiries');
 
   int? selectedDropdownType;
   String? selectedDropdownBranch;
@@ -57,6 +59,8 @@ class InquiriesController extends GetxController with StateControlMixin {
     super.onInit();
     addressController = TextEditingController();
     phoneController = TextEditingController();
+    repository.getInquiriesTypes();
+
   }
 
   void onInformationNotEmpty(v) {
