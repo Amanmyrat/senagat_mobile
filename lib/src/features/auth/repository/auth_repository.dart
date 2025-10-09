@@ -60,4 +60,14 @@ class AuthRepository {
     );
   }
 
+  Future<bool> checkRegister({required JSON data}) async {
+    return _apiService.setData<bool>(
+      endpoint: ApiEndpoint.auth(AuthEndpoint.CHECK_REGISTER),
+      data: data,
+      converter: (response) {
+        return response.body['exists'];
+      },
+    );
+  }
+
 }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
@@ -51,21 +53,39 @@ class RegisterController extends GetxController with StateControlMixin {
       key.currentState!.save();
       update();
 
-      final requestModel = await _getRequestModel();
-      await repository.requestOTP(data: requestModel.toMap()).then((value) {
-        status = Status.completed;
-        update();
-        Get.toNamed(
-          RegisterConfirmationScreen.route,
-          arguments: {'phone': phoneController.text, 'login': login},
-        );
-      }).catchError((e) {
+      repository.checkRegister(data: <String, dynamic>{"phone": phoneController.text,}).then((value) async {
+        print(value == true ? 'TRUE' : 'FALSE');
+        if(value == false){
+          final requestModel = await _getRequestModel();
+          await repository.requestOTP(data: requestModel.toMap()).then((value) {
+            status = Status.completed;
+            update();
+            Get.toNamed(
+              RegisterConfirmationScreen.route,
+              arguments: {'phone': phoneController.text, 'login': login},
+            );
+          }).catchError((e) {
+            status = Status.error;
+            update();
+            ShowSnack.showSnack(r'error'.tr, SnackType.error);
+
+            debugPrint(e.toString());
+          });
+        }else{
+          status = Status.error;
+          update();
+          ShowSnack.showSnack('This number registered', SnackType.error);
+        }
+
+      }).catchError((e){
         status = Status.error;
         update();
         ShowSnack.showSnack(r'error'.tr, SnackType.error);
 
         debugPrint(e.toString());
       });
+
+
     }
   }
 
