@@ -119,7 +119,8 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                                                           ),
                                                           SizedBox(height: 6.h,),
                                                           Text(
-                                                            controller.sum ?? '100',
+
+                                                            controller.sum ?? '',
                                                             style: TextStyle(
                                                               fontSize: 40.sp,
                                                               color: AppColors.white,
@@ -147,111 +148,112 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                                                             ),
                                                           ),
                                                           SizedBox(height: 6.h,),
-                                                          Padding(
-                                                            padding: EdgeInsets.all(AppDimensions.paddingMedium.w),
-                                                            child: Row(
-                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                              children: [
-                                                                Text(
-                                                                  r'phone_number'.tr,
-                                                                  style: TextStyle(
-                                                                    fontSize: 14.sp,
-                                                                    color: AppColors.blackText,
-                                                                    fontFamily: AppFonts.secondaryFont,
-                                                                  ),
-                                                                ),
-                                                                Text(
-                                                                  controller.number ?? '',
-                                                                  style: TextStyle(
-                                                                    fontSize: 14.sp,
-                                                                    color: AppColors.blackText,
-                                                                    fontFamily: AppFonts.secondaryFont,
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                          Divider(color: AppColors.dividerColor, height: 1.h,),
-                                                          controller.isInquiries ?
-                                                          Column(
-                                                            children: [
-                                                              Padding(
-                                                                padding: EdgeInsets.all(AppDimensions.paddingMedium.w),
-                                                                child: Row(
-                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                  children: [
-                                                                    Text(
-                                                                      r'name'.tr,
-                                                                      style: TextStyle(
-                                                                        fontSize: 14.sp,
-                                                                        color: AppColors.blackText,
-                                                                        fontFamily: AppFonts.secondaryFont,
-                                                                      ),
-                                                                    ),
-                                                                    Text(
-                                                                      controller.userName ?? '',
-                                                                      style: TextStyle(
-                                                                        fontSize: 14.sp,
-                                                                        color: AppColors.blackText,
-                                                                        fontFamily: AppFonts.secondaryFont,
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                              Divider(color: AppColors.dividerColor, height: 1.h,),
-                                                            ],
-                                                          ): SizedBox(),
-
-                                                          Padding(
-                                                            padding: EdgeInsets.all(AppDimensions.paddingMedium.w),
-                                                            child: Row(
-                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                              children: [
-                                                                Text(
-                                                                  r'payment_via'.tr,
-                                                                  style: TextStyle(
-                                                                    fontSize: 14.sp,
-                                                                    color: AppColors.blackText,
-                                                                    fontFamily: AppFonts.secondaryFont,
-                                                                  ),
-                                                                ),
-                                                                Text(
-                                                                  r'xxxx0689'.tr,
-                                                                  style: TextStyle(
-                                                                    fontSize: 14.sp,
-                                                                    color: AppColors.blackText,
-                                                                    fontFamily: AppFonts.secondaryFont,
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                          Divider(color: AppColors.dividerColor, height: 1.h,),
-                                                          Padding(
-                                                            padding: EdgeInsets.all(AppDimensions.paddingMedium.w),
-                                                            child: Row(
-                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                              children: [
-                                                                Text(
-                                                                  r'category'.tr,
-                                                                  style: TextStyle(
-                                                                    fontSize: 14.sp,
-                                                                    color: AppColors.blackText,
-                                                                    fontFamily: AppFonts.secondaryFont,
-                                                                  ),
-                                                                ),
-                                                                Text(
-                                                                  r'services2'.tr,
-                                                                  style: TextStyle(
-                                                                    fontSize: 14.sp,
-                                                                    color: AppColors.blackText,
-                                                                    fontFamily: AppFonts.secondaryFont,
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
+                                                          // Padding(
+                                                          //   padding: EdgeInsets.all(AppDimensions.paddingMedium.w),
+                                                          //   child: Row(
+                                                          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          //     children: [
+                                                          //       Text(
+                                                          //         r'phone_number'.tr,
+                                                          //         style: TextStyle(
+                                                          //           fontSize: 14.sp,
+                                                          //           color: AppColors.blackText,
+                                                          //           fontFamily: AppFonts.secondaryFont,
+                                                          //         ),
+                                                          //       ),
+                                                          //       Text(
+                                                          //         controller.number ?? '',
+                                                          //         style: TextStyle(
+                                                          //           fontSize: 14.sp,
+                                                          //           color: AppColors.blackText,
+                                                          //           fontFamily: AppFonts.secondaryFont,
+                                                          //         ),
+                                                          //       ),
+                                                          //     ],
+                                                          //   ),
+                                                          // ),
+                                                          // Divider(color: AppColors.dividerColor, height: 1.h,),
+                                                          // controller.isInquiries ?
+                                                          // Column(
+                                                          //   children: [
+                                                          //     Padding(
+                                                          //       padding: EdgeInsets.all(AppDimensions.paddingMedium.w),
+                                                          //       child: Row(
+                                                          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          //         children: [
+                                                          //           Text(
+                                                          //             r'name'.tr,
+                                                          //             style: TextStyle(
+                                                          //               fontSize: 14.sp,
+                                                          //               color: AppColors.blackText,
+                                                          //               fontFamily: AppFonts.secondaryFont,
+                                                          //             ),
+                                                          //           ),
+                                                          //           Text(
+                                                          //             controller.userName ?? '',
+                                                          //             style: TextStyle(
+                                                          //               fontSize: 14.sp,
+                                                          //               color: AppColors.blackText,
+                                                          //               fontFamily: AppFonts.secondaryFont,
+                                                          //             ),
+                                                          //           ),
+                                                          //         ],
+                                                          //       ),
+                                                          //     ),
+                                                          //     Divider(color: AppColors.dividerColor, height: 1.h,),
+                                                          //   ],
+                                                          // ): SizedBox(),
+                                                          //
+                                                          // Padding(
+                                                          //   padding: EdgeInsets.all(AppDimensions.paddingMedium.w),
+                                                          //   child: Row(
+                                                          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          //     children: [
+                                                          //       Text(
+                                                          //         r'payment_via'.tr,
+                                                          //         style: TextStyle(
+                                                          //           fontSize: 14.sp,
+                                                          //           color: AppColors.blackText,
+                                                          //           fontFamily: AppFonts.secondaryFont,
+                                                          //         ),
+                                                          //       ),
+                                                          //       Text(
+                                                          //         r'xxxx0689'.tr,
+                                                          //         style: TextStyle(
+                                                          //           fontSize: 14.sp,
+                                                          //           color: AppColors.blackText,
+                                                          //           fontFamily: AppFonts.secondaryFont,
+                                                          //         ),
+                                                          //       ),
+                                                          //     ],
+                                                          //   ),
+                                                          // ),
+                                                          // Divider(color: AppColors.dividerColor, height: 1.h,),
+                                                          // Padding(
+                                                          //   padding: EdgeInsets.all(AppDimensions.paddingMedium.w),
+                                                          //   child: Row(
+                                                          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          //     children: [
+                                                          //       Text(
+                                                          //         r'category'.tr,
+                                                          //         style: TextStyle(
+                                                          //           fontSize: 14.sp,
+                                                          //           color: AppColors.blackText,
+                                                          //           fontFamily: AppFonts.secondaryFont,
+                                                          //         ),
+                                                          //       ),
+                                                          //       Text(
+                                                          //         r'services2'.tr,
+                                                          //         style: TextStyle(
+                                                          //           fontSize: 14.sp,
+                                                          //           color: AppColors.blackText,
+                                                          //           fontFamily: AppFonts.secondaryFont,
+                                                          //         ),
+                                                          //       ),
+                                                          //     ],
+                                                          //   ),
+                                                          // ),
+                                                          inquiriesInformation(controller),
                                                         ],
                                                       ),
                                                     ),
@@ -326,6 +328,187 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
           }
         ),
       ),
+    );
+  }
+  Widget inquiriesInformation(PaymentVerificationController controller){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.all(AppDimensions.paddingMedium.w),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                r'name'.tr,
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  color: AppColors.blackText,
+                  fontFamily: AppFonts.secondaryFont,
+                ),
+              ),
+              Text(
+                controller.firstName ?? '',
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  color: AppColors.blackText,
+                  fontFamily: AppFonts.secondaryFont,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Divider(color: AppColors.dividerColor, height: 1.h,),
+        Padding(
+          padding: EdgeInsets.all(AppDimensions.paddingMedium.w),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                r'lastName'.tr,
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  color: AppColors.blackText,
+                  fontFamily: AppFonts.secondaryFont,
+                ),
+              ),
+              Text(
+                controller.lastName ?? '',
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  color: AppColors.blackText,
+                  fontFamily: AppFonts.secondaryFont,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Divider(color: AppColors.dividerColor, height: 1.h,),
+        Padding(
+          padding: EdgeInsets.all(AppDimensions.paddingMedium.w),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                r'surname'.tr,
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  color: AppColors.blackText,
+                  fontFamily: AppFonts.secondaryFont,
+                ),
+              ),
+              Text(
+                controller.surname ?? '',
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  color: AppColors.blackText,
+                  fontFamily: AppFonts.secondaryFont,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Divider(color: AppColors.dividerColor, height: 1.h,),
+        Padding(
+          padding: EdgeInsets.all(AppDimensions.paddingMedium.w),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                r'date_birth'.tr,
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  color: AppColors.blackText,
+                  fontFamily: AppFonts.secondaryFont,
+                ),
+              ),
+              Text(
+                controller.birthDate ?? '',
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  color: AppColors.blackText,
+                  fontFamily: AppFonts.secondaryFont,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Divider(color: AppColors.dividerColor, height: 1.h,),
+        Padding(
+          padding: EdgeInsets.all(AppDimensions.paddingMedium.w),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                r'passport_number'.tr,
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  color: AppColors.blackText,
+                  fontFamily: AppFonts.secondaryFont,
+                ),
+              ),
+              Text(
+                controller.passportNumber ?? '',
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  color: AppColors.blackText,
+                  fontFamily: AppFonts.secondaryFont,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Divider(color: AppColors.dividerColor, height: 1.h,),
+        Padding(
+          padding: EdgeInsets.all(AppDimensions.paddingMedium.w),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                r'date_issue'.tr,
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  color: AppColors.blackText,
+                  fontFamily: AppFonts.secondaryFont,
+                ),
+              ),
+              Text(
+                controller.issuedDate ?? '',
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  color: AppColors.blackText,
+                  fontFamily: AppFonts.secondaryFont,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Divider(color: AppColors.dividerColor, height: 1.h,),
+        Padding(
+          padding: EdgeInsets.all(AppDimensions.paddingMedium.w),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                r'place_of_issue'.tr,
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  color: AppColors.blackText,
+                  fontFamily: AppFonts.secondaryFont,
+                ),
+              ),
+              Text(
+                controller.issuedBy ?? '',
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  color: AppColors.blackText,
+                  fontFamily: AppFonts.secondaryFont,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

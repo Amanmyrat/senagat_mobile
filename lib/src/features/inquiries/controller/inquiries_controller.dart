@@ -98,7 +98,6 @@ class InquiriesController extends GetxController with StateControlMixin {
     if (pageIndex == 1 && continueEnabled) {
       pageIndex = 2;
 
-      print(inquiriesId);
       continueEnabled = false;
       update();
     } else if (pageIndex == 2 && continueEnabled) {

@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
+import 'package:senagat_mobile/src/features/identity_verification/models/profile_model.dart';
 import 'package:senagat_mobile/src/features/pay/model/pay_model.dart';
 import '../../../core/states/stateful_data.dart';
 
@@ -16,19 +17,41 @@ class PaymentVerificationController extends GetxController with StateControlMixi
   late bool isInquiries;
   late bool isFoundation;
 
+  late String? firstName;
+  late String? lastName;
+  late String? surname;
+  late String? birthDate;
+  late String? passportNumber;
+  late String? issuedDate;
+  late String? issuedBy;
+
+
+  final profileBox = Hive.box<ProfileModel>('profileBox');
+
   @override
   void onInit() {
+    final savedProfile = profileBox.get('currentProfile');
+
+    firstName = savedProfile?.firstName;
+    lastName = savedProfile?.lastName;
+    surname = savedProfile?.middleName;
+    birthDate = savedProfile?.birthDate;
+    passportNumber = savedProfile?.passportNumber;
+    issuedDate = savedProfile?.issuedDate;
+    issuedBy = savedProfile?.issuedBy;
+
     try{
       serviceName = Get.arguments['serviceName'];
       serviceIcon = Get.arguments['serviceIcon'];
       isInquiries = Get.arguments['isInquiries'];
       isFoundation = Get.arguments['isFoundation'];
       number = Get.arguments['number'];
-      sum = Get.arguments['sum'];
+      sum = Get.arguments['sum']?.replaceAll('.', ',');
       userName = Get.arguments['userName'];
     }catch (e){
       print(e);
     }
+
     super.onInit();
   }
 

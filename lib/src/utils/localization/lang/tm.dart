@@ -48,7 +48,7 @@ const Map<String, String> tmTm = {
   r'balance': r'Balans',
   r'fund_balance': r'Gaznanyň balansy',
   r'fund_text': r'Çagalyk rak keselini bejermek bolýar. Biz Türkmenistanda her bir çaga zerur bejergini alyp bilsin diýip işleýäris.',
-  r'find_an_ATM': r'Bankomat tap',
+  r'find_an_ATM': r'Bankomat gözle',
   r'atm': r'Bankomatlar',
   r'branch': r'Şahamçalar',
   r'add_a_card': r'Kart goşmak',
@@ -190,6 +190,7 @@ const Map<String, String> tmTm = {
   r'monthly_payment2': r'Aýlyk töleg',
   r'name_lastName': r'Ady Familiýa',
   r'scan_sent': r'Skan iberildi',
+  r'get_inquiries': r'Güwänama almak',
 
 
 };

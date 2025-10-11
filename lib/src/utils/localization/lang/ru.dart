@@ -191,6 +191,7 @@ const Map<String, String> ruRu = {
   r'monthly_payment2': r'Плата в мес.',
   r'name_lastName': r'Имя Фамилия',
   r'scan_sent': r'Скан отправлен',
+  r'get_inquiries': r'Получение справки',
 
 
 };

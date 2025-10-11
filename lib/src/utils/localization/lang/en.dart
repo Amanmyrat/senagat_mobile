@@ -191,6 +191,7 @@ const Map<String, String> enUs = {
   r'monthly_payment2': r'Monthly pay.',
   r'name_lastName': r'Name Last Name',
   r'scan_sent': r'Scan sent',
+  r'get_inquiries': r'Get inquiries',
 
 
 };
