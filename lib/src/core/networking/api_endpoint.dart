@@ -54,6 +54,17 @@ class ApiEndpoint {
     }
   }
 
+  static Future<String> card(CardEndpoint endpoint, {int? id, String? date}) async {
+    const path = '';
+    switch (endpoint) {
+      case CardEndpoint.CARD_TYPES:
+        return '$path/card/types';
+
+      case CardEndpoint.CARD_ORDER:
+        return '$path/card/order';
+    }
+  }
+
 
 }
 
@@ -72,5 +83,11 @@ enum AuthEndpoint {
 enum InquiriesEndpoint {
   CERTIFICATE_TYPES,
   CERTIFICATE_ORDER,
+
+}
+
+enum CardEndpoint {
+  CARD_TYPES,
+  CARD_ORDER,
 
 }

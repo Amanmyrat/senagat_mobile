@@ -2,157 +2,99 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
+import 'package:senagat_mobile/src/features/get_card_details/models/card_order_model.dart';
 import 'package:senagat_mobile/src/features/payment_verification/presentation/payment_verification_screen.dart';
 
+import '../../../core/states/stateful_data.dart';
+import '../../../utils/services/show_snack.dart';
+import '../../get_card/repository/card_repository.dart';
 
 class GetCardDetailsController extends GetxController with StateControlMixin {
-
-  late final TextEditingController nameController;
-  late final TextEditingController lastNameController;
-  late final TextEditingController surNameController;
-  late final TextEditingController dateOfBirthController;
-  late final TextEditingController passportNumberController;
-  late final TextEditingController asController;
-  late final TextEditingController dateIssueController;
-  late final TextEditingController addressController;
+  late final TextEditingController homePhoneNumberController;
   late final TextEditingController phoneController;
 
-  String? selectedCard;
-  String? selectedDropdownType;
+  String? selectedCardTitle;
+  String? selectedCardImage;
+  String? sum;
+  int? selectedCardId;
   String? selectedDropdownBranch;
-  String? selectedDropdownIssuance;
   bool continueEnabled = false;
-  int pageIndex = 1;
+  CardRepository repository;
+
+  GetCardDetailsController(this.repository);
 
   final dateOfBirthFormatter = MaskTextInputFormatter(
     mask: '##-##-####',
-    filter: { "#": RegExp(r'[0-9]') },
+    filter: {"#": RegExp(r'[0-9]')},
   );
 
-  List<String> textFieldTitle = [
-    r'name'.tr,
-    r'last_name'.tr,
-    r'surname'.tr,
-    r'date_birth'.tr,
-    r'passport_number'.tr,
-    r'date_issue'.tr,
-  ];
-
-  final List<String> typeSelection = [
-    "Option 1",
-    "Option 2",
-    "Option 3",
-  ];
-
-
-  final List<String> branchSelection = [
-    "Option 1",
-    "Option 2",
-    "Option 3",
-  ];
-
-  final List<String> issuanceSelection = [
-    "Option 1",
-    "Option 2",
-    "Option 3",
-  ];
+  final List<String> branchSelection = ["Option 1", "Option 2", "Option 3"];
 
   late List<TextEditingController> controllers;
 
   @override
   void onInit() {
     super.onInit();
-    selectedCard = Get.arguments['selectedCard'];
-    controllers = [
-      nameController = TextEditingController(),
-      lastNameController = TextEditingController(),
-      surNameController = TextEditingController(),
-      dateOfBirthController = TextEditingController(),
-      passportNumberController = TextEditingController(),
-      dateIssueController = TextEditingController(),
-      asController = TextEditingController(),
-    ];
-    addressController = TextEditingController();
+    selectedCardTitle = Get.arguments['selectedCardTitle'];
+    selectedCardImage = Get.arguments['selectedCardImage'];
+    selectedCardId = Get.arguments['selectedCardId'];
+    sum = Get.arguments['sum'];
+    homePhoneNumberController = TextEditingController();
     phoneController = TextEditingController();
-
   }
 
-  void onTextIsNotEmpty(String? v){
-    if(nameController.text.isNotEmpty &&
-        lastNameController.text.isNotEmpty &&
-        surNameController.text.isNotEmpty &&
-        dateOfBirthController.text.isNotEmpty &&
-        passportNumberController.text.isNotEmpty &&
-        dateIssueController.text.isNotEmpty &&
-        asController.text.isNotEmpty &&
-        selectedDropdownIssuance != null){
+  void onInformationNotEmpty(String? v) {
+    if (homePhoneNumberController.text.isNotEmpty &&
+        phoneController.text.length >= 8 &&
+        selectedDropdownBranch != null) {
       continueEnabled = true;
       update();
-    }else{
+    } else {
       continueEnabled = false;
       update();
     }
   }
 
-  void onInformationNotEmpty(String? v){
-    if(addressController.text.isNotEmpty &&
-        phoneController.text.length >= 8){
-      continueEnabled = true;
+  Future<CardOrderModel> _getCardOrderModel() async {
+    return CardOrderModel(
+      typeId: selectedCardId,
+      phoneNumber: phoneController.text,
+      homePhoneNumber: homePhoneNumberController.text,
+      bankBranch: selectedDropdownBranch,
+    );
+  }
+
+  Future<void> onTap() async {
+    if (continueEnabled) {
+      status = Status.loading;
       update();
-    }else{
-      continueEnabled = false;
-      update();
+      final cardOrderModel = await _getCardOrderModel();
+      await repository
+          .createCardOrder(data: cardOrderModel.toMap())
+          .then((value) {
+            status = Status.completed;
+            update();
+
+            Get.toNamed(PaymentVerificationScreen.route, arguments: {
+              'serviceName': r'get_a_card',
+              'sum': sum,
+              'isInquiries': true,
+              'isFoundation': false,
+            });
+          })
+          .catchError((e) {
+            status = Status.error;
+            update();
+            ShowSnack.showSnack(r'error'.tr, SnackType.error);
+
+            debugPrint(e.toString());
+          });
     }
-  }
-
-  void setDropdownType(String? value) {
-    selectedDropdownType = value;
-    continueEnabled = true;
-    update();
-  }
-
-  void onTap(){
-    if(pageIndex == 1 && continueEnabled){
-      pageIndex = 2;
-      continueEnabled = false;
-      update();
-    }else if(pageIndex == 2 && continueEnabled){
-      Get.toNamed(PaymentVerificationScreen.route, arguments: {
-        'serviceName': 'inquiries',
-        'isInquiries': true
-      });
-      update();
-    }
-
-  }
-  void onBack(){
-    if(pageIndex == 1){
-      Get.back();
-      update();
-    }else if(pageIndex == 2) {
-      pageIndex = 1;
-      continueEnabled = true;
-      update();
-    }
-  }
-
-  void setDropdownIssuance(String? value) {
-    selectedDropdownIssuance = value;
-    onTextIsNotEmpty(value);
-    update();
   }
 
   void setDropdownBranch(String? value) {
     selectedDropdownBranch = value;
     onInformationNotEmpty(value);
     update();
-  }
-
-  @override
-  void onClose() {
-    for (var c in controllers) {
-      c.dispose();
-    }
-    super.onClose();
   }
 }

@@ -1,8 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:senagat_mobile/src/core/globals.dart';
+import 'package:senagat_mobile/src/features/get_card/repository/card_repository.dart';
 import 'package:senagat_mobile/src/features/get_card_details/controller/get_card_details_controller.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
 
@@ -27,7 +30,9 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
     return Scaffold(
       body: SafeArea(
           child: GetBuilder<GetCardDetailsController>(
-            init: GetCardDetailsController(),
+            init: GetCardDetailsController(
+              CardRepository(apiService: ApiServices.apiService)
+            ),
             builder: (controller) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,14 +56,21 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              controller.selectedCard?.tr ?? '',
+                              controller.selectedCardTitle?.tr ?? '',
                               style: TextStyle(
                                 fontSize: 24.sp,
                                 color: AppColors.blackText,
                               ),
                             ),
                             SizedBox(height: 16.h,),
-                            Image.asset(AppAssets.paymentCardImage),
+                            CachedNetworkImage(
+                              imageUrl:
+                              controller.selectedCardImage ??
+                                  AppAssets.cardImage,
+                              width: 390.w,
+                              height: 250.h,
+                              fit: BoxFit.cover,
+                            ),
                             SizedBox(height: AppDimensions.padding40.h,),
                             Text(
                               r'details_for_obtaining'.tr,
@@ -139,7 +151,7 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                               ),
 
                               decoration: InputDecoration(
-                                contentPadding: EdgeInsets.fromLTRB(AppDimensions.paddingMedium.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.h, ),
+                                contentPadding: EdgeInsets.fromLTRB(0, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.h, ),
                               ),
                               dropdownStyleData: DropdownStyleData(
                                 decoration: BoxDecoration(
@@ -172,7 +184,7 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                             TextFormField(
                               textInputAction: TextInputAction.next,
                               keyboardType: TextInputType.number,
-                              controller: controller.addressController,
+                              controller: controller.homePhoneNumberController,
                               onChanged:(v) => controller.onInformationNotEmpty(v),
                               style: TextStyle(
                                 fontSize: 14.sp,
@@ -224,13 +236,7 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                         child: ElevatedButtonWithState(
                           isLoading: controller.status == Status.loading,
                           isError: controller.status == Status.error,
-                          onPressed:() {
-                            Get.toNamed(PaymentVerificationScreen.route, arguments: {
-                              'serviceName': 'get_a_card',
-                              'isInquiries': true,
-                              'isFoundation': false,
-                            });
-                          },
+                          onPressed:() => controller.onTap(),
                           child: Text(r'next'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.white),),
                         ),
                       ),
