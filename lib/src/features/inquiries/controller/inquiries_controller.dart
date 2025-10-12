@@ -104,9 +104,9 @@ class InquiriesController extends GetxController with StateControlMixin {
 
         status = Status.loading;
         update();
-        final requestModel = await _getInquiriesOrderModel();
+        final inquiriesOrderModel = await _getInquiriesOrderModel();
         await repository
-            .createInquiresOrder(data: requestModel.toMap())
+            .createInquiresOrder(data: inquiriesOrderModel.toMap())
             .then((value) {
               status = Status.completed;
               update();
