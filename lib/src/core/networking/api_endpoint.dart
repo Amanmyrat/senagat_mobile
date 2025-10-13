@@ -43,7 +43,11 @@ class ApiEndpoint {
     }
   }
 
-  static Future<String> inquiries(InquiriesEndpoint endpoint, {int? id, String? date}) async {
+  static Future<String> inquiries(
+    InquiriesEndpoint endpoint, {
+    int? id,
+    String? date,
+  }) async {
     const path = '';
     switch (endpoint) {
       case InquiriesEndpoint.CERTIFICATE_TYPES:
@@ -54,7 +58,11 @@ class ApiEndpoint {
     }
   }
 
-  static Future<String> card(CardEndpoint endpoint, {int? id, String? date}) async {
+  static Future<String> card(
+    CardEndpoint endpoint, {
+    int? id,
+    String? date,
+  }) async {
     const path = '';
     switch (endpoint) {
       case CardEndpoint.CARD_TYPES:
@@ -65,7 +73,23 @@ class ApiEndpoint {
     }
   }
 
-
+  static Future<String> credit(
+    CreditEndpoint endpoint, {
+    int? id,
+    String? date,
+  }) async {
+    const path = '';
+    switch (endpoint) {
+      case CreditEndpoint.CREDIT_TYPES:
+        return '$path/credit';
+      case CreditEndpoint.CREDIT_DETAILS:
+        return '$path/application/credit-details';
+      case CreditEndpoint.WORK_INFO:
+        return '$path/application/work-info';
+      case CreditEndpoint.BRANCH_INFO:
+        return '$path/application/branch-info';
+    }
+  }
 }
 
 /// A collection of endpoints used for authentication purposes.
@@ -80,14 +104,8 @@ enum AuthEndpoint {
   PROFILE,
 }
 
-enum InquiriesEndpoint {
-  CERTIFICATE_TYPES,
-  CERTIFICATE_ORDER,
+enum InquiriesEndpoint { CERTIFICATE_TYPES, CERTIFICATE_ORDER }
 
-}
+enum CardEndpoint { CARD_TYPES, CARD_ORDER }
 
-enum CardEndpoint {
-  CARD_TYPES,
-  CARD_ORDER,
-
-}
+enum CreditEndpoint { CREDIT_TYPES, CREDIT_DETAILS, WORK_INFO, BRANCH_INFO }
