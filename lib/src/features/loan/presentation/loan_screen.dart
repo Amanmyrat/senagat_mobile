@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:senagat_mobile/src/core/globals.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
-import 'package:senagat_mobile/src/widgets/passport_details.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/constants/app_assets.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_fonts.dart';
 import '../../../widgets/check_widget.dart';
 import '../../../widgets/elevated_button_with_state.dart';
+import '../../credit/repository/credit_repository.dart';
 import '../../dashboard/presentation/dashboard_screen.dart';
 import '../controller/loan_controller.dart';
 
@@ -28,7 +29,9 @@ class _LoanScreenState extends State<LoanScreen> {
     return Scaffold(
       body: SafeArea(
         child: GetBuilder<LoanController>(
-            init: LoanController(),
+            init: LoanController(
+              CreditRepository(apiService: ApiServices.apiService),
+            ),
             builder: (controller) {
               return Column(
                 children: [
@@ -373,7 +376,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                                                     TextFormField(
                                                                       textInputAction: TextInputAction.next,
                                                                       keyboardType: TextInputType.name,
-                                                                      controller: controller.workAddress2Controller,
+                                                                      controller: controller.managerWorkAddressController,
                                                                       onChanged:(v) => controller.onInformationNotEmpty(v),
                                                                       style: TextStyle(
                                                                         fontSize: 14.sp,
@@ -570,7 +573,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                                 style: TextStyle(fontSize: 14.sp),
                                               ),
                                               decoration: InputDecoration(
-                                                contentPadding: EdgeInsets.fromLTRB(AppDimensions.paddingMedium.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.h, ),
+                                                contentPadding: EdgeInsets.fromLTRB(0, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.h, ),
                                               ),
                                               dropdownStyleData: DropdownStyleData(
                                                 decoration: BoxDecoration(
@@ -618,7 +621,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                                 fontSize: 14.sp,),
                                               ),
                                               decoration: InputDecoration(
-                                                contentPadding: EdgeInsets.fromLTRB(AppDimensions.paddingMedium.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.h, ),
+                                                contentPadding: EdgeInsets.fromLTRB(0, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.h, ),
                                               ),
                                               dropdownStyleData: DropdownStyleData(
                                                 decoration: BoxDecoration(
