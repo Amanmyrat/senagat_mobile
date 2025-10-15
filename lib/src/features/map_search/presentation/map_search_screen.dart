@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:senagat_mobile/src/core/globals.dart';
 
 import '../../../utils/constants/app_assets.dart';
 import '../../../utils/theme/constants/app_colors.dart';
@@ -11,6 +12,7 @@ import '../../../utils/theme/constants/app_dimensions.dart';
 import '../../../utils/theme/constants/app_fonts.dart';
 import '../controller/map_search_controller.dart';
 import '../model/location_model.dart';
+import '../repository/location_repository.dart';
 
 class MapSearchScreen extends StatefulWidget {
   static const route = r'/map/search';
@@ -26,7 +28,9 @@ class _MapSearchScreenState extends State<MapSearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: GetBuilder<MapSearchController>(
-        init: MapSearchController(),
+        init: MapSearchController(
+          LocationRepository(apiService: ApiServices.apiService),
+        ),
         builder: (c) {
           return GestureDetector(
             onTap: () {
@@ -41,7 +45,7 @@ class _MapSearchScreenState extends State<MapSearchScreen> {
                 child: FlutterMap(
                   mapController: c.mapController,
                   options: MapOptions(
-                    initialCenter: const LatLng(37.910114, 58.397884),
+                    initialCenter: LatLng(c.lat, c.lng),
                     initialZoom: 12.0,
                     onMapReady: () {
                       c.initializeMap();
@@ -83,7 +87,7 @@ class _MapSearchScreenState extends State<MapSearchScreen> {
                                 style: BorderStyle.solid,
                               ),
                           ),
-                          child: SvgPicture.asset(AppAssets.arrowLeftIcon, width: 25.w),
+                          child: SvgPicture.asset(AppAssets.arrowLeftIcon, width: 20.w, color: AppColors.grey,),
                         ),
                       ),
                       SizedBox(width: 8.w),
@@ -140,7 +144,7 @@ class _MapSearchScreenState extends State<MapSearchScreen> {
                             ),
                             counter: const SizedBox(),
                             contentPadding: EdgeInsets.symmetric(
-                              vertical: AppDimensions.paddingExtraLarge.h,
+                              vertical: 16.h,
                               horizontal: AppDimensions.paddingLarge.w,
                             ),
                           ),
@@ -238,7 +242,6 @@ class _MapSearchScreenState extends State<MapSearchScreen> {
           title,
           style: TextStyle(
             color: textColor,
-            fontWeight: FontWeight.w600,
             fontSize: 14.sp,
             fontFamily: AppFonts.primaryFont,
           ),

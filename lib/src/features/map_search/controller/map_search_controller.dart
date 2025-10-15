@@ -4,8 +4,11 @@ import 'package:get/get.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
+import 'package:senagat_mobile/src/features/map_search/repository/location_repository.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 
+import '../../../core/states/stateful_data.dart';
+import '../../../utils/services/show_snack.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../../widgets/elevated_button_with_state.dart';
 import '../model/location_model.dart';
@@ -26,55 +29,63 @@ class MapSearchController extends GetxController with StateControlMixin {
   String get searchText => searchController.text;
   bool get hasSearchText => searchController.text.isNotEmpty;
 
+  double lat = 37.910114; // fallback (Ashgabat)
+  double lng = 58.397884; // fallback
+
   // Flutter Map controller
   final MapController mapController = MapController();
+
+  LocationRepository repository;
+
+  MapSearchController(this.repository);
 
   @override
   void onInit() {
     super.onInit();
-    
+
     // Listen to search text changes
     searchController.addListener(() {
       update(); // Update UI when search text changes
     });
 
-    // seed (replace with REST later)
-    _locations.addAll([
-      LocationModel(
-        id: 1,
-        type: LocationType.atm,
-        name: "Bevis Bass",
-        address: "Tempor consequatur ",
-        lat: 37.910114,
-        lng: 58.397884,
-      ),
-      LocationModel(
-        id: 2,
-        type: LocationType.atm,
-        name: "Ai for disabled",
-        address: "Tempor consequatur ",
-        lat: 37.923704,
-        lng: 58.380968,
-      ),
-      LocationModel(
-        id: 3,
-        type: LocationType.branch,
-        name: "Mobile app dev",
-        address: "1111111111111111",
-        lat: 37.907508,
-        lng: 58.370909,
-      ),
-    ]);
+    getLocations();
+
+  }
+
+  void getLocations() async {
+    status = Status.loading;
+    update();
+    await repository
+        .getLocations()
+        .then((value) {
+      _locations.addAll(value);
+
+      status = Status.completed;
+
+      if (_locations.isNotEmpty) {
+        lat = _locations.first.lat;
+        lng = _locations.first.lng;
+        initializeMap();
+      }
+      update();
+    })
+        .catchError((e) {
+      status = Status.error;
+      update();
+      ShowSnack.showSnack(r'error'.tr, SnackType.error);
+
+      debugPrint(e.toString());
+    });
   }
 
   // Initialize map - called after map is ready
   void initializeMap() {
-    // Move to initial position
     mapController.move(
-      LatLng(37.910114, 58.397884),
-      12.0,
+      LatLng(lat, lng),
+      13.0,
     );
   }
+
 
   void choose(LocationType t) {
     if (selected == t) return;
@@ -137,11 +148,11 @@ class MapSearchController extends GetxController with StateControlMixin {
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Text(r'bank'.tr, style: TextStyle(color: AppColors.black, fontSize: 24.sp),),
+                                  Text(loc.type.name.tr, style: TextStyle(color: AppColors.black, fontSize: 24.sp),),
                                   SizedBox(height: 22.h,),
                                   Row(
                                     children: [
-                                      Text(r'Проспект Махтумкули 43. Ашхабад'.tr, style: TextStyle(color: AppColors.greyInactive, fontSize: 14.sp),),
+                                      Text(loc.address.tr, style: TextStyle(color: AppColors.greyInactive, fontSize: 14.sp),),
                                     ],
                                   ),
                                   SizedBox(height: 22.h,),
@@ -157,7 +168,7 @@ class MapSearchController extends GetxController with StateControlMixin {
                                     children: [
                                       Text(r'Телефон тех поддержки'.tr, style: TextStyle(color: AppColors.blackText, fontSize: 14.sp),),
                                       SizedBox(width: 10.h,),
-                                      Text('+993 12 345678'.tr, style: TextStyle(color: AppColors.blackText, fontSize: 14.sp),),
+                                      Text(loc.phoneNumber.tr, style: TextStyle(color: AppColors.blackText, fontSize: 14.sp),),
                                     ],
                                   ),
                                   SizedBox(height: 22.h,),

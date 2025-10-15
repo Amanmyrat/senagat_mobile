@@ -11,6 +11,7 @@ class LocationModel {
   final LocationType type;
   final String name;
   final String address;
+  final String phoneNumber;
   final double lat;
   final double lng;
 
@@ -19,6 +20,7 @@ class LocationModel {
     required this.type,
     required this.name,
     required this.address,
+    required this.phoneNumber,
     required this.lat,
     required this.lng,
   });
@@ -28,6 +30,7 @@ class LocationModel {
     type: _typeFromString(json['type'] as String),
     name: json['name'] as String,
     address: json['address'] as String,
+    phoneNumber: json['phone_number'] as String,
     lat: (json['location']['lat'] as num).toDouble(),
     lng: (json['location']['lng'] as num).toDouble(),
   );
@@ -37,6 +40,7 @@ class LocationModel {
     'type': _typeToString(type),
     'name': name,
     'address': address,
+    'phone_number': phoneNumber,
     'location': {'lat': lat, 'lng': lng},
   };
 }

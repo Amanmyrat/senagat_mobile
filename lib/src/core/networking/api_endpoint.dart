@@ -90,11 +90,21 @@ class ApiEndpoint {
         return '$path/application/branch-info';
     }
   }
+
+  static Future<String> location(
+      LocationEndpoint endpoint, {
+        int? id,
+        String? date,
+      }) async {
+    const path = '';
+    switch (endpoint) {
+      case LocationEndpoint.LOCATION:
+        return '$path/location';
+    }
+  }
 }
 
-/// A collection of endpoints used for authentication purposes.
 enum AuthEndpoint {
-  /// An endpoint for auth requests.
   PRE_LOGIN,
   REQUEST_OTP,
   LOGIN,
@@ -109,3 +119,5 @@ enum InquiriesEndpoint { CERTIFICATE_TYPES, CERTIFICATE_ORDER }
 enum CardEndpoint { CARD_TYPES, CARD_ORDER }
 
 enum CreditEndpoint { CREDIT_TYPES, CREDIT_DETAILS, WORK_INFO, BRANCH_INFO }
+
+enum LocationEndpoint{LOCATION}
