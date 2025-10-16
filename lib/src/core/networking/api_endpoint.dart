@@ -102,6 +102,19 @@ class ApiEndpoint {
         return '$path/location';
     }
   }
+
+  static Future<String> exchangeRate(
+      ExchangeRateEndpoint endpoint, {
+        int? id,
+        String? date,
+      }) async {
+    const path = '';
+    switch (endpoint) {
+      case ExchangeRateEndpoint.EXCHANGE_RALE:
+        return '$path/exchange-rate';
+    }
+  }
+
 }
 
 enum AuthEndpoint {
@@ -121,3 +134,5 @@ enum CardEndpoint { CARD_TYPES, CARD_ORDER }
 enum CreditEndpoint { CREDIT_TYPES, CREDIT_DETAILS, WORK_INFO, BRANCH_INFO }
 
 enum LocationEndpoint{LOCATION}
+
+enum ExchangeRateEndpoint{EXCHANGE_RALE}

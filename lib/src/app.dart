@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:overlay_support/overlay_support.dart';
+import 'package:senagat_mobile/src/core/globals.dart';
 import 'package:senagat_mobile/src/features/about_us/presentation/about_us_screen.dart';
 import 'package:senagat_mobile/src/features/add_card/presentation/add_card_screen.dart';
 import 'package:senagat_mobile/src/features/auth_success/presentation/auth_success_screen.dart';
@@ -16,6 +17,7 @@ import 'package:senagat_mobile/src/features/category/presentation/category_scree
 import 'package:senagat_mobile/src/features/foundation/presentation/foundation_screen.dart';
 import 'package:senagat_mobile/src/features/get_card_details/presentation/get_card_details_screen.dart';
 import 'package:senagat_mobile/src/features/home/controller/home_controller.dart';
+import 'package:senagat_mobile/src/features/home/repository/exchage_rate_repository.dart';
 import 'package:senagat_mobile/src/features/identify/presentation/identify_screen.dart';
 import 'package:senagat_mobile/src/features/identity_verification/presentation/identity_verification_screen.dart';
 import 'package:senagat_mobile/src/features/lang_settings/presentation/lang_settings_screen.dart';
@@ -245,7 +247,7 @@ class DashboardBinding extends Bindings {
     Get.put(AuthController(), permanent: true);
     Get.put(ServiceSettingsController());
     Get.put(AddCardController());
-    Get.put(HomeController());
+    Get.put(HomeController(ExchangeRateRepository(apiService: ApiServices.apiService)));
 
   }
 }

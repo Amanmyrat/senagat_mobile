@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
@@ -5,11 +6,15 @@ import 'package:senagat_mobile/src/features/add_card/controller/add_card_control
 import 'package:senagat_mobile/src/features/add_card/model/card_model.dart';
 import 'package:senagat_mobile/src/features/credit/presentation/get_credit_screen.dart';
 import 'package:senagat_mobile/src/features/get_card/presentation/get_card_screen.dart';
+import 'package:senagat_mobile/src/features/home/models/exchange_rate_model.dart';
+import 'package:senagat_mobile/src/features/home/repository/exchage_rate_repository.dart';
 import 'package:senagat_mobile/src/features/net_and_tv/presentation/net_and_tv_screen.dart';
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/payment_screen.dart';
 import 'package:senagat_mobile/src/features/register_confirmation/models/account_model.dart';
+import '../../../core/states/stateful_data.dart';
 import '../../../utils/constants/app_assets.dart';
+import '../../../utils/services/show_snack.dart';
 import '../../foundation/presentation/foundation_screen.dart';
 import '../../inquiries/presentation/inquiries_screen.dart';
 import '../../pay/model/pay_model.dart';
@@ -23,6 +28,8 @@ class HomeController extends GetxController with StateControlMixin {
   int? lastFastServiceTapIndex;
   int? lastServiceTapIndex;
   AccountModel accountModel = AccountModel();
+
+  ExchangeRateRepository repository;
 
   late ServiceSettingsController fastServiceController;
   late AddCardController addCardController;
@@ -39,6 +46,9 @@ class HomeController extends GetxController with StateControlMixin {
     AppAssets.enIcon,
     AppAssets.euIcon,
   ];
+  final _exchange = <ExchangeRateModel>[];
+  List<ExchangeRateModel> get exchange => _exchange;
+
 
   final List<String> currency = ['RUB', 'USD', 'EUR'];
 
@@ -61,6 +71,8 @@ class HomeController extends GetxController with StateControlMixin {
     GetCardScreen.route,
     GetCreditScreen.route,
   ];
+
+  HomeController(this.repository);
 
   void onQrScanTap() {
     lastTap = HomeTapType.qr;
@@ -118,7 +130,24 @@ class HomeController extends GetxController with StateControlMixin {
     checkProfile();
     fastServiceController = Get.find<ServiceSettingsController>();
     addCardController = Get.find<AddCardController>();
+    getExchangeRates();
     super.onInit();
+  }
+
+  void getExchangeRates() async{
+    status = Status.loading;
+    update();
+    await repository.getExchangeRateTypes().then((value){
+      status = Status.completed;
+      update();
+      _exchange.addAll(value);
+    }).catchError((e){
+      status = Status.error;
+      update();
+      ShowSnack.showSnack(r'error'.tr, SnackType.error);
+
+      debugPrint(e.toString());
+    });
   }
 
   checkProfile(){

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:senagat_mobile/src/core/globals.dart';
 import 'package:senagat_mobile/src/features/add_card/presentation/add_card_screen.dart';
 import 'package:senagat_mobile/src/features/card_expenses/presentation/card_expenses_screen.dart';
 import 'package:senagat_mobile/src/features/map_search/presentation/map_search_screen.dart';
@@ -12,6 +13,7 @@ import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
 import '../../../widgets/header_widget.dart';
 import '../controller/home_controller.dart';
+import '../repository/exchage_rate_repository.dart';
 
 class HomeScreen extends StatefulWidget {
   static const route = '/home';
@@ -29,7 +31,9 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SingleChildScrollView(
         child: SafeArea(
           child: GetBuilder<HomeController>(
-            init: HomeController(),
+            init: HomeController(
+              ExchangeRateRepository(apiService: ApiServices.apiService)
+            ),
             builder: (controller) => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -446,7 +450,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ListView.builder(
                               physics: NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
-                              itemCount: 3,
+                              itemCount: controller.exchange.length,
                               itemBuilder: (context, index) {
                                 return Padding(
                                   padding: EdgeInsets.only(
@@ -458,10 +462,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     children: [
                                       Row(
                                         children: [
-                                          Image.asset(controller.flags[index]),
+                                          Image.network(controller.exchange[index].flag ?? '', width: 28.w, height: 20.h,),
                                           SizedBox(width: 4.w),
                                           Text(
-                                            controller.currency[index],
+                                            controller.exchange[index].currency ?? '',
                                             style: TextStyle(
                                               color: AppColors.blackText,
                                               fontSize: 14.sp,
@@ -477,7 +481,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             width: AppDimensions.padding60.w,
                                             child: Text(
                                               textAlign: TextAlign.end,
-                                              '1213',
+                                              controller.exchange[index].purchase ?? '',
                                               style: TextStyle(
                                                 color: AppColors.blackText,
                                                 fontSize: 14.sp,
@@ -493,7 +497,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             width: AppDimensions.padding60.w,
                                             child: Text(
                                               textAlign: TextAlign.end,
-                                              '124',
+                                              controller.exchange[index].sale ?? '',
                                               style: TextStyle(
                                                 color: AppColors.blackText,
                                                 fontSize: 14.sp,

@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:senagat_mobile/src/core/globals.dart';
+import 'package:senagat_mobile/src/features/home/repository/exchage_rate_repository.dart';
 import '../features/home/controller/home_controller.dart';
 import '../features/map_search/presentation/map_search_screen.dart';
 import '../utils/constants/app_assets.dart';
@@ -22,7 +24,9 @@ class _HeaderWidgetState extends State<HeaderWidget> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
-      init: HomeController(),
+      init: HomeController(
+        ExchangeRateRepository(apiService: ApiServices.apiService)
+      ),
       builder: (controller) {
         return Padding(
           padding: EdgeInsets.only(bottom: 22.h),
