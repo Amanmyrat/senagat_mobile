@@ -2,14 +2,16 @@ class CreditTypeModel {
   final int? id;
   final String? name;
   final int? term;
-  final String? amount;
-  final String? interest;
+  final int? minAmount;
+  final int? maxAmount;
+  final int? interest;
 
   CreditTypeModel({
     this.id,
     this.name,
     this.term,
-    this.amount,
+    this.minAmount,
+    this.maxAmount,
     this.interest,
   });
 
@@ -18,7 +20,8 @@ class CreditTypeModel {
       id: json['id'],
       name: json['name'],
       term: json['term'],
-      amount: json['amount'],
+      minAmount: json['min_amount'],
+      maxAmount: json['max_amount'],
       interest: json['interest'],
     );
   }

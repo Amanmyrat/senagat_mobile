@@ -1,7 +1,7 @@
 class InquiriesModel {
   final int? id;
   final String? title;
-  final String? price;
+  final int? price;
 
   InquiriesModel({
     this.id,

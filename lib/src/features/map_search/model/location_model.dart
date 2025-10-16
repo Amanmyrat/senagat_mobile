@@ -14,6 +14,7 @@ class LocationModel {
   final String phoneNumber;
   final double lat;
   final double lng;
+  final List<WorkingHoursModel>? workingHours;
 
   LocationModel({
     required this.id,
@@ -23,6 +24,7 @@ class LocationModel {
     required this.phoneNumber,
     required this.lat,
     required this.lng,
+    required this.workingHours,
   });
 
   factory LocationModel.fromJson(Map<String, dynamic> json) => LocationModel(
@@ -33,6 +35,9 @@ class LocationModel {
     phoneNumber: json['phone_number'] as String,
     lat: (json['location']['lat'] as num).toDouble(),
     lng: (json['location']['lng'] as num).toDouble(),
+    workingHours: (json['working_hours'] as List<dynamic>?)
+        ?.map((item) => WorkingHoursModel.fromJson(item))
+        .toList(),
   );
 
   Map<String, dynamic> toJson() => {
@@ -43,4 +48,20 @@ class LocationModel {
     'phone_number': phoneNumber,
     'location': {'lat': lat, 'lng': lng},
   };
+}
+
+class WorkingHoursModel {
+  final String? day;
+  final String? from;
+  final String? to;
+
+  WorkingHoursModel({this.day, this.from, this.to});
+
+  factory WorkingHoursModel.fromJson(Map<String, dynamic> json) {
+    return WorkingHoursModel(
+        day: json['day'],
+        from: json['from'],
+        to: json['to'],
+    );
+  }
 }

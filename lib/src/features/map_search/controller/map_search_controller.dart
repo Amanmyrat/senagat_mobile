@@ -6,6 +6,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/map_search/repository/location_repository.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
+import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
 
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/services/show_snack.dart';
@@ -29,8 +30,8 @@ class MapSearchController extends GetxController with StateControlMixin {
   String get searchText => searchController.text;
   bool get hasSearchText => searchController.text.isNotEmpty;
 
-  double lat = 37.910114; // fallback (Ashgabat)
-  double lng = 58.397884; // fallback
+  late double lat;
+  late double lng;
 
   // Flutter Map controller
   final MapController mapController = MapController();
@@ -131,64 +132,121 @@ class MapSearchController extends GetxController with StateControlMixin {
         width: 40,
         height: 40,
         child: GestureDetector(
-          onTap: (){
+          onTap: () {
             showModalBottomSheet(
-                isScrollControlled: true,
-                context: Get.context!,
-                backgroundColor: AppColors.inputFillBackground,
-                builder: (_){
-                  return Padding(
-                          padding: EdgeInsets.only(
-                            bottom: MediaQuery.of(Get.context!).viewInsets.bottom,
+              isScrollControlled: true,
+              context: Get.context!,
+              backgroundColor: AppColors.inputFillBackground,
+              builder: (_) {
+                return Padding(
+                  padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(Get.context!).viewInsets.bottom,
+                  ),
+                  child: SizedBox(
+                    width: MediaQuery.of(Get.context!).size.width,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            loc.type.name.tr,
+                            style: TextStyle(
+                              color: AppColors.black,
+                              fontSize: 24.sp,
+                            ),
                           ),
-                          child: SizedBox(
-                            width: MediaQuery.of(Get.context!).size.width,
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(loc.type.name.tr, style: TextStyle(color: AppColors.black, fontSize: 24.sp),),
-                                  SizedBox(height: 22.h,),
-                                  Row(
-                                    children: [
-                                      Text(loc.address.tr, style: TextStyle(color: AppColors.greyInactive, fontSize: 14.sp),),
-                                    ],
-                                  ),
-                                  SizedBox(height: 22.h,),
-                                  Row(
-                                    children: [
-                                      Text(r'Открыто'.tr, style: TextStyle(color: AppColors.green, fontSize: 14.sp),),
-                                      SizedBox(width: 10.h,),
-                                      Text(r'Закроется в 18:00'.tr, style: TextStyle(color: AppColors.greyInactive, fontSize: 14.sp),),
-                                    ],
-                                  ),
-                                  SizedBox(height: 22.h,),
-                                  Row(
-                                    children: [
-                                      Text(r'Телефон тех поддержки'.tr, style: TextStyle(color: AppColors.blackText, fontSize: 14.sp),),
-                                      SizedBox(width: 10.h,),
-                                      Text(loc.phoneNumber.tr, style: TextStyle(color: AppColors.blackText, fontSize: 14.sp),),
-                                    ],
-                                  ),
-                                  SizedBox(height: 22.h,),
-                                  SizedBox(
-                                      width: MediaQuery.of(Get.context!).size.width,
-                                      child: ElevatedButtonWithState(
-                                        isLoading: false,
-                                        isError: false,
-                                        onPressed: (){
+                          SizedBox(height: 22.h),
 
-                                        },
-                                        child: Text(r'Позвонить'.tr, style: TextStyle(color: AppColors.white, fontSize: 14.sp),),
-                                      ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  loc.address.tr,
+                                  style: TextStyle(
+                                    color: AppColors.black,
+                                    fontSize: 14.sp,
+                                    fontFamily: AppFonts.secondaryFont
                                   ),
-                                ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 22.h),
+
+                          if (loc.workingHours != null && loc.workingHours!.isNotEmpty)
+                            ...loc.workingHours!.map((item) {
+                              return Padding(
+                                padding: EdgeInsets.only(bottom: 10.h),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      item.day ?? '',
+                                      style: TextStyle(
+                                        color: AppColors.black,
+                                        fontSize: 14.sp,
+                                      ),
+                                    ),
+                                    SizedBox(width: 10.w),
+                                    Text(
+                                      '${item.from} - ${item.to}',
+                                      style: TextStyle(
+                                        color: AppColors.greyInactive,
+                                        fontSize: 14.sp,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }),
+
+                          SizedBox(height: 10.h),
+
+                          Row(
+                            children: [
+                              Text(
+                                r'technical_support_num'.tr,
+                                style: TextStyle(
+                                  color: AppColors.blackText,
+                                  fontSize: 14.sp,
+                                ),
+                              ),
+                              SizedBox(width: 10.w),
+                              Text(
+                                loc.phoneNumber.tr,
+                                style: TextStyle(
+                                  color: AppColors.blackText,
+                                  fontSize: 14.sp,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 22.h),
+
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButtonWithState(
+                              isLoading: false,
+                              isError: false,
+                              onPressed: () {
+                                // handle call logic here
+                              },
+                              child: Text(
+                                r'Позвонить'.tr,
+                                style: TextStyle(
+                                  color: AppColors.white,
+                                  fontSize: 14.sp,
+                                ),
                               ),
                             ),
                           ),
-                        );
-                });
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            );
           },
           child: Image.asset(
             iconPath,

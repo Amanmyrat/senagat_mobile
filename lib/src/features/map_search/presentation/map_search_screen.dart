@@ -6,6 +6,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:senagat_mobile/src/core/globals.dart';
 
+import '../../../core/states/stateful_data.dart';
 import '../../../utils/constants/app_assets.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
@@ -32,7 +33,11 @@ class _MapSearchScreenState extends State<MapSearchScreen> {
           LocationRepository(apiService: ApiServices.apiService),
         ),
         builder: (c) {
-          return GestureDetector(
+          return c.status == Status.loading
+              ? Center(
+            child: CircularProgressIndicator(color: AppColors.green),
+          )
+              : GestureDetector(
             onTap: () {
               // Remove focus when tapping outside
               c.unfocusSearch();

@@ -177,14 +177,14 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                             value.replaceAll(',', ''),
                                           );
                                           if (parsed != null &&
-                                              parsed >= controller.interest &&
-                                              parsed <= controller.amount) {
+                                              parsed >= controller.minAmount &&
+                                              parsed <= controller.maxAmount) {
                                             controller.updateText(parsed);
                                           }
                                         },
                                         decoration: InputDecoration(
-                                          suffixText: controller.creditAmount,
-                                          prefixText: '1,000',
+                                          suffixText: controller.maxAmountStr,
+                                          prefixText: controller.minAmountStr,
                                           suffixStyle: TextStyle(
                                             color: AppColors.greyInactive,
                                             fontSize: 14.sp,
@@ -207,8 +207,8 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                       ),
                                       FlutterSlider(
                                         values: [controller.currentValue],
-                                        min: 1000,
-                                        max: controller.amount,
+                                        min: controller.minAmount,
+                                        max: controller.maxAmount,
                                         step: FlutterSliderStep(step: 100),
                                         tooltip: FlutterSliderTooltip(
                                           disabled: true,

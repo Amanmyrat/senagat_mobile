@@ -59,7 +59,7 @@ class GetCardController extends GetxController
   void onTap() {
     Get.toNamed(
       GetCardDetailsScreen.route,
-      arguments: {'selectedCardTitle': currentTabText, 'selectedCardImage': cards[selectedTabIndex].image, 'selectedCardId': selectedTabIndex + 1, 'sum': cards[selectedTabIndex].price},
+      arguments: {'selectedCardTitle': currentTabText, 'selectedCardImage': cards[selectedTabIndex].image, 'selectedCardId': selectedTabIndex + 1, 'sum': cards[selectedTabIndex].price.toString()},
     );
   }
 

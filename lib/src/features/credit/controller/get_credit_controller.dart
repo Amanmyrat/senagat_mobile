@@ -22,11 +22,12 @@ class GetCreditController extends GetxController with StateControlMixin, GetSing
   late TabController tabBarController;
   final _credits = <CreditTypeModel>[];
 
-  late String creditAmount;
-  late String creditInterest;
+  late String minAmountStr;
+  late String maxAmountStr;
 
-  late double amount;
-  late double interest;
+  late double minAmount;
+  late double maxAmount;
+  late int interest;
 
   late int creditId;
   late int term;
@@ -162,13 +163,13 @@ class GetCreditController extends GetxController with StateControlMixin, GetSing
 
       creditId = selectedCredit.id ?? -1;
 
-      creditInterest = selectedCredit.interest?.replaceAll('.', ',') ?? '';
+      interest = selectedCredit.interest!;
 
-      amount = double.tryParse(selectedCredit.amount?.replaceAll(',', '.') ?? '0') ?? 0.0;
-      interest = double.parse(creditInterest.replaceAll(',', '.'));
+      minAmount = selectedCredit.minAmount!.toDouble();
+      maxAmount = selectedCredit.maxAmount!.toDouble();
 
-      creditAmount = formatMoney(amount);
-
+      minAmountStr = formatMoney(selectedCredit.minAmount ?? 0);
+      maxAmountStr = formatMoney(selectedCredit.maxAmount ?? 0);
 
       formatBid(interest);
 
@@ -198,7 +199,7 @@ class GetCreditController extends GetxController with StateControlMixin, GetSing
   }
 
 
-  void formatBid(double value) {
+  void formatBid(int value) {
     String formatted;
 
     if (value % 1 == 0) {
@@ -212,10 +213,11 @@ class GetCreditController extends GetxController with StateControlMixin, GetSing
     bidController.text = formatted;
   }
 
-  String formatMoney(double value) {
+  String formatMoney(int value) {
     final formatter = NumberFormat("#,##0", "en_US");
     return formatter.format(value);
   }
+
   @override
   void dispose() {
     tabBarController.dispose();

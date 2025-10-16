@@ -19,7 +19,7 @@ class InquiriesController extends GetxController with StateControlMixin {
   final _inquiries = <InquiriesModel>[];
 
   late int inquiriesId;
-  late String inquiriesPrice;
+  late int inquiriesPrice;
   List<InquiriesModel> get inquiries => _inquiries;
 
 
@@ -114,7 +114,7 @@ class InquiriesController extends GetxController with StateControlMixin {
 
               Get.toNamed(
                 PaymentVerificationScreen.route,
-                arguments: {'isInquiries': true, 'isFoundation': false, 'serviceName': r'get_inquiries', 'sum': inquiriesPrice},
+                arguments: {'isInquiries': true, 'isFoundation': false, 'serviceName': r'get_inquiries', 'sum': inquiriesPrice.toString()},
               );
             })
             .catchError((e) {

@@ -192,6 +192,8 @@ const Map<String, String> enUs = {
   r'name_lastName': r'Name Last Name',
   r'scan_sent': r'Scan sent',
   r'get_inquiries': r'Get inquiries',
+  r'technical_support_num': r'Technical support phone number',
+  r'call': r'Call',
 
 
 };

@@ -1,7 +1,7 @@
 class CardTypeModel {
   final int? id;
   final String? title;
-  final String? price;
+  final int? price;
   final String? image;
   final List<AdvantageModel>? advantages;
 
