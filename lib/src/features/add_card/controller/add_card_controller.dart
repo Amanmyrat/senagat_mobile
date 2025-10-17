@@ -27,6 +27,13 @@ class AddCardController extends GetxController with StateControlMixin {
       AppAssets.cardImage4,
   ];
 
+  List<String> cardDesigns2 = [
+    AppAssets.salaryCard,
+    AppAssets.salaryCard,
+    AppAssets.goyumCard,
+    AppAssets.familyCard,
+  ];
+
   late final cardNumberFormatter = MaskTextInputFormatter(
     mask: '#### #### #### ####',
     filter: {"#": RegExp(r'\d')},

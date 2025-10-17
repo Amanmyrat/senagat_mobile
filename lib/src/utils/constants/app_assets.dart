@@ -75,6 +75,9 @@ class AppAssets {
   static const enIcon = 'assets/icons/US.png';
   static const tmIcon = 'assets/icons/TM.png';
   static const euIcon = 'assets/icons/EU.png';
+  static const goyumCard = 'assets/images/goyumCard.jpg';
+  static const salaryCard = 'assets/images/salaryCard.jpg';
+  static const familyCard = 'assets/images/familyCard.jpg';
 
   static const mapPinBlackIcon = 'assets/icons/pin_black.png';
   static const mapPinGreenIcon = 'assets/icons/pin_green.png';
