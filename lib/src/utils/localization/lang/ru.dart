@@ -194,6 +194,8 @@ const Map<String, String> ruRu = {
   r'get_inquiries': r'Получение справки',
   r'technical_support_num': r'Tehniki goldawyň telefon belgisi',
   r'call': r'Позвонить',
+  r'select_all': r'Выбрать все',
+
 
 
 };

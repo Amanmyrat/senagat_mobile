@@ -1,18 +1,18 @@
 class CreditBranchInfoModel {
 
   final String? country;
-  final String? bankName;
+  final int? bankId;
 
 
   CreditBranchInfoModel({
     this.country,
-    this.bankName,
+    this.bankId,
   });
 
   factory CreditBranchInfoModel.fromJson(Map<String, dynamic> json) {
     return CreditBranchInfoModel(
       country: json['country'],
-      bankName: json['bank_name'],
+      bankId: json['bank_branch_id'],
 
     );
   }
@@ -20,7 +20,7 @@ class CreditBranchInfoModel {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'country': country,
-      'bank_name': bankName,
+      'bank_branch_id': bankId,
     };
   }
 

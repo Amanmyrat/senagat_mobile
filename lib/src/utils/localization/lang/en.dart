@@ -194,6 +194,8 @@ const Map<String, String> enUs = {
   r'get_inquiries': r'Get inquiries',
   r'technical_support_num': r'Technical support phone number',
   r'call': r'Call',
+  r'select_all': r'Select All',
+
 
 
 };

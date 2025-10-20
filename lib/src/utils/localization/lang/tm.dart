@@ -194,6 +194,8 @@ const Map<String, String> tmTm = {
   r'home_phone_number': r'Öý telefony',
   r'technical_support_num': r'Öý telefony',
   r'call': r'Jaň etmek',
+  r'select_all': r'Hemmesini saýla',
+
 
 
 };

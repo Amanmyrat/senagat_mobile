@@ -4,7 +4,7 @@ class CardOrderModel {
   final int? profileId;
   final int? typeId;
   final String? phoneNumber;
-  final String? bankBranch;
+  final int? bankBranch;
   final String? homePhoneNumber;
 
   CardOrderModel({
@@ -24,7 +24,7 @@ class CardOrderModel {
       profileId: json['profile_id'],
       typeId: json['card_type_id'],
       phoneNumber: json['phone_number'],
-      bankBranch: json['bank_branch'],
+      bankBranch: json['bank_branch_id'],
       homePhoneNumber: json['home_phone_number'],
     );
   }
@@ -33,7 +33,7 @@ class CardOrderModel {
     return <String, dynamic>{
       "card_type_id": typeId,
       "phone_number": phoneNumber,
-      "bank_branch": bankBranch,
+      "bank_branch_id": bankBranch,
       "home_phone_number": homePhoneNumber,
     };
   }

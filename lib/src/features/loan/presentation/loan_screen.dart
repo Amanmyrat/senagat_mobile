@@ -615,40 +615,32 @@ class _LoanScreenState extends State<LoanScreen> {
                                                 ),
                                               ),
                                             ),
-                                            child: DropdownButtonFormField2<String>(
+                                            child: DropdownButtonFormField2<int>(
                                               value: controller.selectedDropdownBank,
-                                              hint: Text(r"select_bank".tr, style: TextStyle(
-                                                fontSize: 14.sp,),
+                                              hint: Text(
+                                                "select_bank".tr,
+                                                style: TextStyle(fontSize: 14.sp),
                                               ),
                                               decoration: InputDecoration(
-                                                contentPadding: EdgeInsets.fromLTRB(0, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.h, ),
-                                              ),
-                                              dropdownStyleData: DropdownStyleData(
-                                                decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(10),
-
+                                                contentPadding: EdgeInsets.fromLTRB(
+                                                  0,
+                                                  AppDimensions.paddingExtraLarge.w,
+                                                  AppDimensions.paddingExtraLarge.w,
+                                                  AppDimensions.paddingExtraLarge.h,
                                                 ),
-                                                elevation: 2,
-
-                                              ),
-                                              iconStyleData: IconStyleData(
-                                                icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18,),
                                               ),
 
                                               onChanged: (v) => controller.setDropdownBank(v),
-                                              items: controller.bankSelection
-                                                  .map(
-                                                    (item) => DropdownMenuItem<String>(
-                                                  value: item,
-                                                  child: Text(item, style: TextStyle(
-                                                    fontSize: 14.sp,
-                                                  ),),
-                                                ),
-                                              ).toList(),
 
+                                              items: controller.bankSelection.entries.map((entry) {
+                                                return DropdownMenuItem<int>(
+                                                  value: entry.value,           // int
+                                                  child: Text(entry.key,        // String for UI
+                                                      style: TextStyle(fontSize: 14.sp)),
+                                                );
+                                              }).toList(),
                                             ),
-                                          ),
-                    
+                                          )
                                         ],
                                       ),
                                     ),

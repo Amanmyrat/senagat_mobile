@@ -14,10 +14,10 @@ import '../../../utils/constants/app_assets.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
 import '../../../widgets/elevated_button_with_state.dart';
-import '../../payment_verification/presentation/payment_verification_screen.dart';
 
 class GetCardDetailsScreen extends StatefulWidget {
   static const route = '/get/card/details';
+
   const GetCardDetailsScreen({super.key});
 
   @override
@@ -29,225 +29,262 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child: GetBuilder<GetCardDetailsController>(
-            init: GetCardDetailsController(
-              CardRepository(apiService: ApiServices.apiService)
-            ),
-            builder: (controller) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                     CustomAppBar(),
-                      Padding(
-                        padding: EdgeInsets.only(right: AppDimensions.paddingExtraLarge, top: 22.h),
-                        child: Align(alignment: Alignment.bottomRight,child:
-                        Text('step_of_5'.trParams({'page': '2'}), style: TextStyle(fontSize: 14.sp), )),
+        child: GetBuilder<GetCardDetailsController>(
+          init: GetCardDetailsController(
+            CardRepository(apiService: ApiServices.apiService),
+          ),
+          builder: (controller) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CustomAppBar(),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        right: AppDimensions.paddingExtraLarge,
+                        top: 22.h,
                       ),
-                    ],
-                  ),
-                    Expanded(
-                    child: SingleChildScrollView(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: AppDimensions.paddingExtraLarge.w),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              controller.selectedCardTitle?.tr ?? '',
-                              style: TextStyle(
-                                fontSize: 24.sp,
-                                color: AppColors.blackText,
-                              ),
-                            ),
-                            SizedBox(height: 16.h,),
-                            CachedNetworkImage(
-                              imageUrl:
-                              controller.selectedCardImage ??
-                                  AppAssets.cardImage,
-                              width: 390.w,
-                              height: 250.h,
-                              fit: BoxFit.cover,
-                            ),
-                            SizedBox(height: AppDimensions.padding40.h,),
-                            Text(
-                              r'details_for_obtaining'.tr,
-                              style: TextStyle(
-                                fontSize: 24.sp,
-                                color: AppColors.blackText,
-                              ),
-                            ),
-                            SizedBox(height: 32.h,),
-                            Text(r'phone_number'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
-                            SizedBox(height: AppDimensions.paddingMedium.h,),
-                            Row(
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.all(
-                                    AppDimensions.paddingExtraLarge.w,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: AppColors.inputFillBackground,
-                                    borderRadius: BorderRadius.circular(
-                                      AppDimensions.borderRadiusMedium,
-                                    ),
-                                  ),
-                                  child: Text(
-                                    '+993',
-                                    style: TextStyle(fontSize: 14.sp),
-                                  ),
-                                ),
-                                SizedBox(width: AppDimensions.paddingSmall.w),
-                                Expanded(
-                                  child: TextFormField(
-                                    keyboardType: TextInputType.phone,
-                                    controller: controller.phoneController,
-                                    onChanged:(v) => controller.onInformationNotEmpty(v),
-                                    maxLength: 8,
-                                    style: TextStyle(
-                                      fontSize: 14.sp,
-                                    ),
-                                    decoration: InputDecoration(
-                                      hintText: r'enter_number'.tr,
-                                      border: OutlineInputBorder(),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                          AppDimensions.borderRadiusMedium,
-                                        ),
-                                        borderSide: BorderSide(
-                                          color: AppColors.green,
-                                          width: 1.w,
-                                        ),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                          AppDimensions.borderRadiusMedium,
-                                        ),
-                                        borderSide: BorderSide(
-                                          color: AppColors.white,
-                                          width: 1.w,
-                                        ),
-                                      ),
-                                      counter: const SizedBox(),
-                                      contentPadding: EdgeInsets.symmetric(
-                                        vertical: AppDimensions.paddingExtraLarge.h,
-                                        horizontal: AppDimensions.paddingLarge.w,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 22.h,),
-                            Text(r'bank_branch'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
-                            SizedBox(height: AppDimensions.paddingMedium,),
-
-                            DropdownButtonFormField2<String>(
-                              value: controller.selectedDropdownBranch,
-                              hint: Text(r"bank_branch".tr, style: TextStyle(
-                                fontSize: 14.sp,),
-                              ),
-
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.fromLTRB(0, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.h, ),
-                              ),
-                              dropdownStyleData: DropdownStyleData(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
-
-                                ),
-                                elevation: 2,
-
-                              ),
-                              iconStyleData: IconStyleData(
-                                icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18.w,),
-                              ),
-                              onChanged: (v) => controller.setDropdownBranch(v),
-                              items: controller.branchSelection
-                                  .map(
-                                    (item) => DropdownMenuItem<String>(
-                                  value: item,
-                                  child: Text(item, style: TextStyle(
-                                    fontSize: 14.sp,
-                                  ),),
-                                ),
-                              ).toList(),
-                            ),
-
-                            SizedBox(height: 22.h,),
-
-
-                            Text(r'home_phone_number'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
-                            SizedBox(height: AppDimensions.paddingMedium.h,),
-                            TextFormField(
-                              textInputAction: TextInputAction.next,
-                              keyboardType: TextInputType.number,
-                              controller: controller.homePhoneNumberController,
-                              onChanged:(v) => controller.onInformationNotEmpty(v),
-                              style: TextStyle(
-                                fontSize: 14.sp,
-                              ),
-                              decoration: InputDecoration(
-                                hintText: r'enter_number'.tr,
-                                border: OutlineInputBorder(),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(
-                                    AppDimensions.borderRadiusMedium,
-                                  ),
-                                  borderSide: BorderSide(
-                                    color: AppColors.green,
-                                    width: 1.w,
-                                  ),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(
-                                    AppDimensions.borderRadiusMedium,
-                                  ),
-                                  borderSide: BorderSide(
-                                    color: AppColors.white,
-                                    width: 1.w,
-                                  ),
-                                ),
-                                counter: const SizedBox(),
-                                contentPadding: EdgeInsets.symmetric(
-                                  vertical: AppDimensions.paddingExtraLarge.h,
-                                  horizontal: AppDimensions.paddingLarge.w,
-                                ),
-                              ),
-                            ),
-
-
-
-
-                          ],
+                      child: Align(
+                        alignment: Alignment.bottomRight,
+                        child: Text(
+                          'step_of_5'.trParams({'page': '2'}),
+                          style: TextStyle(fontSize: 14.sp),
                         ),
                       ),
                     ),
-                  ),
-
-                  Opacity(
-                    opacity: controller.continueEnabled ? 1 : 0.5,
+                  ],
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
                     child: Padding(
-                      padding:  EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        child: ElevatedButtonWithState(
-                          isLoading: controller.status == Status.loading,
-                          isError: controller.status == Status.error,
-                          onPressed:() => controller.onTap(),
-                          child: Text(r'next'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.white),),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: AppDimensions.paddingExtraLarge.w,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            controller.selectedCardTitle?.tr ?? '',
+                            style: TextStyle(
+                              fontSize: 24.sp,
+                              color: AppColors.blackText,
+                            ),
+                          ),
+                          SizedBox(height: 16.h),
+                          CachedNetworkImage(
+                            imageUrl:
+                                controller.selectedCardImage ??
+                                AppAssets.cardImage,
+                            width: 390.w,
+                            height: 250.h,
+                            fit: BoxFit.cover,
+                          ),
+                          SizedBox(height: AppDimensions.padding40.h),
+                          Text(
+                            r'details_for_obtaining'.tr,
+                            style: TextStyle(
+                              fontSize: 24.sp,
+                              color: AppColors.blackText,
+                            ),
+                          ),
+                          SizedBox(height: 32.h),
+                          Text(
+                            r'phone_number'.tr,
+                            style: TextStyle(
+                              color: AppColors.blackText,
+                              fontSize: 14.sp,
+                            ),
+                          ),
+                          SizedBox(height: AppDimensions.paddingMedium.h),
+                          Row(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(
+                                  AppDimensions.paddingExtraLarge.w,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: AppColors.inputFillBackground,
+                                  borderRadius: BorderRadius.circular(
+                                    AppDimensions.borderRadiusMedium,
+                                  ),
+                                ),
+                                child: Text(
+                                  '+993',
+                                  style: TextStyle(fontSize: 14.sp),
+                                ),
+                              ),
+                              SizedBox(width: AppDimensions.paddingSmall.w),
+                              Expanded(
+                                child: TextFormField(
+                                  keyboardType: TextInputType.phone,
+                                  controller: controller.phoneController,
+                                  onChanged: (v) =>
+                                      controller.onInformationNotEmpty(),
+                                  maxLength: 8,
+                                  style: TextStyle(fontSize: 14.sp),
+                                  decoration: InputDecoration(
+                                    hintText: r'enter_number'.tr,
+                                    border: OutlineInputBorder(),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(
+                                        AppDimensions.borderRadiusMedium,
+                                      ),
+                                      borderSide: BorderSide(
+                                        color: AppColors.green,
+                                        width: 1.w,
+                                      ),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(
+                                        AppDimensions.borderRadiusMedium,
+                                      ),
+                                      borderSide: BorderSide(
+                                        color: AppColors.white,
+                                        width: 1.w,
+                                      ),
+                                    ),
+                                    counter: const SizedBox(),
+                                    contentPadding: EdgeInsets.symmetric(
+                                      vertical:
+                                          AppDimensions.paddingExtraLarge.h,
+                                      horizontal: AppDimensions.paddingLarge.w,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 22.h),
+                          Text(
+                            r'bank_branch'.tr,
+                            style: TextStyle(
+                              color: AppColors.blackText,
+                              fontSize: 14.sp,
+                            ),
+                          ),
+                          SizedBox(height: AppDimensions.paddingMedium),
+
+                          DropdownButtonFormField2<int>(
+                            value: controller.selectedDropdownBranch,
+                            hint: Text(
+                              r"bank_branch".tr,
+                              style: TextStyle(fontSize: 14.sp),
+                            ),
+
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.fromLTRB(
+                                0,
+                                AppDimensions.paddingExtraLarge.w,
+                                AppDimensions.paddingExtraLarge.w,
+                                AppDimensions.paddingExtraLarge.h,
+                              ),
+                            ),
+                            dropdownStyleData: DropdownStyleData(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                  AppDimensions.borderRadiusMedium.r,
+                                ),
+                              ),
+                              elevation: 2,
+                            ),
+                            iconStyleData: IconStyleData(
+                              icon: SvgPicture.asset(
+                                AppAssets.caretDownIcon,
+                                width: 18.w,
+                              ),
+                            ),
+                            onChanged: (v) => controller.setDropdownBranch(v),
+                            items: controller.branchSelection.entries.map((
+                              entry,
+                            ) {
+                              return DropdownMenuItem<int>(
+                                value: entry.value,
+                                child: Text(
+                                  entry.key,
+                                  style: TextStyle(fontSize: 14.sp),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                          SizedBox(height: 22.h),
+
+                          Text(
+                            r'home_phone_number'.tr,
+                            style: TextStyle(
+                              color: AppColors.blackText,
+                              fontSize: 14.sp,
+                            ),
+                          ),
+                          SizedBox(height: AppDimensions.paddingMedium.h),
+                          TextFormField(
+                            textInputAction: TextInputAction.next,
+                            keyboardType: TextInputType.number,
+                            controller: controller.homePhoneNumberController,
+                            onChanged: (v) =>
+                                controller.onInformationNotEmpty(),
+                            style: TextStyle(fontSize: 14.sp),
+                            decoration: InputDecoration(
+                              hintText: r'enter_number'.tr,
+                              border: OutlineInputBorder(),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(
+                                  AppDimensions.borderRadiusMedium,
+                                ),
+                                borderSide: BorderSide(
+                                  color: AppColors.green,
+                                  width: 1.w,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(
+                                  AppDimensions.borderRadiusMedium,
+                                ),
+                                borderSide: BorderSide(
+                                  color: AppColors.white,
+                                  width: 1.w,
+                                ),
+                              ),
+                              counter: const SizedBox(),
+                              contentPadding: EdgeInsets.symmetric(
+                                vertical: AppDimensions.paddingExtraLarge.h,
+                                horizontal: AppDimensions.paddingLarge.w,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+
+                Opacity(
+                  opacity: controller.continueEnabled ? 1 : 0.5,
+                  child: Padding(
+                    padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: ElevatedButtonWithState(
+                        isLoading: controller.status == Status.loading,
+                        isError: controller.status == Status.error,
+                        onPressed: () => controller.onTap(),
+                        child: Text(
+                          r'next'.tr,
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            color: AppColors.white,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ],
-              );
-            }
-          )
+                ),
+              ],
+            );
+          },
+        ),
       ),
-
     );
   }
 }

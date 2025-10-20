@@ -1,29 +1,75 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 
 
-class NotificationController extends GetxController with StateControlMixin, GetSingleTickerProviderStateMixin {
+class NotificationController extends GetxController with GetSingleTickerProviderStateMixin {
 
-  late bool isNotificationEmpty = true;
-  late bool isLongTap = false;
+  bool isLongTap = false;
+  bool isNotificationEmpty = false;
+
+  List listAll = List.generate(5, (i) => i);
+  List listManager1 = List.generate(3, (i) => i);
+  List listManager2 = List.generate(2, (i) => i);
+
+  List<int> selectedItems = [];
+
   late TabController tabController;
 
-  List<String> items = ['1', 'q', 'q', 'h'];
+  void onLongTap() {
+    isLongTap = !isLongTap;
+    update();
+  }
 
-  void onLongTap(){
-    if(isLongTap == false){
-      isLongTap = true;
-    }else{
+  void onItemSelect(int id) {
+    if (selectedItems.contains(id)) {
+      selectedItems.remove(id);
+    } else {
+      selectedItems.add(id);
+    }
+
+    if (selectedItems.isEmpty) {
       isLongTap = false;
     }
     update();
   }
 
+  void selectAll() {
+    final current = _currentList();
+
+    if (selectedItems.length == current.length) {
+      selectedItems.clear();
+      isLongTap = false;
+    }
+    else {
+      selectedItems = List.from(current);
+      isLongTap = true;
+    }
+
+    update();
+  }
+
+  List _currentList() {
+    final index = tabController.index;
+    if (index == 0) return listAll;
+    if (index == 1) return listManager1;
+    return listManager2;
+  }
+
+  void deleteSelected() {
+    final current = _currentList();
+    current.removeWhere((e) => selectedItems.contains(e));
+    selectedItems.clear();
+    isLongTap = false;
+    update();
+  }
+
   @override
   void onInit() {
-    super.onInit();
     tabController = TabController(length: 3, vsync: this);
+    tabController.addListener(() {
+      update();
+    });
+    super.onInit();
   }
 }
 

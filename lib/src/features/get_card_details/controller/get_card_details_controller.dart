@@ -17,7 +17,7 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
   String? selectedCardImage;
   String? sum;
   int? selectedCardId;
-  String? selectedDropdownBranch;
+  int? selectedDropdownBranch;
   bool continueEnabled = false;
   CardRepository repository;
 
@@ -28,7 +28,7 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
     filter: {"#": RegExp(r'[0-9]')},
   );
 
-  final List<String> branchSelection = ["Option 1", "Option 2", "Option 3"];
+  final Map<String, dynamic> branchSelection = {"Option 1": 1, "Option 2": 2, "Option 3": 3};
 
   late List<TextEditingController> controllers;
 
@@ -43,7 +43,7 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
     phoneController = TextEditingController();
   }
 
-  void onInformationNotEmpty(String? v) {
+  void onInformationNotEmpty() {
     if (homePhoneNumberController.text.isNotEmpty &&
         phoneController.text.length >= 8 &&
         selectedDropdownBranch != null) {
@@ -92,9 +92,9 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
     }
   }
 
-  void setDropdownBranch(String? value) {
+  void setDropdownBranch(int? value) {
     selectedDropdownBranch = value;
-    onInformationNotEmpty(value);
+    onInformationNotEmpty();
     update();
   }
 }

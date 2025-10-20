@@ -20,7 +20,7 @@ class LoanController extends GetxController
   late final TextEditingController phoneController;
 
   String? selectedDropdownCity;
-  String? selectedDropdownBank;
+  int? selectedDropdownBank;
   bool continueEnabled = false;
   bool check = false;
   int pageIndex = 1;
@@ -32,7 +32,7 @@ class LoanController extends GetxController
 
   final List<String> citySelection = ["Option 1", "Option 2", "Option 3"];
 
-  final List<String> bankSelection = ["Option 1", "Option 2", "Option 3"];
+  final Map<String, dynamic> bankSelection = {"Option 1": 1, "Option 2": 2, "Option 3": 3};
 
   late List<TextEditingController> controllers;
 
@@ -87,7 +87,7 @@ class LoanController extends GetxController
 
   void setDropdownCity(String? value) {
     selectedDropdownCity = value;
-    if (selectedDropdownBank!.isNotEmpty) {
+    if (selectedDropdownBank != null) {
       continueEnabled = true;
     }
     update();
@@ -159,7 +159,7 @@ class LoanController extends GetxController
   Future<CreditBranchInfoModel> _getCreditBranchInfoModel() async {
     return CreditBranchInfoModel(
       country: selectedDropdownCity,
-      bankName: selectedDropdownBank,
+      bankId: selectedDropdownBank,
     );
   }
 
@@ -185,7 +185,7 @@ class LoanController extends GetxController
         });
   }
 
-  void setDropdownBank(String? value) {
+  void setDropdownBank(int? value) {
     selectedDropdownBank = value;
     if (selectedDropdownCity!.isNotEmpty) {
       continueEnabled = true;
