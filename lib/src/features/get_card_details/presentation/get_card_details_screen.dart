@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/globals.dart';
 import 'package:senagat_mobile/src/features/get_card/repository/card_repository.dart';
 import 'package:senagat_mobile/src/features/get_card_details/controller/get_card_details_controller.dart';
+import 'package:senagat_mobile/src/features/map_search/repository/location_repository.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
 
 import '../../../core/states/stateful_data.dart';
@@ -32,6 +33,7 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
         child: GetBuilder<GetCardDetailsController>(
           init: GetCardDetailsController(
             CardRepository(apiService: ApiServices.apiService),
+            LocationRepository(apiService: ApiServices.apiService),
           ),
           builder: (controller) {
             return Column(
@@ -196,17 +198,19 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                               ),
                             ),
                             onChanged: (v) => controller.setDropdownBranch(v),
-                            items: controller.branchSelection.entries.map((
-                              entry,
-                            ) {
-                              return DropdownMenuItem<int>(
-                                value: entry.value,
-                                child: Text(
-                                  entry.key,
-                                  style: TextStyle(fontSize: 14.sp),
-                                ),
-                              );
-                            }).toList(),
+                            items: controller.branches
+                                .map(
+                                  (item) =>
+                                  DropdownMenuItem<int>(
+                                    value: item.id,
+                                    child: Text(
+                                      item.name,
+                                      style: TextStyle(
+                                        fontSize: 14.sp,
+                                      ),
+                                    ),
+                                  ),
+                            ).toList(),
                           ),
                           SizedBox(height: 22.h),
 

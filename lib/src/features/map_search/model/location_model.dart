@@ -12,6 +12,7 @@ class LocationModel {
   final String name;
   final String address;
   final String phoneNumber;
+  final bool branchService;
   final double lat;
   final double lng;
   final List<WorkingHoursModel>? workingHours;
@@ -22,6 +23,7 @@ class LocationModel {
     required this.name,
     required this.address,
     required this.phoneNumber,
+    required this.branchService,
     required this.lat,
     required this.lng,
     required this.workingHours,
@@ -33,6 +35,7 @@ class LocationModel {
     name: json['name'] as String,
     address: json['address'] as String,
     phoneNumber: json['phone_number'] as String,
+    branchService: json['branch_services'] as bool,
     lat: (json['location']['lat'] as num).toDouble(),
     lng: (json['location']['lng'] as num).toDouble(),
     workingHours: (json['working_hours'] as List<dynamic>?)
@@ -48,6 +51,7 @@ class LocationModel {
     'phone_number': phoneNumber,
     'location': {'lat': lat, 'lng': lng},
   };
+
 }
 
 class WorkingHoursModel {
@@ -64,4 +68,5 @@ class WorkingHoursModel {
         to: json['to'],
     );
   }
+
 }

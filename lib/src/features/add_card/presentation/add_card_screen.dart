@@ -487,10 +487,15 @@ class _AddCardScreenState extends State<AddCardScreen> {
 
     final cardNumber = controller.cardNumberController.text.replaceAll(' ', '');
     final prefix6 = cardNumber.length >= 6 ? cardNumber.substring(0, 6) : '';
-    final prefix4 = cardNumber.length >= 4 ? cardNumber.substring(0, 4) : '';
 
 
     final prefixToIndex = {
+      '993470': 0,
+      '993407': 0,
+      '993420': 0,
+      '993402': 0,
+      '993471': 0,
+      '993421': 0,
       '993472': 0,
       '993473': 1,
       '993474': 2,
@@ -498,9 +503,6 @@ class _AddCardScreenState extends State<AddCardScreen> {
     };
     int? senagatIndex = prefixToIndex[prefix6];
 
-    if (senagatIndex == null && prefix4 == '9934') {
-      senagatIndex = 1;
-    }
 
     if (senagatIndex != null) {
       return Container(

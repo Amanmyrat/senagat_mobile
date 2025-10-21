@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/globals.dart';
+import 'package:senagat_mobile/src/features/map_search/repository/location_repository.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/constants/app_assets.dart';
@@ -32,6 +33,7 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
         child: GetBuilder<InquiriesController>(
           init: InquiriesController(
             InquiriesRepository(apiService: ApiServices.apiService),
+            LocationRepository(apiService: ApiServices.apiService),
             _key,
           ),
           builder: (controller) {
@@ -232,9 +234,8 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                         height: AppDimensions.paddingMedium,
                                       ),
 
-                                      DropdownButtonFormField2<String>(
-                                        value:
-                                            controller.selectedDropdownBranch,
+                                      DropdownButtonFormField2<int>(
+                                        value: controller.selectedDropdownBranch,
                                         hint: Text(
                                           r"bank_branch".tr,
                                           style: TextStyle(
@@ -270,13 +271,13 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                         ),
                                         onChanged: (v) =>
                                             controller.setDropdownBranch(v),
-                                        items: controller.branchSelection
+                                        items: controller.branches
                                             .map(
                                               (item) =>
-                                                  DropdownMenuItem<String>(
-                                                    value: item,
+                                                  DropdownMenuItem<int>(
+                                                    value: item.id,
                                                     child: Text(
-                                                      item,
+                                                      item.name,
                                                       style: TextStyle(
                                                         fontSize: 14.sp,
                                                       ),

@@ -92,29 +92,30 @@ class ApiEndpoint {
   }
 
   static Future<String> location(
-      LocationEndpoint endpoint, {
-        int? id,
-        String? date,
-      }) async {
+    LocationEndpoint endpoint, {
+    int? id,
+    String? date,
+  }) async {
     const path = '';
     switch (endpoint) {
       case LocationEndpoint.LOCATION:
         return '$path/location';
+      case LocationEndpoint.LOCATION_BRANCHES:
+        return '$path/location/branches';
     }
   }
 
   static Future<String> exchangeRate(
-      ExchangeRateEndpoint endpoint, {
-        int? id,
-        String? date,
-      }) async {
+    ExchangeRateEndpoint endpoint, {
+    int? id,
+    String? date,
+  }) async {
     const path = '';
     switch (endpoint) {
       case ExchangeRateEndpoint.EXCHANGE_RALE:
         return '$path/exchange-rate';
     }
   }
-
 }
 
 enum AuthEndpoint {
@@ -133,6 +134,6 @@ enum CardEndpoint { CARD_TYPES, CARD_ORDER }
 
 enum CreditEndpoint { CREDIT_TYPES, CREDIT_DETAILS, WORK_INFO, BRANCH_INFO }
 
-enum LocationEndpoint{LOCATION}
+enum LocationEndpoint { LOCATION, LOCATION_BRANCHES }
 
-enum ExchangeRateEndpoint{EXCHANGE_RALE}
+enum ExchangeRateEndpoint { EXCHANGE_RALE }

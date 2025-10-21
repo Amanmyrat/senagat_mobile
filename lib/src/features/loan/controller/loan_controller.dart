@@ -6,6 +6,8 @@ import 'package:senagat_mobile/src/features/loan/models/credit_branch_info_model
 import 'package:senagat_mobile/src/features/loan/models/credit_work_info_model.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/services/show_snack.dart';
+import '../../map_search/model/location_model.dart';
+import '../../map_search/repository/location_repository.dart';
 
 class LoanController extends GetxController
     with StateControlMixin, GetSingleTickerProviderStateMixin {
@@ -26,17 +28,20 @@ class LoanController extends GetxController
   int pageIndex = 1;
 
   CreditRepository repository;
+  LocationRepository locRepository;
+
+  final List<LocationModel> _branches = [];
+
+  List<LocationModel> get branches => _branches;
 
   late TabController tabController;
   int selectedTabIndex = 0;
 
   final List<String> citySelection = ["Option 1", "Option 2", "Option 3"];
 
-  final Map<String, dynamic> bankSelection = {"Option 1": 1, "Option 2": 2, "Option 3": 3};
-
   late List<TextEditingController> controllers;
 
-  LoanController(this.repository);
+  LoanController(this.repository, this.locRepository);
 
   @override
   void onInit() {
@@ -57,6 +62,7 @@ class LoanController extends GetxController
       selectedTabIndex = tabController.index;
       update();
     });
+    getBranches();
   }
 
   void onInformationNotEmpty(String? v) {
@@ -85,14 +91,6 @@ class LoanController extends GetxController
     }
   }
 
-  void setDropdownCity(String? value) {
-    selectedDropdownCity = value;
-    if (selectedDropdownBank != null) {
-      continueEnabled = true;
-    }
-    update();
-  }
-
   Future<void> onTap() async {
     if (pageIndex == 1 && continueEnabled) {
       status = Status.loading;
@@ -103,7 +101,11 @@ class LoanController extends GetxController
           : await _getCreditWorkInfoModelForManager();
 
       await repository
-          .submitWorkInfo(data: creditWorkInfoModel.toMap())
+          .submitWorkInfo(
+            data: selectedTabIndex == 0
+                ? creditWorkInfoModel.toMap()
+                : creditWorkInfoModel.toMap2(),
+          )
           .then((value) {
             status = Status.completed;
             update();
@@ -136,14 +138,34 @@ class LoanController extends GetxController
     }
   }
 
+  void getBranches() async {
+    status = Status.loading;
+    update();
+
+    await locRepository
+        .getBranches()
+        .then((value) {
+          _branches.addAll(value);
+          status = Status.completed;
+          update();
+        })
+        .catchError((e) {
+          status = Status.error;
+          update();
+          ShowSnack.showSnack(r'error'.tr, SnackType.error);
+          debugPrint(e.toString());
+        });
+  }
+
   Future<CreditWorkInfoModel> _getCreditWorkInfoModelForManager() async {
+    final int salary = int.parse(wagesController.text);
     return CreditWorkInfoModel(
       role: 'manager',
       managerWorkAddress: managerWorkAddressController.text,
       workplace: workplaceController.text,
       position: positionAtWorkController.text,
       phoneNumber: phoneController.text,
-      salary: wagesController.text,
+      salary: salary,
     );
   }
 
@@ -185,12 +207,28 @@ class LoanController extends GetxController
         });
   }
 
-  void setDropdownBank(int? value) {
-    selectedDropdownBank = value;
-    if (selectedDropdownCity!.isNotEmpty) {
-      continueEnabled = true;
+  void setDropdownCity(String? value) {
+    selectedDropdownCity = value;
+    try{
+      if (selectedDropdownBank != null) {
+        continueEnabled = true;
+      }
+    } catch(e){
+      print(e);
     }
     update();
   }
 
+  void setDropdownBank(int? value) {
+    selectedDropdownBank = value;
+    try {
+      if (selectedDropdownCity!.isNotEmpty) {
+        continueEnabled = true;
+      }
+    } catch(e){
+      print(e);
+    }
+
+    update();
+  }
 }

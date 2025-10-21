@@ -9,7 +9,7 @@ class CreditWorkInfoModel {
   final String? position;
   final String? managerWorkAddress;
   final String? phoneNumber;
-  final String? salary;
+  final int? salary;
 
   CreditWorkInfoModel({
     this.role,

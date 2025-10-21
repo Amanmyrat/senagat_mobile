@@ -53,6 +53,7 @@ class MapSearchController extends GetxController with StateControlMixin {
 
   }
 
+
   void getLocations() async {
     status = Status.loading;
     update();

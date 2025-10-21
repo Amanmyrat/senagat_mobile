@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/globals.dart';
+import 'package:senagat_mobile/src/features/map_search/repository/location_repository.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/constants/app_assets.dart';
@@ -31,6 +32,7 @@ class _LoanScreenState extends State<LoanScreen> {
         child: GetBuilder<LoanController>(
             init: LoanController(
               CreditRepository(apiService: ApiServices.apiService),
+              LocationRepository(apiService: ApiServices.apiService),
             ),
             builder: (controller) {
               return Column(
@@ -486,7 +488,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                                                     SizedBox(height: AppDimensions.paddingMedium.h,),
                                                                     TextFormField(
                                                                       textInputAction: TextInputAction.next,
-                                                                      keyboardType: TextInputType.name,
+                                                                      keyboardType: TextInputType.number,
                                                                       controller: controller.wagesController,
                                                                       onChanged:(v) => controller.onInformationNotEmpty(v),
                                                                       style: TextStyle(
@@ -629,16 +631,24 @@ class _LoanScreenState extends State<LoanScreen> {
                                                   AppDimensions.paddingExtraLarge.h,
                                                 ),
                                               ),
-
+                                              iconStyleData: IconStyleData(
+                                                icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18,),
+                                              ),
                                               onChanged: (v) => controller.setDropdownBank(v),
 
-                                              items: controller.bankSelection.entries.map((entry) {
-                                                return DropdownMenuItem<int>(
-                                                  value: entry.value,           // int
-                                                  child: Text(entry.key,        // String for UI
-                                                      style: TextStyle(fontSize: 14.sp)),
-                                                );
-                                              }).toList(),
+                                              items: controller.branches
+                                                  .map(
+                                                    (item) =>
+                                                    DropdownMenuItem<int>(
+                                                      value: item.id,
+                                                      child: Text(
+                                                        item.name,
+                                                        style: TextStyle(
+                                                          fontSize: 14.sp,
+                                                        ),
+                                                      ),
+                                                    ),
+                                              ).toList(),
                                             ),
                                           )
                                         ],

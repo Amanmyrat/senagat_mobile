@@ -4,10 +4,12 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/inquiries/models/inquiries_model.dart';
 import 'package:senagat_mobile/src/features/inquiries/repository/inquiries_repository.dart';
+import 'package:senagat_mobile/src/features/map_search/repository/location_repository.dart';
 import 'package:senagat_mobile/src/features/payment_verification/presentation/payment_verification_screen.dart';
 
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/services/show_snack.dart';
+import '../../map_search/model/location_model.dart';
 import '../models/inquiries_order_model.dart';
 
 class InquiriesController extends GetxController with StateControlMixin {
@@ -15,16 +17,20 @@ class InquiriesController extends GetxController with StateControlMixin {
   late final TextEditingController phoneController;
 
   InquiriesRepository repository;
+  LocationRepository locRepository;
   final GlobalKey<FormState> key;
   final _inquiries = <InquiriesModel>[];
 
   late int inquiriesId;
   late int inquiriesPrice;
+
   List<InquiriesModel> get inquiries => _inquiries;
 
+  final List<LocationModel> _branches = [];
+  List<LocationModel> get branches => _branches;
 
   String? selectedDropdownType;
-  String? selectedDropdownBranch;
+  int? selectedDropdownBranch;
   bool continueEnabled = false;
   int pageIndex = 1;
 
@@ -50,13 +56,8 @@ class InquiriesController extends GetxController with StateControlMixin {
     4: r'certificate_of_loan_balance',
   };
 
-  final List<String> branchSelection = [
-    "Option 1",
-    "Option 2",
-    "Option 3",
-  ];
 
-  InquiriesController(this.repository, this.key,);
+  InquiriesController(this.repository, this.locRepository ,this.key,);
 
   @override
   void onInit() {
@@ -64,12 +65,13 @@ class InquiriesController extends GetxController with StateControlMixin {
     addressController = TextEditingController();
     phoneController = TextEditingController();
     getInquiries();
+    getBranches();
   }
 
   void onInformationNotEmpty(v) {
     if (addressController.text.isNotEmpty &&
         phoneController.text.length >= 8 &&
-        selectedDropdownBranch!.isNotEmpty) {
+        selectedDropdownBranch != null) {
       continueEnabled = true;
       update();
     } else {
@@ -141,23 +143,44 @@ class InquiriesController extends GetxController with StateControlMixin {
       debugPrint(e.toString());
     });
   }
+
+
+  void getBranches() async {
+    status = Status.loading;
+    update();
+
+    await locRepository
+        .getBranches()
+        .then((value) {
+      _branches.addAll(value);
+      status = Status.completed;
+      update();
+    }).catchError((e) {
+      status = Status.error;
+      update();
+      ShowSnack.showSnack(r'error'.tr, SnackType.error);
+      debugPrint(e.toString());
+    });
+  }
+
+
   getInquiriesId(){
-    final selectedType = selectedDropdownType; // e.g. "obtain_certificate"
+    final selectedType = selectedDropdownType;
 
     final selectedInquiry = _inquiries.firstWhere(
-          (inquiry) => inquiry.title == selectedType, // or any matching field
-      orElse: () => InquiriesModel(id: -1, title: ''), // fallback if not found
+          (inquiry) => inquiry.title == selectedType,
+      orElse: () => InquiriesModel(id: -1, title: ''),
     );
 
     inquiriesId = selectedInquiry.id!;
   }
 
   getInquiriesPrice(){
-    final selectedType = selectedDropdownType; // e.g. "obtain_certificate"
+    final selectedType = selectedDropdownType;
 
     final selectedInquiry = _inquiries.firstWhere(
-          (inquiry) => inquiry.title == selectedType, // or any matching field
-      orElse: () => InquiriesModel(id: -1, title: ''), // fallback if not found
+          (inquiry) => inquiry.title == selectedType,
+      orElse: () => InquiriesModel(id: -1, title: ''),
     );
 
     inquiriesPrice = selectedInquiry.price!;
@@ -174,7 +197,7 @@ class InquiriesController extends GetxController with StateControlMixin {
     }
   }
 
-  void setDropdownBranch(String? value) {
+  void setDropdownBranch(int? value) {
     selectedDropdownBranch = value;
     onInformationNotEmpty(value);
     update();
