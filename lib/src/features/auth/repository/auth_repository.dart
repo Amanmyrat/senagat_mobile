@@ -1,3 +1,5 @@
+import 'package:senagat_mobile/src/features/home/models/user_information_model.dart';
+
 import '../../../core/networking/api_endpoint.dart';
 import '../../../core/networking/api_service.dart';
 import '../../../core/typedefs.dart';
@@ -66,6 +68,16 @@ class AuthRepository {
       data: data,
       converter: (response) {
         return response.body['exists'];
+      },
+    );
+  }
+
+  Future<UserInformationModel> getUserInformation() async {
+    return await _apiService.getDocumentData(
+      endpoint: ApiEndpoint.auth(AuthEndpoint.USER_INFORMATION),
+      requiresAuthToken: true,
+      converter: (response) {
+        return UserInformationModel.fromJson(response['data']);
       },
     );
   }

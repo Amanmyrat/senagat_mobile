@@ -65,7 +65,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(controller.fullName ?? r'name_lastName'.tr, style: TextStyle(fontSize: 24.sp, color: AppColors.black),),
+                              Text(controller.fullName, style: TextStyle(fontSize: 24.sp, color: AppColors.black),),
                               SvgPicture.asset(AppAssets.arrowRightIcon, color: AppColors.black, width: 18.w,)
                             ],
                           ),
@@ -73,15 +73,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                padding: EdgeInsets.symmetric(horizontal: AppDimensions.paddingMedium.w, vertical: 4.h),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
-                                  color: AppColors.greyInactive,
+                                padding: EdgeInsets.symmetric(
+                                  horizontal:
+                                  AppDimensions.paddingMedium.w,
+                                  vertical: 4,
                                 ),
-                                child: Text(r'not_confirmed'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.white, fontFamily: AppFonts.secondaryFont),),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(
+                                    AppDimensions.borderRadiusMedium.r,
+                                  ),
+                                  color: controller.homeController.isProfileRequired ? AppColors.greyInactive : AppColors.green,
+                                ),
+                                child: Text(
+                                  controller.homeController.isProfileRequired ? r'not_confirmed'.tr : r'confirmed'.tr,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: AppColors.white,
+                                    fontFamily: AppFonts.secondaryFont,
+                                  ),
+                                ),
                               ),
                               SizedBox(width: 10.w,),
-                              Text('+99364626088', style: TextStyle(fontSize: 14.sp, color: AppColors.black,),),
+                              Text('+993${controller.homeController.userInformationModel.phone}', style: TextStyle(fontSize: 14.sp, color: AppColors.black,),),
                             ],
                           ),
                         ],

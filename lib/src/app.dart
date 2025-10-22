@@ -41,6 +41,7 @@ import 'package:senagat_mobile/src/utils/theme/app_theme.dart';
 import 'package:senagat_mobile/src/utils/theme/controller/theme_controller.dart';
 import 'features/add_card/controller/add_card_controller.dart';
 import 'features/auth/controller/auth_controller.dart';
+import 'features/auth/repository/auth_repository.dart';
 import 'features/credit/presentation/get_credit_screen.dart';
 import 'features/dashboard/controller/dashboard_controller.dart';
 import 'features/dashboard/presentation/dashboard_screen.dart';
@@ -247,7 +248,11 @@ class DashboardBinding extends Bindings {
     Get.put(AuthController(), permanent: true);
     Get.put(ServiceSettingsController());
     Get.put(AddCardController());
-    Get.put(HomeController(ExchangeRateRepository(apiService: ApiServices.apiService)));
+    Get.put(HomeController(
+        ExchangeRateRepository(apiService: ApiServices.apiService),
+        AuthRepository(apiService: ApiServices.apiService),
+
+    ));
 
   }
 }

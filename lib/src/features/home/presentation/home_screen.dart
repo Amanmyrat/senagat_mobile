@@ -5,13 +5,13 @@ import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/globals.dart';
 import 'package:senagat_mobile/src/features/add_card/presentation/add_card_screen.dart';
 import 'package:senagat_mobile/src/features/card_expenses/presentation/card_expenses_screen.dart';
-import 'package:senagat_mobile/src/features/map_search/presentation/map_search_screen.dart';
 import 'package:senagat_mobile/src/features/service_settings/presentation/service_settings_screen.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
 import '../../../widgets/header_widget.dart';
+import '../../auth/repository/auth_repository.dart';
 import '../controller/home_controller.dart';
 import '../repository/exchage_rate_repository.dart';
 
@@ -32,7 +32,8 @@ class _HomeScreenState extends State<HomeScreen> {
         child: SafeArea(
           child: GetBuilder<HomeController>(
             init: HomeController(
-              ExchangeRateRepository(apiService: ApiServices.apiService)
+              ExchangeRateRepository(apiService: ApiServices.apiService),
+              AuthRepository(apiService: ApiServices.apiService),
             ),
             builder: (controller) => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,8 +55,39 @@ class _HomeScreenState extends State<HomeScreen> {
                       cardsWidget(controller),
                       fastOperationsWidget(controller),
                       charityFoundationWidget(controller),
-                      inquiriesWidget(),
-                      creditsWidget(),
+                      Text(
+                        r'inquiries'.tr,
+                        style: TextStyle(
+                          color: AppColors.blackText,
+                          fontSize: 17.sp,
+                        ),
+                      ),
+                      SizedBox(height: 16.h),
+                      ListView.builder(
+                        itemCount: controller.userInformationModel.certificates?.length,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return inquiriesWidget(controller, index);
+                          },
+                      ),
+
+                      Text(
+                        r'credits'.tr,
+                        style: TextStyle(
+                          color: AppColors.blackText,
+                          fontSize: 17.sp,
+                        ),
+                      ),
+                      SizedBox(height: 16.h),
+
+                      ListView.builder(
+                        itemCount: controller.userInformationModel.loan?.length,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return creditsWidget(controller, index);
+                          },
+                      ),
 
                       Text(
                         r'services'.tr,
@@ -924,20 +956,12 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget inquiriesWidget(){
+  Widget inquiriesWidget(HomeController controller, int index){
     return Padding(
       padding: EdgeInsetsGeometry.only(bottom: AppDimensions.padding40.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            r'inquiries'.tr,
-            style: TextStyle(
-              color: AppColors.blackText,
-              fontSize: 17.sp,
-            ),
-          ),
-          SizedBox(height: 16.h),
           Container(
             padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
             decoration: BoxDecoration(
@@ -950,7 +974,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      r'inquiries'.tr,
+                      controller.userInformationModel.certificates![0].certificateName ?? '',
                       style: TextStyle(
                         color: AppColors.white,
                         fontSize: 14.sp,
@@ -979,20 +1003,13 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget creditsWidget(){
+  Widget creditsWidget(HomeController controller, int index){
+    final loan = controller.userInformationModel.loan?[index];
     return Padding(
       padding: EdgeInsetsGeometry.only(bottom: AppDimensions.padding40.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            r'credits'.tr,
-            style: TextStyle(
-              color: AppColors.blackText,
-              fontSize: 17.sp,
-            ),
-          ),
-          SizedBox(height: 16.h),
           Container(
             padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
             decoration: BoxDecoration(
@@ -1005,7 +1022,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      r'credit_for_newlyweds'.tr,
+                      loan?.creditName ?? '',
                       style: TextStyle(
                         color: AppColors.white,
                         fontSize: 14.sp,
@@ -1043,7 +1060,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           SizedBox(height: 4.h,),
                           Text(
-                            r'10,000'.tr,
+                            loan?.amount.toString() ?? '',
                             style: TextStyle(
                               color: AppColors.white,
                               fontSize: 17.sp,
@@ -1075,7 +1092,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           SizedBox(height: 4.h,),
                           Text(
-                            r'1,000'.tr,
+                            loan?.monthlyPayment.toString() ?? '',
                             style: TextStyle(
                               color: AppColors.white,
                               fontSize: 17.sp,

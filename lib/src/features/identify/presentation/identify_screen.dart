@@ -143,7 +143,7 @@ class _IdentifyScreenState extends State<IdentifyScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      '12345678',
+                                      controller.phone ?? '',
                                       style: TextStyle(
                                         fontSize: 14.sp,
                                         color: AppColors.blackText,
@@ -211,10 +211,10 @@ class _IdentifyScreenState extends State<IdentifyScreen> {
                                         borderRadius: BorderRadius.circular(
                                           AppDimensions.borderRadiusMedium.r,
                                         ),
-                                        color: AppColors.greyInactive,
+                                        color: controller.homeController.isProfileRequired ? AppColors.greyInactive : AppColors.green,
                                       ),
                                       child: Text(
-                                        r'not_confirmed'.tr,
+                                        controller.homeController.isProfileRequired ? r'not_confirmed'.tr : r'confirmed'.tr,
                                         style: TextStyle(
                                           fontSize: 14,
                                           color: AppColors.white,

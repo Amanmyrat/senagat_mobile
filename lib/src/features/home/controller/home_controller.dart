@@ -4,9 +4,11 @@ import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/add_card/controller/add_card_controller.dart';
 import 'package:senagat_mobile/src/features/add_card/model/card_model.dart';
+import 'package:senagat_mobile/src/features/auth/repository/auth_repository.dart';
 import 'package:senagat_mobile/src/features/credit/presentation/get_credit_screen.dart';
 import 'package:senagat_mobile/src/features/get_card/presentation/get_card_screen.dart';
 import 'package:senagat_mobile/src/features/home/models/exchange_rate_model.dart';
+import 'package:senagat_mobile/src/features/home/models/user_information_model.dart';
 import 'package:senagat_mobile/src/features/home/repository/exchage_rate_repository.dart';
 import 'package:senagat_mobile/src/features/net_and_tv/presentation/net_and_tv_screen.dart';
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
@@ -16,6 +18,7 @@ import '../../../core/states/stateful_data.dart';
 import '../../../utils/constants/app_assets.dart';
 import '../../../utils/services/show_snack.dart';
 import '../../foundation/presentation/foundation_screen.dart';
+import '../../identity_verification/models/profile_model.dart';
 import '../../inquiries/presentation/inquiries_screen.dart';
 import '../../pay/model/pay_model.dart';
 import '../../qr_code/presentation/qr_code_screen.dart';
@@ -28,8 +31,10 @@ class HomeController extends GetxController with StateControlMixin {
   int? lastFastServiceTapIndex;
   int? lastServiceTapIndex;
   AccountModel accountModel = AccountModel();
+  final profileBox = Hive.box<ProfileModel>('profileBox');
 
   ExchangeRateRepository repository;
+  AuthRepository authRepository;
 
   late ServiceSettingsController fastServiceController;
   late AddCardController addCardController;
@@ -41,16 +46,11 @@ class HomeController extends GetxController with StateControlMixin {
 
   late bool isProfileRequired;
 
-  final List<String> flags = [
-    AppAssets.ruIcon,
-    AppAssets.enIcon,
-    AppAssets.euIcon,
-  ];
   final _exchange = <ExchangeRateModel>[];
   List<ExchangeRateModel> get exchange => _exchange;
 
+  late final UserInformationModel userInformationModel;
 
-  final List<String> currency = ['RUB', 'USD', 'EUR'];
 
   final List<String> serviceTitles = [r'inquiries', r'cards', r'credits'];
 
@@ -72,7 +72,7 @@ class HomeController extends GetxController with StateControlMixin {
     GetCreditScreen.route,
   ];
 
-  HomeController(this.repository);
+  HomeController(this.repository, this.authRepository);
 
   void onQrScanTap() {
     lastTap = HomeTapType.qr;
@@ -131,6 +131,9 @@ class HomeController extends GetxController with StateControlMixin {
     fastServiceController = Get.find<ServiceSettingsController>();
     addCardController = Get.find<AddCardController>();
     getExchangeRates();
+    getUserProfileInfo();
+    profileBox.put('currentProfile', userInformationModel.profileModel!);
+
     super.onInit();
   }
 
@@ -141,6 +144,23 @@ class HomeController extends GetxController with StateControlMixin {
       status = Status.completed;
       update();
       _exchange.addAll(value);
+    }).catchError((e){
+      status = Status.error;
+      update();
+      ShowSnack.showSnack(r'error'.tr, SnackType.error);
+
+      debugPrint(e.toString());
+    });
+  }
+
+  void getUserProfileInfo() async{
+    status = Status.loading;
+    update();
+    await authRepository.getUserInformation().then((value){
+      status = Status.completed;
+      update();
+      userInformationModel = (value);
+
     }).catchError((e){
       status = Status.error;
       update();

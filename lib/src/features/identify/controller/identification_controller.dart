@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:senagat_mobile/src/features/home/controller/home_controller.dart';
 import 'package:senagat_mobile/src/features/welcome/presentation/welcome_screen.dart';
 import '../../../core/control_state_variable_mixin.dart';
 import '../../../core/local/key_value_storage_service.dart';
@@ -17,6 +18,8 @@ class IdentificationController extends GetxController with StateControlMixin {
       Get.put(AccountLoginStatusController(), permanent: true);
 
   AccountModel? currentUser;
+  final homeController = Get.find<HomeController>();
+  late final String? phone;
 
   void logout() {
     _keyValueStorageService.resetKeys();
@@ -31,5 +34,13 @@ class IdentificationController extends GetxController with StateControlMixin {
     Navigator.of(Get.context!).pushNamedAndRemoveUntil(
         WelcomeScreen.route, (Route<dynamic> route) => false);
   }
+
+  @override
+  void onInit() {
+    super.onInit();
+    phone = homeController.userInformationModel.phone;
+
+  }
+
 
 }
