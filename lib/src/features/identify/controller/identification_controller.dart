@@ -38,7 +38,7 @@ class IdentificationController extends GetxController with StateControlMixin {
   @override
   void onInit() {
     super.onInit();
-    phone = homeController.userInformationModel.phone;
+    phone = homeController.userInformationModel!.phone;
 
   }
 

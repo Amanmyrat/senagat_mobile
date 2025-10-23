@@ -44,12 +44,12 @@ class HomeController extends GetxController with StateControlMixin {
 
   String cardKey = 'card';
 
-  late bool isProfileRequired;
+  bool isProfileRequired = false;
 
   final _exchange = <ExchangeRateModel>[];
   List<ExchangeRateModel> get exchange => _exchange;
 
-  late final UserInformationModel userInformationModel;
+  UserInformationModel? userInformationModel;
 
 
   final List<String> serviceTitles = [r'inquiries', r'cards', r'credits'];
@@ -127,12 +127,12 @@ class HomeController extends GetxController with StateControlMixin {
 
   @override
   void onInit() {
-    checkProfile();
     fastServiceController = Get.find<ServiceSettingsController>();
     addCardController = Get.find<AddCardController>();
-    getExchangeRates();
+
     getUserProfileInfo();
-    profileBox.put('currentProfile', userInformationModel.profileModel!);
+
+    getExchangeRates();
 
     super.onInit();
   }
@@ -157,9 +157,13 @@ class HomeController extends GetxController with StateControlMixin {
     status = Status.loading;
     update();
     await authRepository.getUserInformation().then((value){
+      userInformationModel = value;
+
       status = Status.completed;
+
+      profileBox.put('currentProfile', userInformationModel!.profileModel!);
+      checkProfile();
       update();
-      userInformationModel = (value);
 
     }).catchError((e){
       status = Status.error;
@@ -171,7 +175,7 @@ class HomeController extends GetxController with StateControlMixin {
   }
 
   checkProfile(){
-    if(accountModel.profile == null){
+    if(userInformationModel!.profileModel == null){
       isProfileRequired = true;
     }else{
       isProfileRequired = false;

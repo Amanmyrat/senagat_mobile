@@ -10,6 +10,7 @@ import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
+import '../../../core/states/stateful_data.dart';
 import '../../../widgets/header_widget.dart';
 import '../../auth/repository/auth_repository.dart';
 import '../controller/home_controller.dart';
@@ -35,294 +36,237 @@ class _HomeScreenState extends State<HomeScreen> {
               ExchangeRateRepository(apiService: ApiServices.apiService),
               AuthRepository(apiService: ApiServices.apiService),
             ),
-            builder: (controller) => Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: AppDimensions.paddingExtraLarge.w,
-                    vertical: AppDimensions.paddingMedium.h,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      HeaderWidget(),
-
-                      if(controller.isProfileRequired == true)...[
-                        profileIsRequiredWidget(controller),
-                      ],
-
-                      cardsWidget(controller),
-                      fastOperationsWidget(controller),
-                      charityFoundationWidget(controller),
-                      Text(
-                        r'inquiries'.tr,
-                        style: TextStyle(
-                          color: AppColors.blackText,
-                          fontSize: 17.sp,
-                        ),
-                      ),
-                      SizedBox(height: 16.h),
-                      ListView.builder(
-                        itemCount: controller.userInformationModel.certificates?.length,
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return inquiriesWidget(controller, index);
-                          },
-                      ),
-
-                      Text(
-                        r'credits'.tr,
-                        style: TextStyle(
-                          color: AppColors.blackText,
-                          fontSize: 17.sp,
-                        ),
-                      ),
-                      SizedBox(height: 16.h),
-
-                      ListView.builder(
-                        itemCount: controller.userInformationModel.loan?.length,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            return creditsWidget(controller, index);
-                          },
-                      ),
-
-                      Text(
-                        r'services'.tr,
-                        style: TextStyle(
-                          color: AppColors.blackText,
-                          fontSize: 17.sp,
-                        ),
-                      ),
-
-                      SizedBox(height: 16.h),
-                    ],
-                  ),
-                ),
-
-                SizedBox(
-                  height: 232.h,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: AppDimensions.paddingExtraLarge,
-                    ),
-                    itemCount: controller.serviceTitles.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      final isSelected =
-                          controller.lastTap == HomeTapType.service &&
-                          controller.lastServiceTapIndex == index;
-
-                      return GestureDetector(
-                        onTap: () {
-                          controller.onServiceTap(index);
-                        },
-                        child: Container(
-                          margin: EdgeInsets.only(
-                            right: AppDimensions.marginMedium,
+            builder: (controller) {
+              return controller.status == Status.loading
+                  ? Center(
+                      child: CircularProgressIndicator(color: AppColors.green),
+                    )
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: AppDimensions.paddingExtraLarge.w,
+                            vertical: AppDimensions.paddingMedium.h,
                           ),
-                          width: 290.w,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                              AppDimensions.borderRadiusMedium.r,
-                            ),
-                            border: Border.all(
-                              color: AppColors.dividerColor,
-                              width: 1.w,
-                              style: BorderStyle.solid,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.dividerColor,
-                                blurRadius: 4.r,
-                              ),
-                            ],
-                            color: isSelected
-                                ? AppColors.green
-                                : AppColors.white,
-                          ),
-                          child: Row(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Expanded(
-                                child: Stack(
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.all(
-                                        AppDimensions.paddingExtraLarge.w,
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            controller.serviceTitles[index].tr,
-                                            style: TextStyle(
-                                              color: isSelected
-                                                  ? AppColors.white
-                                                  : AppColors.blackText,
-                                              fontSize: 14.sp,
-                                            ),
-                                          ),
+                              HeaderWidget(),
 
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              SizedBox(
-                                                width: 110.h,
-                                                child: Text(
-                                                  controller
-                                                      .serviceSecondaryTitles[index]
-                                                      .tr,
-                                                  style: TextStyle(
-                                                    color: isSelected
-                                                        ? AppColors.white
-                                                        : AppColors.blackText,
-                                                    fontSize: 14.sp,
-                                                    fontFamily:
-                                                        AppFonts.secondaryFont,
+                              if (controller.isProfileRequired == true) ...[
+                                profileIsRequiredWidget(controller),
+                              ],
+
+                              cardsWidget(controller),
+                              fastOperationsWidget(controller),
+                              charityFoundationWidget(controller),
+                              Text(
+                                r'inquiries'.tr,
+                                style: TextStyle(
+                                  color: AppColors.blackText,
+                                  fontSize: 17.sp,
+                                ),
+                              ),
+                              SizedBox(height: 16.h),
+                              ListView.builder(
+                                itemCount: controller
+                                    .userInformationModel!
+                                    .certificates
+                                    ?.length,
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  return inquiriesWidget(controller, index);
+                                },
+                              ),
+
+                              Text(
+                                r'credits'.tr,
+                                style: TextStyle(
+                                  color: AppColors.blackText,
+                                  fontSize: 17.sp,
+                                ),
+                              ),
+                              SizedBox(height: 16.h),
+
+                              ListView.builder(
+                                itemCount: controller
+                                    .userInformationModel!
+                                    .loan
+                                    ?.length,
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  return creditsWidget(controller, index);
+                                },
+                              ),
+
+                              Text(
+                                r'services'.tr,
+                                style: TextStyle(
+                                  color: AppColors.blackText,
+                                  fontSize: 17.sp,
+                                ),
+                              ),
+
+                              SizedBox(height: 16.h),
+                            ],
+                          ),
+                        ),
+
+                        SizedBox(
+                          height: 232.h,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: AppDimensions.paddingExtraLarge,
+                            ),
+                            itemCount: controller.serviceTitles.length,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              final isSelected =
+                                  controller.lastTap == HomeTapType.service &&
+                                  controller.lastServiceTapIndex == index;
+
+                              return GestureDetector(
+                                onTap: () {
+                                  controller.onServiceTap(index);
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.only(
+                                    right: AppDimensions.marginMedium,
+                                  ),
+                                  width: 290.w,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(
+                                      AppDimensions.borderRadiusMedium.r,
+                                    ),
+                                    border: Border.all(
+                                      color: AppColors.dividerColor,
+                                      width: 1.w,
+                                      style: BorderStyle.solid,
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: AppColors.dividerColor,
+                                        blurRadius: 4.r,
+                                      ),
+                                    ],
+                                    color: isSelected
+                                        ? AppColors.green
+                                        : AppColors.white,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Stack(
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsets.all(
+                                                AppDimensions
+                                                    .paddingExtraLarge
+                                                    .w,
+                                              ),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    controller
+                                                        .serviceTitles[index]
+                                                        .tr,
+                                                    style: TextStyle(
+                                                      color: isSelected
+                                                          ? AppColors.white
+                                                          : AppColors.blackText,
+                                                      fontSize: 14.sp,
+                                                    ),
                                                   ),
+
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      SizedBox(
+                                                        width: 110.h,
+                                                        child: Text(
+                                                          controller
+                                                              .serviceSecondaryTitles[index]
+                                                              .tr,
+                                                          style: TextStyle(
+                                                            color: isSelected
+                                                                ? AppColors
+                                                                      .white
+                                                                : AppColors
+                                                                      .blackText,
+                                                            fontSize: 14.sp,
+                                                            fontFamily: AppFonts
+                                                                .secondaryFont,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Positioned(
+                                              top: 0,
+                                              right: 0,
+                                              child: Image.asset(
+                                                controller.serviceImage[index],
+                                                width: 163.w,
+                                                height: 200.h,
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsets.only(
+                                                bottom: 20,
+                                                right: 20,
+                                              ),
+                                              child: Align(
+                                                alignment:
+                                                    Alignment.bottomRight,
+                                                child: SvgPicture.asset(
+                                                  AppAssets.arrowRightIcon,
+                                                  color: isSelected
+                                                      ? AppColors.white
+                                                      : AppColors.black,
+                                                  width: 14.w,
                                                 ),
                                               ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: 0,
-                                      right: 0,
-                                      child: Image.asset(
-                                        controller.serviceImage[index],
-                                        width: 163.w,
-                                        height: 200.h,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                        bottom: 20,
-                                        right: 20,
-                                      ),
-                                      child: Align(
-                                        alignment: Alignment.bottomRight,
-                                        child: SvgPicture.asset(
-                                          AppAssets.arrowRightIcon,
-                                          color: isSelected
-                                              ? AppColors.white
-                                              : AppColors.black,
-                                          width: 14.w,
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                              );
+                            },
                           ),
                         ),
-                      );
-                    },
-                  ),
-                ),
 
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: AppDimensions.paddingExtraLarge.w,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: AppDimensions.padding40.h),
-                      controller.payBox.isEmpty
-                          ? Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 200,
-                              padding: EdgeInsets.all(
-                                AppDimensions.paddingExtraLarge.w,
-                              ),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(
-                                  AppDimensions.borderRadiusMedium.r,
-                                ),
-                                border: Border.all(
-                                  color: AppColors.dividerColor,
-                                  width: 1.w,
-                                  style: BorderStyle.solid,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: AppColors.dividerColor,
-                                    blurRadius: 4.r,
-                                  ),
-                                ],
-                                color: AppColors.white,
-                              ),
-                              child: Column(
-                                children: [
-                                  Image.asset(AppAssets.sandClock),
-                                  SizedBox(
-                                    height: AppDimensions.paddingExtraLarge.h,
-                                  ),
-                                  Text(
-                                    r'history_is_empty'.tr,
-                                    style: TextStyle(
-                                      color: AppColors.blackText,
-                                      fontSize: 17.sp,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      r'history'.tr,
-                                      style: TextStyle(
-                                        color: AppColors.blackText,
-                                        fontSize: 17.sp,
-                                      ),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        Get.toNamed(CardExpensesScreen.route);
-                                      },
-                                      child: Text(
-                                        r'view_all'.tr,
-                                        style: TextStyle(
-                                          color: AppColors.green,
-                                          fontSize: 14.sp,
-                                          fontFamily: AppFonts.secondaryFont,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 6.h),
-
-                                ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: controller.payBox.length > 3
-                                      ? 3
-                                      : controller.payBox.length,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemBuilder: (context, index) {
-                                    return Container(
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: AppDimensions.paddingExtraLarge.w,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(height: AppDimensions.padding40.h),
+                              controller.payBox.isEmpty
+                                  ? Container(
                                       width: MediaQuery.of(context).size.width,
-                                      height: 90.h,
+                                      height: 200,
                                       padding: EdgeInsets.all(
                                         AppDimensions.paddingExtraLarge.w,
                                       ),
-                                      margin: EdgeInsets.symmetric(vertical: 5),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(
                                           AppDimensions.borderRadiusMedium.r,
@@ -340,65 +284,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ],
                                         color: AppColors.white,
                                       ),
-                                      child: Row(
+                                      child: Column(
                                         children: [
-                                          Container(
-                                            width: 50.w,
-                                            height: 50.h,
-                                            padding: EdgeInsets.all(
-                                              AppDimensions.paddingMedium.w,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: AppColors.green,
-                                            ),
-                                            child: SvgPicture.asset(
-                                              controller.payBox
-                                                      .getAt(index)
-                                                      ?.serviceIcon ??
-                                                  '',
-                                              color: AppColors.white,
-                                            ),
-                                          ),
+                                          Image.asset(AppAssets.sandClock),
                                           SizedBox(
-                                            width:
-                                                AppDimensions.paddingMedium.w,
-                                          ),
-                                          Expanded(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  controller.payBox
-                                                          .getAt(index)
-                                                          ?.serviceName ??
-                                                      '',
-                                                  style: TextStyle(
-                                                    color: AppColors.blackText,
-                                                    fontSize: 14.sp,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  controller.payBox
-                                                          .getAt(index)
-                                                          ?.number ??
-                                                      '',
-                                                  style: TextStyle(
-                                                    color: AppColors.blackText,
-                                                    fontSize: 14.sp,
-                                                    fontFamily:
-                                                        AppFonts.secondaryFont,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
+                                            height: AppDimensions
+                                                .paddingExtraLarge
+                                                .h,
                                           ),
                                           Text(
-                                            '-${controller.payBox.getAt(index)?.sum ?? ''}',
+                                            r'history_is_empty'.tr,
                                             style: TextStyle(
                                               color: AppColors.blackText,
                                               fontSize: 17.sp,
@@ -406,172 +301,356 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                         ],
                                       ),
-                                    );
-                                  },
-                                ),
-                              ],
-                            ),
-                      SizedBox(height: AppDimensions.padding40.h),
-                      Text(
-                        r'exchange_rates'.tr,
-                        style: TextStyle(
-                          color: AppColors.blackText,
-                          fontSize: 17.sp,
-                        ),
-                      ),
-                      SizedBox(height: 16.h),
+                                    )
+                                  : Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              r'history'.tr,
+                                              style: TextStyle(
+                                                color: AppColors.blackText,
+                                                fontSize: 17.sp,
+                                              ),
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {
+                                                Get.toNamed(
+                                                  CardExpensesScreen.route,
+                                                );
+                                              },
+                                              child: Text(
+                                                r'view_all'.tr,
+                                                style: TextStyle(
+                                                  color: AppColors.green,
+                                                  fontSize: 14.sp,
+                                                  fontFamily:
+                                                      AppFonts.secondaryFont,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: 6.h),
 
-                      Container(
-                        padding: EdgeInsets.all(
-                          AppDimensions.paddingExtraLarge.w,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                            AppDimensions.borderRadiusMedium.r,
-                          ),
-                          border: Border.all(
-                            color: AppColors.dividerColor,
-                            width: 1.w,
-                            style: BorderStyle.solid,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColors.dividerColor,
-                              blurRadius: 4.r,
-                            ),
-                          ],
-                          color: AppColors.white,
-                        ),
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    r'currency'.tr,
-                                    style: TextStyle(
-                                      color: AppColors.blackText,
-                                      fontSize: 14.sp,
+                                        ListView.builder(
+                                          shrinkWrap: true,
+                                          itemCount:
+                                              controller.payBox.length > 3
+                                              ? 3
+                                              : controller.payBox.length,
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
+                                          itemBuilder: (context, index) {
+                                            return Container(
+                                              width: MediaQuery.of(
+                                                context,
+                                              ).size.width,
+                                              height: 90.h,
+                                              padding: EdgeInsets.all(
+                                                AppDimensions
+                                                    .paddingExtraLarge
+                                                    .w,
+                                              ),
+                                              margin: EdgeInsets.symmetric(
+                                                vertical: 5,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                      AppDimensions
+                                                          .borderRadiusMedium
+                                                          .r,
+                                                    ),
+                                                border: Border.all(
+                                                  color: AppColors.dividerColor,
+                                                  width: 1.w,
+                                                  style: BorderStyle.solid,
+                                                ),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color:
+                                                        AppColors.dividerColor,
+                                                    blurRadius: 4.r,
+                                                  ),
+                                                ],
+                                                color: AppColors.white,
+                                              ),
+                                              child: Row(
+                                                children: [
+                                                  Container(
+                                                    width: 50.w,
+                                                    height: 50.h,
+                                                    padding: EdgeInsets.all(
+                                                      AppDimensions
+                                                          .paddingMedium
+                                                          .w,
+                                                    ),
+                                                    decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      color: AppColors.green,
+                                                    ),
+                                                    child: SvgPicture.asset(
+                                                      controller.payBox
+                                                              .getAt(index)
+                                                              ?.serviceIcon ??
+                                                          '',
+                                                      color: AppColors.white,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: AppDimensions
+                                                        .paddingMedium
+                                                        .w,
+                                                  ),
+                                                  Expanded(
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          controller.payBox
+                                                                  .getAt(index)
+                                                                  ?.serviceName ??
+                                                              '',
+                                                          style: TextStyle(
+                                                            color: AppColors
+                                                                .blackText,
+                                                            fontSize: 14.sp,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          controller.payBox
+                                                                  .getAt(index)
+                                                                  ?.number ??
+                                                              '',
+                                                          style: TextStyle(
+                                                            color: AppColors
+                                                                .blackText,
+                                                            fontSize: 14.sp,
+                                                            fontFamily: AppFonts
+                                                                .secondaryFont,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    '-${controller.payBox.getAt(index)?.sum ?? ''}',
+                                                    style: TextStyle(
+                                                      color:
+                                                          AppColors.blackText,
+                                                      fontSize: 17.sp,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ],
                                     ),
-                                  ),
+                              SizedBox(height: AppDimensions.padding40.h),
+                              Text(
+                                r'exchange_rates'.tr,
+                                style: TextStyle(
+                                  color: AppColors.blackText,
+                                  fontSize: 17.sp,
                                 ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      r'purchase'.tr,
-                                      style: TextStyle(
-                                        color: AppColors.blackText,
-                                        fontSize: 14.sp,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: AppDimensions.paddingExtraLarge.w,
-                                    ),
-                                    Text(
-                                      r'sale'.tr,
-                                      style: TextStyle(
-                                        color: AppColors.blackText,
-                                        fontSize: 14.sp,
-                                      ),
+                              ),
+                              SizedBox(height: 16.h),
+
+                              Container(
+                                padding: EdgeInsets.all(
+                                  AppDimensions.paddingExtraLarge.w,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(
+                                    AppDimensions.borderRadiusMedium.r,
+                                  ),
+                                  border: Border.all(
+                                    color: AppColors.dividerColor,
+                                    width: 1.w,
+                                    style: BorderStyle.solid,
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: AppColors.dividerColor,
+                                      blurRadius: 4.r,
                                     ),
                                   ],
+                                  color: AppColors.white,
                                 ),
-                              ],
-                            ),
-
-                            ListView.builder(
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: controller.exchange.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: EdgeInsets.only(
-                                    top: AppDimensions.paddingExtraLarge.h,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Image.network(controller.exchange[index].flag ?? '', width: 28.w, height: 20.h,),
-                                          SizedBox(width: 4.w),
-                                          Text(
-                                            controller.exchange[index].currency ?? '',
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            r'currency'.tr,
                                             style: TextStyle(
                                               color: AppColors.blackText,
                                               fontSize: 14.sp,
                                             ),
                                           ),
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          SizedBox(
-                                            width: AppDimensions.padding60.w,
-                                            child: Text(
-                                              textAlign: TextAlign.end,
-                                              controller.exchange[index].purchase ?? '',
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              r'purchase'.tr,
                                               style: TextStyle(
                                                 color: AppColors.blackText,
                                                 fontSize: 14.sp,
                                               ),
                                             ),
-                                          ),
-                                          SizedBox(
-                                            width: AppDimensions
-                                                .paddingSuperExtraLarge
-                                                .w,
-                                          ),
-                                          SizedBox(
-                                            width: AppDimensions.padding60.w,
-                                            child: Text(
-                                              textAlign: TextAlign.end,
-                                              controller.exchange[index].sale ?? '',
+                                            SizedBox(
+                                              width: AppDimensions
+                                                  .paddingExtraLarge
+                                                  .w,
+                                            ),
+                                            Text(
+                                              r'sale'.tr,
                                               style: TextStyle(
                                                 color: AppColors.blackText,
                                                 fontSize: 14.sp,
                                               ),
                                             ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+
+                                    ListView.builder(
+                                      physics: NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount: controller.exchange.length,
+                                      itemBuilder: (context, index) {
+                                        return Padding(
+                                          padding: EdgeInsets.only(
+                                            top: AppDimensions
+                                                .paddingExtraLarge
+                                                .h,
                                           ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            ),
-                          ],
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Image.network(
+                                                    controller
+                                                            .exchange[index]
+                                                            .flag ??
+                                                        '',
+                                                    width: 28.w,
+                                                    height: 20.h,
+                                                  ),
+                                                  SizedBox(width: 4.w),
+                                                  Text(
+                                                    controller
+                                                            .exchange[index]
+                                                            .currency ??
+                                                        '',
+                                                    style: TextStyle(
+                                                      color:
+                                                          AppColors.blackText,
+                                                      fontSize: 14.sp,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  SizedBox(
+                                                    width: AppDimensions
+                                                        .padding60
+                                                        .w,
+                                                    child: Text(
+                                                      textAlign: TextAlign.end,
+                                                      controller
+                                                              .exchange[index]
+                                                              .purchase ??
+                                                          '',
+                                                      style: TextStyle(
+                                                        color:
+                                                            AppColors.blackText,
+                                                        fontSize: 14.sp,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: AppDimensions
+                                                        .paddingSuperExtraLarge
+                                                        .w,
+                                                  ),
+                                                  SizedBox(
+                                                    width: AppDimensions
+                                                        .padding60
+                                                        .w,
+                                                    child: Text(
+                                                      textAlign: TextAlign.end,
+                                                      controller
+                                                              .exchange[index]
+                                                              .sale ??
+                                                          '',
+                                                      style: TextStyle(
+                                                        color:
+                                                            AppColors.blackText,
+                                                        fontSize: 14.sp,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+                      ],
+                    );
+            },
           ),
         ),
       ),
     );
   }
 
-
   Widget profileIsRequiredWidget(HomeController controller) {
     return GestureDetector(
-      onTap: controller.setProfileRequiredFalse(),
+      onTap: controller.setProfileRequiredFalse,
       child: Container(
         margin: EdgeInsets.only(bottom: 22.h),
         padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
+          borderRadius: BorderRadius.circular(
+            AppDimensions.borderRadiusMedium.r,
+          ),
           border: Border.all(
             color: AppColors.dividerColor,
             width: 1.w,
             style: BorderStyle.solid,
           ),
-          boxShadow: [BoxShadow(color: AppColors.dividerColor, blurRadius: 4.r)],
+          boxShadow: [
+            BoxShadow(color: AppColors.dividerColor, blurRadius: 4.r),
+          ],
           color: AppColors.black,
         ),
         child: Row(
@@ -595,282 +674,265 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget cardsWidget(HomeController controller){
+  Widget cardsWidget(HomeController controller) {
     return Padding(
       padding: EdgeInsets.only(bottom: AppDimensions.padding40.h),
-      child: Column(children: [
-        if (controller.cardBox.isNotEmpty) ...[
-          Container(
-            width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.all(
-              AppDimensions.paddingExtraLarge,
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.r),
-              image: DecorationImage(
-                image: AssetImage(
-                  controller.cardBox.getAt(0)!.cardDesign,
-                ),
-                fit: BoxFit.fill,
-              ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    'Senagat Bank',
-                    style: TextStyle(
-                      color: AppColors.white,
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 72.h),
-                Text(
-                  controller.cardBox.getAt(0)?.cardNumber ?? '',
-                  style: TextStyle(
-                    wordSpacing: 10.sp,
-                    fontSize: 24.sp,
-                    color: AppColors.white,
-                  ),
-                ),
-                SizedBox(height: 41.h),
-                Row(
-                  mainAxisAlignment:
-                  MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      controller.cardBox.getAt(0)?.name ?? '',
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        color: AppColors.white,
-                      ),
-                    ),
-                    Text(
-                      controller.cardBox.getAt(0)?.expiryDate ??
-                          '',
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        color: AppColors.white,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ] else ...[
-          GestureDetector(
-            onTap: () {
-              Get.toNamed(AddCardScreen.route);
-            },
-            child: Container(
-              width: 390.w,
-              height: 220.h,
+      child: Column(
+        children: [
+          if (controller.cardBox.isNotEmpty) ...[
+            Container(
+              width: MediaQuery.of(context).size.width,
+              padding: EdgeInsets.all(AppDimensions.paddingExtraLarge),
               decoration: BoxDecoration(
-                color: AppColors.inputFillBackground,
-                borderRadius: BorderRadius.circular(
-                  AppDimensions.borderRadiusMedium.r,
+                borderRadius: BorderRadius.circular(10.r),
+                image: DecorationImage(
+                  image: AssetImage(controller.cardBox.getAt(0)!.cardDesign),
+                  fit: BoxFit.fill,
                 ),
               ),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SvgPicture.asset(
-                    AppAssets.plusIcon,
-                    width: 32.w,
-                  ),
-
-                  SizedBox(height: AppDimensions.paddingMedium),
-
-                  Text(
-                    r'add_a_card'.tr,
-                    style: TextStyle(
-                      color: AppColors.blackText,
-                      fontSize: 17.sp,
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      'Senagat Bank',
+                      style: TextStyle(color: AppColors.white, fontSize: 14),
                     ),
+                  ),
+                  SizedBox(height: 72.h),
+                  Text(
+                    controller.cardBox.getAt(0)?.cardNumber ?? '',
+                    style: TextStyle(
+                      wordSpacing: 10.sp,
+                      fontSize: 24.sp,
+                      color: AppColors.white,
+                    ),
+                  ),
+                  SizedBox(height: 41.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        controller.cardBox.getAt(0)?.name ?? '',
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          color: AppColors.white,
+                        ),
+                      ),
+                      Text(
+                        controller.cardBox.getAt(0)?.expiryDate ?? '',
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          color: AppColors.white,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
-          ),
+          ] else ...[
+            GestureDetector(
+              onTap: () {
+                Get.toNamed(AddCardScreen.route);
+              },
+              child: Container(
+                width: 390.w,
+                height: 220.h,
+                decoration: BoxDecoration(
+                  color: AppColors.inputFillBackground,
+                  borderRadius: BorderRadius.circular(
+                    AppDimensions.borderRadiusMedium.r,
+                  ),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(AppAssets.plusIcon, width: 32.w),
+
+                    SizedBox(height: AppDimensions.paddingMedium),
+
+                    Text(
+                      r'add_a_card'.tr,
+                      style: TextStyle(
+                        color: AppColors.blackText,
+                        fontSize: 17.sp,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ],
-      ],),
+      ),
     );
   }
 
   Widget fastOperationsWidget(HomeController controller) {
-     return Padding(
-       padding: EdgeInsets.only(bottom: 40.h),
-       child: Column(
-           crossAxisAlignment: CrossAxisAlignment.start,
-           children: [
-         Padding(
-           padding: EdgeInsets.only(bottom: 16.h ),
-           child: Row(
-             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-             children: [
-               Text(
-                 r'fast_operations'.tr,
-                 style: TextStyle(
-                   color: AppColors.blackText,
-                   fontSize: 17.sp,
-                 ),
-               ),
-               GestureDetector(
-                 onTap: () {
-                   Get.toNamed(ServiceSettingsScreen.route);
-                 },
-                 child: Text(
-                   r'tune'.tr,
-                   style: TextStyle(
-                     color: AppColors.green,
-                     fontSize: 14.sp,
-                     fontFamily: AppFonts.secondaryFont,
-                   ),
-                 ),
-               ),
-             ],
-           ),
-         ),
+    return Padding(
+      padding: EdgeInsets.only(bottom: 40.h),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(bottom: 16.h),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  r'fast_operations'.tr,
+                  style: TextStyle(color: AppColors.blackText, fontSize: 17.sp),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Get.toNamed(ServiceSettingsScreen.route);
+                  },
+                  child: Text(
+                    r'tune'.tr,
+                    style: TextStyle(
+                      color: AppColors.green,
+                      fontSize: 14.sp,
+                      fontFamily: AppFonts.secondaryFont,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
 
-         SizedBox(
-           height: 78.h,
-           child: ListView.builder(
-             scrollDirection: Axis.horizontal,
-             physics: const NeverScrollableScrollPhysics(),
-             shrinkWrap: true,
-             itemCount: controller.getFastOperationsCount(),
+          SizedBox(
+            height: 78.h,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: controller.getFastOperationsCount(),
 
-             itemBuilder: (context, index) {
-               final isSelected =
-                   controller.lastTap ==
-                       HomeTapType.fastOperation &&
-                       controller.lastFastServiceTapIndex == index;
+              itemBuilder: (context, index) {
+                final isSelected =
+                    controller.lastTap == HomeTapType.fastOperation &&
+                    controller.lastFastServiceTapIndex == index;
 
-               if (controller
-                   .fastServiceController
-                   .selectedServiceTitle
-                   .length <=
-                   4 &&
-                   index ==
-                       controller
-                           .fastServiceController
-                           .selectedServiceTitle
-                           .length) {
-                 return GestureDetector(
-                   onTap: () {
-                     Get.toNamed(ServiceSettingsScreen.route);
-                   },
-                   child: Container(
-                     width: 90.w,
-                     height: 78.h,
-                     margin: EdgeInsets.only(
-                       right: AppDimensions.marginMedium.w,
-                     ),
-                     decoration: BoxDecoration(
-                       borderRadius: BorderRadius.circular(
-                         AppDimensions.borderRadiusMedium.r,
-                       ),
-                       border: Border.all(
-                         color: AppColors.dividerColor,
-                         width: 1.w,
-                         style: BorderStyle.solid,
-                       ),
-                       boxShadow: [
-                         BoxShadow(
-                           color: AppColors.dividerColor,
-                           blurRadius: 4.r,
-                         ),
-                       ],
-                       color: AppColors.green,
-                     ),
-                     child: Center(
-                       child: SvgPicture.asset(
-                         AppAssets.plusIcon,
-                         width: 30.w,
-                         color: AppColors.white,
-                       ),
-                     ),
-                   ),
-                 );
-               }
+                if (controller
+                            .fastServiceController
+                            .selectedServiceTitle
+                            .length <=
+                        4 &&
+                    index ==
+                        controller
+                            .fastServiceController
+                            .selectedServiceTitle
+                            .length) {
+                  return GestureDetector(
+                    onTap: () {
+                      Get.toNamed(ServiceSettingsScreen.route);
+                    },
+                    child: Container(
+                      width: 90.w,
+                      height: 78.h,
+                      margin: EdgeInsets.only(
+                        right: AppDimensions.marginMedium.w,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                          AppDimensions.borderRadiusMedium.r,
+                        ),
+                        border: Border.all(
+                          color: AppColors.dividerColor,
+                          width: 1.w,
+                          style: BorderStyle.solid,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.dividerColor,
+                            blurRadius: 4.r,
+                          ),
+                        ],
+                        color: AppColors.green,
+                      ),
+                      child: Center(
+                        child: SvgPicture.asset(
+                          AppAssets.plusIcon,
+                          width: 30.w,
+                          color: AppColors.white,
+                        ),
+                      ),
+                    ),
+                  );
+                }
 
-               return GestureDetector(
-                 onTap: () {
-                   controller.onFastServiceTap(index);
-                 },
-                 child: Container(
-                   width: 90.w,
-                   height: 78.h,
-                   padding: EdgeInsets.symmetric(
-                     vertical: AppDimensions.paddingMedium.h,
-                   ),
-                   margin: EdgeInsets.only(
-                     right: AppDimensions.marginMedium.w,
-                   ),
-                   decoration: BoxDecoration(
-                     borderRadius: BorderRadius.circular(
-                       AppDimensions.borderRadiusMedium.r,
-                     ),
-                     border: Border.all(
-                       color: AppColors.dividerColor,
-                       width: 1.w,
-                       style: BorderStyle.solid,
-                     ),
-                     boxShadow: [
-                       BoxShadow(
-                         color: AppColors.dividerColor,
-                         blurRadius: 4.r,
-                       ),
-                     ],
-                     color: isSelected
-                         ? AppColors.green
-                         : AppColors.white,
-                   ),
-                   child: Column(
-                     mainAxisAlignment:
-                     MainAxisAlignment.spaceAround,
-                     children: [
-                       SvgPicture.asset(
-                         controller
-                             .fastServiceController
-                             .selectedServiceIcons[index],
-                         width: 30.w,
-                         color: isSelected
-                             ? AppColors.white
-                             : AppColors.green,
-                       ),
-                       Text(
-                         controller.fastServiceController
-                             .selectedServiceTitle[index]
-                             .tr,
-                         maxLines: 1,
-                         textAlign: TextAlign.center,
-                         style: TextStyle(
-                           color: isSelected
-                               ? AppColors.white
-                               : AppColors.blackText,
-                           fontSize: 14.sp,
-                           fontFamily: AppFonts.secondaryFont,
-                         ),
-                       ),
-                     ],
-                   ),
-                 ),
-               );
-             },
-           ),
-         ),
-       ]),
-     );
+                return GestureDetector(
+                  onTap: () {
+                    controller.onFastServiceTap(index);
+                  },
+                  child: Container(
+                    width: 90.w,
+                    height: 78.h,
+                    padding: EdgeInsets.symmetric(
+                      vertical: AppDimensions.paddingMedium.h,
+                    ),
+                    margin: EdgeInsets.only(
+                      right: AppDimensions.marginMedium.w,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(
+                        AppDimensions.borderRadiusMedium.r,
+                      ),
+                      border: Border.all(
+                        color: AppColors.dividerColor,
+                        width: 1.w,
+                        style: BorderStyle.solid,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.dividerColor,
+                          blurRadius: 4.r,
+                        ),
+                      ],
+                      color: isSelected ? AppColors.green : AppColors.white,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        SvgPicture.asset(
+                          controller
+                              .fastServiceController
+                              .selectedServiceIcons[index],
+                          width: 30.w,
+                          color: isSelected ? AppColors.white : AppColors.green,
+                        ),
+                        Text(
+                          controller
+                              .fastServiceController
+                              .selectedServiceTitle[index]
+                              .tr,
+                          maxLines: 1,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: isSelected
+                                ? AppColors.white
+                                : AppColors.blackText,
+                            fontSize: 14.sp,
+                            fontFamily: AppFonts.secondaryFont,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget charityFoundationWidget(HomeController controller) {
     return Padding(
-      padding:  EdgeInsets.only(bottom: 40.h),
+      padding: EdgeInsets.only(bottom: 40.h),
       child: GestureDetector(
         onTap: () {
           controller.onFoundationTap();
@@ -910,7 +972,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: AppDimensions.paddingMedium.h),
+                      padding: EdgeInsets.symmetric(
+                        vertical: AppDimensions.paddingMedium.h,
+                      ),
                       child: Text(
                         r'donations_of_any_amount'.tr,
                         style: TextStyle(
@@ -956,7 +1020,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget inquiriesWidget(HomeController controller, int index){
+  Widget inquiriesWidget(HomeController controller, int index) {
     return Padding(
       padding: EdgeInsetsGeometry.only(bottom: AppDimensions.padding40.h),
       child: Column(
@@ -965,8 +1029,10 @@ class _HomeScreenState extends State<HomeScreen> {
           Container(
             padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
-                color: AppColors.orange
+              borderRadius: BorderRadius.circular(
+                AppDimensions.borderRadiusMedium.r,
+              ),
+              color: AppColors.orange,
             ),
             child: Column(
               children: [
@@ -974,11 +1040,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      controller.userInformationModel.certificates![0].certificateName ?? '',
-                      style: TextStyle(
-                        color: AppColors.white,
-                        fontSize: 14.sp,
-                      ),
+                      controller
+                              .userInformationModel!
+                              .certificates![0]
+                              .certificateName ??
+                          '',
+                      style: TextStyle(color: AppColors.white, fontSize: 14.sp),
                     ),
                     Row(
                       children: [
@@ -989,10 +1056,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontSize: 14.sp,
                           ),
                         ),
-                        SizedBox(width: 6.w,),
-                        SvgPicture.asset(AppAssets.arrowRightIcon, width: 14.w, color: AppColors.white,)
+                        SizedBox(width: 6.w),
+                        SvgPicture.asset(
+                          AppAssets.arrowRightIcon,
+                          width: 14.w,
+                          color: AppColors.white,
+                        ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ],
@@ -1003,8 +1074,8 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget creditsWidget(HomeController controller, int index){
-    final loan = controller.userInformationModel.loan?[index];
+  Widget creditsWidget(HomeController controller, int index) {
+    final loan = controller.userInformationModel!.loan?[index];
     return Padding(
       padding: EdgeInsetsGeometry.only(bottom: AppDimensions.padding40.h),
       child: Column(
@@ -1013,8 +1084,10 @@ class _HomeScreenState extends State<HomeScreen> {
           Container(
             padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
-              color: AppColors.blue
+              borderRadius: BorderRadius.circular(
+                AppDimensions.borderRadiusMedium.r,
+              ),
+              color: AppColors.blue,
             ),
             child: Column(
               children: [
@@ -1023,10 +1096,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Text(
                       loan?.creditName ?? '',
-                      style: TextStyle(
-                        color: AppColors.white,
-                        fontSize: 14.sp,
-                      ),
+                      style: TextStyle(color: AppColors.white, fontSize: 14.sp),
                     ),
                     Row(
                       children: [
@@ -1037,13 +1107,17 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontSize: 14.sp,
                           ),
                         ),
-                        SizedBox(width: 6.w,),
-                        SvgPicture.asset(AppAssets.arrowRightIcon, width: 14.w, color: AppColors.white,)
+                        SizedBox(width: 6.w),
+                        SvgPicture.asset(
+                          AppAssets.arrowRightIcon,
+                          width: 14.w,
+                          color: AppColors.white,
+                        ),
                       ],
-                    )
+                    ),
                   ],
                 ),
-                SizedBox(height: AppDimensions.paddingExtraLarge.h,),
+                SizedBox(height: AppDimensions.paddingExtraLarge.h),
                 Row(
                   children: [
                     Expanded(
@@ -1058,7 +1132,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               fontFamily: AppFonts.secondaryFont,
                             ),
                           ),
-                          SizedBox(height: 4.h,),
+                          SizedBox(height: 4.h),
                           Text(
                             loan?.amount.toString() ?? '',
                             style: TextStyle(
@@ -1073,7 +1147,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     Container(
                       width: 1.w,
                       height: 44.h,
-                      margin: EdgeInsets.symmetric(horizontal: AppDimensions.paddingExtraLarge.w),
+                      margin: EdgeInsets.symmetric(
+                        horizontal: AppDimensions.paddingExtraLarge.w,
+                      ),
                       color: AppColors.white,
                     ),
 
@@ -1090,7 +1166,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             maxLines: 1,
                           ),
-                          SizedBox(height: 4.h,),
+                          SizedBox(height: 4.h),
                           Text(
                             loan?.monthlyPayment.toString() ?? '',
                             style: TextStyle(
@@ -1105,7 +1181,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     Container(
                       width: 1.w,
                       height: 44.h,
-                      margin: EdgeInsets.symmetric(horizontal: AppDimensions.paddingExtraLarge.w),
+                      margin: EdgeInsets.symmetric(
+                        horizontal: AppDimensions.paddingExtraLarge.w,
+                      ),
                       color: AppColors.white,
                     ),
 
@@ -1121,7 +1199,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               fontFamily: AppFonts.secondaryFont,
                             ),
                           ),
-                          SizedBox(height: 4.h,),
+                          SizedBox(height: 4.h),
                           Text(
                             r'8,000'.tr,
                             style: TextStyle(
@@ -1141,5 +1219,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
 }

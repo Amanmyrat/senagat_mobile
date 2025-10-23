@@ -197,6 +197,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
           onLongPress: () => controller.onLongTap(),
           child: Container(
             margin: EdgeInsets.only(bottom: 10.h),
+            color: AppColors.white,
             padding: EdgeInsets.symmetric(vertical: AppDimensions.paddingMedium.h),
             child: Row(
               children: [
