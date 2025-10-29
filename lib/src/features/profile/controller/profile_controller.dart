@@ -23,6 +23,6 @@ class ProfileController extends GetxController
   void onInit() {
     super.onInit();
    final savedProfile = profileBox.get('currentProfile');
-   fullName = '${savedProfile!.firstName} ${savedProfile.lastName}';
+   fullName = '${savedProfile?.firstName ?? r'name'.tr} ${savedProfile?.lastName ?? r'last_name'.tr}';
   }
 }

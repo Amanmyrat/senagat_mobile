@@ -61,46 +61,51 @@ class _HomeScreenState extends State<HomeScreen> {
                               cardsWidget(controller),
                               fastOperationsWidget(controller),
                               charityFoundationWidget(controller),
-                              Text(
-                                r'inquiries'.tr,
-                                style: TextStyle(
-                                  color: AppColors.blackText,
-                                  fontSize: 17.sp,
-                                ),
-                              ),
-                              SizedBox(height: 16.h),
-                              ListView.builder(
-                                itemCount: controller
-                                    .userInformationModel!
-                                    .certificates
-                                    ?.length,
-                                shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
-                                itemBuilder: (context, index) {
-                                  return inquiriesWidget(controller, index);
-                                },
-                              ),
 
-                              Text(
-                                r'credits'.tr,
-                                style: TextStyle(
-                                  color: AppColors.blackText,
-                                  fontSize: 17.sp,
+                              if (controller.isProfileRequired == false) ...[
+                                Text(
+                                  r'inquiries'.tr,
+                                  style: TextStyle(
+                                    color: AppColors.blackText,
+                                    fontSize: 17.sp,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 16.h),
+                                SizedBox(height: 16.h),
+                                ListView.builder(
+                                  itemCount: controller
+                                      .userInformationModel
+                                      ?.certificates
+                                      ?.length,
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    return inquiriesWidget(controller, index);
+                                  },
+                                ),
+                              ],
 
-                              ListView.builder(
-                                itemCount: controller
-                                    .userInformationModel!
-                                    .loan
-                                    ?.length,
-                                shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
-                                itemBuilder: (context, index) {
-                                  return creditsWidget(controller, index);
-                                },
-                              ),
+                              if (controller.isProfileRequired == false) ...[
+                                Text(
+                                  r'credits'.tr,
+                                  style: TextStyle(
+                                    color: AppColors.blackText,
+                                    fontSize: 17.sp,
+                                  ),
+                                ),
+                                SizedBox(height: 16.h),
+
+                                ListView.builder(
+                                  itemCount: controller
+                                      .userInformationModel
+                                      ?.loan
+                                      ?.length,
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    return creditsWidget(controller, index);
+                                  },
+                                ),
+                              ],
 
                               Text(
                                 r'services'.tr,
@@ -1041,8 +1046,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Text(
                       controller
-                              .userInformationModel!
-                              .certificates![0]
+                              .userInformationModel
+                              ?.certificates?[0]
                               .certificateName ??
                           '',
                       style: TextStyle(color: AppColors.white, fontSize: 14.sp),
@@ -1075,7 +1080,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget creditsWidget(HomeController controller, int index) {
-    final loan = controller.userInformationModel!.loan?[index];
+    final loan = controller.userInformationModel?.loan?[index];
     return Padding(
       padding: EdgeInsetsGeometry.only(bottom: AppDimensions.padding40.h),
       child: Column(

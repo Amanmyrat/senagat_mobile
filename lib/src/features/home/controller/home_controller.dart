@@ -44,7 +44,7 @@ class HomeController extends GetxController with StateControlMixin {
 
   String cardKey = 'card';
 
-  bool isProfileRequired = false;
+  bool isProfileRequired = true;
 
   final _exchange = <ExchangeRateModel>[];
   List<ExchangeRateModel> get exchange => _exchange;
