@@ -12,8 +12,14 @@ import '../../get_card/repository/card_repository.dart';
 import '../../map_search/model/location_model.dart';
 
 class GetCardDetailsController extends GetxController with StateControlMixin {
-  late final TextEditingController homePhoneNumberController;
+
+
+  late final TextEditingController workPhoneController;
   late final TextEditingController phoneController;
+  late final TextEditingController emailController;
+  late final TextEditingController workPositionController;
+  late bool internetService = false;
+  late bool delivery = false;
 
   String? selectedCardTitle;
   String? selectedCardImage;
@@ -43,13 +49,17 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
     selectedCardImage = Get.arguments['selectedCardImage'];
     selectedCardId = Get.arguments['selectedCardId'];
     sum = Get.arguments['sum'];
-    homePhoneNumberController = TextEditingController();
+    workPhoneController = TextEditingController();
     phoneController = TextEditingController();
+    emailController = TextEditingController();
+    workPositionController = TextEditingController();
     getBranches();
   }
 
-  void onInformationNotEmpty() {
-    if (homePhoneNumberController.text.isNotEmpty &&
+  void onInformationNotEmpty(String v) {
+    if (workPhoneController.text.isNotEmpty &&
+        emailController.text.isNotEmpty &&
+        workPositionController.text.isNotEmpty &&
         phoneController.text.length >= 8 &&
         selectedDropdownBranch != null) {
       continueEnabled = true;
@@ -60,12 +70,24 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
     }
   }
 
+  void onCheckBoxTap(String type) {
+    if (type == 'internet') {
+      internetService = !internetService;
+    } else if (type == 'delivery') {
+      delivery = !delivery;
+    }
+    update();
+  }
+
+
   Future<CardOrderModel> _getCardOrderModel() async {
     return CardOrderModel(
       typeId: selectedCardId,
       phoneNumber: phoneController.text,
-      homePhoneNumber: homePhoneNumberController.text,
+      workPhone: int.parse(workPhoneController.text),
       bankBranch: selectedDropdownBranch,
+      internetService: internetService,
+      delivery: delivery,
     );
   }
 
@@ -117,7 +139,7 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
 
   void setDropdownBranch(int? value) {
     selectedDropdownBranch = value;
-    onInformationNotEmpty();
+    onInformationNotEmpty('');
     update();
   }
 }

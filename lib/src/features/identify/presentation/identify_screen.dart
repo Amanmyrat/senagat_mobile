@@ -121,10 +121,10 @@ class _IdentifyScreenState extends State<IdentifyScreen> {
                                   AppDimensions.borderRadiusMedium,
                                 ),
                               ),
-                              child: Text(
+                              child: controller.phone != null ? Text(
                                 '+993',
                                 style: TextStyle(fontSize: 14.sp),
-                              ),
+                              ) : null,
                             ),
                             SizedBox(width: AppDimensions.paddingSmall.w),
                             Expanded(

@@ -160,13 +160,11 @@ class HomeController extends GetxController with StateControlMixin {
       userInformationModel = value;
 
       status = Status.completed;
-
       profileBox.put('currentProfile', userInformationModel!.profileModel!);
       checkProfile();
       update();
 
     }).catchError((e){
-      status = Status.error;
       update();
       ShowSnack.showSnack(r'error'.tr, SnackType.error);
 

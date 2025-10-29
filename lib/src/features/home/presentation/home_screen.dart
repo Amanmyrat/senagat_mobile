@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               fastOperationsWidget(controller),
                               charityFoundationWidget(controller),
 
-                              if (controller.isProfileRequired == false) ...[
+                              if (controller.userInformationModel?.certificates != null) ...[
                                 Text(
                                   r'inquiries'.tr,
                                   style: TextStyle(
@@ -82,9 +82,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                     return inquiriesWidget(controller, index);
                                   },
                                 ),
+                              ] else ...[
+                                SizedBox.shrink(),
                               ],
 
-                              if (controller.isProfileRequired == false) ...[
+                              if (controller.userInformationModel?.loan != null) ...[
                                 Text(
                                   r'credits'.tr,
                                   style: TextStyle(
@@ -105,6 +107,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     return creditsWidget(controller, index);
                                   },
                                 ),
+                              ] else ...[
+                                SizedBox.shrink(),
                               ],
 
                               Text(

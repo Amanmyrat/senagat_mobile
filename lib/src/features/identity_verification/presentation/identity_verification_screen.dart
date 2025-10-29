@@ -14,6 +14,7 @@ import '../../../widgets/elevated_button_with_state.dart';
 
 class IdentityVerificationScreen extends StatefulWidget {
   static const route = '/identity/verification';
+
   const IdentityVerificationScreen({super.key});
 
   @override
@@ -56,9 +57,9 @@ class _IdentityVerificationScreenState
                           ),
                           SizedBox(height: 32.h),
                           ListView.builder(
-                            itemCount: 6,
+                            itemCount: controller.controllers.length,
                             shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
+                            physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               if (controller.controllers[index] ==
                                   controller.passportNumberController) {
@@ -95,12 +96,9 @@ class _IdentityVerificationScreenState
                                                   .onTextIsNotEmpty(v),
                                               style: TextStyle(fontSize: 14.sp),
                                               decoration: InputDecoration(
-                                                hintText: r'AS',
-                                                hintStyle: TextStyle(
-                                                  color: AppColors.black,
-                                                  fontSize: 14.sp,
-                                                ),
-                                                border: OutlineInputBorder(),
+                                                hintText: 'AS',
+                                                border:
+                                                    const OutlineInputBorder(),
                                                 focusedBorder: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -136,7 +134,7 @@ class _IdentityVerificationScreenState
                                               ),
                                             ),
                                           ),
-                                          SizedBox(width: 4.sp),
+                                          SizedBox(width: 4.w),
                                           Expanded(
                                             child: TextFormField(
                                               textInputAction:
@@ -150,8 +148,9 @@ class _IdentityVerificationScreenState
                                                   .onTextIsNotEmpty(v),
                                               style: TextStyle(fontSize: 14.sp),
                                               decoration: InputDecoration(
-                                                hintText: r'passport_number'.tr,
-                                                border: OutlineInputBorder(),
+                                                hintText: 'passport_number'.tr,
+                                                border:
+                                                    const OutlineInputBorder(),
                                                 focusedBorder: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -193,6 +192,10 @@ class _IdentityVerificationScreenState
                                   ),
                                 );
                               }
+                              if(controller.controllers[index] == controller.asController){
+                                return SizedBox.shrink();
+                              }
+                              // Default text fields
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -210,28 +213,31 @@ class _IdentityVerificationScreenState
                                     textInputAction: TextInputAction.next,
                                     keyboardType:
                                         (controller.controllers[index] ==
-                                                controller.controllers[3] ||
+                                                controller
+                                                    .dateOfBirthController ||
                                             controller.controllers[index] ==
-                                                controller.controllers[5])
+                                                controller
+                                                    .dateIssueController ||
+                                            controller.controllers[index] ==
+                                                controller.homePhoneController)
                                         ? TextInputType.number
                                         : TextInputType.name,
                                     controller: controller.controllers[index],
-                                    inputFormatters: [
-                                      ?controller.controllers[index] ==
-                                                  controller
-                                                      .dateOfBirthController ||
-                                              controller.controllers[index] ==
-                                                  controller.dateIssueController
-                                          ? controller.dateFormatter
-                                          : null,
-                                    ],
+                                    inputFormatters:
+                                        (controller.controllers[index] ==
+                                                controller
+                                                    .dateOfBirthController ||
+                                            controller.controllers[index] ==
+                                                controller.dateIssueController)
+                                        ? [controller.dateFormatter]
+                                        : [],
                                     onChanged: (v) =>
                                         controller.onTextIsNotEmpty(v),
                                     style: TextStyle(fontSize: 14.sp),
                                     decoration: InputDecoration(
                                       hintText:
                                           controller.textFieldTitle[index].tr,
-                                      border: OutlineInputBorder(),
+                                      border: const OutlineInputBorder(),
                                       focusedBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(
                                           AppDimensions.borderRadiusMedium,
@@ -265,49 +271,6 @@ class _IdentityVerificationScreenState
                             },
                           ),
 
-                          Text(
-                            r'place_of_issue'.tr,
-                            style: TextStyle(
-                              color: AppColors.blackText,
-                              fontSize: 14.sp,
-                            ),
-                          ),
-                          SizedBox(height: AppDimensions.paddingMedium),
-                          TextFormField(
-                            textInputAction: TextInputAction.next,
-                            keyboardType: TextInputType.name,
-                            controller: controller.placeIssueController,
-                            onChanged: (v) => controller.onTextIsNotEmpty(v),
-                            style: TextStyle(fontSize: 14.sp),
-                            decoration: InputDecoration(
-                              hintText: 'place_of_issue'.tr,
-                              border: OutlineInputBorder(),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(
-                                  AppDimensions.borderRadiusMedium,
-                                ),
-                                borderSide: BorderSide(
-                                  color: AppColors.green,
-                                  width: 1.w,
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(
-                                  AppDimensions.borderRadiusMedium,
-                                ),
-                                borderSide: BorderSide(
-                                  color: AppColors.white,
-                                  width: 1.w,
-                                ),
-                              ),
-                              counter: const SizedBox(),
-                              contentPadding: EdgeInsets.symmetric(
-                                vertical: AppDimensions.paddingExtraLarge.h,
-                                horizontal: AppDimensions.paddingLarge.w,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 22.h),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

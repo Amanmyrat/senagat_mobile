@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:roundcheckbox/roundcheckbox.dart';
 import 'package:senagat_mobile/src/core/globals.dart';
 import 'package:senagat_mobile/src/features/get_card/repository/card_repository.dart';
 import 'package:senagat_mobile/src/features/get_card_details/controller/get_card_details_controller.dart';
@@ -123,7 +124,74 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                                   keyboardType: TextInputType.phone,
                                   controller: controller.phoneController,
                                   onChanged: (v) =>
-                                      controller.onInformationNotEmpty(),
+                                      controller.onInformationNotEmpty(v),
+                                  maxLength: 8,
+                                  style: TextStyle(fontSize: 14.sp),
+                                  decoration: InputDecoration(
+                                    hintText: r'enter_number'.tr,
+                                    border: OutlineInputBorder(),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(
+                                        AppDimensions.borderRadiusMedium,
+                                      ),
+                                      borderSide: BorderSide(
+                                        color: AppColors.green,
+                                        width: 1.w,
+                                      ),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(
+                                        AppDimensions.borderRadiusMedium,
+                                      ),
+                                      borderSide: BorderSide(
+                                        color: AppColors.white,
+                                        width: 1.w,
+                                      ),
+                                    ),
+                                    counter: const SizedBox(),
+                                    contentPadding: EdgeInsets.symmetric(
+                                      vertical:
+                                          AppDimensions.paddingExtraLarge.h,
+                                      horizontal: AppDimensions.paddingLarge.w,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 22.h),
+                          Text(
+                            'work_phone'.tr,
+                            style: TextStyle(
+                              color: AppColors.blackText,
+                              fontSize: 14.sp,
+                            ),
+                          ),
+                          SizedBox(height: AppDimensions.paddingMedium.h),
+                          Row(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(
+                                  AppDimensions.paddingExtraLarge.w,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: AppColors.inputFillBackground,
+                                  borderRadius: BorderRadius.circular(
+                                    AppDimensions.borderRadiusMedium,
+                                  ),
+                                ),
+                                child: Text(
+                                  '+993',
+                                  style: TextStyle(fontSize: 14.sp),
+                                ),
+                              ),
+                              SizedBox(width: AppDimensions.paddingSmall.w),
+                              Expanded(
+                                child: TextFormField(
+                                  keyboardType: TextInputType.phone,
+                                  controller: controller.workPhoneController,
+                                  onChanged: (v) =>
+                                      controller.onInformationNotEmpty(v),
                                   maxLength: 8,
                                   style: TextStyle(fontSize: 14.sp),
                                   decoration: InputDecoration(
@@ -200,63 +268,212 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                             onChanged: (v) => controller.setDropdownBranch(v),
                             items: controller.branches
                                 .map(
-                                  (item) =>
-                                  DropdownMenuItem<int>(
+                                  (item) => DropdownMenuItem<int>(
                                     value: item.id,
                                     child: Text(
                                       item.name,
-                                      style: TextStyle(
-                                        fontSize: 14.sp,
-                                      ),
+                                      style: TextStyle(fontSize: 14.sp),
                                     ),
                                   ),
-                            ).toList(),
+                                )
+                                .toList(),
                           ),
                           SizedBox(height: 22.h),
 
-                          Text(
-                            r'home_phone_number'.tr,
-                            style: TextStyle(
-                              color: AppColors.blackText,
-                              fontSize: 14.sp,
-                            ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'work_position'.tr,
+                                style: TextStyle(
+                                  color: AppColors.blackText,
+                                  fontSize: 14.sp,
+                                ),
+                              ),
+                              SizedBox(height: AppDimensions.paddingMedium.h),
+                              TextFormField(
+                                textInputAction: TextInputAction.next,
+                                keyboardType: TextInputType.text,
+                                controller: controller.workPositionController,
+                                onChanged: (v) =>
+                                    controller.onInformationNotEmpty(v),
+                                style: TextStyle(fontSize: 14.sp),
+                                decoration: InputDecoration(
+                                  hintText: 'work_position'.tr,
+                                  border: const OutlineInputBorder(),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                      AppDimensions.borderRadiusMedium,
+                                    ),
+                                    borderSide: BorderSide(
+                                      color: AppColors.green,
+                                      width: 1.w,
+                                    ),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                      AppDimensions.borderRadiusMedium,
+                                    ),
+                                    borderSide: BorderSide(
+                                      color: AppColors.white,
+                                      width: 1.w,
+                                    ),
+                                  ),
+                                  counter: const SizedBox(),
+                                  contentPadding: EdgeInsets.symmetric(
+                                    vertical: AppDimensions.paddingExtraLarge.h,
+                                    horizontal: AppDimensions.paddingLarge.w,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 22.h),
+                            ],
                           ),
-                          SizedBox(height: AppDimensions.paddingMedium.h),
-                          TextFormField(
-                            textInputAction: TextInputAction.next,
-                            keyboardType: TextInputType.number,
-                            controller: controller.homePhoneNumberController,
-                            onChanged: (v) =>
-                                controller.onInformationNotEmpty(),
-                            style: TextStyle(fontSize: 14.sp),
-                            decoration: InputDecoration(
-                              hintText: r'enter_number'.tr,
-                              border: OutlineInputBorder(),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(
-                                  AppDimensions.borderRadiusMedium,
-                                ),
-                                borderSide: BorderSide(
-                                  color: AppColors.green,
-                                  width: 1.w,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'email'.tr,
+                                style: TextStyle(
+                                  color: AppColors.blackText,
+                                  fontSize: 14.sp,
                                 ),
                               ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(
-                                  AppDimensions.borderRadiusMedium,
-                                ),
-                                borderSide: BorderSide(
-                                  color: AppColors.white,
-                                  width: 1.w,
+                              SizedBox(height: AppDimensions.paddingMedium.h),
+                              TextFormField(
+                                textInputAction: TextInputAction.next,
+                                keyboardType: TextInputType.text,
+                                controller: controller.emailController,
+                                onChanged: (v) =>
+                                    controller.onInformationNotEmpty,
+                                style: TextStyle(fontSize: 14.sp),
+                                decoration: InputDecoration(
+                                  hintText: 'email'.tr,
+                                  border: const OutlineInputBorder(),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                      AppDimensions.borderRadiusMedium,
+                                    ),
+                                    borderSide: BorderSide(
+                                      color: AppColors.green,
+                                      width: 1.w,
+                                    ),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                      AppDimensions.borderRadiusMedium,
+                                    ),
+                                    borderSide: BorderSide(
+                                      color: AppColors.white,
+                                      width: 1.w,
+                                    ),
+                                  ),
+                                  counter: const SizedBox(),
+                                  contentPadding: EdgeInsets.symmetric(
+                                    vertical: AppDimensions.paddingExtraLarge.h,
+                                    horizontal: AppDimensions.paddingLarge.w,
+                                  ),
                                 ),
                               ),
-                              counter: const SizedBox(),
-                              contentPadding: EdgeInsets.symmetric(
-                                vertical: AppDimensions.paddingExtraLarge.h,
-                                horizontal: AppDimensions.paddingLarge.w,
-                              ),
-                            ),
+                              SizedBox(height: 22.h),
+                            ],
                           ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              GestureDetector(
+                                onTap: () =>
+                                    controller.onCheckBoxTap('internet'),
+                                child: Container(
+                                  padding: EdgeInsets.all(
+                                    AppDimensions.paddingExtraLarge.w,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.inputFillBackground,
+                                    borderRadius: BorderRadius.circular(
+                                      AppDimensions.borderRadiusMedium,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'internet_service'.tr,
+                                        style: TextStyle(
+                                          color: AppColors.blackText,
+                                          fontSize: 14.sp,
+                                        ),
+                                      ),
+                                      RoundCheckBox(
+                                        size: 27.w,
+                                        checkedColor: Colors.transparent,
+                                        checkedWidget: SvgPicture.asset(
+                                          AppAssets.checkBoxIcon,
+                                          color: AppColors.green,
+                                        ),
+                                        border: Border.all(
+                                          color: AppColors.black,
+                                        ),
+                                        isRound: false,
+                                        isChecked: controller.internetService,
+                                        // ← make sure to bind it
+                                        onTap: (value) => controller
+                                            .onCheckBoxTap('internet'),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: AppDimensions.paddingExtraLarge.w,
+                              ),
+                              GestureDetector(
+                                onTap: () =>
+                                    controller.onCheckBoxTap('delivery'),
+                                child: Container(
+                                  padding: EdgeInsets.all(
+                                    AppDimensions.paddingExtraLarge.w,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.inputFillBackground,
+                                    borderRadius: BorderRadius.circular(
+                                      AppDimensions.borderRadiusMedium,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'delivery'.tr,
+                                        style: TextStyle(
+                                          color: AppColors.blackText,
+                                          fontSize: 14.sp,
+                                        ),
+                                      ),
+                                      RoundCheckBox(
+                                        size: 27.w,
+                                        checkedColor: Colors.transparent,
+                                        checkedWidget: SvgPicture.asset(
+                                          AppAssets.checkBoxIcon,
+                                          color: AppColors.green,
+                                        ),
+                                        border: Border.all(
+                                          color: AppColors.black,
+                                        ),
+                                        isRound: false,
+                                        isChecked: controller.delivery,
+                                        onTap: (value) => controller
+                                            .onCheckBoxTap('delivery'),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 22.h),
                         ],
                       ),
                     ),

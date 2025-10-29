@@ -5,7 +5,11 @@ class CardOrderModel {
   final int? typeId;
   final String? phoneNumber;
   final int? bankBranch;
-  final String? homePhoneNumber;
+  final String? workPosition;
+  final int? workPhone;
+  final bool? internetService;
+  final bool? delivery;
+  final String? email;
 
   CardOrderModel({
     this.id,
@@ -14,7 +18,11 @@ class CardOrderModel {
     this.typeId,
     this.phoneNumber,
     this.bankBranch,
-    this.homePhoneNumber,
+    this.workPosition,
+    this.workPhone,
+    this.internetService,
+    this.delivery,
+    this.email,
   });
 
   factory CardOrderModel.fromJson(Map<String, dynamic> json) {
@@ -25,7 +33,11 @@ class CardOrderModel {
       typeId: json['card_type_id'],
       phoneNumber: json['phone_number'],
       bankBranch: json['bank_branch_id'],
-      homePhoneNumber: json['home_phone_number'],
+      workPosition: json['work_position'],
+      workPhone: json['work_phone'],
+      internetService: json['internet_service'],
+      delivery: json['delivery'],
+      email: json['email'],
     );
   }
 
@@ -34,7 +46,11 @@ class CardOrderModel {
       "card_type_id": typeId,
       "phone_number": phoneNumber,
       "bank_branch_id": bankBranch,
-      "home_phone_number": homePhoneNumber,
+      "work_position": workPosition,
+      "work_phone": workPhone,
+      "internet_service": internetService,
+      "delivery": delivery,
+      "email": email,
     };
   }
 }
