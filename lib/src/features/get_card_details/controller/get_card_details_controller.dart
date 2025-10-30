@@ -61,6 +61,7 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
         emailController.text.isNotEmpty &&
         workPositionController.text.isNotEmpty &&
         phoneController.text.length >= 8 &&
+        workPhoneController.text.length >= 8 &&
         selectedDropdownBranch != null) {
       continueEnabled = true;
       update();
@@ -85,9 +86,11 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
       typeId: selectedCardId,
       phoneNumber: phoneController.text,
       workPhone: int.parse(workPhoneController.text),
+      workPosition: workPositionController.text,
       bankBranch: selectedDropdownBranch,
       internetService: internetService,
       delivery: delivery,
+      email: emailController.text,
     );
   }
 

@@ -107,7 +107,7 @@ class IdentityVerificationController extends GetxController
       gender: 'male',
       passportScan: passportFile,
       citizenship: citizenshipController.text,
-      homePhone: int.tryParse(homePhoneController.text),
+      homePhone: homePhoneController.text,
       homeAddress: homeAddressController.text,
     );
   }
@@ -125,8 +125,11 @@ class IdentityVerificationController extends GetxController
       await profileBox.put('currentProfile', model);
 
       final dashboardController = Get.find<DashboardController>();
-      dashboardController.updateCurrentIndex(NestedNavigationIds.settings);
 
+      final homeController = Get.find<HomeController>();
+
+      homeController.getUserProfileInfo();
+      dashboardController.updateCurrentIndex(NestedNavigationIds.settings);
       Navigator.of(Get.context!).pushNamedAndRemoveUntil(
         DashboardScreen.route,
             (Route<dynamic> route) => false,
@@ -135,6 +138,7 @@ class IdentityVerificationController extends GetxController
       update();
     } catch (e) {
       status = Status.error;
+      print(e);
       update();
     }
   }

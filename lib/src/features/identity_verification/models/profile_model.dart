@@ -39,7 +39,7 @@ class ProfileModel extends HiveObject {
   final String? citizenship;
 
   @HiveField(11)
-  final int? homePhone;
+  final String? homePhone;
 
   @HiveField(12)
   final String? homeAddress;

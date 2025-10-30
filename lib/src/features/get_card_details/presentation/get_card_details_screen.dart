@@ -284,7 +284,7 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'work_position'.tr,
+                                'job_title'.tr,
                                 style: TextStyle(
                                   color: AppColors.blackText,
                                   fontSize: 14.sp,
@@ -299,7 +299,7 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                                     controller.onInformationNotEmpty(v),
                                 style: TextStyle(fontSize: 14.sp),
                                 decoration: InputDecoration(
-                                  hintText: 'work_position'.tr,
+                                  hintText: 'job_title'.tr,
                                   border: const OutlineInputBorder(),
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(
@@ -345,7 +345,7 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                                 keyboardType: TextInputType.text,
                                 controller: controller.emailController,
                                 onChanged: (v) =>
-                                    controller.onInformationNotEmpty,
+                                    controller.onInformationNotEmpty(v),
                                 style: TextStyle(fontSize: 14.sp),
                                 decoration: InputDecoration(
                                   hintText: 'email'.tr,
@@ -381,6 +381,14 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              Text(
+                                'internet_service'.tr,
+                                style: TextStyle(
+                                  color: AppColors.blackText,
+                                  fontSize: 14.sp,
+                                ),
+                              ),
+                              SizedBox(height: AppDimensions.paddingMedium.h),
                               GestureDetector(
                                 onTap: () =>
                                     controller.onCheckBoxTap('internet'),
@@ -428,6 +436,14 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                               SizedBox(
                                 height: AppDimensions.paddingExtraLarge.w,
                               ),
+                              Text(
+                                'delivery'.tr,
+                                style: TextStyle(
+                                  color: AppColors.blackText,
+                                  fontSize: 14.sp,
+                                ),
+                              ),
+                              SizedBox(height: AppDimensions.paddingMedium.h),
                               GestureDetector(
                                 onTap: () =>
                                     controller.onCheckBoxTap('delivery'),

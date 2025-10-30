@@ -32,7 +32,7 @@ class CheckWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Positioned.fill(
       child: Container(
-        color: AppColors.black.withOpacity(0.4), // dim background
+        color: AppColors.black.withOpacity(0.4),
         child: Center(
           child: Container(
             width: MediaQuery.of(context).size.width,
@@ -87,7 +87,8 @@ class CheckWidget extends StatelessWidget {
                         textAlign: TextAlign.center,
                       ),
 
-                if (isTitle == false) SizedBox(height: 22.h),
+                if (isTitle == false)
+                  SizedBox(height: 22.h),
 
                 if (isTitle == false)
                   isLoading
@@ -101,10 +102,8 @@ class CheckWidget extends StatelessWidget {
                             child: ElevatedButtonWithState(
                               onPressed: () {
                                 try {
-                                  final dashboardController = Get.find<DashboardController>();
-                                  dashboardController.updateCurrentIndex(NestedNavigationIds.home);
                                   final homeController = Get.find<HomeController>();
-                                  homeController.onInit();
+                                  homeController.getUserProfileInfo();
 
                                   Get.offAllNamed(DashboardScreen.route);
 
