@@ -26,6 +26,7 @@ import 'package:senagat_mobile/src/features/net_and_tv/presentation/net_and_tv_s
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
 import 'package:senagat_mobile/src/features/notifications_settings/presentation/notifications_settings_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/payment_screen.dart';
+import 'package:senagat_mobile/src/features/profile/controller/profile_controller.dart';
 import 'package:senagat_mobile/src/features/qr_code/presentation/qr_code_screen.dart';
 import 'package:senagat_mobile/src/features/register/presentation/register_screen.dart';
 import 'package:senagat_mobile/src/features/register_confirmation/presentation/register_confirmation.dart';
@@ -248,6 +249,7 @@ class DashboardBinding extends Bindings {
     Get.put(AuthController(), permanent: true);
     Get.put(ServiceSettingsController());
     Get.put(AddCardController());
+    Get.put(ProfileController());
     Get.put(HomeController(
         ExchangeRateRepository(apiService: ApiServices.apiService),
         AuthRepository(apiService: ApiServices.apiService),

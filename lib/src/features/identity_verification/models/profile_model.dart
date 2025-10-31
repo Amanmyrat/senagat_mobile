@@ -39,7 +39,7 @@ class ProfileModel extends HiveObject {
   final String? citizenship;
 
   @HiveField(11)
-  final String? homePhone;
+  final int? homePhone;
 
   @HiveField(12)
   final String? homeAddress;
@@ -64,6 +64,13 @@ class ProfileModel extends HiveObject {
   });
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
+    int? _parseNullableInt(dynamic value) {
+      if (value == null) return null;
+      if (value is int) return value;
+      if (value is String) return int.tryParse(value);
+      return null;
+    }
+
     return ProfileModel(
       firstName: json['first_name'],
       lastName: json['last_name'],
@@ -75,11 +82,10 @@ class ProfileModel extends HiveObject {
       issuedBy: json['issued_by'],
       getPassportScan: json['passport_scan'],
       citizenship: json['citizenship'],
-      homePhone: json['home_phone'],
+      homePhone: _parseNullableInt(json['home_phone']),
       homeAddress: json['home_address'],
     );
   }
-
 
   Future<Map<String, dynamic>> toMap() async {
     return {

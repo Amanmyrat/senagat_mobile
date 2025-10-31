@@ -2,13 +2,11 @@ class AccountModel {
   final int? id;
   final String? phoneNumber;
   final String? token;
-  final String? profile;
 
   AccountModel({
     this.id,
     this.phoneNumber,
     this.token,
-    this.profile,
   });
 
   factory AccountModel.fromJson(Map<String, dynamic> json) {
@@ -16,7 +14,6 @@ class AccountModel {
       id: json['id'],
       phoneNumber: json['phone'],
       token: json['token'],
-      profile: json['profile'],
     );
   }
 
@@ -25,7 +22,6 @@ class AccountModel {
       "id": id,
       "phone": phoneNumber,
       "token": token,
-      "profile": profile,
     };
   }
 

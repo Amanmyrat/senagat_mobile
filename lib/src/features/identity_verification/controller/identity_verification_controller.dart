@@ -7,8 +7,8 @@ import 'package:hive/hive.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
-import 'package:senagat_mobile/src/features/home/controller/home_controller.dart';
 import 'package:senagat_mobile/src/features/identity_verification/repository/profile_repository.dart';
+import 'package:senagat_mobile/src/features/profile/controller/profile_controller.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../dashboard/controller/dashboard_controller.dart';
 import '../../dashboard/utils/nested_nav_ids.dart';
@@ -63,28 +63,45 @@ class IdentityVerificationController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    final savedProfile = profileBox.get('currentProfile');
+    ProfileModel? savedProfile;
+    try {
+      savedProfile = profileBox.get('currentProfile');
+    } catch (_) {
+      profileBox.delete('currentProfile');
+      savedProfile = null;
+    }
     final firstTwoLetters = savedProfile?.passportNumber?.substring(0, 2) ?? '';
 
     controllers = [
       nameController = TextEditingController(text: savedProfile?.firstName),
       lastNameController = TextEditingController(text: savedProfile?.lastName),
       surNameController = TextEditingController(text: savedProfile?.middleName),
-      dateOfBirthController =
-          TextEditingController(text: savedProfile?.birthDate),
-      passportNumberController =
-          TextEditingController(text: savedProfile?.passportNumber),
-      dateIssueController =
-          TextEditingController(text: savedProfile?.issuedDate),
-      placeIssueController =
-          TextEditingController(text: savedProfile?.issuedBy),
+      dateOfBirthController = TextEditingController(
+        text: savedProfile?.birthDate,
+      ),
+      passportNumberController = TextEditingController(
+        text:
+            (savedProfile?.passportNumber != null &&
+                savedProfile!.passportNumber!.length > 2)
+            ? savedProfile.passportNumber!.substring(2)
+            : savedProfile?.passportNumber ?? '',
+      ),
+      dateIssueController = TextEditingController(
+        text: savedProfile?.issuedDate,
+      ),
+      placeIssueController = TextEditingController(
+        text: savedProfile?.issuedBy,
+      ),
       asController = TextEditingController(text: firstTwoLetters),
-      citizenshipController =
-          TextEditingController(text: savedProfile?.citizenship),
-      homePhoneController =
-          TextEditingController(text: savedProfile?.homePhone?.toString()),
-      homeAddressController =
-          TextEditingController(text: savedProfile?.homeAddress),
+      citizenshipController = TextEditingController(
+        text: savedProfile?.citizenship,
+      ),
+      homePhoneController = TextEditingController(
+        text: savedProfile?.homePhone.toString(),
+      ),
+      homeAddressController = TextEditingController(
+        text: savedProfile?.homeAddress,
+      ),
     ];
   }
 
@@ -107,7 +124,7 @@ class IdentityVerificationController extends GetxController
       gender: 'male',
       passportScan: passportFile,
       citizenship: citizenshipController.text,
-      homePhone: homePhoneController.text,
+      homePhone: int.parse(homePhoneController.text),
       homeAddress: homeAddressController.text,
     );
   }
@@ -125,17 +142,17 @@ class IdentityVerificationController extends GetxController
       await profileBox.put('currentProfile', model);
 
       final dashboardController = Get.find<DashboardController>();
+      final profileController = Get.find<ProfileController>();
 
-      final homeController = Get.find<HomeController>();
+      profileController.refreshProfile();
 
-      homeController.getUserProfileInfo();
       dashboardController.updateCurrentIndex(NestedNavigationIds.settings);
+      update();
+
       Navigator.of(Get.context!).pushNamedAndRemoveUntil(
         DashboardScreen.route,
-            (Route<dynamic> route) => false,
+        (Route<dynamic> route) => false,
       );
-
-      update();
     } catch (e) {
       status = Status.error;
       print(e);

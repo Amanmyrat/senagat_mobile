@@ -8,9 +8,8 @@ import '../../register_confirmation/models/account_model.dart';
 class AuthRepository {
   final ApiService _apiService;
 
-  const AuthRepository({
-    required ApiService apiService,
-  }) : _apiService = apiService;
+  const AuthRepository({required ApiService apiService})
+    : _apiService = apiService;
 
   Future<bool> preLogin({required JSON data}) async {
     return _apiService.setData<bool>(
@@ -81,5 +80,4 @@ class AuthRepository {
       },
     );
   }
-
 }

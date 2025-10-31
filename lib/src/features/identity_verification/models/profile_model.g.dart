@@ -28,7 +28,7 @@ class ProfileModelAdapter extends TypeAdapter<ProfileModel> {
       getPassportScan: fields[8] as String?,
       passportScanPath: fields[9] as String?,
       citizenship: fields[10] as String?,
-      homePhone: fields[11] as String?,
+      homePhone: fields[11] as int?,
       homeAddress: fields[12] as String?,
     );
   }

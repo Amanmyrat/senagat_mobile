@@ -19,7 +19,6 @@ class ProfileRepository {
         print('aaaaaaaaaaaaaaa  ${response.body['data']}');
         final responseData = response.body['data'];
         return ProfileModel.fromJson(responseData);
-
       },
     );
   }

@@ -5,6 +5,7 @@ import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_scr
 import 'package:senagat_mobile/src/features/register_password_setup/controller/register_password_setup_controller.dart';
 
 import '../../../core/control_state_variable_mixin.dart';
+import '../../home/controller/home_controller.dart';
 
 class AuthSuccessController extends GetxController with StateControlMixin{
 
@@ -28,6 +29,9 @@ class AuthSuccessController extends GetxController with StateControlMixin{
   }
 
   void _navigateToNextScreen() {
+    final homeController = Get.find<HomeController>();
+
+    homeController.getUserProfileInfo();
     try {
       Navigator.of(Get.context!).pushNamedAndRemoveUntil(
           DashboardScreen.route, (Route<dynamic> route) => false);

@@ -87,8 +87,7 @@ class CheckWidget extends StatelessWidget {
                         textAlign: TextAlign.center,
                       ),
 
-                if (isTitle == false)
-                  SizedBox(height: 22.h),
+                if (isTitle == false) SizedBox(height: 22.h),
 
                 if (isTitle == false)
                   isLoading
@@ -101,15 +100,11 @@ class CheckWidget extends StatelessWidget {
                             width: MediaQuery.of(context).size.width,
                             child: ElevatedButtonWithState(
                               onPressed: () {
-                                try {
-                                  final homeController = Get.find<HomeController>();
-                                  homeController.getUserProfileInfo();
+                                final homeController =
+                                    Get.find<HomeController>();
+                                homeController.getUserProfileInfo();
 
-                                  Get.offAllNamed(DashboardScreen.route);
-
-                                } catch (e) {
-                                  // Fallback if dashboard not found (e.g. after app restart)
-                               }
+                                Get.offAllNamed(DashboardScreen.route);
                               },
 
                               isError: false,
