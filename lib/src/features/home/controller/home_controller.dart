@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/add_card/controller/add_card_controller.dart';
 import 'package:senagat_mobile/src/features/add_card/model/card_model.dart';
+import 'package:senagat_mobile/src/features/auth/controller/account_status_controller.dart';
 import 'package:senagat_mobile/src/features/auth/repository/auth_repository.dart';
 import 'package:senagat_mobile/src/features/credit/presentation/get_credit_screen.dart';
 import 'package:senagat_mobile/src/features/get_card/presentation/get_card_screen.dart';
@@ -38,6 +39,7 @@ class HomeController extends GetxController with StateControlMixin {
 
   late ServiceSettingsController fastServiceController;
   late AddCardController addCardController;
+  late AccountLoginStatusController accountLoginStatusController;
 
   final cardBox = Hive.box<CardModel>('cardsBox');
   final payBox = Hive.box<PayModel>('payBox');
@@ -48,9 +50,10 @@ class HomeController extends GetxController with StateControlMixin {
 
   final _exchange = <ExchangeRateModel>[];
   List<ExchangeRateModel> get exchange => _exchange;
+  bool _isFetchingExchangeRates = false;
+  bool _isFetchingUserInfo = false;
 
   UserInformationModel? userInformationModel;
-
 
   final List<String> serviceTitles = [r'inquiries', r'cards', r'credits'];
 
@@ -129,53 +132,85 @@ class HomeController extends GetxController with StateControlMixin {
   void onInit() {
     fastServiceController = Get.find<ServiceSettingsController>();
     addCardController = Get.find<AddCardController>();
+    accountLoginStatusController = Get.find<AccountLoginStatusController>();
 
-    getUserProfileInfo();
+    // Listen to login status changes and fetch data when user logs in
+    ever(accountLoginStatusController.accountLoginStatus, (
+      AccountLoginStatus status,
+    ) {
+      if (status == AccountLoginStatus.loggedIn) {
+        getUserProfileInfo();
+        getExchangeRates();
+      }
+    });
 
-    getExchangeRates();
+    // Also check initial status
+    if (accountLoginStatusController.accountLoginStatus.value ==
+        AccountLoginStatus.loggedIn) {
+      getUserProfileInfo();
+      getExchangeRates();
+    }
 
     super.onInit();
   }
 
-  void getExchangeRates() async{
+  void getExchangeRates() async {
+    if (_isFetchingExchangeRates) return;
+
+    _isFetchingExchangeRates = true;
     status = Status.loading;
     update();
-    await repository.getExchangeRateTypes().then((value){
-      status = Status.completed;
-      update();
-      _exchange.addAll(value);
-    }).catchError((e){
-      status = Status.error;
-      update();
-      ShowSnack.showSnack(r'error'.tr, SnackType.error);
 
-      debugPrint(e.toString());
-    });
+    await repository
+        .getExchangeRateTypes()
+        .then((value) {
+          _exchange.clear();
+          _exchange.addAll(value);
+          status = Status.completed;
+          update();
+        })
+        .catchError((e) {
+          status = Status.error;
+          update();
+          ShowSnack.showSnack(r'error'.tr, SnackType.error);
+          debugPrint(e.toString());
+        })
+        .whenComplete(() {
+          _isFetchingExchangeRates = false;
+        });
   }
 
-  void getUserProfileInfo() async{
+  void getUserProfileInfo() async {
+    if (_isFetchingUserInfo) return;
+
+    _isFetchingUserInfo = true;
     status = Status.loading;
     update();
-    await authRepository.getUserInformation().then((value){
-      userInformationModel = value;
 
-      status = Status.completed;
-      profileBox.put('currentProfile', userInformationModel!.profileModel!);
-      checkProfile();
-      update();
-
-    }).catchError((e){
-      update();
-      ShowSnack.showSnack(r'error'.tr, SnackType.error);
-
-      debugPrint(e.toString());
-    });
+    await authRepository
+        .getUserInformation()
+        .then((value) {
+          userInformationModel = value;
+          status = Status.completed;
+          profileBox.put('currentProfile', userInformationModel!.profileModel!);
+          checkProfile();
+          update();
+        })
+        .catchError((e) {
+          status = Status.error;
+          update();
+          ShowSnack.showSnack(r'error'.tr, SnackType.error);
+          debugPrint(e.toString());
+        })
+        .whenComplete(() {
+          _isFetchingUserInfo = false;
+        });
   }
 
-  checkProfile(){
-    if(userInformationModel!.profileModel == null){
+  checkProfile() {
+    if (userInformationModel!.profileModel == null) {
       isProfileRequired = true;
-    }else{
+    } else {
       isProfileRequired = false;
     }
   }
@@ -186,7 +221,7 @@ class HomeController extends GetxController with StateControlMixin {
         : fastServiceController.selectedServiceTitle.length;
   }
 
-  setProfileRequiredFalse(){
+  setProfileRequiredFalse() {
     isProfileRequired = false;
     update();
   }

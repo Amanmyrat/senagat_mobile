@@ -176,10 +176,7 @@ class _SenagatAppState extends State<SenagatApp> {
                 name: GetCreditScreen.route,
                 page: () => const GetCreditScreen(),
               ),
-              GetPage(
-                name: LoanScreen.route,
-                page: () => const LoanScreen(),
-              ),
+              GetPage(name: LoanScreen.route, page: () => const LoanScreen()),
               GetPage(
                 name: NotificationsSettingsScreen.route,
                 page: () => const NotificationsSettingsScreen(),
@@ -249,12 +246,12 @@ class DashboardBinding extends Bindings {
     Get.put(AuthController(), permanent: true);
     Get.put(ServiceSettingsController());
     Get.put(AddCardController());
-    Get.put(ProfileController());
-    Get.put(HomeController(
+    Get.put(
+      HomeController(
         ExchangeRateRepository(apiService: ApiServices.apiService),
         AuthRepository(apiService: ApiServices.apiService),
-
-    ));
-
+      ),
+    );
+    Get.put(ProfileController());
   }
 }
