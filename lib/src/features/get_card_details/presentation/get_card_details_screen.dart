@@ -333,7 +333,7 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'email'.tr,
+                                'Email'.tr,
                                 style: TextStyle(
                                   color: AppColors.blackText,
                                   fontSize: 14.sp,
@@ -348,7 +348,7 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                                     controller.onInformationNotEmpty(v),
                                 style: TextStyle(fontSize: 14.sp),
                                 decoration: InputDecoration(
-                                  hintText: 'email'.tr,
+                                  hintText: 'Email'.tr,
                                   border: const OutlineInputBorder(),
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(
@@ -409,7 +409,7 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                                       Text(
                                         'internet_service'.tr,
                                         style: TextStyle(
-                                          color: AppColors.blackText,
+                                          color: AppColors.grey,
                                           fontSize: 14.sp,
                                         ),
                                       ),
@@ -464,7 +464,7 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                                       Text(
                                         'delivery'.tr,
                                         style: TextStyle(
-                                          color: AppColors.blackText,
+                                          color: AppColors.grey,
                                           fontSize: 14.sp,
                                         ),
                                       ),

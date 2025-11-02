@@ -23,7 +23,7 @@ class ShowSnack {
         break;
       case SnackType.warning:
         title = 'warning'.tr;
-        color = AppColors.orange;
+        color = AppColors.orangeLight;
         bcColor = const Color(0xFFFFFFFF);
         break;
       case SnackType.success:

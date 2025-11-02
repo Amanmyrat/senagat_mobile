@@ -13,6 +13,7 @@ import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../widgets/header_widget.dart';
 import '../../auth/repository/auth_repository.dart';
+import '../../identity_verification/presentation/identity_verification_screen.dart';
 import '../controller/home_controller.dart';
 import '../repository/exchage_rate_repository.dart';
 
@@ -272,7 +273,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               controller.payBox.isEmpty
                                   ? Container(
                                       width: MediaQuery.of(context).size.width,
-                                      height: 200,
+                                      height: 200.h,
                                       padding: EdgeInsets.all(
                                         AppDimensions.paddingExtraLarge.w,
                                       ),
@@ -295,19 +296,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       child: Column(
                                         children: [
-                                          Image.asset(AppAssets.sandClock),
+                                          Expanded(child: Image.asset(AppAssets.sandClock, height: 118.h, width: 62.w,)),
                                           SizedBox(
                                             height: AppDimensions
                                                 .paddingExtraLarge
                                                 .h,
                                           ),
                                           Text(
-                                            r'history_is_empty'.tr,
-                                            style: TextStyle(
-                                              color: AppColors.blackText,
-                                              fontSize: 17.sp,
+                                              r'history_is_empty'.tr,
+                                              style: TextStyle(
+                                                color: AppColors.blackText,
+                                                fontSize: 17.sp,
+                                              ),
                                             ),
-                                          ),
                                         ],
                                       ),
                                     )
@@ -644,7 +645,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget profileIsRequiredWidget(HomeController controller) {
     return GestureDetector(
-      onTap: controller.setProfileRequiredFalse,
+      onTap:() {
+        Get.toNamed(IdentityVerificationScreen.route);
+      },
       child: Container(
         margin: EdgeInsets.only(bottom: 22.h),
         padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),

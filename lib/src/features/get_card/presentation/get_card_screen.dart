@@ -34,11 +34,14 @@ class _GetCardScreenState extends State<GetCardScreen> {
             CardRepository(apiService: ApiServices.apiService),
           ),
           builder: (controller) {
-            return controller.status == Status.loading
-                ? Center(
-                    child: CircularProgressIndicator(color: AppColors.green),
-                  )
-                : Column(
+            if (controller.status == Status.loading || controller.cards.isEmpty) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            if (!controller.tabController.hasListeners) {
+              return const Center(child: CircularProgressIndicator());
+            }
+           return  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomAppBar(),

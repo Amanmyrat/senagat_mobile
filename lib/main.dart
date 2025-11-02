@@ -23,6 +23,7 @@ void main() async {
 
   await Hive.openBox<ProfileModel>('profileBox');
   await Hive.openBox('fastOperations');
+  await Hive.openBox<String>('phoneBox');
   await Hive.openBox<CardModel>('cardsBox');
   await Hive.openBox<PayModel>('payBox');
   await Hive.openBox<PayModel>('payFoundationBox');

@@ -24,6 +24,7 @@ import '../../inquiries/presentation/inquiries_screen.dart';
 import '../../pay/model/pay_model.dart';
 import '../../qr_code/presentation/qr_code_screen.dart';
 import '../../service_settings/controller/service_settings_controller.dart';
+import '../../profile/controller/profile_controller.dart';
 
 enum HomeTapType { none, qr, foundation, service, fastOperation, notification }
 
@@ -33,6 +34,7 @@ class HomeController extends GetxController with StateControlMixin {
   int? lastServiceTapIndex;
   AccountModel accountModel = AccountModel();
   final profileBox = Hive.box<ProfileModel>('profileBox');
+  final phoneBox = Hive.box<String>('phoneBox');
 
   ExchangeRateRepository repository;
   AuthRepository authRepository;
@@ -96,10 +98,14 @@ class HomeController extends GetxController with StateControlMixin {
   }
 
   void onServiceTap(int index) {
-    lastTap = HomeTapType.service;
-    lastServiceTapIndex = index;
-    update();
-    Get.toNamed(serviceRoute[index]);
+    if (!isProfileRequired) {
+      lastTap = HomeTapType.service;
+      lastServiceTapIndex = index;
+      update();
+      Get.toNamed(serviceRoute[index]);
+    } else {
+      ShowSnack.showSnack(r'most_functions'.tr, SnackType.warning);
+    }
   }
 
   void onFastServiceTap(int index) {
@@ -192,7 +198,22 @@ class HomeController extends GetxController with StateControlMixin {
         .then((value) {
           userInformationModel = value;
           status = Status.completed;
-          profileBox.put('currentProfile', userInformationModel!.profileModel!);
+          if (userInformationModel?.profileModel != null) {
+            profileBox.put(
+              'currentProfile',
+              userInformationModel!.profileModel!,
+            );
+            phoneBox.put('phone', userInformationModel!.phone!);
+
+            // Notify ProfileController to refresh
+            try {
+              final profileController = Get.find<ProfileController>();
+              profileController.refreshProfile();
+            } catch (e) {
+              // ProfileController might not be initialized yet
+            }
+          }
+
           checkProfile();
           update();
         })
@@ -208,7 +229,7 @@ class HomeController extends GetxController with StateControlMixin {
   }
 
   checkProfile() {
-    if (userInformationModel!.profileModel == null) {
+    if (userInformationModel?.profileModel == null) {
       isProfileRequired = true;
     } else {
       isProfileRequired = false;
@@ -219,10 +240,5 @@ class HomeController extends GetxController with StateControlMixin {
     return fastServiceController.selectedServiceTitle.length <= 4
         ? fastServiceController.selectedServiceTitle.length + 1
         : fastServiceController.selectedServiceTitle.length;
-  }
-
-  setProfileRequiredFalse() {
-    isProfileRequired = false;
-    update();
   }
 }

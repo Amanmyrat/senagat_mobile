@@ -1,7 +1,7 @@
 class CardTypeModel {
   final int? id;
   final String? title;
-  final int? price;
+  final double? price;
   final String? image;
   final List<AdvantageModel>? advantages;
 
@@ -17,7 +17,7 @@ class CardTypeModel {
     return CardTypeModel(
       id: json['id'],
       title: json['title'],
-      price: json['price'],
+      price: json['price'] == null ? null : (json['price'] as num).toDouble(),
       image: json['image_url'],
       advantages: (json['advantages'] as List<dynamic>?)
           ?.map((item) => AdvantageModel.fromJson(item))

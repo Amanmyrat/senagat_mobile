@@ -28,7 +28,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       body: SafeArea(
           child: GetBuilder<ProfileController>(
-            init: ProfileController(),
             builder: (controller) {
               return Padding(
                 padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
@@ -94,7 +93,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                               ),
                               SizedBox(width: 10.w,),
-                              Text('+993${controller.homeController.userInformationModel?.phone}', style: TextStyle(fontSize: 14.sp, color: AppColors.black,),),
+                              Text('+993 ${controller.phone ?? ''}', style: TextStyle(fontSize: 14.sp, color: AppColors.black,),),
                             ],
                           ),
                         ],
