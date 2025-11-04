@@ -33,9 +33,9 @@ class ShowSnack {
         break;
     }
     final snack = GetSnackBar(
-      title: title,
-      titleText: Text(title,
-          style: TextStyle(color: color, fontWeight: FontWeight.bold)),
+      // title: title,
+      // titleText: Text(title,
+      //     style: TextStyle(color: color, fontWeight: FontWeight.bold)),
       message: message,
       messageText: Text(message,
           style: TextStyle(color: color, fontWeight: FontWeight.bold)),
