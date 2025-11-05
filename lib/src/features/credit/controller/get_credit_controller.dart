@@ -9,6 +9,7 @@ import 'package:senagat_mobile/src/features/credit/repository/credit_repository.
 
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/services/show_snack.dart';
+import '../../../utils/error_utils.dart';
 import '../../loan/presentation/loan_screen.dart';
 
 class GetCreditController extends GetxController with StateControlMixin, GetSingleTickerProviderStateMixin {
@@ -97,7 +98,8 @@ class GetCreditController extends GetxController with StateControlMixin, GetSing
         .catchError((e) {
           status = Status.error;
           update();
-          ShowSnack.showSnack(r'error'.tr, SnackType.error);
+          final errorText = ErrorUtils.extractErrorText(e);
+          ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
 
           debugPrint(e.toString());
         });
@@ -128,7 +130,8 @@ class GetCreditController extends GetxController with StateControlMixin, GetSing
           .catchError((e) {
             status = Status.error;
             update();
-            ShowSnack.showSnack(r'error'.tr, SnackType.error);
+            final errorText = ErrorUtils.extractErrorText(e);
+            ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
 
             debugPrint(e.toString());
           });

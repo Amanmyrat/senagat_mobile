@@ -18,6 +18,7 @@ import 'package:senagat_mobile/src/features/register_confirmation/models/account
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/constants/app_assets.dart';
 import '../../../utils/services/show_snack.dart';
+import '../../../utils/error_utils.dart';
 import '../../foundation/presentation/foundation_screen.dart';
 import '../../identity_verification/models/profile_model.dart';
 import '../../inquiries/presentation/inquiries_screen.dart';
@@ -140,7 +141,6 @@ class HomeController extends GetxController with StateControlMixin {
     addCardController = Get.find<AddCardController>();
     accountLoginStatusController = Get.find<AccountLoginStatusController>();
 
-    // Listen to login status changes and fetch data when user logs in
     ever(accountLoginStatusController.accountLoginStatus, (
       AccountLoginStatus status,
     ) {
@@ -150,7 +150,6 @@ class HomeController extends GetxController with StateControlMixin {
       }
     });
 
-    // Also check initial status
     if (accountLoginStatusController.accountLoginStatus.value ==
         AccountLoginStatus.loggedIn) {
       getUserProfileInfo();
@@ -177,8 +176,10 @@ class HomeController extends GetxController with StateControlMixin {
         })
         .catchError((e) {
           status = Status.error;
+
           update();
-          ShowSnack.showSnack(r'error'.tr, SnackType.error);
+          final errorText = ErrorUtils.extractErrorText(e);
+          ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
           debugPrint(e.toString());
         })
         .whenComplete(() {
@@ -220,7 +221,8 @@ class HomeController extends GetxController with StateControlMixin {
         .catchError((e) {
           status = Status.error;
           update();
-          ShowSnack.showSnack(r'error'.tr, SnackType.error);
+          final errorText = ErrorUtils.extractErrorText(e);
+          ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
           debugPrint(e.toString());
         })
         .whenComplete(() {

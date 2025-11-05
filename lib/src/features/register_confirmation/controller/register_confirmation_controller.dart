@@ -6,10 +6,10 @@ import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/features/auth_success/presentation/auth_success_screen.dart';
 import 'package:senagat_mobile/src/features/register_confirmation/models/verify_otp_model.dart';
-import 'package:senagat_mobile/src/features/register_confirmation/models/verify_otp_model.dart';
 import 'package:senagat_mobile/src/features/register_password_setup/presentation/register_password_setup_screen.dart';
 
 import '../../../utils/services/show_snack.dart';
+import '../../../utils/error_utils.dart';
 import '../../auth/controller/auth_controller.dart';
 import '../../auth/repository/auth_repository.dart';
 import '../models/account_model.dart';
@@ -104,7 +104,8 @@ class RegisterConfirmationController extends GetxController
       }).catchError((e) {
         status = Status.error;
         update();
-        ShowSnack.showSnack(r'error'.tr, SnackType.error);
+        final errorText = ErrorUtils.extractErrorText(e);
+        ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
 
         debugPrint(e.toString());
       });
@@ -130,7 +131,8 @@ class RegisterConfirmationController extends GetxController
       }).catchError((e) {
         status = Status.error;
         update();
-        ShowSnack.showSnack(r'error'.tr, SnackType.error);
+        final errorText = ErrorUtils.extractErrorText(e);
+        ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
 
         debugPrint(e.toString());
       });

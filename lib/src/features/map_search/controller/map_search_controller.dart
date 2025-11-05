@@ -13,6 +13,8 @@ import '../../../utils/services/show_snack.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../../widgets/elevated_button_with_state.dart';
 import '../model/location_model.dart';
+import '../../../core/networking/custom_exception.dart';
+import '../../../utils/error_utils.dart';
 
 class MapSearchController extends GetxController with StateControlMixin {
   // private storage + public getter (as you requested)
@@ -77,7 +79,9 @@ class MapSearchController extends GetxController with StateControlMixin {
         .catchError((e) {
           status = Status.error;
           update();
-          ShowSnack.showSnack(r'error'.tr, SnackType.error);
+
+          final errorText = ErrorUtils.extractErrorText(e);
+          ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
 
           debugPrint(e.toString());
         });

@@ -6,6 +6,7 @@ import 'package:senagat_mobile/src/features/loan/models/credit_branch_info_model
 import 'package:senagat_mobile/src/features/loan/models/credit_work_info_model.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/services/show_snack.dart';
+import '../../../utils/error_utils.dart';
 import '../../map_search/model/location_model.dart';
 import '../../map_search/repository/location_repository.dart';
 
@@ -115,7 +116,8 @@ class LoanController extends GetxController
           .catchError((e) {
             status = Status.error;
             update();
-            ShowSnack.showSnack(r'error'.tr, SnackType.error);
+            final errorText = ErrorUtils.extractErrorText(e);
+            ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
 
             debugPrint(e.toString());
           });
@@ -152,7 +154,8 @@ class LoanController extends GetxController
         .catchError((e) {
           status = Status.error;
           update();
-          ShowSnack.showSnack(r'error'.tr, SnackType.error);
+          final errorText = ErrorUtils.extractErrorText(e);
+          ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
           debugPrint(e.toString());
         });
   }
@@ -201,7 +204,8 @@ class LoanController extends GetxController
         .catchError((e) {
           status = Status.error;
           update();
-          ShowSnack.showSnack(r'error'.tr, SnackType.error);
+          final errorText = ErrorUtils.extractErrorText(e);
+          ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
 
           debugPrint(e.toString());
         });

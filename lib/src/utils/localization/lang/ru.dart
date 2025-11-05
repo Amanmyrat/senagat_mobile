@@ -199,6 +199,7 @@ const Map<String, String> ruRu = {
   r'delivery': r'Доставка',
   r'internet_service': r'Интернет-сервис',
   r'citizenship': r'Гражданство',
+  r'error': r'Ошибка',
 
 
 

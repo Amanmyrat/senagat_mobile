@@ -85,20 +85,6 @@ class _RegisterConfirmationScreenState extends State<RegisterConfirmationScreen>
                       ),
                       SizedBox(height: AppDimensions.padding60.h),
 
-                      controller.status == Status.error
-                          ?Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: Text(
-                          r'incorrectly_entered_OTP'.tr,
-                          style: TextStyle(
-                            color: AppColors.redDark,
-                            fontSize: 15.sp,
-                            fontFamily: AppFonts.secondaryFont,
-                          ),
-                        ),
-                      )
-                          : SizedBox.shrink(),
-
                       PinCodeTextField(
                         controller: controller.otpController,
                         focusNode: controller.otpFocus,

@@ -10,6 +10,7 @@ import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_scr
 import 'package:senagat_mobile/src/features/identity_verification/repository/profile_repository.dart';
 import 'package:senagat_mobile/src/features/profile/controller/profile_controller.dart';
 import 'package:senagat_mobile/src/utils/services/show_snack.dart';
+import 'package:senagat_mobile/src/utils/error_utils.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../dashboard/controller/dashboard_controller.dart';
 import '../../dashboard/utils/nested_nav_ids.dart';
@@ -156,7 +157,8 @@ class IdentityVerificationController extends GetxController
       );
     } catch (e) {
       status = Status.error;
-      ShowSnack.showSnack(e.toString(), SnackType.error);
+      final errorText = ErrorUtils.extractErrorText(e);
+      ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
       update();
     }
   }

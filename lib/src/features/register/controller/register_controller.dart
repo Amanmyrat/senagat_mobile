@@ -1,12 +1,13 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/register/models/request_otp.dart';
 
+import '../../../core/networking/custom_exception.dart';
 import '../../../utils/services/show_snack.dart';
+import '../../../utils/error_utils.dart';
+import '../../../utils/validator.dart';
 import '../../register_confirmation/presentation/register_confirmation.dart';
 import '../models/pre_login_model.dart';
 import '../../auth/repository/auth_repository.dart';
@@ -21,10 +22,12 @@ class RegisterController extends GetxController with StateControlMixin {
   bool isPasswordVisible = false;
   bool isPasswordValid = false;
 
+  late String errorCode = '';
+
   late final TextEditingController passwordController;
   late final FocusNode passwordFocus;
 
-  RegisterController(this.repository,this.key);
+  RegisterController(this.repository, this.key);
 
   late final TextEditingController phoneController;
   late final FocusNode phoneFocus;
@@ -40,10 +43,17 @@ class RegisterController extends GetxController with StateControlMixin {
   }
 
   Future<PreLoginModel> _getPreLoginModel() async {
-    return PreLoginModel(phone: phoneController.text, password: passwordController.text);
+    return PreLoginModel(
+      phone: phoneController.text,
+      password: passwordController.text,
+    );
   }
+
   Future<RequestModel> _getRequestModel() async {
-    return RequestModel(phone: phoneController.text, purpose: login ? 'login' : 'register');
+    return RequestModel(
+      phone: phoneController.text,
+      purpose: login ? 'login' : 'register',
+    );
   }
 
   void onRegisterTap() async {
@@ -53,39 +63,40 @@ class RegisterController extends GetxController with StateControlMixin {
       key.currentState!.save();
       update();
 
-      repository.checkRegister(data: <String, dynamic>{"phone": phoneController.text,}).then((value) async {
-        print(value == true ? 'TRUE' : 'FALSE');
-        if(value == false){
-          final requestModel = await _getRequestModel();
-          await repository.requestOTP(data: requestModel.toMap()).then((value) {
-            status = Status.completed;
-            update();
-            Get.toNamed(
-              RegisterConfirmationScreen.route,
-              arguments: {'phone': phoneController.text, 'login': login},
-            );
-          }).catchError((e) {
+      repository
+          .checkRegister(data: <String, dynamic>{"phone": phoneController.text})
+          .then((value) async {
+            print(value == true ? 'TRUE' : 'FALSE');
+              final requestModel = await _getRequestModel();
+              await repository
+                  .requestOTP(data: requestModel.toMap())
+                  .then((value) {
+                    status = Status.completed;
+                    update();
+                    Get.toNamed(
+                      RegisterConfirmationScreen.route,
+                      arguments: {
+                        'phone': phoneController.text,
+                        'login': login,
+                      },
+                    );
+                  })
+                  .catchError((e) {
+                    status = Status.error;
+                    update();
+                    final errorText = ErrorUtils.extractErrorText(e);
+                    ShowSnack.showSnack(
+                      errorText ?? r'error'.tr,
+                      SnackType.error,
+                    );
+                  });
+          })
+          .catchError((e) {
             status = Status.error;
             update();
-            ShowSnack.showSnack(r'error'.tr, SnackType.error);
-
-            debugPrint(e.toString());
+            final errorText = ErrorUtils.extractErrorText(e);
+            ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
           });
-        }else{
-          status = Status.error;
-          update();
-          ShowSnack.showSnack('This number registered', SnackType.error);
-        }
-
-      }).catchError((e){
-        status = Status.error;
-        update();
-        ShowSnack.showSnack(r'error'.tr, SnackType.error);
-
-        debugPrint(e.toString());
-      });
-
-
     }
   }
 
@@ -97,20 +108,23 @@ class RegisterController extends GetxController with StateControlMixin {
       update();
 
       final preLoginModel = await _getPreLoginModel();
-      await repository.preLogin(data: preLoginModel.toMap()).then((value) {
-        status = Status.completed;
-        update();
-        Get.toNamed(
-          RegisterConfirmationScreen.route,
-          arguments: {'phone': phoneController.text, 'login': login},
-        );
-      }).catchError((e) {
-        status = Status.error;
-        update();
-        ShowSnack.showSnack(r'error'.tr, SnackType.error);
-
-        debugPrint(e.toString());
-      });
+      await repository
+          .preLogin(data: preLoginModel.toMap())
+          .then((value) {
+            status = Status.completed;
+            update();
+            errorCode = value.toString();
+            Get.toNamed(
+              RegisterConfirmationScreen.route,
+              arguments: {'phone': phoneController.text, 'login': login},
+            );
+          })
+          .catchError((e) {
+            status = Status.error;
+            update();
+            final errorText = ErrorUtils.extractErrorText(e);
+            ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
+          });
     }
   }
 

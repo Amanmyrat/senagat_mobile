@@ -88,17 +88,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         SizedBox(height: AppDimensions.padding60.h),
 
-                        if (controller.status == Status.error)
-                          Text(
-                            r'incorrect_number'.tr,
-                            style: TextStyle(
-                              color: AppColors.redDark,
-                              fontSize: 14.sp,
-                              fontFamily: AppFonts.secondaryFont,
-                            ),
-                          ),
-
-                        SizedBox(height: AppDimensions.paddingMedium.h),
 
                         Row(
                           children: [
@@ -110,6 +99,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 color: AppColors.inputFillBackground,
                                 borderRadius: BorderRadius.circular(
                                   AppDimensions.borderRadiusMedium,
+                                ),
+                                border: Border.all(
+                                  color: controller.status == Status.error
+                                      ? AppColors.redDark
+                                      : AppColors.transparent,
+                                  width: 1,
                                 ),
                               ),
                               child: Text(
@@ -124,6 +119,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 focusNode: controller.phoneFocus,
                                 keyboardType: TextInputType.phone,
                                 onChanged: controller.onPhoneTextChanged,
+                                onTapOutside: (_) =>
+                                    controller.phoneFocus.unfocus(),
                                 maxLength: 8,
                                 style: TextStyle(
                                   fontSize: 14.sp,
@@ -146,7 +143,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       AppDimensions.borderRadiusMedium,
                                     ),
                                     borderSide: BorderSide(
-                                      color: AppColors.green,
+                                      color: controller.status == Status.error
+                                          ? AppColors.redDark
+                                          : AppColors.green,
                                       width: 1,
                                     ),
                                   ),
@@ -156,7 +155,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       AppDimensions.borderRadiusMedium,
                                     ),
                                     borderSide: BorderSide(
-                                      color: AppColors.lightBackground,
+                                      color: controller.status == Status.error
+                                          ? AppColors.redDark
+                                          : AppColors.transparent,
                                       width: 1,
                                     ),
                                   ),
@@ -193,6 +194,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               suffixIconConstraints: BoxConstraints(
                                 minHeight: 20.h,
                                 minWidth: 20.w,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(
+                                  AppDimensions.borderRadiusMedium,
+                                ),
+                                borderSide: BorderSide(
+                                  color: controller.status == Status.error
+                                      ? AppColors.redDark
+                                      : AppColors.transparent,
+                                  width: 1,
+                                ),
                               ),
                               suffixIcon: GestureDetector(
                                 onTap: controller.togglePasswordVisibility,

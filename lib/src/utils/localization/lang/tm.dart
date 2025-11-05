@@ -159,13 +159,14 @@ const Map<String, String> tmTm = {
   r'type_of_certificate': r'Güwänamanyň görnüşleri',
   r'payment_was_successful': r'Töleg üstünlikli boldy',
   r'submit_for_review': r'Syn üçin iberiň',
-  r'expenses_per_month': r'Aýda çykdajylar',
+  r'expenses_per_month': r'Aýlyk çykdajylar',
   r'air_tickets': r'Howa biletleri',
   r'railway_tickets': r'Demir ýol biletleri',
   r'auto_tickets': r'Auto biletleri',
   r'details_for_obtaining': r'Almak üçin maglumat',
   r'get_a_card_in_just_a_few_seconds': r'Karty birnäçe sekuntda alyň',
-  r'get_a_credit_in_just_a_few_seconds': r'Karz üçin diňe birnäçe sekuntda ýüz tutuň',
+  r'get_a_credit_in_just_a_few_seconds': r'Karzy birnäçe sekuntda alyň'
+  r'',
   r'most_functions': r'Profiliňizi dolduranyňyzdan soň funksiýalaryň köpüsi işlär',
   r'view_all': r'Hemmesini görmek',
   r'daily_limit_of_non_cash_transactions': r'Nagt däl amallaryň gündelik çägi',
@@ -199,6 +200,7 @@ const Map<String, String> tmTm = {
   r'delivery': r'Eltip bermek hyzmaty',
   r'internet_service': r'Internet hyzmaty',
   r'citizenship': r'Raýatlyk',
+  r'error': r'Ýalňyşlyk',
 
 
 

@@ -101,8 +101,30 @@ class CustomException implements Exception {
                 message: 'Authentication credentials were not provided.',
               );
             }
+            // Try to parse structured error from response body
+            try {
+              final data = error.response?.data;
+              if (data is Map) {
+                final code = data['code']?.toString();
+                final message =
+                    data['error_message']?.toString() ??
+                    data['error']?.toString() ??
+                    'Response error';
+                final success = data['success'] is bool
+                    ? data['success'] as bool
+                    : null;
+                return CustomException(
+                  exceptionType: ExceptionType.ApiException,
+                  statusCode: error.response?.statusCode,
+                  code: code,
+                  success: success,
+                  message: message,
+                );
+              }
+            } catch (_) {}
             return CustomException(
               exceptionType: ExceptionType.UnrecognizedException,
+              statusCode: error.response?.statusCode,
               message: 'Response error',
             );
           case DioErrorType.unknown:
@@ -122,20 +144,30 @@ class CustomException implements Exception {
                 message: error.response?.statusMessage ?? 'Unknown',
               );
             }
-            const name = 'name';
-            final message = error.response?.data;
-            if (name == ExceptionType.TokenExpiredException.name) {
-              return CustomException(
-                exceptionType: ExceptionType.TokenExpiredException,
-                code: name,
-                statusCode: error.response?.statusCode,
-                message: message,
-              );
-            }
+            try {
+              final data = error.response?.data;
+              if (data is Map) {
+                final code = data['code']?.toString();
+                final message =
+                    data['message']?.toString() ??
+                    data['error']?.toString() ??
+                    'Unknown';
+                final success = data['success'] is bool
+                    ? data['success'] as bool
+                    : null;
+                return CustomException(
+                  exceptionType: ExceptionType.ApiException,
+                  statusCode: error.response?.statusCode,
+                  code: code,
+                  success: success,
+                  message: message,
+                );
+              }
+            } catch (_) {}
             return CustomException(
-              message: message.toString(),
-              code: name,
+              exceptionType: ExceptionType.UnrecognizedException,
               statusCode: error.response?.statusCode,
+              message: error.response?.statusMessage ?? 'Unknown',
             );
           case DioExceptionType.badCertificate:
             return CustomException(

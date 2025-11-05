@@ -199,6 +199,7 @@ const Map<String, String> enUs = {
   r'delivery': r'Delivery',
   r'internet_service': r'Internet service',
   r'citizenship': r'Citizenship',
+  r'error': r'Error',
 
 
 

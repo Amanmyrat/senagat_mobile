@@ -9,6 +9,7 @@ import 'package:senagat_mobile/src/features/payment_verification/presentation/pa
 
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/services/show_snack.dart';
+import '../../../utils/error_utils.dart';
 import '../../map_search/model/location_model.dart';
 import '../models/inquiries_order_model.dart';
 
@@ -122,7 +123,8 @@ class InquiriesController extends GetxController with StateControlMixin {
             .catchError((e) {
               status = Status.error;
               update();
-              ShowSnack.showSnack(r'error'.tr, SnackType.error);
+              final errorText = ErrorUtils.extractErrorText(e);
+              ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
 
               debugPrint(e.toString());
             });
@@ -138,7 +140,8 @@ class InquiriesController extends GetxController with StateControlMixin {
     }).catchError((e){
       status = Status.error;
       update();
-      ShowSnack.showSnack(r'error'.tr, SnackType.error);
+      final errorText = ErrorUtils.extractErrorText(e);
+      ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
 
       debugPrint(e.toString());
     });
@@ -158,7 +161,8 @@ class InquiriesController extends GetxController with StateControlMixin {
     }).catchError((e) {
       status = Status.error;
       update();
-      ShowSnack.showSnack(r'error'.tr, SnackType.error);
+      final errorText = ErrorUtils.extractErrorText(e);
+      ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
       debugPrint(e.toString());
     });
   }
