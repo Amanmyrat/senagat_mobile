@@ -134,7 +134,7 @@ const Map<String, String> tmTm = {
   r'accounts': r'Hasaplar',
   r'language': r'Dil',
   r'about_Us_v2.0': r'Biz hakynda v2.0',
-  r'identity_verification': r'Şahsyýeti barlamak',
+  r'identity_verification': r'Şahsyýeti tassyklamak',
   r'logout': r'Çykmak',
   r'date_birth': r'Doglan güni',
   r'last_name': r'Familiýasy',

@@ -72,13 +72,9 @@ class ApiEndpoint {
     const path = '';
     switch (endpoint) {
       case CreditEndpoint.CREDIT_TYPES:
-        return '$path/credit';
-      case CreditEndpoint.CREDIT_DETAILS:
-        return '$path/application/credit-details';
-      case CreditEndpoint.WORK_INFO:
-        return '$path/application/work-info';
-      case CreditEndpoint.BRANCH_INFO:
-        return '$path/application/branch-info';
+        return '$path/credit/types';
+      case CreditEndpoint.CREDIT_ORDER:
+        return '$path/application/credit/order';
     }
   }
 
@@ -124,7 +120,7 @@ enum InquiriesEndpoint { CERTIFICATE_TYPES, CERTIFICATE_ORDER }
 
 enum CardEndpoint { CARD_TYPES, CARD_ORDER }
 
-enum CreditEndpoint { CREDIT_TYPES, CREDIT_DETAILS, WORK_INFO, BRANCH_INFO }
+enum CreditEndpoint { CREDIT_TYPES, CREDIT_ORDER }
 
 enum LocationEndpoint { LOCATION, LOCATION_BRANCHES }
 

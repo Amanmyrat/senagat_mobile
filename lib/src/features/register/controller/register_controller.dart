@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/register/models/request_otp.dart';
@@ -22,8 +23,6 @@ class RegisterController extends GetxController with StateControlMixin {
   bool isPasswordVisible = false;
   bool isPasswordValid = false;
 
-  late String errorCode = '';
-
   late final TextEditingController passwordController;
   late final FocusNode passwordFocus;
 
@@ -31,6 +30,9 @@ class RegisterController extends GetxController with StateControlMixin {
 
   late final TextEditingController phoneController;
   late final FocusNode phoneFocus;
+
+  final phoneBox = Hive.box<String>('phoneBox');
+
 
   @override
   void onInit() {
@@ -63,40 +65,45 @@ class RegisterController extends GetxController with StateControlMixin {
       key.currentState!.save();
       update();
 
-      repository
-          .checkRegister(data: <String, dynamic>{"phone": phoneController.text})
-          .then((value) async {
-            print(value == true ? 'TRUE' : 'FALSE');
-              final requestModel = await _getRequestModel();
-              await repository
-                  .requestOTP(data: requestModel.toMap())
-                  .then((value) {
-                    status = Status.completed;
-                    update();
-                    Get.toNamed(
-                      RegisterConfirmationScreen.route,
-                      arguments: {
-                        'phone': phoneController.text,
-                        'login': login,
-                      },
-                    );
-                  })
-                  .catchError((e) {
-                    status = Status.error;
-                    update();
-                    final errorText = ErrorUtils.extractErrorText(e);
-                    ShowSnack.showSnack(
-                      errorText ?? r'error'.tr,
-                      SnackType.error,
-                    );
-                  });
-          })
+      // repository
+      //     .checkRegister(data: <String, dynamic>{"phone": phoneController.text})
+      //     .then((value) async {
+      //       print(value == true ? 'TRUE' : 'FALSE');
+      //
+      //     })
+      //     .catchError((e) {
+      //       status = Status.error;
+      //       update();
+      //       final errorText = ErrorUtils.extractErrorText(e);
+      //       ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
+      //     });
+
+      final requestModel = await _getRequestModel();
+      await repository
+          .requestOTP(data: requestModel.toMap())
+          .then((value) {
+        status = Status.completed;
+        update();
+
+        phoneBox.put('phone', phoneController.text);
+
+        Get.toNamed(
+          RegisterConfirmationScreen.route,
+          arguments: {
+            'phone': phoneController.text,
+            'login': login,
+          },
+        );
+      })
           .catchError((e) {
-            status = Status.error;
-            update();
-            final errorText = ErrorUtils.extractErrorText(e);
-            ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
-          });
+        status = Status.error;
+        update();
+        final errorText = ErrorUtils.extractErrorText(e);
+        ShowSnack.showSnack(
+          errorText ?? r'error'.tr,
+          SnackType.error,
+        );
+      });
     }
   }
 
@@ -113,7 +120,8 @@ class RegisterController extends GetxController with StateControlMixin {
           .then((value) {
             status = Status.completed;
             update();
-            errorCode = value.toString();
+            phoneBox.put('phone', phoneController.text);
+
             Get.toNamed(
               RegisterConfirmationScreen.route,
               arguments: {'phone': phoneController.text, 'login': login},

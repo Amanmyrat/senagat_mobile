@@ -7,6 +7,7 @@ import 'package:hive/hive.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
+import 'package:senagat_mobile/src/features/home/controller/home_controller.dart';
 import 'package:senagat_mobile/src/features/identity_verification/repository/profile_repository.dart';
 import 'package:senagat_mobile/src/features/profile/controller/profile_controller.dart';
 import 'package:senagat_mobile/src/utils/services/show_snack.dart';
@@ -72,7 +73,7 @@ class IdentityVerificationController extends GetxController
       profileBox.delete('currentProfile');
       savedProfile = null;
     }
-    final firstTwoLetters = savedProfile?.passportNumber?.substring(0, 2) ?? '';
+    final firstTwoLetters = savedProfile?.passportNumber?.substring(0, 2) ?? 'AS';
 
     controllers = [
       nameController = TextEditingController(text: savedProfile?.firstName),
@@ -123,7 +124,6 @@ class IdentityVerificationController extends GetxController
       passportNumber: asController.text + passportNumberController.text,
       issuedDate: dateIssueController.text,
       issuedBy: placeIssueController.text,
-      gender: 'male',
       passportScan: passportFile,
       citizenship: citizenshipController.text,
       homePhone: int.parse(homePhoneController.text),
@@ -145,10 +145,13 @@ class IdentityVerificationController extends GetxController
 
       final dashboardController = Get.find<DashboardController>();
       final profileController = Get.find<ProfileController>();
+      final homeController = Get.find<HomeController>();
 
       profileController.refreshProfile();
+      homeController.getUserProfileInfo();
 
       dashboardController.updateCurrentIndex(NestedNavigationIds.settings);
+      dashboardController.updateCurrentIndex(NestedNavigationIds.home);
       update();
 
       Navigator.of(Get.context!).pushNamedAndRemoveUntil(

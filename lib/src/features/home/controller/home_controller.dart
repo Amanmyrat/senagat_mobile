@@ -233,8 +233,10 @@ class HomeController extends GetxController with StateControlMixin {
   checkProfile() {
     if (userInformationModel?.profileModel == null) {
       isProfileRequired = true;
+      update();
     } else {
       isProfileRequired = false;
+      update();
     }
   }
 

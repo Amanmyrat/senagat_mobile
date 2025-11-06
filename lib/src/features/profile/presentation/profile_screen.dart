@@ -92,10 +92,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                 ),
                               ),
-                              if(controller.phone != null)...[
                                 SizedBox(width: 10.w,),
                                 Text('+993 ${controller.phone}', style: TextStyle(fontSize: 14.sp, color: AppColors.black,),),
-                              ]
+
                             ],
                           ),
                         ],

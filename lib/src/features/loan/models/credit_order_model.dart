@@ -1,17 +1,29 @@
-class CreditWorkInfoModel {
-  final String? role;
+class CreditOrderModel {
+  final int? creditId;
+  final int? term;
+  final int? amount;
+  final double? monthlyPayment;
 
+  final String? country;
+  final int? bankId;
+
+  final String? role;
   final String? patentNumber;
   final String? registrationNumber;
   final String? workAddress;
-
   final String? workplace;
   final String? position;
   final String? managerWorkAddress;
   final String? phoneNumber;
   final int? salary;
 
-  CreditWorkInfoModel({
+  CreditOrderModel({
+    this.creditId,
+    this.term,
+    this.amount,
+    this.monthlyPayment,
+    this.country,
+    this.bankId,
     this.role,
     this.patentNumber,
     this.registrationNumber,
@@ -23,8 +35,14 @@ class CreditWorkInfoModel {
     this.salary,
   });
 
-  factory CreditWorkInfoModel.fromJson(Map<String, dynamic> json) {
-    return CreditWorkInfoModel(
+  factory CreditOrderModel.fromJson(Map<String, dynamic> json) {
+    return CreditOrderModel(
+      creditId: json['credit_id'],
+      term: json['term'],
+      amount: json['amount'],
+      monthlyPayment: json['monthly_payment'],
+      country: json['country'],
+      bankId: json['bank_branch_id'],
       role: json['role'],
       patentNumber: json['patent_number'],
       registrationNumber: json['registration_number'],
@@ -39,6 +57,12 @@ class CreditWorkInfoModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'credit_id': creditId,
+      'term': term,
+      'amount': amount,
+      'monthly_payment': monthlyPayment,
+      'country': country,
+      'bank_branch_id': bankId,
       'role': role,
       'patent_number': patentNumber,
       'registration_number': registrationNumber,
@@ -48,6 +72,12 @@ class CreditWorkInfoModel {
 
   Map<String, dynamic> toMap2() {
     return <String, dynamic>{
+      'credit_id': creditId,
+      'term': term,
+      'amount': amount,
+      'monthly_payment': monthlyPayment,
+      'country': country,
+      'bank_branch_id': bankId,
       'role': role,
       'workplace': workplace,
       'position': position,

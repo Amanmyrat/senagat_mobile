@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/credit/repository/credit_repository.dart';
-import 'package:senagat_mobile/src/features/loan/models/credit_branch_info_model.dart';
-import 'package:senagat_mobile/src/features/loan/models/credit_work_info_model.dart';
+import 'package:senagat_mobile/src/features/loan/models/credit_order_model.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/services/show_snack.dart';
 import '../../../utils/error_utils.dart';
@@ -27,6 +26,11 @@ class LoanController extends GetxController
   bool continueEnabled = false;
   bool check = false;
   int pageIndex = 1;
+
+  late int creditId;
+  late int term;
+  late int amount;
+  late double monthlyPayment;
 
   CreditRepository repository;
   LocationRepository locRepository;
@@ -64,6 +68,11 @@ class LoanController extends GetxController
       update();
     });
     getBranches();
+
+    creditId = Get.arguments['creditId'];
+    term = Get.arguments['term'];
+    amount = Get.arguments['amount'];
+    monthlyPayment = Get.arguments['monthlyPayment'];
   }
 
   void onInformationNotEmpty(String? v) {
@@ -94,35 +103,10 @@ class LoanController extends GetxController
 
   Future<void> onTap() async {
     if (pageIndex == 1 && continueEnabled) {
-      status = Status.loading;
+      pageIndex = 2;
+      continueEnabled = false;
       update();
 
-      final creditWorkInfoModel = selectedTabIndex == 0
-          ? await _getCreditWorkInfoModelForEntrepreneur()
-          : await _getCreditWorkInfoModelForManager();
-
-      await repository
-          .submitWorkInfo(
-            data: selectedTabIndex == 0
-                ? creditWorkInfoModel.toMap()
-                : creditWorkInfoModel.toMap2(),
-          )
-          .then((value) {
-            status = Status.completed;
-            update();
-            pageIndex = 2;
-            continueEnabled = false;
-          })
-          .catchError((e) {
-            status = Status.error;
-            update();
-            final errorText = ErrorUtils.extractErrorText(e);
-            ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
-
-            debugPrint(e.toString());
-          });
-
-      update();
     } else if (pageIndex == 2 && continueEnabled) {
       startBankVerification();
       update();
@@ -160,55 +144,71 @@ class LoanController extends GetxController
         });
   }
 
-  Future<CreditWorkInfoModel> _getCreditWorkInfoModelForManager() async {
+  Future<CreditOrderModel> _getCreditWorkInfoModelForManager() async {
     final int salary = int.parse(wagesController.text);
-    return CreditWorkInfoModel(
+    return CreditOrderModel(
+      creditId: creditId,
+      term: term,
+      amount: amount,
+      monthlyPayment: monthlyPayment,
       role: 'manager',
       managerWorkAddress: managerWorkAddressController.text,
       workplace: workplaceController.text,
       position: positionAtWorkController.text,
       phoneNumber: phoneController.text,
       salary: salary,
+        country: selectedDropdownCity,
+        bankId: selectedDropdownBank
     );
   }
 
-  Future<CreditWorkInfoModel> _getCreditWorkInfoModelForEntrepreneur() async {
-    return CreditWorkInfoModel(
+  Future<CreditOrderModel> _getCreditWorkInfoModelForEntrepreneur() async {
+    return CreditOrderModel(
+      creditId: creditId,
+      term: term,
+      amount: amount,
+      monthlyPayment: monthlyPayment,
       role: 'entrepreneur',
       patentNumber: patentNumController.text,
       registrationNumber: registerNumController.text,
       workAddress: workAddressController.text,
+      country: selectedDropdownCity,
+      bankId: selectedDropdownBank
     );
   }
 
-  Future<CreditBranchInfoModel> _getCreditBranchInfoModel() async {
-    return CreditBranchInfoModel(
-      country: selectedDropdownCity,
-      bankId: selectedDropdownBank,
-    );
-  }
 
   Future<void> startBankVerification() async {
     check = true;
     status = Status.loading;
     update();
 
-    final creditBranchInfoModel = await _getCreditBranchInfoModel();
+
+    final creditWorkInfoModel = selectedTabIndex == 0
+        ? await _getCreditWorkInfoModelForEntrepreneur()
+        : await _getCreditWorkInfoModelForManager();
 
     await repository
-        .submitBranchInfo(data: creditBranchInfoModel.toMap())
+        .creditOrder(
+      data: selectedTabIndex == 0
+          ? creditWorkInfoModel.toMap()
+          : creditWorkInfoModel.toMap2(),
+    )
         .then((value) {
-          status = Status.completed;
-          update();
-        })
-        .catchError((e) {
-          status = Status.error;
-          update();
-          final errorText = ErrorUtils.extractErrorText(e);
-          ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
+      status = Status.completed;
+      update();
 
-          debugPrint(e.toString());
-        });
+    })
+        .catchError((e) {
+      status = Status.error;
+      update();
+      final errorText = ErrorUtils.extractErrorText(e);
+      ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
+
+      debugPrint(e.toString());
+    });
+
+    update();
   }
 
   void setDropdownCity(String? value) {

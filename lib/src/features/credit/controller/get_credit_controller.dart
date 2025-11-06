@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:intl/intl.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
-import 'package:senagat_mobile/src/features/credit/models/credit_details_model.dart';
 import 'package:senagat_mobile/src/features/credit/models/credit_types_model.dart';
 import 'package:senagat_mobile/src/features/credit/repository/credit_repository.dart';
 
@@ -105,36 +104,15 @@ class GetCreditController extends GetxController with StateControlMixin, GetSing
         });
   }
 
-  Future<CreditDetailsModel> _getCreditDetailsModel() async {
-    return CreditDetailsModel(
-      creditId: creditId,
-      term: term,
-      amount: currentValue.toInt(),
-      monthlyPayment: monthlyPayment,
-    );
-  }
 
   Future<void> onTap() async {
     if (continueEnabled) {
-      status = Status.loading;
-      update();
-      final creditDetailsModel = await _getCreditDetailsModel();
-      await repository
-          .submitCreditDetails(data: creditDetailsModel.toMap())
-          .then((value) {
-            status = Status.completed;
-            update();
-
-            Get.toNamed(LoanScreen.route);
-          })
-          .catchError((e) {
-            status = Status.error;
-            update();
-            final errorText = ErrorUtils.extractErrorText(e);
-            ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
-
-            debugPrint(e.toString());
-          });
+      Get.toNamed(LoanScreen.route, arguments: {
+        'creditId': creditId,
+        'term': term,
+        'amount': currentValue.toInt(),
+        'monthlyPayment': monthlyPayment,
+      });
     }
   }
 

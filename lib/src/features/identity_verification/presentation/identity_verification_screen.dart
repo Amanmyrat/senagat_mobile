@@ -350,7 +350,9 @@ class _IdentityVerificationScreenState
                         isLoading: controller.status == Status.loading,
                         isError: controller.status == Status.error,
                         onPressed: () {
-                          controller.startBankVerification();
+                          if(controller.continueEnabled) {
+                            controller.startBankVerification();
+                          }
                         },
                         child: Text(
                           r'submit_for_review'.tr,

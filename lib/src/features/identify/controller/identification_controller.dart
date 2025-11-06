@@ -31,8 +31,8 @@ class IdentificationController extends GetxController with StateControlMixin {
     _accountLoginStatusController.getAccountStatus(
       StatefulData.error(ExceptionType.UnauthorizedException),
     );
-    profileBox.delete('currentProfile');
-    phoneBox.delete('phone');
+    profileBox.clear();
+    phoneBox.clear();
 
     update();
 
