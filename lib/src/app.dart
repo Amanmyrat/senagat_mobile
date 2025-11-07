@@ -20,6 +20,7 @@ import 'package:senagat_mobile/src/features/home/controller/home_controller.dart
 import 'package:senagat_mobile/src/features/home/repository/exchage_rate_repository.dart';
 import 'package:senagat_mobile/src/features/identify/presentation/identify_screen.dart';
 import 'package:senagat_mobile/src/features/identity_verification/presentation/identity_verification_screen.dart';
+import 'package:senagat_mobile/src/features/inquiries_list/presentation/inquiries_list.dart';
 import 'package:senagat_mobile/src/features/lang_settings/presentation/lang_settings_screen.dart';
 import 'package:senagat_mobile/src/features/loan/presentation/loan_screen.dart';
 import 'package:senagat_mobile/src/features/net_and_tv/presentation/net_and_tv_screen.dart';
@@ -44,6 +45,7 @@ import 'features/add_card/controller/add_card_controller.dart';
 import 'features/auth/controller/auth_controller.dart';
 import 'features/auth/repository/auth_repository.dart';
 import 'features/credit/presentation/get_credit_screen.dart';
+import 'features/credit_list/presentation/credit_list.dart';
 import 'features/dashboard/controller/dashboard_controller.dart';
 import 'features/dashboard/presentation/dashboard_screen.dart';
 import 'features/get_card/presentation/get_card_screen.dart';
@@ -228,6 +230,13 @@ class _SenagatAppState extends State<SenagatApp> {
               GetPage(
                 name: GetCardDetailsScreen.route,
                 page: () => const GetCardDetailsScreen(),
+              ),
+              GetPage(
+                name: InquiriesList.route,
+                page: () => const InquiriesList(),
+              ),GetPage(
+                name: CreditList.route,
+                page: () => const CreditList(),
               ),
             ],
           ),

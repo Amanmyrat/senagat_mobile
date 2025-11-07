@@ -6,8 +6,16 @@ class UserInformationModel {
   final ProfileModel? profileModel;
   final List<CertificateModel>? certificates;
   final List<LoanModel>? loan;
+  final List<CardsModel>? cards;
 
-  UserInformationModel({this.id, this.phone, this.profileModel, this.certificates, this.loan});
+  UserInformationModel({
+    this.id,
+    this.phone,
+    this.profileModel,
+    this.certificates,
+    this.loan,
+    this.cards,
+  });
 
   factory UserInformationModel.fromJson(Map<String, dynamic> json) {
     return UserInformationModel(
@@ -22,26 +30,32 @@ class UserInformationModel {
       loan: (json['loans'] as List<dynamic>?)
           ?.map((item) => LoanModel.fromJson(item))
           .toList(),
+      cards: (json['cards'] as List<dynamic>?)
+          ?.map((item) => CardsModel
+          .fromJson(item))
+          .toList(),
     );
   }
-
 }
 
 class LoanModel {
   final String? creditName;
   final int? amount;
   final double? monthlyPayment;
+  final String? status;
 
-  LoanModel({this.creditName, this.amount, this.monthlyPayment});
+
+  LoanModel({this.creditName, this.amount, this.monthlyPayment, this.status});
 
   factory LoanModel.fromJson(Map<String, dynamic> json) {
     return LoanModel(
       creditName: json['credit_name'],
       amount: json['amount'],
       monthlyPayment: json['monthly_payment'],
+      status: json['status'],
+
     );
   }
-
 }
 
 class CertificateModel {
@@ -58,5 +72,15 @@ class CertificateModel {
       status: json['status'],
     );
   }
+}
 
+class CardsModel {
+  final String? cardTitle;
+  final String? status;
+
+  CardsModel({this.cardTitle, this.status});
+
+  factory CardsModel.fromJson(Map<String, dynamic> json) {
+    return CardsModel(cardTitle: json['card_title'], status: json['status']);
+  }
 }

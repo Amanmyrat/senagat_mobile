@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/globals.dart';
 import 'package:senagat_mobile/src/features/add_card/presentation/add_card_screen.dart';
 import 'package:senagat_mobile/src/features/card_expenses/presentation/card_expenses_screen.dart';
+import 'package:senagat_mobile/src/features/credit_list/presentation/credit_list.dart';
+import 'package:senagat_mobile/src/features/inquiries_list/presentation/inquiries_list.dart';
 import 'package:senagat_mobile/src/features/service_settings/presentation/service_settings_screen.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
@@ -64,12 +66,29 @@ class _HomeScreenState extends State<HomeScreen> {
                               charityFoundationWidget(controller),
 
                               if (controller.userInformationModel?.certificates != null) ...[
-                                Text(
-                                  r'inquiries'.tr,
-                                  style: TextStyle(
-                                    color: AppColors.blackText,
-                                    fontSize: 17.sp,
-                                  ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      r'inquiries'.tr,
+                                      style: TextStyle(
+                                        color: AppColors.blackText,
+                                        fontSize: 17.sp,
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: (){
+                                        Get.toNamed(InquiriesList.route);
+                                      },
+                                      child: Text(
+                                        r'all'.tr,
+                                        style: TextStyle(
+                                          color: AppColors.green,
+                                          fontSize: 14.sp,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 SizedBox(height: 16.h),
                                 ListView.builder(
@@ -88,12 +107,29 @@ class _HomeScreenState extends State<HomeScreen> {
                               ],
 
                               if (controller.userInformationModel?.loan != null) ...[
-                                Text(
-                                  r'credits'.tr,
-                                  style: TextStyle(
-                                    color: AppColors.blackText,
-                                    fontSize: 17.sp,
-                                  ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      r'credits'.tr,
+                                      style: TextStyle(
+                                        color: AppColors.blackText,
+                                        fontSize: 17.sp,
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: (){
+                                        Get.toNamed(CreditList.route);
+                                      },
+                                      child: Text(
+                                        r'all'.tr,
+                                        style: TextStyle(
+                                          color: AppColors.green,
+                                          fontSize: 14.sp,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 SizedBox(height: 16.h),
 
