@@ -107,9 +107,14 @@ class CustomException implements Exception {
               if (data is Map) {
                 final code = data['code']?.toString();
                 final message =
-                    data['error_message']?.toString() ??
-                    data['error']?.toString() ??
-                    'Response error';
+                    data['message']?.toString() ??
+                        (data['errors'] is Map
+                            ? ((data['errors'] as Map).values.first as List?)?.first?.toString()
+                            : null) ??
+                        data['error_message']?.toString() ??
+                        data['error']?.toString() ??
+                        'Response error';
+
                 final success = data['success'] is bool
                     ? data['success'] as bool
                     : null;

@@ -259,7 +259,7 @@ class MapSearchController extends GetxController with StateControlMixin {
                                 // handle call logic here
                               },
                               child: Text(
-                                r'Позвонить'.tr,
+                                r'call'.tr,
                                 style: TextStyle(
                                   color: AppColors.white,
                                   fontSize: 14.sp,

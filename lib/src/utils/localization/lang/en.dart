@@ -200,6 +200,10 @@ const Map<String, String> enUs = {
   r'internet_service': r'Internet service',
   r'citizenship': r'Citizenship',
   r'error': r'Error',
+  r'payment_amount': r'Payment amount',
+  r'the_application_is_under_consideration': r'The application is under consideration',
+  r'open_applications': r'Open applications',
+  r'payment': r'Payment',
 
 
 

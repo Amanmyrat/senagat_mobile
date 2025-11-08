@@ -15,11 +15,14 @@ import '../../qr_code/presentation/qr_code_screen.dart';
 enum CardTapType { none, qr, foundation, service, fastOperation, notification }
 
 class CardController extends GetxController with StateControlMixin {
+
   CardTapType lastTap = CardTapType.none;
   late AddCardController addCardController;
   final cardBox = Hive.box<CardModel>('cardsBox');
   UserInformationModel? userInformationModel;
   AuthRepository authRepository;
+
+  late bool isOpen = false;
 
   CardController(this.authRepository);
 
@@ -41,6 +44,16 @@ class CardController extends GetxController with StateControlMixin {
     super.onInit();
     addCardController = Get.find<AddCardController>();
     getUserProfileInfo();
+  }
+
+  void onOpenApplication(){
+    if(!isOpen){
+      isOpen = true;
+      update();
+    }else{
+      isOpen = false;
+      update();
+    }
   }
 
   void getUserProfileInfo() async {

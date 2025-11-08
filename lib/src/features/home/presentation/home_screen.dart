@@ -65,9 +65,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               fastOperationsWidget(controller),
                               charityFoundationWidget(controller),
 
-                              if (controller.userInformationModel?.certificates != null) ...[
+                              if (controller
+                                      .userInformationModel
+                                      ?.certificates !=
+                                  null) ...[
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       r'inquiries'.tr,
@@ -77,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                     ),
                                     GestureDetector(
-                                      onTap: (){
+                                      onTap: () {
                                         Get.toNamed(InquiriesList.route);
                                       },
                                       child: Text(
@@ -99,16 +103,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
                                   itemBuilder: (context, index) {
-                                    return inquiriesWidget(controller, index);
+                                    return GestureDetector(
+                                      onTap: () {
+                                        Get.toNamed(InquiriesList.route);
+                                      },
+                                      child: inquiriesWidget(controller, index),
+                                    );
                                   },
                                 ),
                               ] else ...[
                                 SizedBox.shrink(),
                               ],
 
-                              if (controller.userInformationModel?.loan != null) ...[
+                              if (controller.userInformationModel?.loan !=
+                                  null) ...[
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       r'credits'.tr,
@@ -118,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                     ),
                                     GestureDetector(
-                                      onTap: (){
+                                      onTap: () {
                                         Get.toNamed(CreditList.route);
                                       },
                                       child: Text(
@@ -141,7 +152,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
                                   itemBuilder: (context, index) {
-                                    return creditsWidget(controller, index);
+                                    return GestureDetector(
+                                      onTap: () {
+                                        Get.toNamed(CreditList.route);
+                                      },
+                                      child: creditsWidget(controller, index),
+                                    );
                                   },
                                 ),
                               ] else ...[
@@ -332,19 +348,25 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       child: Column(
                                         children: [
-                                          Expanded(child: Image.asset(AppAssets.sandClock, height: 118.h, width: 62.w,)),
+                                          Expanded(
+                                            child: Image.asset(
+                                              AppAssets.sandClock,
+                                              height: 118.h,
+                                              width: 62.w,
+                                            ),
+                                          ),
                                           SizedBox(
                                             height: AppDimensions
                                                 .paddingExtraLarge
                                                 .h,
                                           ),
                                           Text(
-                                              r'history_is_empty'.tr,
-                                              style: TextStyle(
-                                                color: AppColors.blackText,
-                                                fontSize: 17.sp,
-                                              ),
+                                            r'history_is_empty'.tr,
+                                            style: TextStyle(
+                                              color: AppColors.blackText,
+                                              fontSize: 17.sp,
                                             ),
+                                          ),
                                         ],
                                       ),
                                     )
@@ -681,7 +703,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget profileIsRequiredWidget(HomeController controller) {
     return GestureDetector(
-      onTap:() {
+      onTap: () {
         Get.toNamed(IdentityVerificationScreen.route);
       },
       child: Container(

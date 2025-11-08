@@ -117,7 +117,7 @@ class _InquiriesListState extends State<InquiriesList> {
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      r'sum'.tr,
+                                                      r'payment_amount'.tr,
                                                       style: TextStyle(
                                                         color: AppColors.grey,
                                                         fontSize: 14.sp,
@@ -126,11 +126,11 @@ class _InquiriesListState extends State<InquiriesList> {
                                                     ),
                                                     SizedBox(height: 4.h),
                                                     Text(
-                                                      // inquiries?.amount.toString() ??
+                                                      inquiries?.certificatePrice.toString() ??
                                                           '',
                                                       style: TextStyle(
                                                         color: AppColors.black,
-                                                        fontSize: 17.sp,
+                                                        fontSize: 14.sp,
                                                       ),
                                                     ),
                                                   ],
@@ -151,7 +151,7 @@ class _InquiriesListState extends State<InquiriesList> {
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      r'monthly_payment2'.tr,
+                                                      r'payment'.tr,
                                                       style: TextStyle(
                                                         color: AppColors.grey,
                                                         fontSize: 14.sp,
@@ -165,45 +165,13 @@ class _InquiriesListState extends State<InquiriesList> {
                                                           '',
                                                       style: TextStyle(
                                                         color: AppColors.black,
-                                                        fontSize: 17.sp,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                  
-                                              Container(
-                                                width: 1.w,
-                                                height: 44.h,
-                                                margin: EdgeInsets.symmetric(
-                                                  horizontal: AppDimensions.paddingExtraLarge.w,
-                                                ),
-                                                color: AppColors.dividerColor,
-                                              ),
-                  
-                                              Expanded(
-                                                child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      r'remainder'.tr,
-                                                      style: TextStyle(
-                                                        color: AppColors.grey,
                                                         fontSize: 14.sp,
-                                                        fontFamily: AppFonts.secondaryFont,
-                                                      ),
-                                                    ),
-                                                    SizedBox(height: 4.h),
-                                                    Text(
-                                                      r'8,000'.tr,
-                                                      style: TextStyle(
-                                                        color: AppColors.black,
-                                                        fontSize: 17.sp,
                                                       ),
                                                     ),
                                                   ],
                                                 ),
                                               ),
+
                                             ],
                                           ),
                                         ],

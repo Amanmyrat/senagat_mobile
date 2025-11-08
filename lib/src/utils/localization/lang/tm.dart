@@ -201,6 +201,10 @@ const Map<String, String> tmTm = {
   r'internet_service': r'Internet hyzmaty',
   r'citizenship': r'Raýatlyk',
   r'error': r'Ýalňyşlyk',
+  r'payment_amount': r'Töleg mukdary',
+  r'the_application_is_under_consideration': r'Arza seredilýär',
+  r'open_applications': r'Açyk arzalar',
+  r'payment': r'Töleg',
 
 
 

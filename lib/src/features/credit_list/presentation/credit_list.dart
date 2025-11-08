@@ -129,7 +129,7 @@ class _CreditListState extends State<CreditList> {
                                                         '',
                                                         style: TextStyle(
                                                           color: AppColors.black,
-                                                          fontSize: 17.sp,
+                                                          fontSize: 14.sp,
                                                         ),
                                                       ),
                                                     ],
@@ -164,45 +164,13 @@ class _CreditListState extends State<CreditList> {
                                                         '',
                                                         style: TextStyle(
                                                           color: AppColors.black,
-                                                          fontSize: 17.sp,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-
-                                                Container(
-                                                  width: 1.w,
-                                                  height: 44.h,
-                                                  margin: EdgeInsets.symmetric(
-                                                    horizontal: AppDimensions.paddingExtraLarge.w,
-                                                  ),
-                                                  color: AppColors.dividerColor,
-                                                ),
-
-                                                Expanded(
-                                                  child: Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    children: [
-                                                      Text(
-                                                        r'remainder'.tr,
-                                                        style: TextStyle(
-                                                          color: AppColors.grey,
                                                           fontSize: 14.sp,
-                                                          fontFamily: AppFonts.secondaryFont,
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: 4.h),
-                                                      Text(
-                                                        r'8,000'.tr,
-                                                        style: TextStyle(
-                                                          color: AppColors.black,
-                                                          fontSize: 17.sp,
                                                         ),
                                                       ),
                                                     ],
                                                   ),
                                                 ),
+
                                               ],
                                             ),
                                           ],

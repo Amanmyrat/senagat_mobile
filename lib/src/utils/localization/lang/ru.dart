@@ -200,6 +200,10 @@ const Map<String, String> ruRu = {
   r'internet_service': r'Интернет-сервис',
   r'citizenship': r'Гражданство',
   r'error': r'Ошибка',
+  r'payment_amount': r'Сумма платежа',
+  r'the_application_is_under_consideration': r'Заявка на рассмотрении',
+  r'open_applications': r'Открытые заявки',
+  r'payment': r'Оплата',
 
 
 

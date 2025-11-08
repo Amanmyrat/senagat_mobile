@@ -183,7 +183,7 @@ class _CardScreenState extends State<CardScreen> {
                           ),
                           SizedBox(height: AppDimensions.padding40.h,),
                           if(controller.userInformationModel?.loan != null)...[
-                            Text(r'cards'.tr, style: TextStyle(fontSize: 17.sp, color: AppColors.black),),
+                            Text(r'open_applications'.tr, style: TextStyle(fontSize: 17.sp, color: AppColors.black),),
                             SizedBox(height: 16.h),
                             ListView.builder(
                               scrollDirection: Axis.vertical,
@@ -211,33 +211,104 @@ class _CardScreenState extends State<CardScreen> {
                                           boxShadow: [
                                             BoxShadow(color: AppColors.dividerColor, blurRadius: 4.r),
                                           ],
-                                          color: AppColors.white,
+                                          color: AppColors.inputFillBackground,
                                         ),
                                         child: Column(
                                           children: [
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                Text(
-                                                  card?.cardTitle ?? '',
-                                                  style: TextStyle(color: AppColors.black, fontSize: 14.sp),
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    Text(
-                                                      r'01 Августа, 10:15'.tr,
-                                                      style: TextStyle(
-                                                        color: AppColors.grey,
-                                                        fontSize: 14.sp,
+                                            GestureDetector(
+                                              onTap:(){
+                                                controller.onOpenApplication();
+                                                },
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Expanded(
+                                                    child: Text(
+                                                      'the_application_is_under_consideration'.tr,
+                                                      style: TextStyle(color: AppColors.black, fontSize: 14.sp),
+                                                    ),
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                        r'01 Августа, 10:15'.tr,
+                                                        style: TextStyle(
+                                                          color: AppColors.grey,
+                                                          fontSize: 14.sp,
+                                                        ),
                                                       ),
-                                                    ),
-                                                    SizedBox(width: 6.w),
-                                                    SvgPicture.asset(
-                                                      AppAssets.arrowRightIcon,
-                                                      width: 14.w,
-                                                      color: AppColors.grey,
-                                                    ),
-                                                  ],
+                                                      SizedBox(width: 6.w),
+                                                      SvgPicture.asset(
+                                                        controller.isOpen ? AppAssets.caretDownIcon :AppAssets.arrowRightIcon,
+                                                        width: 14.w,
+                                                        color: AppColors.grey,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            if(controller.isOpen)...[
+                                            SizedBox(height: AppDimensions.paddingExtraLarge.h),
+                                            Row(
+                                              children: [
+                                                Expanded(
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                        r'card'.tr,
+                                                        style: TextStyle(
+                                                          color: AppColors.grey,
+                                                          fontSize: 14.sp,
+                                                          fontFamily: AppFonts.secondaryFont,
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 4.h),
+                                                      Text(
+                                                        card?.cardTitle.toString() ?? '',
+                                                        style: TextStyle(
+                                                          color: AppColors.black,
+                                                          fontSize: 14.sp,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+
+                                                Container(
+                                                  width: 1.w,
+                                                  height: 44.h,
+                                                  margin: EdgeInsets.symmetric(
+                                                    horizontal: AppDimensions.paddingExtraLarge.w,
+                                                  ),
+                                                  color: AppColors.dividerColor,
+                                                ),
+
+                                                Expanded(
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                        r'payment_amount'.tr,
+                                                        style: TextStyle(
+                                                          color: AppColors.grey,
+                                                          fontSize: 14.sp,
+                                                          fontFamily: AppFonts.secondaryFont,
+                                                        ),
+                                                        maxLines: 1,
+                                                      ),
+                                                      SizedBox(height: 4.h),
+                                                      Text(
+                                                        card?.cardPrice.toString() ??
+                                                            '',
+                                                        style: TextStyle(
+                                                          color: AppColors.black,
+                                                          fontSize: 14.sp,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               ],
                                             ),
@@ -249,7 +320,7 @@ class _CardScreenState extends State<CardScreen> {
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
                                                       Text(
-                                                        r'sum'.tr,
+                                                        r'payment'.tr,
                                                         style: TextStyle(
                                                           color: AppColors.grey,
                                                           fontSize: 14.sp,
@@ -262,7 +333,7 @@ class _CardScreenState extends State<CardScreen> {
                                                             '',
                                                         style: TextStyle(
                                                           color: AppColors.black,
-                                                          fontSize: 17.sp,
+                                                          fontSize: 14.sp,
                                                         ),
                                                       ),
                                                     ],
@@ -283,7 +354,7 @@ class _CardScreenState extends State<CardScreen> {
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
                                                       Text(
-                                                        r'monthly_payment2'.tr,
+                                                        r'delivery'.tr,
                                                         style: TextStyle(
                                                           color: AppColors.grey,
                                                           fontSize: 14.sp,
@@ -293,44 +364,11 @@ class _CardScreenState extends State<CardScreen> {
                                                       ),
                                                       SizedBox(height: 4.h),
                                                       Text(
-                                                        // card?.monthlyPayment.toString() ??
+                                                        card?.delivery.toString() ??
                                                             '',
                                                         style: TextStyle(
                                                           color: AppColors.black,
-                                                          fontSize: 17.sp,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-
-                                                Container(
-                                                  width: 1.w,
-                                                  height: 44.h,
-                                                  margin: EdgeInsets.symmetric(
-                                                    horizontal: AppDimensions.paddingExtraLarge.w,
-                                                  ),
-                                                  color: AppColors.dividerColor,
-                                                ),
-
-                                                Expanded(
-                                                  child: Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    children: [
-                                                      Text(
-                                                        r'remainder'.tr,
-                                                        style: TextStyle(
-                                                          color: AppColors.grey,
                                                           fontSize: 14.sp,
-                                                          fontFamily: AppFonts.secondaryFont,
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: 4.h),
-                                                      Text(
-                                                        r'8,000'.tr,
-                                                        style: TextStyle(
-                                                          color: AppColors.black,
-                                                          fontSize: 17.sp,
                                                         ),
                                                       ),
                                                     ],
@@ -338,6 +376,7 @@ class _CardScreenState extends State<CardScreen> {
                                                 ),
                                               ],
                                             ),
+                                            ]
                                           ],
                                         ),
                                       ),
