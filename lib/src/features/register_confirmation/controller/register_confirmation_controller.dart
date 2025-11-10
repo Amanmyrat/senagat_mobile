@@ -12,6 +12,7 @@ import '../../../utils/services/show_snack.dart';
 import '../../../utils/error_utils.dart';
 import '../../auth/controller/auth_controller.dart';
 import '../../auth/repository/auth_repository.dart';
+import '../../register/models/request_otp.dart';
 import '../models/account_model.dart';
 import '../models/login_model.dart';
 
@@ -68,6 +69,36 @@ class RegisterConfirmationController extends GetxController
     });
 
     update();
+  }
+
+  Future<RequestModel> _getRequestModel() async {
+    return RequestModel(
+      phone: phoneNumber,
+      purpose: login ? 'login' : 'register',
+    );
+  }
+
+  void resendOtpCode() async {
+      status = Status.loading;
+      update();
+
+      final requestModel = await _getRequestModel();
+      await repository
+          .requestOTP(data: requestModel.toMap())
+          .then((value) {
+        status = Status.completed;
+        update();
+
+      })
+          .catchError((e) {
+        status = Status.error;
+        update();
+        final errorText = ErrorUtils.extractErrorText(e);
+        ShowSnack.showSnack(
+          errorText ?? r'error'.tr,
+          SnackType.error,
+        );
+      });
   }
 
   void _onOtpChanged() {
@@ -137,18 +168,6 @@ class RegisterConfirmationController extends GetxController
         debugPrint(e.toString());
       });
     }
-  }
-
-  void resendOtpCode() async {
-    status = Status.loading;
-    update();
-
-    await Future.delayed(const Duration(seconds: 1));
-    otpController.clear();
-    startTimer();
-
-    status = Status.completed;
-    update();
   }
 
   @override

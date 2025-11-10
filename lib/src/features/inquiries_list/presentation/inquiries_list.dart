@@ -82,6 +82,7 @@ class _InquiriesListState extends State<InquiriesList> {
                                         color: AppColors.white,
                                       ),
                                       child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -114,7 +115,7 @@ class _InquiriesListState extends State<InquiriesList> {
                                             children: [
                                               Expanded(
                                                 child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
                                                   children: [
                                                     Text(
                                                       r'payment_amount'.tr,
@@ -136,7 +137,7 @@ class _InquiriesListState extends State<InquiriesList> {
                                                   ],
                                                 ),
                                               ),
-                  
+
                                               Container(
                                                 width: 1.w,
                                                 height: 44.h,
@@ -145,32 +146,60 @@ class _InquiriesListState extends State<InquiriesList> {
                                                 ),
                                                 color: AppColors.dividerColor,
                                               ),
-                  
+
                                               Expanded(
-                                                child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
                                                   children: [
-                                                    Text(
-                                                      r'payment'.tr,
-                                                      style: TextStyle(
-                                                        color: AppColors.grey,
-                                                        fontSize: 14.sp,
-                                                        fontFamily: AppFonts.secondaryFont,
+                                                    Container(
+                                                      padding: EdgeInsets.symmetric(
+                                                        horizontal:
+                                                        AppDimensions.paddingMedium.w,
+                                                        vertical: 4,
                                                       ),
-                                                      maxLines: 1,
-                                                    ),
-                                                    SizedBox(height: 4.h),
-                                                    Text(
-                                                      // inquiries?.monthlyPayment.toString() ??
-                                                          '',
-                                                      style: TextStyle(
-                                                        color: AppColors.black,
-                                                        fontSize: 14.sp,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(
+                                                          AppDimensions.borderRadiusMedium.r,
+                                                        ),
+                                                        color: inquiries?.status == r'pending' ? AppColors.orange : inquiries?.status == r'rejected' ? AppColors.redDark : AppColors.green,
+                                                      ),
+                                                      child: Text(
+                                                        inquiries?.status?.tr ?? '',
+                                                        style: TextStyle(
+                                                          fontSize: 14,
+                                                          color: AppColors.white,
+                                                          fontFamily: AppFonts.secondaryFont,
+                                                        ),
                                                       ),
                                                     ),
                                                   ],
                                                 ),
                                               ),
+                                              // Expanded(
+                                              //   child: Column(
+                                              //     crossAxisAlignment: CrossAxisAlignment.start,
+                                              //     children: [
+                                              //       Text(
+                                              //         r'payment'.tr,
+                                              //         style: TextStyle(
+                                              //           color: AppColors.grey,
+                                              //           fontSize: 14.sp,
+                                              //           fontFamily: AppFonts.secondaryFont,
+                                              //         ),
+                                              //         maxLines: 1,
+                                              //       ),
+                                              //       SizedBox(height: 4.h),
+                                              //       Text(
+                                              //         // inquiries?.monthlyPayment.toString() ??
+                                              //             '',
+                                              //         style: TextStyle(
+                                              //           color: AppColors.black,
+                                              //           fontSize: 14.sp,
+                                              //         ),
+                                              //       ),
+                                              //     ],
+                                              //   ),
+                                              // ),
 
                                             ],
                                           ),

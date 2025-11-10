@@ -101,24 +101,26 @@ class _IdentityVerificationScreenState
                                                     const OutlineInputBorder(),
                                                 focusedBorder: OutlineInputBorder(
                                                   borderRadius:
-                                                      BorderRadius.circular(
-                                                        AppDimensions
-                                                            .borderRadiusMedium,
-                                                      ),
+                                                  BorderRadius.circular(
+                                                    AppDimensions
+                                                        .borderRadiusMedium,
+                                                  ),
                                                   borderSide: BorderSide(
-                                                    color: AppColors.green,
+                                                    color: controller.status == Status.error
+                                                        ? AppColors.redDark
+                                                        : AppColors.green,
                                                     width: 1.w,
                                                   ),
                                                 ),
                                                 enabledBorder: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                        AppDimensions
-                                                            .borderRadiusMedium,
-                                                      ),
+                                                  borderRadius: BorderRadius.circular(
+                                                    AppDimensions.borderRadiusMedium,
+                                                  ),
                                                   borderSide: BorderSide(
-                                                    color: AppColors.white,
-                                                    width: 1.w,
+                                                    color: controller.status == Status.error
+                                                        ? AppColors.redDark
+                                                        : AppColors.white,
+                                                    width: 1,
                                                   ),
                                                 ),
                                                 counter: const SizedBox(),
@@ -158,19 +160,21 @@ class _IdentityVerificationScreenState
                                                             .borderRadiusMedium,
                                                       ),
                                                   borderSide: BorderSide(
-                                                    color: AppColors.green,
+                                                    color: controller.status == Status.error
+                                                        ? AppColors.redDark
+                                                        : AppColors.green,
                                                     width: 1.w,
                                                   ),
                                                 ),
                                                 enabledBorder: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                        AppDimensions
-                                                            .borderRadiusMedium,
-                                                      ),
+                                                  borderRadius: BorderRadius.circular(
+                                                    AppDimensions.borderRadiusMedium,
+                                                  ),
                                                   borderSide: BorderSide(
-                                                    color: AppColors.white,
-                                                    width: 1.w,
+                                                    color: controller.status == Status.error
+                                                        ? AppColors.redDark
+                                                        : AppColors.white,
+                                                    width: 1,
                                                   ),
                                                 ),
                                                 counter: const SizedBox(),
@@ -243,7 +247,9 @@ class _IdentityVerificationScreenState
                                           AppDimensions.borderRadiusMedium,
                                         ),
                                         borderSide: BorderSide(
-                                          color: AppColors.green,
+                                          color: controller.status == Status.error
+                                              ? AppColors.redDark
+                                              : AppColors.green,
                                           width: 1.w,
                                         ),
                                       ),
@@ -252,8 +258,10 @@ class _IdentityVerificationScreenState
                                           AppDimensions.borderRadiusMedium,
                                         ),
                                         borderSide: BorderSide(
-                                          color: AppColors.white,
-                                          width: 1.w,
+                                          color: controller.status == Status.error
+                                              ? AppColors.redDark
+                                              : AppColors.transparent,
+                                          width: 1,
                                         ),
                                       ),
                                       counter: const SizedBox(),
@@ -288,7 +296,7 @@ class _IdentityVerificationScreenState
                                   customStyle: ElevatedButton.styleFrom(
                                     backgroundColor: AppColors.white,
                                     side: BorderSide(
-                                      color: AppColors.dividerColor,
+                                      color: controller.status == Status.error? AppColors.redDark : AppColors.dividerColor,
                                     ),
                                     shadowColor: Colors.transparent,
                                   ),
@@ -308,7 +316,15 @@ class _IdentityVerificationScreenState
                                             fontSize: 14.sp,
                                           ),
                                         ),
-                                      ] else ...[
+                                      ] else if(controller.status == Status.error) ...[
+                                        Text(
+                                          r'passport_scan'.tr,
+                                          style: TextStyle(
+                                            color: AppColors.blackText,
+                                            fontSize: 14.sp,
+                                          ),
+                                        ),
+                                      ]else ...[
                                         Text(
                                           r'scan_sent'.tr,
                                           style: TextStyle(
@@ -320,15 +336,23 @@ class _IdentityVerificationScreenState
                                       SizedBox(
                                         width: AppDimensions.paddingMedium.w,
                                       ),
+                                      if(controller.status == Status.error)...[
+                                        SvgPicture.asset(
+                                          AppAssets.X,
+                                          width: 24.w,
+                                          color: AppColors.redDark,
+                                        ),
+                                      ]else...[
                                       SvgPicture.asset(
                                         controller.pdfFile == null
                                             ? AppAssets.pdfIcon
                                             : AppAssets.checkIcon,
-                                        width: 18.w,
+                                        width: 24.w,
                                         color: controller.pdfFile == null
                                             ? AppColors.grey
                                             : AppColors.green,
                                       ),
+            ]
                                     ],
                                   ),
                                 ),

@@ -81,12 +81,35 @@ class _CreditListState extends State<CreditList> {
                                           color: AppColors.white,
                                         ),
                                         child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal:
+                                                AppDimensions.paddingMedium.w,
+                                                vertical: 4,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(
+                                                  AppDimensions.borderRadiusMedium.r,
+                                                ),
+                                                color: loan?.status == r'pending' ? AppColors.orange : loan?.status == r'rejected' ? AppColors.redDark : AppColors.green,
+                                              ),
+                                              child: Text(
+                                                loan?.status?.tr ?? '',
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: AppColors.white,
+                                                  fontFamily: AppFonts.secondaryFont,
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(height: 10.h,),
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
                                                 Text(
-                                                  loan?.creditName ?? '',
+                                                  loan?.creditName?.tr ?? '',
                                                   style: TextStyle(color: AppColors.black, fontSize: 14.sp),
                                                 ),
                                                 Row(

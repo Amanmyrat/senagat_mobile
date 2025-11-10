@@ -96,10 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 SizedBox(height: 16.h),
                                 ListView.builder(
-                                  itemCount: controller
-                                      .userInformationModel
-                                      ?.certificates
-                                      ?.length,
+                                  itemCount: 1,
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
                                   itemBuilder: (context, index) {
@@ -145,10 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 SizedBox(height: 16.h),
 
                                 ListView.builder(
-                                  itemCount: controller
-                                      .userInformationModel
-                                      ?.loan
-                                      ?.length,
+                                  itemCount: 1,
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
                                   itemBuilder: (context, index) {
@@ -1112,9 +1106,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     Text(
                       controller
                               .userInformationModel
-                              ?.certificates?[0]
-                              .certificateName ??
-                          '',
+                              ?.certificates?.first
+                              .certificateName ?? '',
                       style: TextStyle(color: AppColors.white, fontSize: 14.sp),
                     ),
                     Row(
@@ -1145,7 +1138,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget creditsWidget(HomeController controller, int index) {
-    final loan = controller.userInformationModel?.loan?[index];
+    final loan = controller.userInformationModel?.loan?[0];
     return Padding(
       padding: EdgeInsetsGeometry.only(bottom: AppDimensions.padding40.h),
       child: Column(
