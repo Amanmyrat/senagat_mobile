@@ -8,7 +8,6 @@ import 'package:senagat_mobile/src/features/auth/repository/auth_repository.dart
 import 'package:senagat_mobile/src/features/card/controller/card_controller.dart';
 import 'package:senagat_mobile/src/features/card_expenses/presentation/card_expenses_screen.dart';
 import 'package:senagat_mobile/src/features/card_settings/presentation/card_settings_screen.dart';
-import 'package:senagat_mobile/src/features/map_search/presentation/map_search_screen.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
@@ -224,7 +223,7 @@ class _CardScreenState extends State<CardScreen> {
                                                 children: [
                                                   Expanded(
                                                     child: Text(
-                                                      'the_application_is_under_consideration'.tr,
+                                                      card?.status?.tr ?? '',
                                                       style: TextStyle(color: AppColors.black, fontSize: 14.sp),
                                                     ),
                                                   ),
@@ -315,9 +314,9 @@ class _CardScreenState extends State<CardScreen> {
                                                     ),
                                                   ],
                                                 ),
-                                                SizedBox(height: 15,),
+                                                SizedBox(height: AppDimensions.paddingLarge.h,),
                                                 Container(
-                                                  width: double.infinity,
+                                                  width: MediaQuery.of(context).size.width,
                                                   height: 1.h,
                                                   color: AppColors.dividerColor,
                                                 ),

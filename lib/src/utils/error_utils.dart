@@ -1,54 +1,48 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:get/get.dart';
 import '../core/networking/custom_exception.dart';
 
 class ErrorUtils {
   static String? extractErrorText(Object e) {
     try {
-      // If it's your CustomException
       if (e is CustomException) {
-        return e.message;
+        return e.message.tr;
       }
 
-      // Handle DioError
       if (e is DioError) {
         final data = e.response?.data;
 
         if (data is Map<String, dynamic>) {
-          // Try message first
           if (data['message'] != null) {
-            return data['message'].toString();
+            return data['message'].toString().tr;
           }
 
-          // Then nested errors: { errors: { birth_date: [ "..." ] } }
           if (data['errors'] != null && data['errors'] is Map) {
             final firstKey = (data['errors'] as Map).keys.first;
             final firstValue = (data['errors'][firstKey] as List?)?.first;
-            return firstValue?.toString() ??
+            return firstValue?.toString().tr ??
                 'Error on field "$firstKey"';
           }
         }
 
-        // Fallback
-        return e.message ?? 'Unknown network error';
+        return e.message?.tr ?? 'Unknown network error';
       }
 
-      // If it’s a plain Map (sometimes returned by repositories)
       if (e is Map) {
-        return e['message']?.toString() ?? jsonEncode(e);
+        return e['message']?.toString().tr ?? jsonEncode(e).tr;
       }
 
-      // If it’s a raw String
       if (e is String) {
         try {
           final decoded = jsonDecode(e);
-          return decoded['message']?.toString() ?? e;
+          return decoded['message']?.toString().tr ?? e.tr;
         } catch (_) {
-          return e;
+          return e.tr;
         }
       }
 
-      return e.toString();
+      return e.toString().tr;
     } catch (err) {
       return 'Unknown error: $err';
     }

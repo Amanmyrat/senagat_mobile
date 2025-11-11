@@ -10,20 +10,20 @@ import 'lang/en.dart';
 import 'supported_localizations.dart';
 
 class LocalizationService extends Translations {
-  static const Locale defaultLocale = Locale('tm', 'TM');
+  static const Locale defaultLocale = Locale('tk', 'TK');
 
-  static const Locale fallbackLocale = Locale('tm', 'TM');
+  static const Locale fallbackLocale = Locale('tk', 'TK');
 
-  static final List<String> langs = ['TM', 'RU', 'EN'];
+  static final List<String> langs = ['TK', 'RU', 'EN'];
 
   static const String _selectedLocaleStringKey = 'selected_locale_key';
 
   final GetStorage _box = GetStorage();
 
   static final List<Locale> availableLocales = [
-    const Locale('tm', 'TM'),
+    const Locale('tk', 'TK'),
     const Locale('ru', 'RU'),
-    const Locale('en', 'En'),
+    const Locale('en', 'EN'),
   ];
 
   static Iterable<LocalizationsDelegate> localizationsDelegate() {
@@ -51,7 +51,7 @@ class LocalizationService extends Translations {
   }
 
   @override
-  Map<String, Map<String, String>> get keys => { turkmen: tmTm, russian: ruRu, english: enUs,};
+  Map<String, Map<String, String>> get keys => { turkmen: tkTk, russian: ruRu, english: enUs,};
 
   Locale _getLocaleFromLanguage(String? lang) {
     for (int pos = 0; pos < availableLocales.length; pos++) {

@@ -1,4 +1,4 @@
-const Map<String, String> tmTm = {
+const Map<String, String> tkTk = {
   r'title': r'senagat_mobile',
   r'phone': r'Telefon',
   r'enter_number': r'Belgini giriziň',

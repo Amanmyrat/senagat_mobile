@@ -87,6 +87,7 @@ class RegisterConfirmationController extends GetxController
           .requestOTP(data: requestModel.toMap())
           .then((value) {
         status = Status.completed;
+        startTimer();
         update();
 
       })

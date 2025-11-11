@@ -195,6 +195,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 minHeight: 20.h,
                                 minWidth: 20.w,
                               ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(
+                                  AppDimensions.borderRadiusMedium,
+                                ),
+                                borderSide: BorderSide(
+                                  color: controller.status == Status.error
+                                      ? AppColors.redDark
+                                      : AppColors.green,
+                                  width: 1,
+                                ),
+                              ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(
                                   AppDimensions.borderRadiusMedium,

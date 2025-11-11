@@ -98,7 +98,7 @@ class _CreditListState extends State<CreditList> {
                                               child: Text(
                                                 loan?.status?.tr ?? '',
                                                 style: TextStyle(
-                                                  fontSize: 14,
+                                                  fontSize: 14.sp,
                                                   color: AppColors.white,
                                                   fontFamily: AppFonts.secondaryFont,
                                                 ),

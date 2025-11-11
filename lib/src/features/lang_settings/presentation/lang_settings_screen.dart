@@ -38,7 +38,7 @@ class _LangSettingsScreenState extends State<LangSettingsScreen> {
                         SizedBox(height: 32.h,),
                         GestureDetector(
                           onTap: (){
-                            controller.updateLanguage('TM');
+                            controller.updateLanguage('TK');
                           },
                           child: Container(
                             color: AppColors.white,
@@ -51,9 +51,9 @@ class _LangSettingsScreenState extends State<LangSettingsScreen> {
                                     checkedColor: Colors.transparent,
                                     checkedWidget: SvgPicture.asset(AppAssets.checkBoxIcon, color: AppColors.green,),
                                     border: Border.all(color: AppColors.black),
-                                    isChecked: controller.currentLang == 'TM',
+                                    isChecked: controller.currentLang == 'TK',
                                     onTap: (value) {
-                                      controller.updateLanguage('TM');
+                                      controller.updateLanguage('TK');
                                     }
                                 ),
                               ],

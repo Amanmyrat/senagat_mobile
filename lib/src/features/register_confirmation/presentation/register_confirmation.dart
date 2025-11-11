@@ -75,7 +75,7 @@ class _RegisterConfirmationScreenState extends State<RegisterConfirmationScreen>
                         ),
                       ),
                       Text(
-                        '${r'code_was_sent_to'.tr} +993${controller.phoneNumber}',
+                        '${r'code_was_sent_to'.tr} ${controller.phoneNumber}',
                         style: TextStyle(
                           fontSize: 14.sp,
                           color: AppColors.greyInactive,
