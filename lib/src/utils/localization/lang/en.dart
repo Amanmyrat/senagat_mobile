@@ -130,6 +130,7 @@ const Map<String, String> enUs = {
   r'remove_card': r'Remove card',
   r'replenishment_bank': r'Replenishment of this bank card with cash is not allowed (only salary can be transferred)',
   r'not_confirmed': r'Not confirmed',
+  r'confirmed': r'Confirmed',
   r'control': r'Control',
   r'accounts': r'Accounts',
   r'language': r'Language',

@@ -130,6 +130,7 @@ const Map<String, String> tkTk = {
   r'remove_card': r'Karty pozmak',
   r'replenishment_bank': r'Bu karty nagt bilen doldurmak gadagan (diňe aýlyk geçiriler)',
   r'not_confirmed': r'Tassyklanmadyk',
+  r'confirmed': r'Tassyklanyldy',
   r'control': r'Dolandyryş',
   r'accounts': r'Hasaplar',
   r'language': r'Dil',
@@ -208,7 +209,7 @@ const Map<String, String> tkTk = {
   r'pending': r'Garaşylýar',
   r'delivery_service_available': r'Bar',
   r'no_delivery_service': r'Ýok',
-  r'no_internet_connection': r'internet birikmesi ýok',
+  r'no_internet_connection': r'Internet birikmesi ýok',
 
 
 

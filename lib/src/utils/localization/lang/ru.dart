@@ -130,6 +130,7 @@ const Map<String, String> ruRu = {
   r'remove_card': r'Удалить карту',
   r'replenishment_bank': r'Пополнение этой карты наличными не разрешено (только зарплата)',
   r'not_confirmed': r'Не подтверждено',
+  r'confirmed': r'Потвержден',
   r'control': r'Контроль',
   r'accounts': r'Счета',
   r'language': r'Язык',
