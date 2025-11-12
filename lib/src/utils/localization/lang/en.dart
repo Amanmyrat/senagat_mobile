@@ -207,6 +207,8 @@ const Map<String, String> enUs = {
   r'pending': r'Pending',
   r'delivery_service_available': r'Yes',
   r'no_delivery_service': r'No',
+  r'no_internet_connection': r'No internet connection',
+
 
   r'otp_not_match': r'OTP did not match',
   r'otp_code_has_expired.': r'OTP code has expired',

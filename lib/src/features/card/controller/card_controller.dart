@@ -5,7 +5,7 @@ import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/add_card/controller/add_card_controller.dart';
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
 import '../../../core/states/stateful_data.dart';
-import '../../../utils/error_utils.dart';
+import '../../../utils/services/error_utils.dart';
 import '../../../utils/services/show_snack.dart';
 import '../../add_card/model/card_model.dart';
 import '../../auth/repository/auth_repository.dart';

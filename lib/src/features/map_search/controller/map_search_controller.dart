@@ -14,7 +14,7 @@ import '../../../utils/theme/constants/app_colors.dart';
 import '../../../widgets/elevated_button_with_state.dart';
 import '../model/location_model.dart';
 import '../../../core/networking/custom_exception.dart';
-import '../../../utils/error_utils.dart';
+import '../../../utils/services/error_utils.dart';
 
 class MapSearchController extends GetxController with StateControlMixin {
   // private storage + public getter (as you requested)

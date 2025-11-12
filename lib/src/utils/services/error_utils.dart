@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import '../core/networking/custom_exception.dart';
+import '../../core/networking/custom_exception.dart';
 
 class ErrorUtils {
   static String? extractErrorText(Object e) {

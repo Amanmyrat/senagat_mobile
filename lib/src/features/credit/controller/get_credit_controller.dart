@@ -8,7 +8,7 @@ import 'package:senagat_mobile/src/features/credit/repository/credit_repository.
 
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/services/show_snack.dart';
-import '../../../utils/error_utils.dart';
+import '../../../utils/services/error_utils.dart';
 import '../../loan/presentation/loan_screen.dart';
 
 class GetCreditController extends GetxController with StateControlMixin, GetSingleTickerProviderStateMixin {

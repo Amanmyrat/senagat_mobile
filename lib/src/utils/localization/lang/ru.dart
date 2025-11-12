@@ -207,6 +207,7 @@ const Map<String, String> ruRu = {
   r'pending': r'На рассмотрении',
   r'delivery_service_available': r'Есть',
   r'no_delivery_service': r'Нет',
+  r'no_internet_connection': r'Нет подключения к Интернету',
 
 
   r'otp_not_match': r'Код не совпадает',

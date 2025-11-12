@@ -8,7 +8,7 @@ import 'package:senagat_mobile/src/features/payment_verification/presentation/pa
 
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/services/show_snack.dart';
-import '../../../utils/error_utils.dart';
+import '../../../utils/services/error_utils.dart';
 import '../../get_card/repository/card_repository.dart';
 import '../../map_search/model/location_model.dart';
 

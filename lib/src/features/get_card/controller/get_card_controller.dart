@@ -5,7 +5,7 @@ import 'package:senagat_mobile/src/features/get_card/models/card_type_model.dart
 import 'package:senagat_mobile/src/features/get_card/repository/card_repository.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/services/show_snack.dart';
-import '../../../utils/error_utils.dart';
+import '../../../utils/services/error_utils.dart';
 import '../../get_card_details/presentation/get_card_details_screen.dart';
 
 class GetCardController extends GetxController

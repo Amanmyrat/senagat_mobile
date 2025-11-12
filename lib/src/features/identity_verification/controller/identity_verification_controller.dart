@@ -11,7 +11,7 @@ import 'package:senagat_mobile/src/features/home/controller/home_controller.dart
 import 'package:senagat_mobile/src/features/identity_verification/repository/profile_repository.dart';
 import 'package:senagat_mobile/src/features/profile/controller/profile_controller.dart';
 import 'package:senagat_mobile/src/utils/services/show_snack.dart';
-import 'package:senagat_mobile/src/utils/error_utils.dart';
+import 'package:senagat_mobile/src/utils/services/error_utils.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../dashboard/controller/dashboard_controller.dart';
 import '../../dashboard/utils/nested_nav_ids.dart';

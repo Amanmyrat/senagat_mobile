@@ -4,7 +4,7 @@ import 'package:senagat_mobile/src/features/auth_success/presentation/auth_succe
 import '../../../core/states/stateful_data.dart';
 import '../../../core/control_state_variable_mixin.dart';
 import '../../../utils/services/show_snack.dart';
-import '../../../utils/error_utils.dart';
+import '../../../utils/services/error_utils.dart';
 import '../../auth/controller/auth_controller.dart';
 import '../../auth/repository/auth_repository.dart';
 import '../models/register_model.dart';

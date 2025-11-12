@@ -7,7 +7,7 @@ import 'package:senagat_mobile/src/features/register/models/request_otp.dart';
 
 import '../../../core/networking/custom_exception.dart';
 import '../../../utils/services/show_snack.dart';
-import '../../../utils/error_utils.dart';
+import '../../../utils/services/error_utils.dart';
 import '../../../utils/validator.dart';
 import '../../register_confirmation/presentation/register_confirmation.dart';
 import '../models/pre_login_model.dart';

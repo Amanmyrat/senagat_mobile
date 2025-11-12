@@ -14,7 +14,7 @@ class LocalizationService extends Translations {
 
   static const Locale fallbackLocale = Locale('tk', 'TK');
 
-  static final List<String> langs = ['TK', 'RU', 'EN'];
+  static final List<String> langs = ['TM', 'RU', 'EN'];
 
   static const String _selectedLocaleStringKey = 'selected_locale_key';
 

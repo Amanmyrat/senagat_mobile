@@ -208,6 +208,7 @@ const Map<String, String> tkTk = {
   r'pending': r'Garaşylýar',
   r'delivery_service_available': r'Bar',
   r'no_delivery_service': r'Ýok',
+  r'no_internet_connection': r'internet birikmesi ýok',
 
 
 
@@ -290,7 +291,7 @@ const Map<String, String> tkTk = {
   r'phone_not_registered': r'Telefon hasaba alynmady',
   r'otp_session_invalid': r'Nädogry OTP sessiýasy',
   r'incorrect_password': r'Nädogry parol',
-  r'user_profile_already_exists': r'Ulanyjy profili eýýäm bar',
+  r'user_profile_already_exists': r'Ulanyjynyň profili eýýäm döredildi',
   r'requested_amount_exceeds_credit_limit': r'Talap edilen mukdar kredit çäkden ýokary',
   r'requested_term_exceeds_credit_limit': r'Talap edilen möhlet kredit çäkden ýokary',
 };

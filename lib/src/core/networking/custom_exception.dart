@@ -184,7 +184,7 @@ class CustomException implements Exception {
             return CustomException(
               exceptionType: ExceptionType.ApiException,
               statusCode: error.response?.statusCode,
-              message: 'Connection error',
+              message: 'no_internet_connection'.tr,
             );
         }
       } else {

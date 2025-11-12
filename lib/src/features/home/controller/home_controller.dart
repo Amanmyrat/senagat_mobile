@@ -18,7 +18,7 @@ import 'package:senagat_mobile/src/features/register_confirmation/models/account
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/constants/app_assets.dart';
 import '../../../utils/services/show_snack.dart';
-import '../../../utils/error_utils.dart';
+import '../../../utils/services/error_utils.dart';
 import '../../foundation/presentation/foundation_screen.dart';
 import '../../identity_verification/models/profile_model.dart';
 import '../../inquiries/presentation/inquiries_screen.dart';

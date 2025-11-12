@@ -5,7 +5,7 @@ import 'package:senagat_mobile/src/features/credit/repository/credit_repository.
 import 'package:senagat_mobile/src/features/loan/models/credit_order_model.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/services/show_snack.dart';
-import '../../../utils/error_utils.dart';
+import '../../../utils/services/error_utils.dart';
 import '../../map_search/model/location_model.dart';
 import '../../map_search/repository/location_repository.dart';
 
