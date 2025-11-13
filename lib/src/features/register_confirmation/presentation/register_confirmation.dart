@@ -68,7 +68,7 @@ class _RegisterConfirmationScreenState extends State<RegisterConfirmationScreen>
                       SizedBox(height: AppDimensions.padding40.h),
 
                       Text(
-                        r'OTP'.tr,
+                        r'confirmation'.tr,
                         style: TextStyle(
                           fontSize: 24.sp,
                           color: AppColors.blackText,
@@ -140,7 +140,7 @@ class _RegisterConfirmationScreenState extends State<RegisterConfirmationScreen>
                               }
                             },
                             child: Text(
-                              r'apply'.tr,
+                              r'confirmation'.tr,
                               style: TextStyle(
                                 color: AppColors.white,
                                 fontSize: 14.sp,

@@ -259,7 +259,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               isError: controller.status == Status.error,
                               onPressed: controller.login ? controller.continueEnabled && controller.isPasswordValid ? controller.onLoginTap : null : controller.continueEnabled ? controller.onRegisterTap : null,
                               child: Text(
-                                r'send_code'.tr,
+                                r'confirmation'.tr,
                                 style: TextStyle(
                                   fontSize: 14.sp,
                                   color: AppColors.white,

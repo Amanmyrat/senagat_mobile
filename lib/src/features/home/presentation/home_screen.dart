@@ -88,6 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         r'all'.tr,
                                         style: TextStyle(
                                           color: AppColors.green,
+                                          fontFamily: AppFonts.secondaryFont,
                                           fontSize: 14.sp,
                                         ),
                                       ),
@@ -133,6 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         r'all'.tr,
                                         style: TextStyle(
                                           color: AppColors.green,
+                                          fontFamily: AppFonts.secondaryFont,
                                           fontSize: 14.sp,
                                         ),
                                       ),
