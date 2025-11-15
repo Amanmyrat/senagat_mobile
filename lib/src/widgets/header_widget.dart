@@ -52,14 +52,14 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                       ),
                       borderSide: BorderSide(color: AppColors.white, width: 1.w),
                     ),
-                    prefixIconConstraints: BoxConstraints(
+                    suffixIconConstraints: BoxConstraints(
                       minWidth: 20.w,
                       minHeight: 20.h,
                     ),
-                    prefixIcon: Padding(
+                    suffixIcon: Padding(
                       padding: EdgeInsets.only(
-                        left: AppDimensions.paddingExtraLarge.w,
-                        right: AppDimensions.paddingMedium.w,
+                        left: AppDimensions.paddingMedium.w,
+                        right: AppDimensions.paddingExtraLarge.w,
                       ),
                       child: SvgPicture.asset(AppAssets.searchIcon, width: 20.w),
                     ),
@@ -78,54 +78,54 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                   ),
                 ),
               ),
-              SizedBox(width: 4.w),
-              GestureDetector(
-                onTap: () {
-                  controller.onQrScanTap();
-                },
-                child: Container(
-                  padding: EdgeInsets.all(16.w),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                      AppDimensions.borderRadiusMedium.r,
-                    ),
-                    color: controller.lastTap == HomeTapType.qr
-                        ? AppColors.green
-                        : AppColors.inputFillBackground,
-                  ),
-                  child: SvgPicture.asset(
-                    AppAssets.qrCodeIcon,
-                    width: 20.w,
-                    color: controller.lastTap == HomeTapType.qr
-                        ? AppColors.white
-                        : AppColors.black,
-                  ),
-                ),
-              ),
-              SizedBox(width: 4.w),
-              GestureDetector(
-                onTap: () {
-                  controller.onNotificationScanTap();
-                },
-                child: Container(
-                  padding: EdgeInsets.all(16.w),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                      AppDimensions.borderRadiusMedium.r,
-                    ),
-                    color: controller.lastTap == HomeTapType.notification
-                        ? AppColors.green
-                        : AppColors.inputFillBackground,
-                  ),
-                  child: SvgPicture.asset(
-                    AppAssets.bellSimpleIcon,
-                    width: 20.w,
-                    color: controller.lastTap == HomeTapType.notification
-                        ? AppColors.white
-                        : AppColors.black,
-                  ),
-                ),
-              ),
+              // SizedBox(width: 4.w),
+              // GestureDetector(
+              //   onTap: () {
+              //     controller.onQrScanTap();
+              //   },
+              //   child: Container(
+              //     padding: EdgeInsets.all(16.w),
+              //     decoration: BoxDecoration(
+              //       borderRadius: BorderRadius.circular(
+              //         AppDimensions.borderRadiusMedium.r,
+              //       ),
+              //       color: controller.lastTap == HomeTapType.qr
+              //           ? AppColors.green
+              //           : AppColors.inputFillBackground,
+              //     ),
+              //     child: SvgPicture.asset(
+              //       AppAssets.qrCodeIcon,
+              //       width: 20.w,
+              //       color: controller.lastTap == HomeTapType.qr
+              //           ? AppColors.white
+              //           : AppColors.black,
+              //     ),
+              //   ),
+              // ),
+              // SizedBox(width: 4.w),
+              // GestureDetector(
+              //   onTap: () {
+              //     controller.onNotificationScanTap();
+              //   },
+              //   child: Container(
+              //     padding: EdgeInsets.all(16.w),
+              //     decoration: BoxDecoration(
+              //       borderRadius: BorderRadius.circular(
+              //         AppDimensions.borderRadiusMedium.r,
+              //       ),
+              //       color: controller.lastTap == HomeTapType.notification
+              //           ? AppColors.green
+              //           : AppColors.inputFillBackground,
+              //     ),
+              //     child: SvgPicture.asset(
+              //       AppAssets.bellSimpleIcon,
+              //       width: 20.w,
+              //       color: controller.lastTap == HomeTapType.notification
+              //           ? AppColors.white
+              //           : AppColors.black,
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         );

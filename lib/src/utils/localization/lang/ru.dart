@@ -1,6 +1,6 @@
 const Map<String, String> ruRu = {
   r'title': r'senagat_mobile',
-  r'phone': r'Телефон',
+  r'phone': r'Номер телефона',
   r'enter_number': r'Введите номер',
   r'pay_everything': r'Почти всё можно оплатить!',
   r'create_account': r'Создать аккаунт',
@@ -209,6 +209,7 @@ const Map<String, String> ruRu = {
   r'delivery_service_available': r'Есть',
   r'no_delivery_service': r'Нет',
   r'no_internet_connection': r'Нет подключения к Интернету',
+  r'saved_successfully': r'Успешно сохранино',
 
 
   r'otp_not_match': r'Код не совпадает',

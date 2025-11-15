@@ -17,7 +17,7 @@ class ProfileController extends GetxController with StateControlMixin, GetSingle
   void onInit() {
     super.onInit();
     refreshProfile();
-    phone = phoneBox.get('phone');
+    phone = homeController.userInformationModel?.phone;
   }
 
   @override

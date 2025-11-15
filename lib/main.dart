@@ -5,7 +5,6 @@ import 'package:senagat_mobile/src/app.dart';
 import 'package:senagat_mobile/src/core/local/key_value_storage_base.dart';
 import 'package:senagat_mobile/src/features/add_card/model/card_model.dart';
 import 'package:senagat_mobile/src/features/identity_verification/models/profile_model.dart';
-import 'package:senagat_mobile/src/features/inquiries/models/inquiries_model.dart';
 import 'package:senagat_mobile/src/features/pay/model/pay_model.dart';
 import 'package:senagat_mobile/src/utils/path_provider_service.dart';
 
@@ -27,6 +26,7 @@ void main() async {
   await Hive.openBox<CardModel>('cardsBox');
   await Hive.openBox<PayModel>('payBox');
   await Hive.openBox<PayModel>('payFoundationBox');
+  await Hive.openBox('accountsBox');
 
   runApp(const SenagatApp());
 }

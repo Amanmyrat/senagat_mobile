@@ -209,6 +209,7 @@ const Map<String, String> enUs = {
   r'delivery_service_available': r'Yes',
   r'no_delivery_service': r'No',
   r'no_internet_connection': r'No internet connection',
+  r'saved_successfully': r'Saved successfully',
 
 
   r'otp_not_match': r'OTP did not match',

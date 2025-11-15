@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/features/accounts/controller/accounts_controller.dart';
+import 'package:senagat_mobile/src/utils/services/show_snack.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
 
 import '../../../utils/theme/constants/app_colors.dart';
@@ -107,20 +108,35 @@ class _AccountScreenState extends State<AccountScreen> {
                                                         ),
                                                       ),
                                                     ),
-                                                    if(controller.controllers[index].text.isNotEmpty)
+                                                    if (controller.controllers[index].text.isNotEmpty)
                                                       Column(
-                                                      children: [
-                                                        SizedBox(height: 16.h,),
-                                                        Container(
-                                                          padding: EdgeInsets.symmetric(vertical: 4.w, horizontal: AppDimensions.paddingMedium.w),
-                                                          decoration: BoxDecoration(
-                                                              borderRadius: BorderRadius.circular(AppDimensions.paddingMedium.r),
-                                                              color: AppColors.green
+                                                        children: [
+                                                          SizedBox(height: 16.h),
+                                                          GestureDetector(
+                                                            onTap: () {
+                                                              controller.saveServiceValue(index);
+                                                              ShowSnack.showSnack('saved_successfully'.tr, SnackType.success);
+                                                            },
+                                                            child: Container(
+                                                              padding: EdgeInsets.symmetric(
+                                                                  vertical: 4.w,
+                                                                  horizontal: AppDimensions.paddingMedium.w),
+                                                              decoration: BoxDecoration(
+                                                                borderRadius:
+                                                                BorderRadius.circular(AppDimensions.paddingMedium.r),
+                                                                color: AppColors.green,
+                                                              ),
+                                                              child: Text(
+                                                                'save'.tr,
+                                                                style: TextStyle(
+                                                                    fontSize: 14.sp,
+                                                                    fontFamily: AppFonts.secondaryFont,
+                                                                    color: AppColors.white),
+                                                              ),
+                                                            ),
                                                           ),
-                                                          child: Text(r'save'.tr, style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.secondaryFont, color: AppColors.white),),
-                                                        ),
-                                                      ],
-                                                    ),
+                                                        ],
+                                                      )
                                                   ],
                                                 ),
                                             ],
