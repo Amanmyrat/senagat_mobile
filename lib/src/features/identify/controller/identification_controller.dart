@@ -33,6 +33,9 @@ class IdentificationController extends GetxController with StateControlMixin {
     );
     profileBox.clear();
     phoneBox.clear();
+    phoneBox.delete('phone');
+
+    print(phoneBox.get('phone'));
 
     update();
 
@@ -46,7 +49,7 @@ class IdentificationController extends GetxController with StateControlMixin {
   @override
   void onInit() {
     super.onInit();
-    phone = homeController.userInformationModel!.phone;
+    phone = homeController.userInformationModel?.phone;
 
   }
 

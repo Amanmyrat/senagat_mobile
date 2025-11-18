@@ -83,9 +83,8 @@ class RegisterController extends GetxController with StateControlMixin {
           .requestOTP(data: requestModel.toMap())
           .then((value) {
         status = Status.completed;
-        update();
-
         phoneBox.put('phone', phoneController.text);
+        update();
 
         Get.toNamed(
           RegisterConfirmationScreen.route,
@@ -119,8 +118,8 @@ class RegisterController extends GetxController with StateControlMixin {
           .preLogin(data: preLoginModel.toMap())
           .then((value) {
             status = Status.completed;
-            update();
             phoneBox.put('phone', phoneController.text);
+            update();
 
             Get.toNamed(
               RegisterConfirmationScreen.route,

@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
-
+import 'package:senagat_mobile/src/features/dashboard/controller/dashboard_controller.dart';
 import '../../home/controller/home_controller.dart';
 import '../../identity_verification/models/profile_model.dart';
 
@@ -12,26 +12,23 @@ class ProfileController extends GetxController with StateControlMixin, GetSingle
   String fullName = '';
   String? phone;
   final homeController = Get.find<HomeController>();
+  final dashboardController = Get.find<DashboardController>();
 
   @override
   void onInit() {
     super.onInit();
     refreshProfile();
-    phone = homeController.userInformationModel?.phone;
   }
 
   @override
   void onReady() {
     super.onReady();
-    // Refresh when screen becomes visible
     refreshProfile();
   }
 
   void refreshProfile() {
     final savedProfile = profileBox.get('currentProfile');
-    phone = phoneBox.get('phone');
-    fullName =
-        '${savedProfile?.firstName ?? r'name'.tr} ${savedProfile?.lastName ?? r'last_name'.tr}';
+    fullName = '${savedProfile?.firstName ?? r'name'.tr} ${savedProfile?.lastName ?? r'last_name'.tr}';
 
     update();
   }
