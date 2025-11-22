@@ -115,7 +115,7 @@ class HomeController extends GetxController with StateControlMixin {
     update();
 
     if (fastServiceController.selectedServiceTitle[index] == r'net_and_TV') {
-      Get.offNamed(
+      Get.toNamed(
         NetAndTvScreen.route,
         arguments: {
           'selectedServiceTitle':
@@ -123,7 +123,7 @@ class HomeController extends GetxController with StateControlMixin {
         },
       );
     } else {
-      Get.offNamed(
+      Get.toNamed(
         PaymentScreen.route,
         arguments: {
           'selectedServiceTitle':

@@ -95,13 +95,13 @@ class _ServiceSettingsScreenState extends State<ServiceSettingsScreen> {
                                               Container(
                                                 width: 50.w,
                                                 height: 50.h,
-                                                padding: EdgeInsets.all(AppDimensions.paddingMedium.w),
+                                                padding: EdgeInsets.all(AppDimensions.paddingSmall.w),
                                                 decoration: BoxDecoration(
                                                     border: Border.all(color: AppColors.dividerColor, width: 1.w),
                                                     shape: BoxShape.circle,
                                                     color: AppColors.white
                                                 ),
-                                                child: SvgPicture.asset(controller.selectedServiceIcons[index], color: AppColors.green, width: 30.w,),
+                                                child: Image.asset(controller.selectedServiceIcons[index], width: 30.w,),
                                               ),
                                               SizedBox(width: AppDimensions.paddingMedium.w,),
                                               Expanded(
@@ -157,13 +157,13 @@ class _ServiceSettingsScreenState extends State<ServiceSettingsScreen> {
                                           Container(
                                             width: 50.w,
                                             height: 50.h,
-                                            padding: EdgeInsets.all(AppDimensions.paddingMedium.w),
+                                            padding: EdgeInsets.all(AppDimensions.paddingSmall.w),
                                             decoration: BoxDecoration(
                                               border: Border.all(color: AppColors.dividerColor, width: 1.w),
                                                 shape: BoxShape.circle,
                                                 color: AppColors.white
                                             ),
-                                            child: SvgPicture.asset(controller.serviceIcons[index], color: AppColors.green, width: 30.w,),
+                                            child: Image.asset(controller.serviceIcons[index], width: 30.w, ),
                                           ),
                                           SizedBox(width: AppDimensions.paddingMedium.w,),
                                           Expanded(

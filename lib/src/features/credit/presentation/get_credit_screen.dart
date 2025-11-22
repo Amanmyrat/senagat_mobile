@@ -117,15 +117,16 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                   onChanged: (v) =>
                                       controller.setDropdownValue(v),
                                   items: controller.credits
+                                      .where((c) => c.canOfferOnline == true)
                                       .map(
                                         (item) => DropdownMenuItem<String>(
-                                          value: item.name,
-                                          child: Text(
-                                            item.name?.tr ?? '',
-                                            style: TextStyle(fontSize: 14.sp),
-                                          ),
-                                        ),
-                                      )
+                                      value: item.name,
+                                      child: Text(
+                                        item.name?.tr ?? '',
+                                        style: TextStyle(fontSize: 14.sp),
+                                      ),
+                                    ),
+                                  )
                                       .toList(),
                                 ),
                               ),

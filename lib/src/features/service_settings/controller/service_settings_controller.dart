@@ -9,23 +9,21 @@ class ServiceSettingsController extends GetxController with StateControlMixin {
   final List<String> selectedServiceIcons = [];
 
   final List<String> serviceIcons = [
-    AppAssets.deviceMobileIcon,
-    AppAssets.globeIcon,
-    AppAssets.flameIcon,
-    AppAssets.dropIcon,
-    AppAssets.stickIcon,
-    AppAssets.lightbulbIcon,
-    AppAssets.buildingApartmentIcon,
+    AppAssets.tmCell,
+    AppAssets.astu,
+    AppAssets.astu,
+    AppAssets.astu,
+    AppAssets.astu,
+    AppAssets.telecom,
   ];
 
   final List<String> serviceTitle = [
-    r'Altyn Asyr',
-    r'net_and_TV',
-    r'gas',
-    r'water',
-    r'state_traffic_safety_inspectorate',
-    r'light',
-    r'communal_apartment',
+    r'TM CELL',
+    r'CDMA',
+    r'IP TV',
+    r'home_phone',
+    r'Internet',
+    r'Internet',
   ];
 
   late Box _box;
@@ -40,7 +38,7 @@ class ServiceSettingsController extends GetxController with StateControlMixin {
   void saveData() {
     _box.put('selected_titles', selectedServiceTitle);
     _box.put('selected_icons', selectedServiceIcons);
-    Get.offAllNamed(DashboardScreen.route);
+    Get.back();
   }
 
   void _loadSavedData() {
@@ -52,7 +50,6 @@ class ServiceSettingsController extends GetxController with StateControlMixin {
     selectedServiceTitle.addAll(savedTitles);
     selectedServiceIcons.addAll(savedIcons);
 
-    // Remove already selected from available lists
     for (int i = 0; i < savedTitles.length; i++) {
       serviceTitle.remove(savedTitles[i]);
       serviceIcons.remove(savedIcons[i]);

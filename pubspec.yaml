@@ -92,3 +92,11 @@ flutter:
         - asset: assets/fonts/Xolonium-Regular.otf
         - asset: assets/fonts/Xolonium-Bold.otf
           weight: 400
+
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/app.png"
+  min_sdk_android: 21
+  remove_alpha_ios: true

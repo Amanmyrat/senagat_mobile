@@ -44,11 +44,6 @@ class GetCreditController extends GetxController with StateControlMixin, GetSing
 
   GetCreditController(this.repository);
 
-  final List<String> dropdownItems = [
-    r'credit_for_newlyweds',
-    r'consumer_credit',
-    r'student_loan',
-  ];
 
   void setDropdownValue(String? value) {
     selectedDropdownValue = value;

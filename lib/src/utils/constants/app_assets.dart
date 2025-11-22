@@ -66,6 +66,10 @@ class AppAssets {
   static const threeDPercent = 'assets/images/3DPercent.png';
   static const paymentCardImage = 'assets/images/payment_card_image.png';
   static const paymentCardImage2 = 'assets/images/payment_card_image2.png';
+  static const astu = 'assets/icons/astu.png';
+  static const telecom = 'assets/icons/telecom-logo.png';
+  static const tmCell = 'assets/icons/tmCell.png';
+  static const policeCar = 'assets/icons/policeCar.png';
 
   static const cardImage = 'assets/images/cardImage.jpg';
   static const cardImage2 = 'assets/images/cardImage2.jpg';

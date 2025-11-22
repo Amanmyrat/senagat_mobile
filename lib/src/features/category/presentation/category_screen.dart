@@ -8,6 +8,7 @@ import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
 import 'package:senagat_mobile/src/widgets/header_widget.dart';
+import '../../home/controller/home_controller.dart';
 import '../controller/category_controller.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -38,6 +39,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         HeaderWidget(),
+                        // charityFoundationWidget(controller),
                         Text(r'payments'.tr, style: TextStyle(color: AppColors.blackText, fontSize: 17.sp),),
                         SizedBox(height: 16.h),
                         GridView.builder(
@@ -81,15 +83,16 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                     Container(
                                       width: 50.w,
                                       height: 50.h,
-                                      padding: EdgeInsets.all(AppDimensions.paddingMedium.w),
+                                      padding: EdgeInsets.all(AppDimensions.paddingSmall.w),
                                       decoration: BoxDecoration(
                                           border: Border.all(color: AppColors.dividerColor, width: 1.w),
                                           shape: BoxShape.circle,
-                                          color: isSelected ? AppColors.white : AppColors.green
+                                          // color: isSelected ? AppColors.white : AppColors.green
                                       ),
-                                      child: SvgPicture.asset(
+                                      child: Image.asset(
                                         controller.paymentsIcons[index],
-                                        color: isSelected ? AppColors.green : AppColors.white, width: 30.w,),
+                                        // color: isSelected ? AppColors.green : AppColors.white,
+                                        width: 30.w,),
                                     ),
                                     SizedBox(width: AppDimensions.paddingMedium.w,),
                                     Expanded(
@@ -149,8 +152,13 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 ),
                                 child: Row(
                                   children: [
-                                    Image.asset(
-                                      controller.serviceIcons[index], width: 50.w,),
+                                    Container(
+                                      width: 50.w,
+                                      height: 50.h,
+
+                                      child: Image.asset(
+                                        controller.serviceIcons[index], width: 50.w,),
+                                    ),
                                     SizedBox(width: AppDimensions.paddingMedium.w,),
                                     Expanded(
                                       child: Text(
@@ -180,4 +188,93 @@ class _CategoryScreenState extends State<CategoryScreen> {
       ),
     );
   }
+}
+Widget charityFoundationWidget(CategoryController controller) {
+  return Padding(
+    padding: EdgeInsets.only(bottom: 40.h),
+    child: GestureDetector(
+      onTap: () {
+        controller.onFoundationTap();
+      },
+      child: Container(
+        padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
+        width: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(
+            AppDimensions.borderRadiusMedium.r,
+          ),
+          border: Border.all(
+            color: AppColors.dividerColor,
+            width: 1.w,
+            style: BorderStyle.solid,
+          ),
+          boxShadow: [
+            BoxShadow(color: AppColors.dividerColor, blurRadius: 4.r),
+          ],
+          color: controller.lastTap == HomeTapType.foundation
+              ? AppColors.green
+              : AppColors.white,
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    r'charitable_foundation'.tr,
+                    style: TextStyle(
+                      color: controller.lastTap == HomeTapType.foundation
+                          ? AppColors.white
+                          : AppColors.blackText,
+                      fontSize: 17.sp,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: AppDimensions.paddingMedium.h,
+                    ),
+                    child: Text(
+                      r'donations_of_any_amount'.tr,
+                      style: TextStyle(
+                        color: controller.lastTap == HomeTapType.foundation
+                            ? AppColors.lightGreen
+                            : AppColors.blackText,
+                        fontSize: 14.sp,
+                        fontFamily: AppFonts.secondaryFont,
+                      ),
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        r'donate'.tr,
+                        style: TextStyle(
+                          color: controller.lastTap == HomeTapType.foundation
+                              ? AppColors.white
+                              : AppColors.green,
+                          fontSize: 14.sp,
+                        ),
+                      ),
+                      SvgPicture.asset(
+                        AppAssets.arrowRightIcon,
+                        color: controller.lastTap == HomeTapType.foundation
+                            ? AppColors.white
+                            : AppColors.green,
+                        width: 14.w,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 10.h),
+              child: Image.asset(AppAssets.foundation, width: 125.w),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 }

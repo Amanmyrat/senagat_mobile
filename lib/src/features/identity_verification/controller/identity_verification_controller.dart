@@ -169,7 +169,7 @@ class IdentityVerificationController extends GetxController
   Future<void> pickPdf() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
-      allowedExtensions: ['pdf', 'png', 'jpg', 'jpeg'],
+      allowedExtensions: ['pdf'],
     );
 
     if (result != null &&

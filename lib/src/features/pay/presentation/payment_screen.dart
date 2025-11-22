@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:roundcheckbox/roundcheckbox.dart';
 import 'package:senagat_mobile/src/features/pay/controller/payment_controller.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
@@ -80,35 +82,215 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                         ),
                                       ),
                                       SizedBox(height: 16.h,),
-                                      Container(
-                                        padding: EdgeInsets.all( AppDimensions.paddingExtraLarge, ),
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
-                                          image: DecorationImage(
-                                            image: AssetImage(AppAssets.cardImage),
-                                            fit: BoxFit.cover, ), ),
-                                        child: Column( children: [
-                                          Align( alignment: Alignment.topLeft,
-                                            child: Text( 'Senagat Bank', style:
-                                            TextStyle( color: AppColors.white, fontSize: 14.sp, ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            context: Get.context!,
+                                            backgroundColor: AppColors.white,
+                                            builder: (_) {
+                                              return Padding(
+                                                padding: EdgeInsets.only(
+                                                  bottom: MediaQuery.of(Get.context!).viewInsets.bottom,
+                                                ),
+                                                child: SizedBox(
+                                                  width: MediaQuery.of(Get.context!).size.width,
+                                                  child: Padding(
+                                                    padding: EdgeInsets.symmetric(
+                                                      vertical: 20.h,
+                                                      horizontal: 20.w,
+                                                    ),
+                                                    child: Column(
+                                                      mainAxisSize: MainAxisSize.min,
+                                                      children: [
+                                                        Container(
+                                                          color: AppColors.grey,
+                                                          width: 24.w,
+                                                          height: 2.h,
+                                                        ),
+                                                        SizedBox(height: 22.h),
+
+                                                        Align(
+                                                          alignment: Alignment.topLeft,
+                                                            child: Text('select_a_card'.tr, style: TextStyle(fontSize: 17.sp, color: AppColors.black),)),
+                                                        SizedBox(height: 22.h),
+
+                                                        GestureDetector(
+                                                          onTap: (){
+
+                                                          },
+                                                          child: Container(
+                                                            color: AppColors.white,
+                                                            child: Row(
+                                                              mainAxisAlignment: MainAxisAlignment.start,
+                                                              children: [
+                                                                RoundCheckBox(
+                                                                    size: 27.w,
+                                                                    checkedColor: Colors.transparent,
+                                                                    checkedWidget: SvgPicture.asset(AppAssets.checkBoxIcon, color: AppColors.green,),
+                                                                    border: Border.all(color: AppColors.black),
+                                                                    onTap: (value) {
+                                                                    }
+                                                                ),
+                                                                SizedBox(width: AppDimensions.paddingMedium.w,),
+                                                                Column(
+                                                                  children: [
+                                                                    Text(r'Senagat'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.black,),),
+                                                                    Text(r'*** 0689'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.black, fontFamily: AppFonts.secondaryFont),),
+                                                                  ],
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        SizedBox(height: 22.h),
+
+                                                        GestureDetector(
+                                                          onTap: (){
+
+                                                          },
+                                                          child: Container(
+                                                            color: AppColors.white,
+                                                            child: Row(
+                                                              mainAxisAlignment: MainAxisAlignment.start,
+                                                              children: [
+                                                                RoundCheckBox(
+                                                                    size: 27.w,
+                                                                    checkedColor: Colors.transparent,
+                                                                    checkedWidget: SvgPicture.asset(AppAssets.checkBoxIcon, color: AppColors.green,),
+                                                                    border: Border.all(color: AppColors.black),
+                                                                    onTap: (value) {
+                                                                    }
+                                                                ),
+                                                                SizedBox(width: AppDimensions.paddingMedium.w,),
+                                                                Column(
+                                                                  children: [
+                                                                    Text(r'Senagat'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.black,),),
+                                                                    Text(r'*** 0689'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.black, fontFamily: AppFonts.secondaryFont),),
+                                                                  ],
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+
+
+                                                        SizedBox(height: 22.h),
+
+                                                        SizedBox(
+                                                          width: double.infinity,
+                                                          child: ElevatedButtonWithState(
+                                                            isLoading: false,
+                                                            isError: false,
+                                                            onPressed: () {
+
+                                                            },
+                                                            child: Text(
+                                                              r'select'.tr,
+                                                              style: TextStyle(
+                                                                color: AppColors.white,
+                                                                fontSize: 14.sp,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.all( AppDimensions.paddingExtraLarge, ),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
+                                            image: DecorationImage(
+                                              image: AssetImage(AppAssets.cardImage),
+                                              fit: BoxFit.cover, ), ),
+                                          child: Column( children: [
+                                            Align( alignment: Alignment.topLeft,
+                                              child: Text( 'Senagat Bank', style:
+                                              TextStyle( color: AppColors.white, fontSize: 14.sp, ),
+                                              ),
                                             ),
-                                          ),
-                                          SizedBox(height: AppDimensions.paddingExtraLarge.h,),
-                                          Row( children: [
-                                            Text( 'xxxx', style: TextStyle( fontSize: 24.sp, color: AppColors.white, ),
-                                            ),
-                                            SizedBox(width: AppDimensions.paddingExtraLarge.h,),
-                                            Text( '0689', style: TextStyle( fontSize: 24.sp, color: AppColors.white, ),
-                                            ),
-                                            SizedBox(width: AppDimensions.paddingExtraLarge.h,),
+                                            SizedBox(height: AppDimensions.paddingExtraLarge.h,),
+                                            Row( children: [
+                                              Text( 'xxxx', style: TextStyle( fontSize: 24.sp, color: AppColors.white, ),
+                                              ),
+                                              SizedBox(width: AppDimensions.paddingExtraLarge.h,),
+                                              Text( '0689', style: TextStyle( fontSize: 24.sp, color: AppColors.white, ),
+                                              ),
+                                              SizedBox(width: AppDimensions.paddingExtraLarge.h,),
+                                            ],),
                                           ],),
-                                        ],),
+                                        ),
                                       ),
                                       SizedBox(height: AppDimensions.padding40.h,),
                                       if(controller.serviceName.isNotEmpty)
                                         Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
+                                            Text(r'your_account'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+                                            SizedBox(height: AppDimensions.paddingMedium.h,),
+                                            Row(
+                                              children: [
+                                                Container(
+                                                  padding: EdgeInsets.all(
+                                                    AppDimensions.paddingExtraLarge.w,
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    color: AppColors.inputFillBackground,
+                                                    borderRadius: BorderRadius.circular(
+                                                      AppDimensions.borderRadiusMedium,
+                                                    ),
+                                                  ),
+                                                  child: Text(
+                                                    '${r'your_account'.tr}:',
+                                                    style: TextStyle(fontSize: 14.sp),
+                                                  ),
+                                                ),
+                                                SizedBox(width: AppDimensions.paddingSmall.w),
+                                                Expanded(
+                                                  child: TextFormField(
+                                                    readOnly: true,
+                                                    controller: controller.accountController,
+                                                    style: TextStyle(
+                                                      fontSize: 14.sp,
+                                                      fontFamily: AppFonts.primaryFont,
+                                                    ),
+                                                    decoration: InputDecoration(
+                                                      border: OutlineInputBorder(),
+                                                      focusedBorder: OutlineInputBorder(
+                                                        borderRadius: BorderRadius.circular(
+                                                          AppDimensions.borderRadiusMedium,
+                                                        ),
+                                                        borderSide: BorderSide(
+                                                          color: AppColors.white,
+                                                          width: 1.w,
+                                                        ),
+                                                      ),
+                                                      enabledBorder: OutlineInputBorder(
+                                                        borderRadius: BorderRadius.circular(
+                                                          AppDimensions.borderRadiusMedium,
+                                                        ),
+                                                        borderSide: BorderSide(
+                                                          color: AppColors.white,
+                                                          width: 1.w,
+                                                        ),
+                                                      ),
+                                                      counter: const SizedBox(),
+                                                      contentPadding: EdgeInsets.symmetric(
+                                                        vertical: AppDimensions.paddingExtraLarge.h,
+                                                        horizontal: AppDimensions.paddingLarge.w,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(height: AppDimensions.paddingExtraLarge.w),
                                             Text(r'phone_number'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
                                             SizedBox(height: AppDimensions.paddingMedium.h,),
                                             Row(

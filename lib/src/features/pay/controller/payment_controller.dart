@@ -13,6 +13,7 @@ class PaymentController extends GetxController with StateControlMixin {
   late final TextEditingController phoneController;
   late final TextEditingController sumController;
   late final TextEditingController nameController;
+  late final TextEditingController accountController;
   late ServiceSettingsController serviceSettingsController;
 
   String serviceName = '';
@@ -42,6 +43,7 @@ class PaymentController extends GetxController with StateControlMixin {
     phoneFocus = FocusNode();
     sumController = TextEditingController();
     nameController = TextEditingController();
+    accountController = TextEditingController(text: '100');
 
     super.onInit();
   }

@@ -5,6 +5,7 @@ class CreditTypeModel {
   final int? minAmount;
   final int? maxAmount;
   final int? interest;
+  final bool? canOfferOnline;
 
   CreditTypeModel({
     this.id,
@@ -13,6 +14,7 @@ class CreditTypeModel {
     this.minAmount,
     this.maxAmount,
     this.interest,
+    this.canOfferOnline,
   });
 
   factory CreditTypeModel.fromJson(Map<String, dynamic> json) {
@@ -23,6 +25,7 @@ class CreditTypeModel {
       minAmount: json['min_amount'],
       maxAmount: json['max_amount'],
       interest: json['interest'],
+      canOfferOnline: json['can_offer_online'],
     );
   }
 }

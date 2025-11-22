@@ -4,9 +4,10 @@ import 'package:senagat_mobile/src/features/net_and_tv/presentation/net_and_tv_s
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/payment_screen.dart';
 import '../../../utils/constants/app_assets.dart';
+import '../../foundation/presentation/foundation_screen.dart';
 import '../../qr_code/presentation/qr_code_screen.dart';
 
-enum CategoryTapType { none, qr, service, fastOperation, notification }
+enum CategoryTapType { none, qr, service, fastOperation, notification, foundation }
 
 class CategoryController extends GetxController with StateControlMixin {
   CategoryTapType lastTap = CategoryTapType.none;
@@ -15,38 +16,31 @@ class CategoryController extends GetxController with StateControlMixin {
 
 
   final List<String> paymentsIcons = [
-    AppAssets.deviceMobileIcon,
-    AppAssets.globeIcon,
-    AppAssets.flameIcon,
-    AppAssets.dropIcon,
-    AppAssets.stickIcon,
-    AppAssets.lightbulbIcon,
-    AppAssets.buildingApartmentIcon,
+    AppAssets.tmCell,
+    AppAssets.astu,
+    AppAssets.astu,
+    AppAssets.astu,
+    AppAssets.astu,
+    AppAssets.telecom,
   ];
 
   final List<String> serviceIcons = [
     AppAssets.beletIcon,
-    AppAssets.airTicket,
-    AppAssets.railwayTickets,
-    AppAssets.awtoTicket,
-
+    AppAssets.policeCar,
   ];
 
   final List<String> paymentsTitle = [
-    r'Altyn Asyr',
-    r'net_and_TV',
-    r'gas',
-    r'water',
-    r'state_traffic_safety_inspectorate',
-    r'light',
-    r'communal_apartment',
+    r'TM CELL',
+    r'CDMA',
+    r'IP TV',
+    r'home_phone',
+    r'Internet',
+    r'Türkmen telekom internet',
   ];
 
   final List<String> serviceTitle = [
     r'Belet',
-    r'air_tickets',
-    r'railway_tickets',
-    r'auto_tickets',
+    r'state_traffic_safety_inspectorate',
   ];
 
 
@@ -73,6 +67,11 @@ class CategoryController extends GetxController with StateControlMixin {
 
   }
 
+  void onFoundationTap() {
+    lastTap = CategoryTapType.foundation;
+    update();
+    Get.toNamed(FoundationScreen.route);
+  }
 
   void onFastServiceTap(int index) {
     lastTap = CategoryTapType.fastOperation;

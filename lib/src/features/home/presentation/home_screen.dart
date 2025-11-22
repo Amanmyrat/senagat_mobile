@@ -113,8 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 SizedBox.shrink(),
                               ],
 
-                              if (controller.userInformationModel?.loan !=
-                                  null) ...[
+                              if (controller.userInformationModel?.loan != null) ...[
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -869,7 +868,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
 
           SizedBox(
-            height: 78.h,
+            height: 100.h,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               physics: const NeverScrollableScrollPhysics(),
@@ -962,12 +961,21 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        SvgPicture.asset(
-                          controller
-                              .fastServiceController
-                              .selectedServiceIcons[index],
-                          width: 30.w,
-                          color: isSelected ? AppColors.white : AppColors.green,
+                        Container(
+                          width: 50.w,
+                          height: 50.h,
+                          padding: EdgeInsets.all(AppDimensions.paddingSmall.w),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: AppColors.dividerColor, width: 1.w),
+                            shape: BoxShape.circle,
+                            // color: isSelected ? AppColors.white : AppColors.green
+                          ),
+                          child: Image.asset(
+                            controller
+                                .fastServiceController
+                                .selectedServiceIcons[index],
+                            width: 70.w,
+                          ),
                         ),
                         Text(
                           controller
