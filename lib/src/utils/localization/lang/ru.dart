@@ -212,6 +212,14 @@ const Map<String, String> ruRu = {
   r'no_delivery_service': r'Нет',
   r'no_internet_connection': r'Нет подключения к Интернету',
   r'saved_successfully': r'Успешно сохранино',
+  r'pygg_video': r'ГАИ видео наблюдения',
+  r'pygg_decision': r'Постановление ГАИ',
+  r'fine_number': r'Номер штрафa',
+  r'amount_fine_penalty': r'Сумма штрафа с учётом пени',
+  r'penalty_fee': r'Пени',
+  r'fine_date': r'Дата оформления штрафа',
+  r'number_of_car': r'Номер транспортного средства',
+  r'bank_commission': r'Комиссия банка 1.00 Манат',
 
 
   r'otp_not_match': r'Код не совпадает',

@@ -212,7 +212,14 @@ const Map<String, String> tkTk = {
   r'no_delivery_service': r'Ýok',
   r'no_internet_connection': r'Internet birikmesi ýok',
   r'saved_successfully': r'Üstünlikli ýatda saklanyldy',
-
+  r'pygg_video': r'PÝGG wideo gozegcilik',
+  r'pygg_decision': r'PÝGG Karar',
+  r'fine_number': r'Jerime belgisi',
+  r'amount_fine_penalty': r'Jerimäniň puşmana tölegi bilen möçberi',
+  r'penalty_fee': r'Puşmana',
+  r'fine_date': r'Jerimäniň bellenen senesi',
+  r'number_of_car': r'Awtoulagyň belgisi',
+  r'bank_commission': r'Bankyň ýygymy 1.00 Manat',
 
 
   r'otp_not_match': r'Kod gabat gelmedi',

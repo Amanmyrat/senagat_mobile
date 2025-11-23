@@ -51,7 +51,7 @@ class _LangSettingsScreenState extends State<LangSettingsScreen> {
                                     checkedColor: Colors.transparent,
                                     checkedWidget: SvgPicture.asset(AppAssets.checkBoxIcon, color: AppColors.green,),
                                     border: Border.all(color: AppColors.black),
-                                    isChecked: controller.currentLang == 'TM',
+                                    isChecked: controller.currentLang == 'TM' || controller.currentLang == 'TK',
                                     onTap: (value) {
                                       controller.updateLanguage('TM');
                                     }

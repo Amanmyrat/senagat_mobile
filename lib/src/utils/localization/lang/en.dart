@@ -212,6 +212,14 @@ const Map<String, String> enUs = {
   r'no_delivery_service': r'No',
   r'no_internet_connection': r'No internet connection',
   r'saved_successfully': r'Saved successfully',
+  r'pygg_video': r'PYGG video surveillance',
+  r'pygg_decision': r'PYGG Decision',
+  r'fine_number': r'Fine number',
+  r'amount_fine_penalty': r'The amount of the fine including the penalty fee',
+  r'penalty_fee': r'Penalty fee',
+  r'fine_date': r'The date when the fine was issued',
+  r'number_of_car': r'Number of car',
+  r'bank_commission': 'Bank\'s comission 1.00 Manat',
 
 
   r'otp_not_match': r'OTP did not match',

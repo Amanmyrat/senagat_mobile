@@ -60,7 +60,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                 child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-
                                       if(controller.serviceName.isNotEmpty)
                                         Column(
                                           children: [
@@ -111,7 +110,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                                         SizedBox(height: 22.h),
 
                                                         Align(
-                                                          alignment: Alignment.topLeft,
+                                                            alignment: Alignment.topLeft,
                                                             child: Text('select_a_card'.tr, style: TextStyle(fontSize: 17.sp, color: AppColors.black),)),
                                                         SizedBox(height: 22.h),
 
@@ -232,65 +231,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                         Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Text(r'your_account'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
-                                            SizedBox(height: AppDimensions.paddingMedium.h,),
-                                            Row(
-                                              children: [
-                                                Container(
-                                                  padding: EdgeInsets.all(
-                                                    AppDimensions.paddingExtraLarge.w,
-                                                  ),
-                                                  decoration: BoxDecoration(
-                                                    color: AppColors.inputFillBackground,
-                                                    borderRadius: BorderRadius.circular(
-                                                      AppDimensions.borderRadiusMedium,
-                                                    ),
-                                                  ),
-                                                  child: Text(
-                                                    '${r'your_account'.tr}:',
-                                                    style: TextStyle(fontSize: 14.sp),
-                                                  ),
-                                                ),
-                                                SizedBox(width: AppDimensions.paddingSmall.w),
-                                                Expanded(
-                                                  child: TextFormField(
-                                                    readOnly: true,
-                                                    controller: controller.accountController,
-                                                    style: TextStyle(
-                                                      fontSize: 14.sp,
-                                                      fontFamily: AppFonts.primaryFont,
-                                                    ),
-                                                    decoration: InputDecoration(
-                                                      border: OutlineInputBorder(),
-                                                      focusedBorder: OutlineInputBorder(
-                                                        borderRadius: BorderRadius.circular(
-                                                          AppDimensions.borderRadiusMedium,
-                                                        ),
-                                                        borderSide: BorderSide(
-                                                          color: AppColors.white,
-                                                          width: 1.w,
-                                                        ),
-                                                      ),
-                                                      enabledBorder: OutlineInputBorder(
-                                                        borderRadius: BorderRadius.circular(
-                                                          AppDimensions.borderRadiusMedium,
-                                                        ),
-                                                        borderSide: BorderSide(
-                                                          color: AppColors.white,
-                                                          width: 1.w,
-                                                        ),
-                                                      ),
-                                                      counter: const SizedBox(),
-                                                      contentPadding: EdgeInsets.symmetric(
-                                                        vertical: AppDimensions.paddingExtraLarge.h,
-                                                        horizontal: AppDimensions.paddingLarge.w,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(height: AppDimensions.paddingExtraLarge.w),
                                             Text(r'phone_number'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
                                             SizedBox(height: AppDimensions.paddingMedium.h,),
                                             Row(
@@ -353,6 +293,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                                 ),
                                               ],
                                             ),
+                                            SizedBox(height: 22.h,),
+                                            if(controller.serviceName == 'pygg_video')...[
+                                              isPyggVideo(controller),
+                                            ],
+                                            if(controller.serviceName == 'pygg_decision')...[
+                                              isPyggDecision(controller),
+                                            ],
                                             if(controller.serviceIcon.isEmpty)
                                               Column(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -401,7 +348,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                                 ],
                                               ),
 
-                                            SizedBox(height: AppDimensions.padding40.h,),
 
                                             Column(
                                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -435,7 +381,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                                     ),
                                                     counter: const SizedBox(),
                                                     contentPadding: EdgeInsets.symmetric(
-                                                      vertical: AppDimensions.paddingExtraLarge.h,
+                                                      vertical: AppDimensions.paddingLarge.h,
                                                       horizontal: AppDimensions.paddingLarge.w,
                                                     ),
                                                   ),
@@ -489,4 +435,670 @@ class _PaymentScreenState extends State<PaymentScreen> {
       ),
     );
   }
+}
+
+Widget accountWidget(PaymentController controller){
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(r'your_account'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+      SizedBox(height: AppDimensions.paddingMedium.h,),
+      Row(
+        children: [
+          Container(
+            padding: EdgeInsets.all(
+              AppDimensions.paddingExtraLarge.w,
+            ),
+            decoration: BoxDecoration(
+              color: AppColors.inputFillBackground,
+              borderRadius: BorderRadius.circular(
+                AppDimensions.borderRadiusMedium,
+              ),
+            ),
+            child: Text(
+              '${r'your_account'.tr}:',
+              style: TextStyle(fontSize: 14.sp),
+            ),
+          ),
+          SizedBox(width: AppDimensions.paddingSmall.w),
+          Expanded(
+            child: TextFormField(
+              readOnly: true,
+              controller: controller.accountController,
+              style: TextStyle(
+                fontSize: 14.sp,
+                fontFamily: AppFonts.primaryFont,
+              ),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(
+                    AppDimensions.borderRadiusMedium,
+                  ),
+                  borderSide: BorderSide(
+                    color: AppColors.white,
+                    width: 1.w,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(
+                    AppDimensions.borderRadiusMedium,
+                  ),
+                  borderSide: BorderSide(
+                    color: AppColors.white,
+                    width: 1.w,
+                  ),
+                ),
+                counter: const SizedBox(),
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: AppDimensions.paddingExtraLarge.h,
+                  horizontal: AppDimensions.paddingLarge.w,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+      SizedBox(height: AppDimensions.paddingExtraLarge.w),
+
+    ],
+  );
+}
+
+Widget isPyggVideo(PaymentController controller){
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(r'name'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+          SizedBox(height: AppDimensions.paddingMedium.h,),
+          TextFormField(
+            keyboardType: TextInputType.name,
+            controller: controller.nameController,
+            onChanged: (value) => controller.isTextNotEmpty(),
+            style: TextStyle(
+              fontSize: 14.sp,
+              fontFamily: AppFonts.primaryFont,
+            ),
+            decoration: InputDecoration(
+              hintText: r'enter_name'.tr,
+              border: OutlineInputBorder(),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  AppDimensions.borderRadiusMedium,
+                ),
+                borderSide: BorderSide(
+                  color: AppColors.green,
+                  width: 1.w,
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  AppDimensions.borderRadiusMedium,
+                ),
+                borderSide: BorderSide(
+                  color: AppColors.white,
+                  width: 1.w,
+                ),
+              ),
+              counter: const SizedBox(),
+              contentPadding: EdgeInsets.symmetric(
+                vertical: AppDimensions.paddingExtraLarge.h,
+                horizontal: AppDimensions.paddingLarge.w,
+              ),
+            ),
+          ),
+          SizedBox(height: 22.h,),
+        ],
+      ),
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(r'surname'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+          SizedBox(height: AppDimensions.paddingMedium.h,),
+          TextFormField(
+            keyboardType: TextInputType.name,
+            controller: controller.nameController,
+            onChanged: (value) => controller.isTextNotEmpty(),
+            style: TextStyle(
+              fontSize: 14.sp,
+              fontFamily: AppFonts.primaryFont,
+            ),
+            decoration: InputDecoration(
+              hintText: r'enter_name'.tr,
+              border: OutlineInputBorder(),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  AppDimensions.borderRadiusMedium,
+                ),
+                borderSide: BorderSide(
+                  color: AppColors.green,
+                  width: 1.w,
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  AppDimensions.borderRadiusMedium,
+                ),
+                borderSide: BorderSide(
+                  color: AppColors.white,
+                  width: 1.w,
+                ),
+              ),
+              counter: const SizedBox(),
+              contentPadding: EdgeInsets.symmetric(
+                vertical: AppDimensions.paddingExtraLarge.h,
+                horizontal: AppDimensions.paddingLarge.w,
+              ),
+            ),
+          ),
+          SizedBox(height: 22.h,),
+        ],
+      ),
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(r'fine_number'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+          SizedBox(height: AppDimensions.paddingMedium.h,),
+          TextFormField(
+            keyboardType: TextInputType.name,
+            controller: controller.nameController,
+            onChanged: (value) => controller.isTextNotEmpty(),
+            style: TextStyle(
+              fontSize: 14.sp,
+              fontFamily: AppFonts.primaryFont,
+            ),
+            decoration: InputDecoration(
+              hintText: r'enter_name'.tr,
+              border: OutlineInputBorder(),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  AppDimensions.borderRadiusMedium,
+                ),
+                borderSide: BorderSide(
+                  color: AppColors.green,
+                  width: 1.w,
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  AppDimensions.borderRadiusMedium,
+                ),
+                borderSide: BorderSide(
+                  color: AppColors.white,
+                  width: 1.w,
+                ),
+              ),
+              counter: const SizedBox(),
+              contentPadding: EdgeInsets.symmetric(
+                vertical: AppDimensions.paddingExtraLarge.h,
+                horizontal: AppDimensions.paddingLarge.w,
+              ),
+            ),
+          ),
+          SizedBox(height: 22.h,),
+        ],
+      ),
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(r'number_of_car'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+          SizedBox(height: AppDimensions.paddingMedium.h,),
+          TextFormField(
+            keyboardType: TextInputType.name,
+            controller: controller.nameController,
+            onChanged: (value) => controller.isTextNotEmpty(),
+            style: TextStyle(
+              fontSize: 14.sp,
+              fontFamily: AppFonts.primaryFont,
+            ),
+            decoration: InputDecoration(
+              hintText: r'enter_name'.tr,
+              border: OutlineInputBorder(),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  AppDimensions.borderRadiusMedium,
+                ),
+                borderSide: BorderSide(
+                  color: AppColors.green,
+                  width: 1.w,
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  AppDimensions.borderRadiusMedium,
+                ),
+                borderSide: BorderSide(
+                  color: AppColors.white,
+                  width: 1.w,
+                ),
+              ),
+              counter: const SizedBox(),
+              contentPadding: EdgeInsets.symmetric(
+                vertical: AppDimensions.paddingExtraLarge.h,
+                horizontal: AppDimensions.paddingLarge.w,
+              ),
+            ),
+          ),
+          SizedBox(height: 22.h,),
+        ],
+      ),
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(r'fine_date'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+          SizedBox(height: AppDimensions.paddingMedium.h,),
+          TextFormField(
+            keyboardType: TextInputType.name,
+            controller: controller.nameController,
+            onChanged: (value) => controller.isTextNotEmpty(),
+            style: TextStyle(
+              fontSize: 14.sp,
+              fontFamily: AppFonts.primaryFont,
+            ),
+            decoration: InputDecoration(
+              hintText: r'enter_name'.tr,
+              border: OutlineInputBorder(),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  AppDimensions.borderRadiusMedium,
+                ),
+                borderSide: BorderSide(
+                  color: AppColors.green,
+                  width: 1.w,
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  AppDimensions.borderRadiusMedium,
+                ),
+                borderSide: BorderSide(
+                  color: AppColors.white,
+                  width: 1.w,
+                ),
+              ),
+              counter: const SizedBox(),
+              contentPadding: EdgeInsets.symmetric(
+                vertical: AppDimensions.paddingExtraLarge.h,
+                horizontal: AppDimensions.paddingLarge.w,
+              ),
+            ),
+          ),
+          SizedBox(height: 22.h,),
+        ],
+      ),
+      Text('bank_commission'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 17.sp),),
+      SizedBox(height: AppDimensions.padding40.h,),
+
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(r'penalty_fee'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+          SizedBox(height: AppDimensions.paddingMedium.h,),
+          TextFormField(
+            keyboardType: TextInputType.name,
+            controller: controller.nameController,
+            onChanged: (value) => controller.isTextNotEmpty(),
+            style: TextStyle(
+              fontSize: 14.sp,
+              fontFamily: AppFonts.primaryFont,
+            ),
+            decoration: InputDecoration(
+              hintText: r'enter_name'.tr,
+              border: OutlineInputBorder(),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  AppDimensions.borderRadiusMedium,
+                ),
+                borderSide: BorderSide(
+                  color: AppColors.green,
+                  width: 1.w,
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  AppDimensions.borderRadiusMedium,
+                ),
+                borderSide: BorderSide(
+                  color: AppColors.white,
+                  width: 1.w,
+                ),
+              ),
+              counter: const SizedBox(),
+              contentPadding: EdgeInsets.symmetric(
+                vertical: AppDimensions.paddingExtraLarge.h,
+                horizontal: AppDimensions.paddingLarge.w,
+              ),
+            ),
+          ),
+          SizedBox(height: 22.h,),
+        ],
+      ),
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(r'amount_fine_penalty'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+          SizedBox(height: AppDimensions.paddingMedium.h,),
+          TextFormField(
+            keyboardType: TextInputType.name,
+            controller: controller.nameController,
+            onChanged: (value) => controller.isTextNotEmpty(),
+            style: TextStyle(
+              fontSize: 14.sp,
+              fontFamily: AppFonts.primaryFont,
+            ),
+            decoration: InputDecoration(
+              hintText: r'enter_name'.tr,
+              border: OutlineInputBorder(),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  AppDimensions.borderRadiusMedium,
+                ),
+                borderSide: BorderSide(
+                  color: AppColors.green,
+                  width: 1.w,
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  AppDimensions.borderRadiusMedium,
+                ),
+                borderSide: BorderSide(
+                  color: AppColors.white,
+                  width: 1.w,
+                ),
+              ),
+              counter: const SizedBox(),
+              contentPadding: EdgeInsets.symmetric(
+                vertical: AppDimensions.paddingExtraLarge.h,
+                horizontal: AppDimensions.paddingLarge.w,
+              ),
+            ),
+          ),
+          SizedBox(height: 22.h,),
+        ],
+      ),
+
+
+    ],
+  );
+}
+
+Widget isPyggDecision(PaymentController controller){
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(r'name'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+          SizedBox(height: AppDimensions.paddingMedium.h,),
+          TextFormField(
+            keyboardType: TextInputType.name,
+            controller: controller.nameController,
+            onChanged: (value) => controller.isTextNotEmpty(),
+            style: TextStyle(
+              fontSize: 14.sp,
+              fontFamily: AppFonts.primaryFont,
+            ),
+            decoration: InputDecoration(
+              hintText: r'enter_name'.tr,
+              border: OutlineInputBorder(),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  AppDimensions.borderRadiusMedium,
+                ),
+                borderSide: BorderSide(
+                  color: AppColors.green,
+                  width: 1.w,
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  AppDimensions.borderRadiusMedium,
+                ),
+                borderSide: BorderSide(
+                  color: AppColors.white,
+                  width: 1.w,
+                ),
+              ),
+              counter: const SizedBox(),
+              contentPadding: EdgeInsets.symmetric(
+                vertical: AppDimensions.paddingExtraLarge.h,
+                horizontal: AppDimensions.paddingLarge.w,
+              ),
+            ),
+          ),
+          SizedBox(height: 22.h,),
+        ],
+      ),
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(r'surname'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+          SizedBox(height: AppDimensions.paddingMedium.h,),
+          TextFormField(
+            keyboardType: TextInputType.name,
+            controller: controller.nameController,
+            onChanged: (value) => controller.isTextNotEmpty(),
+            style: TextStyle(
+              fontSize: 14.sp,
+              fontFamily: AppFonts.primaryFont,
+            ),
+            decoration: InputDecoration(
+              hintText: r'enter_name'.tr,
+              border: OutlineInputBorder(),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  AppDimensions.borderRadiusMedium,
+                ),
+                borderSide: BorderSide(
+                  color: AppColors.green,
+                  width: 1.w,
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  AppDimensions.borderRadiusMedium,
+                ),
+                borderSide: BorderSide(
+                  color: AppColors.white,
+                  width: 1.w,
+                ),
+              ),
+              counter: const SizedBox(),
+              contentPadding: EdgeInsets.symmetric(
+                vertical: AppDimensions.paddingExtraLarge.h,
+                horizontal: AppDimensions.paddingLarge.w,
+              ),
+            ),
+          ),
+          SizedBox(height: 22.h,),
+        ],
+      ),
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(r'fine_number'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+          SizedBox(height: AppDimensions.paddingMedium.h,),
+          TextFormField(
+            keyboardType: TextInputType.name,
+            controller: controller.nameController,
+            onChanged: (value) => controller.isTextNotEmpty(),
+            style: TextStyle(
+              fontSize: 14.sp,
+              fontFamily: AppFonts.primaryFont,
+            ),
+            decoration: InputDecoration(
+              hintText: r'enter_name'.tr,
+              border: OutlineInputBorder(),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  AppDimensions.borderRadiusMedium,
+                ),
+                borderSide: BorderSide(
+                  color: AppColors.green,
+                  width: 1.w,
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  AppDimensions.borderRadiusMedium,
+                ),
+                borderSide: BorderSide(
+                  color: AppColors.white,
+                  width: 1.w,
+                ),
+              ),
+              counter: const SizedBox(),
+              contentPadding: EdgeInsets.symmetric(
+                vertical: AppDimensions.paddingExtraLarge.h,
+                horizontal: AppDimensions.paddingLarge.w,
+              ),
+            ),
+          ),
+          SizedBox(height: 22.h,),
+        ],
+      ),
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(r'fine_date'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+          SizedBox(height: AppDimensions.paddingMedium.h,),
+          TextFormField(
+            keyboardType: TextInputType.name,
+            controller: controller.nameController,
+            onChanged: (value) => controller.isTextNotEmpty(),
+            style: TextStyle(
+              fontSize: 14.sp,
+              fontFamily: AppFonts.primaryFont,
+            ),
+            decoration: InputDecoration(
+              hintText: r'enter_name'.tr,
+              border: OutlineInputBorder(),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  AppDimensions.borderRadiusMedium,
+                ),
+                borderSide: BorderSide(
+                  color: AppColors.green,
+                  width: 1.w,
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  AppDimensions.borderRadiusMedium,
+                ),
+                borderSide: BorderSide(
+                  color: AppColors.white,
+                  width: 1.w,
+                ),
+              ),
+              counter: const SizedBox(),
+              contentPadding: EdgeInsets.symmetric(
+                vertical: AppDimensions.paddingExtraLarge.h,
+                horizontal: AppDimensions.paddingLarge.w,
+              ),
+            ),
+          ),
+          SizedBox(height: 22.h,),
+        ],
+      ),
+      Text('bank_commission'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 17.sp),),
+      SizedBox(height: AppDimensions.padding40.h,),
+
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(r'penalty_fee'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+          SizedBox(height: AppDimensions.paddingMedium.h,),
+          TextFormField(
+            keyboardType: TextInputType.name,
+            controller: controller.nameController,
+            onChanged: (value) => controller.isTextNotEmpty(),
+            style: TextStyle(
+              fontSize: 14.sp,
+              fontFamily: AppFonts.primaryFont,
+            ),
+            decoration: InputDecoration(
+              hintText: r'enter_name'.tr,
+              border: OutlineInputBorder(),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  AppDimensions.borderRadiusMedium,
+                ),
+                borderSide: BorderSide(
+                  color: AppColors.green,
+                  width: 1.w,
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  AppDimensions.borderRadiusMedium,
+                ),
+                borderSide: BorderSide(
+                  color: AppColors.white,
+                  width: 1.w,
+                ),
+              ),
+              counter: const SizedBox(),
+              contentPadding: EdgeInsets.symmetric(
+                vertical: AppDimensions.paddingExtraLarge.h,
+                horizontal: AppDimensions.paddingLarge.w,
+              ),
+            ),
+          ),
+          SizedBox(height: 22.h,),
+        ],
+      ),
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(r'amount_fine_penalty'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+          SizedBox(height: AppDimensions.paddingMedium.h,),
+          TextFormField(
+            keyboardType: TextInputType.name,
+            controller: controller.nameController,
+            onChanged: (value) => controller.isTextNotEmpty(),
+            style: TextStyle(
+              fontSize: 14.sp,
+              fontFamily: AppFonts.primaryFont,
+            ),
+            decoration: InputDecoration(
+              hintText: r'enter_name'.tr,
+              border: OutlineInputBorder(),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  AppDimensions.borderRadiusMedium,
+                ),
+                borderSide: BorderSide(
+                  color: AppColors.green,
+                  width: 1.w,
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  AppDimensions.borderRadiusMedium,
+                ),
+                borderSide: BorderSide(
+                  color: AppColors.white,
+                  width: 1.w,
+                ),
+              ),
+              counter: const SizedBox(),
+              contentPadding: EdgeInsets.symmetric(
+                vertical: AppDimensions.paddingExtraLarge.h,
+                horizontal: AppDimensions.paddingLarge.w,
+              ),
+            ),
+          ),
+          SizedBox(height: 22.h,),
+        ],
+      ),
+
+
+    ],
+  );
 }

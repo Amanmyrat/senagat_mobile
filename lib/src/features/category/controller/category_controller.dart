@@ -60,11 +60,17 @@ class CategoryController extends GetxController with StateControlMixin {
     lastTap = CategoryTapType.service;
     lastServiceTapIndex = index;
     update();
-    Get.toNamed(PaymentScreen.route, arguments: {
-      'selectedServiceTitle': serviceTitle[index],
-      'selectedServiceIcon': serviceIcons[index],
-    });
 
+    if(serviceTitle[index] == r'state_traffic_safety_inspectorate'){
+      Get.toNamed(NetAndTvScreen.route, arguments: {
+        'selectedServiceTitle': serviceTitle[index],
+      });
+    }else {
+      Get.toNamed(PaymentScreen.route, arguments: {
+        'selectedServiceTitle': serviceTitle[index],
+        'selectedServiceIcon': serviceIcons[index],
+      });
+    }
   }
 
   void onFoundationTap() {
@@ -78,7 +84,7 @@ class CategoryController extends GetxController with StateControlMixin {
     lastFastServiceTapIndex = index;
     update();
 
-    if (paymentsTitle[index] == r'net_and_TV'.tr) {
+    if (paymentsTitle[index] == r'state_traffic_safety_inspectorate'.tr) {
       Get.toNamed(NetAndTvScreen.route, arguments: {
         'selectedServiceTitle': paymentsTitle[index],
       });

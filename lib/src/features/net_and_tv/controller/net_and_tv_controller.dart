@@ -11,17 +11,13 @@ class NetAndTvController extends GetxController with StateControlMixin {
 
 
   final List<String> serviceIcons = [
-    AppAssets.globeIcon,
-    AppAssets.globeIcon,
-    AppAssets.tvIcon,
-    AppAssets.cabelTvIcon,
+    AppAssets.policeCar,
+    AppAssets.policeCar,
   ];
 
   final List<String> serviceTitle = [
-    r'telecom_internet',
-    r'AŞTU internet',
-    r'AŞTU IPTV',
-    r'cable_TV',
+    r'pygg_decision',
+    r'pygg_video',
   ];
 
   void onServiceTap(int index){

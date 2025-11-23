@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/features/net_and_tv/controller/net_and_tv_controller.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
@@ -61,13 +60,11 @@ class _NetAndTvScreenState extends State<NetAndTvScreen> {
                                           Container(
                                             width: 50.w,
                                             height: 50.h,
-                                            padding: EdgeInsets.all(AppDimensions.paddingMedium.w),
                                             decoration: BoxDecoration(
-                                                border: Border.all(color: AppColors.dividerColor, width: 1.w),
                                                 shape: BoxShape.circle,
                                                 color: AppColors.white
                                             ),
-                                            child: SvgPicture.asset(controller.serviceIcons[index], color: AppColors.green, width: 30.w,),
+                                            child: Image.asset(controller.serviceIcons[index], width: 30.w,),
                                           ),
                                           SizedBox(width: AppDimensions.paddingMedium.w,),
                                           Expanded(
