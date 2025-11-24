@@ -91,14 +91,14 @@ class CustomException implements Exception {
               return CustomException(
                 exceptionType: ExceptionType.UnauthorizedException,
                 statusCode: error.response?.statusCode,
-                message: 'Authentication credentials were not provided.',
+                message: 'unauthorized'.tr,
               );
             }
             if (error.message?.contains('Unauthenticated') ?? false) {
               return CustomException(
                 exceptionType: ExceptionType.UnauthorizedException,
                 statusCode: error.response?.statusCode,
-                message: 'Authentication credentials were not provided.',
+                message: 'unauthorized'.tr,
               );
             }
             // Try to parse structured error from response body

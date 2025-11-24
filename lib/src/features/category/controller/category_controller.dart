@@ -34,8 +34,8 @@ class CategoryController extends GetxController with StateControlMixin {
     r'CDMA',
     r'IP TV',
     r'home_phone',
-    r'Internet',
-    r'Türkmen telekom internet',
+    r'internet'.tr,
+    r'internet'.tr,
   ];
 
   final List<String> serviceTitle = [

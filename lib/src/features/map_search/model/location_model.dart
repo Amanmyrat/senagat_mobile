@@ -30,27 +30,23 @@ class LocationModel {
   });
 
   factory LocationModel.fromJson(Map<String, dynamic> json) => LocationModel(
-    id: json['id'] as int,
-    type: _typeFromString(json['type'] as String),
-    name: json['name'] as String,
-    address: json['address'] as String,
-    phoneNumber: json['phone_number'] as String,
-    branchService: json['branch_services'] as bool,
-    lat: (json['location']['lat'] as num).toDouble(),
-    lng: (json['location']['lng'] as num).toDouble(),
+    id: json['id'] is int ? json['id'] : int.tryParse(json['id']?.toString() ?? '0') ?? 0,
+
+    type: _typeFromString(json['type']?.toString() ?? "ATM"),
+
+    name: json['name']?.toString() ?? '',
+    address: json['address']?.toString() ?? '',
+    phoneNumber: json['phone_number']?.toString() ?? '',
+
+    branchService: json['branch_services'] == true,
+
+    lat: (json['location']?['lat'] as num?)?.toDouble() ?? 0,
+    lng: (json['location']?['lng'] as num?)?.toDouble() ?? 0,
+
     workingHours: (json['working_hours'] as List<dynamic>?)
         ?.map((item) => WorkingHoursModel.fromJson(item))
         .toList(),
   );
-
-  Map<String, dynamic> toJson() => {
-    'id': id,
-    'type': _typeToString(type),
-    'name': name,
-    'address': address,
-    'phone_number': phoneNumber,
-    'location': {'lat': lat, 'lng': lng},
-  };
 
 }
 

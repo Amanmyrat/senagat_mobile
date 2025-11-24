@@ -32,8 +32,8 @@ class MapSearchController extends GetxController with StateControlMixin {
   String get searchText => searchController.text;
   bool get hasSearchText => searchController.text.isNotEmpty;
 
-  late double? lat;
-  late double lng;
+   double? lat;
+   double? lng;
 
   // Flutter Map controller
   final MapController mapController = MapController();
@@ -99,7 +99,7 @@ class MapSearchController extends GetxController with StateControlMixin {
 
   // Initialize/center map; queues the move if map isn't ready yet
   void initializeMap() {
-    final targetCenter = LatLng(lat ?? 0, lng);
+    final targetCenter = LatLng(lat ?? 0, lng ?? 0);
     const targetZoom = 13.0;
 
     if (!_isMapReady) {

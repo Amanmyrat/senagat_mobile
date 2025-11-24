@@ -50,7 +50,7 @@ class _MapSearchScreenState extends State<MapSearchScreen> {
                 child: FlutterMap(
                   mapController: c.mapController,
                   options: MapOptions(
-                    initialCenter: LatLng(c.lat ?? 0, c.lng),
+                    initialCenter: LatLng(c.lat ?? 0, c.lng ?? 0),
                     initialZoom: 12.0,
                     onMapReady: () {
                       c.initializeMap();
