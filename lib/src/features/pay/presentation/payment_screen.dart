@@ -231,6 +231,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                         Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
+                                            accountWidget(controller),
                                             Text(r'phone_number'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
                                             SizedBox(height: AppDimensions.paddingMedium.h,),
                                             Row(

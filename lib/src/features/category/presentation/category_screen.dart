@@ -76,7 +76,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                       blurRadius: 4.r,
                                     ),
                                   ],
-                                  color: isSelected ? AppColors.green : AppColors.white,
+                                  color: AppColors.white,
                                 ),
                                 child: Row(
                                   children: [
@@ -99,7 +99,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                       child: Text(
                                         controller.paymentsTitle[index].tr,
                                         style: TextStyle(
-                                          color: isSelected ? AppColors.white : AppColors.blackText,
+                                          color: AppColors.blackText,
                                           fontSize: 14.sp,
                                           fontFamily: AppFonts.secondaryFont,
                                         ),
@@ -120,9 +120,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           shrinkWrap: true,
                           itemCount: controller.serviceTitle.length,
                           itemBuilder: (context, index) {
-
-                            final isSelected = controller.lastTap == CategoryTapType.service &&
-                                controller.lastServiceTapIndex == index;
 
                             return GestureDetector(
                               onTap: () {
@@ -148,11 +145,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                       blurRadius: 4.r,
                                     ),
                                   ],
-                                  color: isSelected ? AppColors.green : AppColors.white,
+                                  color: AppColors.white,
                                 ),
                                 child: Row(
                                   children: [
-                                    Container(
+                                    SizedBox(
                                       width: 50.w,
                                       height: 50.h,
 
@@ -164,7 +161,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                       child: Text(
                                         controller.serviceTitle[index].tr,
                                         style: TextStyle(
-                                          color: isSelected ? AppColors.white : AppColors.blackText,
+                                          color: AppColors.blackText,
                                           fontSize: 14.sp,
                                           fontFamily: AppFonts.secondaryFont,
                                         ),
@@ -211,9 +208,7 @@ Widget charityFoundationWidget(CategoryController controller) {
           boxShadow: [
             BoxShadow(color: AppColors.dividerColor, blurRadius: 4.r),
           ],
-          color: controller.lastTap == HomeTapType.foundation
-              ? AppColors.green
-              : AppColors.white,
+          color: AppColors.white,
         ),
         child: Row(
           children: [
@@ -224,9 +219,7 @@ Widget charityFoundationWidget(CategoryController controller) {
                   Text(
                     r'charitable_foundation'.tr,
                     style: TextStyle(
-                      color: controller.lastTap == HomeTapType.foundation
-                          ? AppColors.white
-                          : AppColors.blackText,
+                      color: AppColors.blackText,
                       fontSize: 17.sp,
                     ),
                   ),
@@ -237,9 +230,7 @@ Widget charityFoundationWidget(CategoryController controller) {
                     child: Text(
                       r'donations_of_any_amount'.tr,
                       style: TextStyle(
-                        color: controller.lastTap == HomeTapType.foundation
-                            ? AppColors.lightGreen
-                            : AppColors.blackText,
+                        color: AppColors.blackText,
                         fontSize: 14.sp,
                         fontFamily: AppFonts.secondaryFont,
                       ),
@@ -250,17 +241,13 @@ Widget charityFoundationWidget(CategoryController controller) {
                       Text(
                         r'donate'.tr,
                         style: TextStyle(
-                          color: controller.lastTap == HomeTapType.foundation
-                              ? AppColors.white
-                              : AppColors.green,
+                          color:  AppColors.green,
                           fontSize: 14.sp,
                         ),
                       ),
                       SvgPicture.asset(
                         AppAssets.arrowRightIcon,
-                        color: controller.lastTap == HomeTapType.foundation
-                            ? AppColors.white
-                            : AppColors.green,
+                        color: AppColors.green,
                         width: 14.w,
                       ),
                     ],

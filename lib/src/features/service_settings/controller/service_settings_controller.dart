@@ -15,6 +15,8 @@ class ServiceSettingsController extends GetxController with StateControlMixin {
     AppAssets.astu,
     AppAssets.astu,
     AppAssets.telecom,
+    AppAssets.beletIcon,
+    AppAssets.policeCar,
   ];
 
   final List<String> serviceTitle = [
@@ -22,8 +24,10 @@ class ServiceSettingsController extends GetxController with StateControlMixin {
     r'CDMA',
     r'IP TV',
     r'home_phone',
-    r'Internet',
-    r'Internet',
+    r'internet',
+    r'internet',
+    r'Belet',
+    r'state_traffic_safety_inspectorate',
   ];
 
   late Box _box;
@@ -38,7 +42,7 @@ class ServiceSettingsController extends GetxController with StateControlMixin {
   void saveData() {
     _box.put('selected_titles', selectedServiceTitle);
     _box.put('selected_icons', selectedServiceIcons);
-    Get.back();
+    Get.toNamed(DashboardScreen.route);
   }
 
   void _loadSavedData() {
