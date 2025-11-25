@@ -31,6 +31,8 @@ class ApiEndpoint {
         return '$path/users/check';
       case AuthEndpoint.USER_INFORMATION:
         return '$path/users/auth/user-information';
+      case AuthEndpoint.RESET_PASSWORD:
+        return '$path/resetPassword';
     }
   }
 
@@ -114,6 +116,7 @@ enum AuthEndpoint {
   CHECK_REGISTER,
   PROFILE,
   USER_INFORMATION,
+  RESET_PASSWORD,
 }
 
 enum InquiriesEndpoint { CERTIFICATE_TYPES, CERTIFICATE_ORDER }

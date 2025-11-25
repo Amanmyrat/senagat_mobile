@@ -51,7 +51,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              controller.login
+                              controller.login == 'login'
                                   ? r'step_1_of_2'.tr
                                   : r'step_1_of_3'.tr,
                               style: TextStyle(
@@ -87,7 +87,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                         SizedBox(height: AppDimensions.padding60.h),
-
 
                         Row(
                           children: [
@@ -174,7 +173,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                         SizedBox(height: AppDimensions.paddingMedium.h),
 
-                        if (controller.login)
+                        if (controller.login == 'login') ...[
                           TextFormField(
                             controller: controller.passwordController,
                             focusNode: controller.passwordFocus,
@@ -241,10 +240,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                             ),
                           ),
-
-                        SizedBox(height: AppDimensions.paddingMedium.h),
+                          SizedBox(height: AppDimensions.paddingMedium.h),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: GestureDetector(
+                              onTap: () {
+                                controller.onForgetPasswordTap();
+                              },
+                              child: Text(
+                                r'forget password'.tr,
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  color: AppColors.green,
+                                  fontFamily: AppFonts.primaryFont,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                        SizedBox(height: AppDimensions.paddingExtraLarge.h),
                         Opacity(
-                          opacity: controller.login
+                          opacity: controller.login == 'login'
                               ? controller.continueEnabled &&
                                         controller.isPasswordValid
                                     ? 1.0
@@ -257,7 +273,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             child: ElevatedButtonWithState(
                               isLoading: controller.status == Status.loading,
                               isError: controller.status == Status.error,
-                              onPressed: controller.login ? controller.continueEnabled && controller.isPasswordValid ? controller.onLoginTap : null : controller.continueEnabled ? controller.onRegisterTap : null,
+                              onPressed: controller.login == 'login'
+                                  ? controller.continueEnabled &&
+                                            controller.isPasswordValid
+                                        ? controller.onLoginTap
+                                        : null
+                                  : controller.continueEnabled
+                                  ? controller.onRegisterTap
+                                  : null,
                               child: Text(
                                 r'send_code'.tr,
                                 style: TextStyle(

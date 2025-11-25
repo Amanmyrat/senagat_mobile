@@ -138,9 +138,9 @@ class _RegisterPasswordSetupScreenState extends State<RegisterPasswordSetupScree
                           child: ElevatedButtonWithState(
                             isLoading: controller.status == Status.loading,
                             isError: controller.status == Status.error,
-                            onPressed: controller.isPasswordValid
-                                ? controller.confirmPassword
-                                : null,
+                            onPressed: controller.isPasswordValid && controller.login == 'reset_password'
+                                ? controller.newPassword
+                                : controller.confirmPassword,
                             child: Text(r'confirm'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.white),),
                           ),
                         ),

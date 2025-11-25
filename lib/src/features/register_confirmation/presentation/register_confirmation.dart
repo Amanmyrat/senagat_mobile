@@ -48,7 +48,7 @@ class _RegisterConfirmationScreenState extends State<RegisterConfirmationScreen>
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            controller.login ? r'step_1_of_2'.tr :r'step_2_of_3'.tr,
+                            controller.login == 'login' ? r'step_1_of_2'.tr :r'step_2_of_3'.tr,
                             style: TextStyle(
                               fontSize: 14.sp,
                               color: AppColors.blackText,
@@ -60,7 +60,7 @@ class _RegisterConfirmationScreenState extends State<RegisterConfirmationScreen>
                             child: CircularProgressIndicator(
                               color: AppColors.green,
                               backgroundColor: AppColors.dividerColor,
-                              value: controller.login ? 0.75 : 0.5,
+                              value: controller.login == 'login' ? 0.75 : 0.5,
                             )
                           ),
                         ],
@@ -133,9 +133,9 @@ class _RegisterConfirmationScreenState extends State<RegisterConfirmationScreen>
                             isLoading: controller.status == Status.loading,
                             isError: controller.status == Status.error,
                             onPressed:(){
-                              if(controller.login && controller.isPinFull){
+                              if(controller.login == 'login' && controller.isPinFull){
                                 controller.applyOtpCode();
-                              }else if(controller.login == false && controller.isPinFull){
+                              }else if(controller.login != 'login' && controller.isPinFull){
                                controller.verifyOtp();
                               }
                             },

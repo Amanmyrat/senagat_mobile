@@ -25,7 +25,7 @@ class WelcomeController extends GetxController with StateControlMixin {
   void navigateToCreateAccount() {
     status = Status.loading;
     try {
-      Get.toNamed(RegisterScreen.route, arguments: {'login': false});
+      Get.toNamed(RegisterScreen.route, arguments: {'login': 'register'});
     } catch (e) {
       status = Status.error;
     } finally {
@@ -36,7 +36,7 @@ class WelcomeController extends GetxController with StateControlMixin {
   void navigateToLogin() {
     status = Status.loading;
     try {
-      Get.toNamed(RegisterScreen.route, arguments: {'login': true});
+      Get.toNamed(RegisterScreen.route, arguments: {'login': 'login'});
     } catch (e) {
       status = Status.error;
     } finally {

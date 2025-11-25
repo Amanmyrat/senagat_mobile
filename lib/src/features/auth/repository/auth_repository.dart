@@ -1,4 +1,7 @@
 import 'package:senagat_mobile/src/features/home/models/user_information_model.dart';
+import 'package:senagat_mobile/src/features/register_password_setup/models/new_password_model.dart';
+import 'package:senagat_mobile/src/features/register_password_setup/models/new_password_model.dart';
+import 'package:senagat_mobile/src/features/register_password_setup/models/new_password_model.dart';
 
 import '../../../core/networking/api_endpoint.dart';
 import '../../../core/networking/api_service.dart';
@@ -77,6 +80,16 @@ class AuthRepository {
       requiresAuthToken: true,
       converter: (response) {
         return UserInformationModel.fromJson(response['data']);
+      },
+    );
+  }
+
+  Future<NewPasswordModel> resetPassword({required JSON data}) async {
+    return _apiService.setData<NewPasswordModel>(
+      endpoint: ApiEndpoint.auth(AuthEndpoint.RESET_PASSWORD),
+      data: data,
+      converter: (response) {
+        return response.body['data'];
       },
     );
   }

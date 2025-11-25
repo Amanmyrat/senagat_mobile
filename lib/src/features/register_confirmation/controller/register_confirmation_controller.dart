@@ -35,7 +35,7 @@ class RegisterConfirmationController extends GetxController
   Timer? _timer;
   int secondsLeft = 60;
   bool pinLengthError = false;
-  late bool login;
+  late String login;
 
   late AccountModel accountModel;
 
@@ -74,7 +74,7 @@ class RegisterConfirmationController extends GetxController
   Future<RequestModel> _getRequestModel() async {
     return RequestModel(
       phone: phoneNumber,
-      purpose: login ? 'login' : 'register',
+      purpose: login,
     );
   }
 
@@ -113,7 +113,7 @@ class RegisterConfirmationController extends GetxController
     return LoginModel(phone: phoneNumber, otpNumber: otpController.text);
   }
   Future<VerifyOtpModel> _getVerifyOtpModel() async {
-    return VerifyOtpModel(phone: phoneNumber, code: otpController.text, purpose: login ? 'login' : 'register');
+    return VerifyOtpModel(phone: phoneNumber, code: otpController.text, purpose: login);
   }
 
   void applyOtpCode() async {
@@ -132,7 +132,7 @@ class RegisterConfirmationController extends GetxController
         authController.onTokenUpdate(value);
 
         accountModel = value;
-        Get.toNamed(login ? AuthSuccessScreen.route : RegisterPasswordSetupScreen.route);
+        Get.toNamed(login == 'login' ? AuthSuccessScreen.route : RegisterPasswordSetupScreen.route,);
       }).catchError((e) {
         status = Status.error;
         update();
@@ -159,6 +159,7 @@ class RegisterConfirmationController extends GetxController
 
         Get.toNamed(RegisterPasswordSetupScreen.route, arguments: {
           'otpToken': value,
+          'login': login,
         });
       }).catchError((e) {
         status = Status.error;

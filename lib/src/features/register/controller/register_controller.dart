@@ -4,11 +4,9 @@ import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/register/models/request_otp.dart';
-
-import '../../../core/networking/custom_exception.dart';
+import 'package:senagat_mobile/src/features/register/presentation/register_screen.dart';
 import '../../../utils/services/show_snack.dart';
 import '../../../utils/services/error_utils.dart';
-import '../../../utils/validator.dart';
 import '../../register_confirmation/presentation/register_confirmation.dart';
 import '../models/pre_login_model.dart';
 import '../../auth/repository/auth_repository.dart';
@@ -18,7 +16,7 @@ class RegisterController extends GetxController with StateControlMixin {
 
   final GlobalKey<FormState> key;
   bool continueEnabled = false;
-  late bool login;
+  late String login;
 
   bool isPasswordVisible = false;
   bool isPasswordValid = false;
@@ -54,7 +52,7 @@ class RegisterController extends GetxController with StateControlMixin {
   Future<RequestModel> _getRequestModel() async {
     return RequestModel(
       phone: phoneController.text,
-      purpose: login ? 'login' : 'register',
+      purpose: login,
     );
   }
 
@@ -133,6 +131,11 @@ class RegisterController extends GetxController with StateControlMixin {
             ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
           });
     }
+  }
+
+  void onForgetPasswordTap() {
+    login = 'reset_password';
+    update();
   }
 
   void togglePasswordVisibility() {
