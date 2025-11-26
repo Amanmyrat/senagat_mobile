@@ -424,7 +424,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       if(controller.check == true)
                         CheckWidget(isLoading: controller.status == Status.loading,
                           isTitle: false, route: DashboardScreen.route,
-                          buttonTitle: r'home_page'.tr,
+                          buttonTitle: r'home_page'.tr, successTitle: 'payment_was_successful',
                         ),
                     ],
                   ),

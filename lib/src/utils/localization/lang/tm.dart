@@ -90,6 +90,7 @@ const Map<String, String> tkTk = {
   r'light': r'Tok',
   r'net_and_TV': r'Tor we telewizor',
   r'communal_apartment': r'Köp ýaşaýyş jaýy',
+  r'verification_was_successful': r'Tassyklama üstünlikli boldy',
   r'quick_navigation_buttons': r'Çalt geçiş düwmeleri',
   r'selected': r'Saýlandy',
   r'all': r'Hemmesi',
@@ -205,6 +206,7 @@ const Map<String, String> tkTk = {
   r'error': r'Ýalňyşlyk',
   r'payment_amount': r'Töleg mukdary',
   r'the_application_is_under_consideration': r'Arza seredilýär',
+  r'application_send': r'Arza ugradyldy',
   r'open_applications': r'Açyk arzalar',
   r'payment': r'Töleg',
   r'pending': r'Garaşylýar',
@@ -220,6 +222,8 @@ const Map<String, String> tkTk = {
   r'fine_date': r'Jerimäniň bellenen senesi',
   r'number_of_car': r'Awtoulagyň belgisi',
   r'bank_commission': r'Bankyň ýygymy 1.00 Manat',
+  r'forget_password': r'Açar sözi ýatdan çykdy',
+
 
 
   r'otp_not_match': r'Kod gabat gelmedi',

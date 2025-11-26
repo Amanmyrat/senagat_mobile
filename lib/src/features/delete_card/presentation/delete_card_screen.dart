@@ -154,7 +154,7 @@ class _DeleteCardScreenState extends State<DeleteCardScreen> {
                           ],
                         ),
                         if(controller.check)
-                          CheckWidget(isLoading: controller.status == Status.loading, isTitle: true, title: r'remove_card'.tr,),
+                          CheckWidget(isLoading: controller.status == Status.loading, isTitle: true, title: r'remove_card'.tr, successTitle: 'card_removed',),
                       ],
                     ),
                   ),

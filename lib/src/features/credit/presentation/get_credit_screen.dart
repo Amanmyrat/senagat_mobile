@@ -120,9 +120,9 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                       .where((c) => c.canOfferOnline == true)
                                       .map(
                                         (item) => DropdownMenuItem<String>(
-                                      value: item.name,
+                                      value: item.title,
                                       child: Text(
-                                        item.name?.tr ?? '',
+                                        item.title?.tr ?? '',
                                         style: TextStyle(fontSize: 14.sp),
                                       ),
                                     ),

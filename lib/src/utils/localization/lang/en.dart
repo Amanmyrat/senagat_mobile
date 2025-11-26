@@ -91,6 +91,7 @@ const Map<String, String> enUs = {
   r'communal_apartment': r'Communal apartment',
   r'quick_navigation_buttons': r'Quick navigation buttons',
   r'selected': r'Selected',
+  r'verification_was_successful': r'Verification was successful',
   r'all': r'All',
   r'next': r'Next',
   r'monthly_payment': r'Monthly payment',
@@ -128,6 +129,7 @@ const Map<String, String> enUs = {
   r'spending': r'Spending',
   r'card_name': r'Card name',
   r'remove_card': r'Remove card',
+  r'card_removed': r'Card removed',
   r'replenishment_bank': r'Replenishment of this bank card with cash is not allowed (only salary can be transferred)',
   r'not_confirmed': r'Not confirmed',
   r'confirmed': r'Confirmed',
@@ -220,6 +222,8 @@ const Map<String, String> enUs = {
   r'fine_date': r'The date when the fine was issued',
   r'number_of_car': r'Number of car',
   r'bank_commission': 'Bank\'s comission 1.00 Manat',
+  r'application_send': r'The application has been sent',
+  r'forget_password': r'Forgot password',
 
 
   r'otp_not_match': r'OTP did not match',

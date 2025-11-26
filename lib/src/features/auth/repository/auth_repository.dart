@@ -84,12 +84,12 @@ class AuthRepository {
     );
   }
 
-  Future<NewPasswordModel> resetPassword({required JSON data}) async {
-    return _apiService.setData<NewPasswordModel>(
+  Future<void> resetPassword({required JSON data}) async {
+    return _apiService.setData<void>(
       endpoint: ApiEndpoint.auth(AuthEndpoint.RESET_PASSWORD),
       data: data,
       converter: (response) {
-        return response.body['data'];
+        return ;
       },
     );
   }
