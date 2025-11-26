@@ -1,6 +1,6 @@
 class CreditTypeModel {
   final int? id;
-  final String? name;
+  final String? title;
   final int? term;
   final int? minAmount;
   final int? maxAmount;
@@ -9,7 +9,7 @@ class CreditTypeModel {
 
   CreditTypeModel({
     this.id,
-    this.name,
+    this.title,
     this.term,
     this.minAmount,
     this.maxAmount,
@@ -20,7 +20,7 @@ class CreditTypeModel {
   factory CreditTypeModel.fromJson(Map<String, dynamic> json) {
     return CreditTypeModel(
       id: json['id'],
-      name: json['name'],
+      title: json['title'],
       term: json['term'],
       minAmount: json['min_amount'],
       maxAmount: json['max_amount'],

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/features/auth_success/presentation/auth_success_screen.dart';
+import 'package:senagat_mobile/src/features/register/presentation/register_screen.dart';
+import 'package:senagat_mobile/src/features/register_confirmation/controller/register_confirmation_controller.dart';
 import 'package:senagat_mobile/src/features/register_password_setup/models/new_password_model.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../core/control_state_variable_mixin.dart';
@@ -9,6 +11,7 @@ import '../../../utils/services/show_snack.dart';
 import '../../../utils/services/error_utils.dart';
 import '../../auth/controller/auth_controller.dart';
 import '../../auth/repository/auth_repository.dart';
+import '../../register/controller/register_controller.dart';
 import '../models/register_model.dart';
 
 class RegisterPasswordSetupController extends GetxController with StateControlMixin {
@@ -93,9 +96,13 @@ class RegisterPasswordSetupController extends GetxController with StateControlMi
       final newPassword = await _getNewPasswordModel();
       await repository.resetPassword(data: newPassword.toMap()).then((value) {
         status = Status.completed;
+
+
+        Get.delete<RegisterController>(force: true);
+        Get.delete<RegisterConfirmationController>(force: true);
+        Get.toNamed(RegisterScreen.route, arguments: {'login': 'login'});
         update();
 
-        Get.toNamed(AuthSuccessScreen.route);
       }).catchError((e) {
         status = Status.error;
         update();

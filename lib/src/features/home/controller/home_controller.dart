@@ -95,7 +95,12 @@ class HomeController extends GetxController with StateControlMixin {
   void onFoundationTap() {
     lastTap = HomeTapType.foundation;
     update();
-    Get.toNamed(FoundationScreen.route);
+    Get.offNamed(PaymentScreen.route, arguments: {
+      'selectedServiceTitle': r'charitable_foundation'.tr,
+      'isInquiries': false,
+      'isFoundation': true,
+
+    });
   }
 
   void onServiceTap(int index) {

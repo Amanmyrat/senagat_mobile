@@ -12,7 +12,6 @@ import '../../../utils/services/error_utils.dart';
 import '../../loan/presentation/loan_screen.dart';
 
 class GetCreditController extends GetxController with StateControlMixin, GetSingleTickerProviderStateMixin {
-  double currentValue = 10000;
 
   late MoneyMaskedTextController sumController;
 
@@ -34,6 +33,9 @@ class GetCreditController extends GetxController with StateControlMixin, GetSing
   late double monthlyPayment;
 
   late int month;
+
+  double currentValue = 0;
+
 
   List<CreditTypeModel> get credits => _credits;
 
@@ -119,7 +121,6 @@ class GetCreditController extends GetxController with StateControlMixin, GetSing
       thousandSeparator: ',',
       precision: 0,
     );
-    sumController.updateValue(currentValue);
 
     bidController = TextEditingController();
 
@@ -132,7 +133,7 @@ class GetCreditController extends GetxController with StateControlMixin, GetSing
 
   getCreditValues() {
     final selectedCredit = _credits.firstWhereOrNull(
-      (credit) => credit.name == selectedDropdownValue,
+      (credit) => credit.title == selectedDropdownValue,
     );
 
     if (selectedCredit != null) {
@@ -143,6 +144,9 @@ class GetCreditController extends GetxController with StateControlMixin, GetSing
 
       minAmount = selectedCredit.minAmount!.toDouble();
       maxAmount = selectedCredit.maxAmount!.toDouble();
+
+      currentValue = minAmount;
+      sumController.updateValue(currentValue);
 
       minAmountStr = formatMoney(selectedCredit.minAmount ?? 0);
       maxAmountStr = formatMoney(selectedCredit.maxAmount ?? 0);

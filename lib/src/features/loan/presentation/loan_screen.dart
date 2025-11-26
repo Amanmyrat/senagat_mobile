@@ -679,7 +679,7 @@ class _LoanScreenState extends State<LoanScreen> {
                           ],
                         ),
                         if(controller.check)
-                          CheckWidget(isLoading: controller.status == Status.loading, isTitle: false, route: DashboardScreen.route, buttonTitle: r'home_page'.tr,),
+                          CheckWidget(isLoading: controller.status == Status.loading, isTitle: false, route: DashboardScreen.route, buttonTitle: r'home_page'.tr, successTitle: 'application_send',),
                       ],
                     ),
                   ),

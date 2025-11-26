@@ -4,7 +4,6 @@ import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/register/models/request_otp.dart';
-import 'package:senagat_mobile/src/features/register/presentation/register_screen.dart';
 import '../../../utils/services/show_snack.dart';
 import '../../../utils/services/error_utils.dart';
 import '../../register_confirmation/presentation/register_confirmation.dart';
@@ -39,6 +38,7 @@ class RegisterController extends GetxController with StateControlMixin {
     phoneFocus = FocusNode();
     passwordController = TextEditingController();
     passwordFocus = FocusNode();
+    print(login);
     super.onInit();
   }
 

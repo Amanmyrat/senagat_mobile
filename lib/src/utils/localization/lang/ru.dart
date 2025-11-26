@@ -129,6 +129,7 @@ const Map<String, String> ruRu = {
   r'spending': r'Расходы',
   r'card_name': r'Название карты',
   r'remove_card': r'Удалить карту',
+  r'card_removed': r'Карта удалена',
   r'replenishment_bank': r'Пополнение этой карты наличными не разрешено (только зарплата)',
   r'not_confirmed': r'Не подтверждено',
   r'confirmed': r'Потвержден',
@@ -161,6 +162,7 @@ const Map<String, String> ruRu = {
   r'select_the_type_of_certificate': r'Выберите тип справки',
   r'type_of_certificate': r'Тип справки',
   r'payment_was_successful': r'Оплата прошла успешно',
+  r'verification_was_successful': r'Проверка прошла успешна',
   r'submit_for_review': r'Отправить на проверку',
   r'home_phone_number': r'Номер домашнего телефона',
   r'apply_for_a_card': r'Оформить карту',
@@ -206,6 +208,7 @@ const Map<String, String> ruRu = {
   r'payment_amount': r'Сумма платежа',
   r'the_application_is_under_consideration': r'Заявка на рассмотрении',
   r'open_applications': r'Открытые заявки',
+  r'application_send': r'Заявка отправлена',
   r'payment': r'Оплата',
   r'pending': r'На рассмотрении',
   r'delivery_service_available': r'Есть',
@@ -220,6 +223,8 @@ const Map<String, String> ruRu = {
   r'fine_date': r'Дата оформления штрафа',
   r'number_of_car': r'Номер транспортного средства',
   r'bank_commission': r'Комиссия банка 1.00 Манат',
+  r'forget_password': r'Забыл пароль',
+
 
 
   r'otp_not_match': r'Код не совпадает',

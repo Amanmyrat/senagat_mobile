@@ -36,15 +36,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
               padding: const EdgeInsets.symmetric(
                 horizontal: AppDimensions.paddingExtraLarge,
               ),
-              child: GetBuilder<RegisterController>(
-                init: RegisterController(
-                  AuthRepository(apiService: ApiServices.apiService),
-                  _key,
-                ),
-                builder: (controller) {
-                  return Form(
-                    key: controller.key,
-                    child: Column(
+              child: Form(
+                key: _key,
+                child: GetBuilder<RegisterController>(
+                  init: RegisterController(
+                    AuthRepository(apiService: ApiServices.apiService),
+                    _key,
+                  ),
+                  builder: (controller) {
+                    return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
@@ -248,7 +248,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 controller.onForgetPasswordTap();
                               },
                               child: Text(
-                                r'forget password'.tr,
+                                r'forget_password'.tr,
                                 style: TextStyle(
                                   fontSize: 12.sp,
                                   color: AppColors.green,
@@ -292,9 +292,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                       ],
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
             ),
           ],

@@ -181,12 +181,12 @@ class _CardScreenState extends State<CardScreen> {
                             }
                           ),
                           SizedBox(height: AppDimensions.padding40.h,),
-                          if(controller.userInformationModel?.loan != null)...[
+                          if(controller.userInformationModel?.cards != null)...[
                             Text(r'open_applications'.tr, style: TextStyle(fontSize: 17.sp, color: AppColors.black),),
                             SizedBox(height: 16.h),
                             ListView.builder(
                               scrollDirection: Axis.vertical,
-                              itemCount: controller.userInformationModel?.cards?.length ?? 1,
+                              itemCount: controller.userInformationModel?.cards?.length,
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
                               itemBuilder: (context, index) {

@@ -17,6 +17,7 @@ class CheckWidget extends StatelessWidget {
   final bool isLoading;
   final String? route;
   final String? buttonTitle;
+  final String successTitle;
   final String? title;
 
   const CheckWidget({
@@ -25,6 +26,7 @@ class CheckWidget extends StatelessWidget {
     required this.isLoading,
     this.route,
     this.buttonTitle,
+    required this.successTitle,
     this.title,
   });
 
@@ -83,7 +85,7 @@ class CheckWidget extends StatelessWidget {
                 isLoading
                     ? Text(r'check_bank'.tr, textAlign: TextAlign.center)
                     : Text(
-                        r'payment_was_successful'.tr,
+                        successTitle.tr,
                         textAlign: TextAlign.center,
                       ),
 
