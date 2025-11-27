@@ -40,19 +40,6 @@ class _AddCardScreenState extends State<AddCardScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: AppDimensions.paddingExtraLarge.w,
-                              ),
-                              child: Text(
-                                r'choose_a_design'.tr,
-                                style: TextStyle(
-                                  fontSize: 24.sp,
-                                  color: AppColors.blackText,
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 16.h),
 
                             buildCardSection(controller),
 
@@ -355,12 +342,23 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                         ),
                                         Flexible(
                                           child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              SizedBox(height: 25.h),
+                                              Text(
+                                                r'CVC'.tr,
+                                                style: TextStyle(
+                                                  color: AppColors.blackText,
+                                                  fontSize: 14.sp,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: AppDimensions
+                                                    .paddingMedium
+                                                    .h,
+                                              ),
                                               TextFormField(
                                                 keyboardType:
                                                     TextInputType.number,
-                                                textAlign: TextAlign.center,
                                                 controller:
                                                     controller.cvcController,
                                                 onChanged:
@@ -373,9 +371,6 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                                 ),
                                                 decoration: InputDecoration(
                                                   hintText: r'CVC'.tr,
-                                                  hintStyle: TextStyle(
-                                                    color: AppColors.blackText,
-                                                  ),
                                                   focusedBorder: OutlineInputBorder(
                                                     borderRadius:
                                                         BorderRadius.circular(
@@ -398,34 +393,17 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                                       width: 1.w,
                                                     ),
                                                   ),
-                                                  suffixIconConstraints:
-                                                      BoxConstraints(
-                                                        minWidth: 20.w,
-                                                        minHeight: 20.h,
-                                                      ),
-                                                  suffixIcon: Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                          right: 10,
-                                                        ),
-                                                    child: SvgPicture.asset(
-                                                      AppAssets.infoIcon,
-                                                      width: 18.w,
-                                                    ),
-                                                  ),
                                                   counter: const SizedBox(),
                                                   contentPadding:
-                                                      EdgeInsets.only(
-                                                        top: AppDimensions
-                                                            .paddingExtraLarge
-                                                            .h,
-                                                        bottom: AppDimensions
-                                                            .paddingExtraLarge
-                                                            .h,
-                                                        left: AppDimensions
-                                                            .paddingMedium
-                                                            .w,
-                                                      ),
+                                                  EdgeInsets.symmetric(
+                                                    vertical: AppDimensions
+                                                        .paddingExtraLarge
+                                                        .h,
+                                                    horizontal:
+                                                    AppDimensions
+                                                        .paddingLarge
+                                                        .w,
+                                                  ),
                                                 ),
                                               ),
                                             ],

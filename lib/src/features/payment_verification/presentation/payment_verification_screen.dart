@@ -119,10 +119,9 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                                                           ),
                                                           SizedBox(height: 6.h,),
                                                           Text(
-
-                                                            controller.sum ?? '',
+                                                            '${controller.sum} Manat' ?? '',
                                                             style: TextStyle(
-                                                              fontSize: 40.sp,
+                                                              fontSize: 35.sp,
                                                               color: AppColors.white,
                                                             ),
                                                           ),
@@ -301,11 +300,7 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                               width: MediaQuery.of(context).size.width,
                               child: ElevatedButtonWithState(
                                 onPressed: (){
-                                  if(controller.isInquiries){
-                                    Get.toNamed(PaymentScreen.route);
-                                  }else {
-                                    controller.startBankVerification();
-                                  }
+                                  controller.startBankVerification();
                                 },
                                 isError: controller.status == Status.error,
                                 isLoading: controller.status == Status.loading,
@@ -365,7 +360,7 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                r'lastName'.tr,
+                r'last_name'.tr,
                 style: TextStyle(
                   fontSize: 14.sp,
                   color: AppColors.blackText,

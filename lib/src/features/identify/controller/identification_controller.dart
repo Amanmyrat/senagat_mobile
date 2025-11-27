@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:senagat_mobile/src/features/add_card/model/card_model.dart';
 import 'package:senagat_mobile/src/features/home/controller/home_controller.dart';
 import 'package:senagat_mobile/src/features/welcome/presentation/welcome_screen.dart';
 import '../../../core/control_state_variable_mixin.dart';
@@ -17,6 +18,7 @@ class IdentificationController extends GetxController with StateControlMixin {
 
   final profileBox = Hive.box<ProfileModel>('profileBox');
   final phoneBox = Hive.box<String>('phoneBox');
+  final cardsBox = Hive.box<CardModel>('cardsBox');
 
   final _keyValueStorageService = KeyValueStorageService();
   final _accountLoginStatusController =
@@ -34,6 +36,7 @@ class IdentificationController extends GetxController with StateControlMixin {
     profileBox.clear();
     phoneBox.clear();
     phoneBox.delete('phone');
+    cardsBox.clear();
 
     print(phoneBox.get('phone'));
 

@@ -33,7 +33,7 @@ class InquiriesController extends GetxController with StateControlMixin {
   String? selectedDropdownType;
   int? selectedDropdownBranch;
   bool continueEnabled = false;
-  int pageIndex = 1;
+  bool isDropdownSelected = false;
 
   final dateOfBirthFormatter = MaskTextInputFormatter(
     mask: '##-##-####',
@@ -83,7 +83,7 @@ class InquiriesController extends GetxController with StateControlMixin {
 
   void setDropdownType(String? value) {
     selectedDropdownType = value;
-    continueEnabled = true;
+    isDropdownSelected = true;
     update();
   }
 
@@ -98,12 +98,7 @@ class InquiriesController extends GetxController with StateControlMixin {
   }
 
   Future<void> onTap() async {
-    if (pageIndex == 1 && continueEnabled) {
-      pageIndex = 2;
-
-      continueEnabled = false;
-      update();
-    } else if (pageIndex == 2 && continueEnabled) {
+    if (continueEnabled) {
 
         status = Status.loading;
         update();
@@ -190,18 +185,7 @@ class InquiriesController extends GetxController with StateControlMixin {
     inquiriesPrice = selectedInquiry.price!;
   }
 
-  void onBack() {
-    if (pageIndex == 1) {
-      Get.back();
-      update();
-    } else if (pageIndex == 2) {
-      pageIndex = 1;
-      continueEnabled = true;
-      update();
-    }
-  }
-
-  void setDropdownBranch(int? value) {
+    void setDropdownBranch(int? value) {
     selectedDropdownBranch = value;
     onInformationNotEmpty(value);
     update();

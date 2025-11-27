@@ -15,6 +15,7 @@ import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../widgets/header_widget.dart';
 import '../../auth/repository/auth_repository.dart';
+import '../../card_settings/presentation/card_settings_screen.dart';
 import '../../identity_verification/presentation/identity_verification_screen.dart';
 import '../controller/home_controller.dart';
 import '../repository/exchage_rate_repository.dart';
@@ -482,7 +483,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         Text(
                                                           controller.payBox
                                                                   .getAt(index)
-                                                                  ?.serviceName ??
+                                                                  ?.serviceName.tr ??
                                                               '',
                                                           style: TextStyle(
                                                             color: AppColors
@@ -745,56 +746,61 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         children: [
           if (controller.cardBox.isNotEmpty) ...[
-            Container(
-              width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.all(AppDimensions.paddingExtraLarge),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.r),
-                image: DecorationImage(
-                  image: AssetImage(controller.cardBox.getAt(0)!.cardDesign),
-                  fit: BoxFit.fill,
+            GestureDetector(
+              onTap: (){
+                Get.toNamed(CardSettingsScreen.route);
+              },
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.all(AppDimensions.paddingExtraLarge),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.r),
+                  image: DecorationImage(
+                    image: AssetImage(controller.cardBox.getAt(0)!.cardDesign),
+                    fit: BoxFit.fill,
+                  ),
                 ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Senagat Bank',
-                      style: TextStyle(color: AppColors.white, fontSize: 14),
-                    ),
-                  ),
-                  SizedBox(height: 72.h),
-                  Text(
-                    controller.cardBox.getAt(0)?.cardNumber ?? '',
-                    style: TextStyle(
-                      wordSpacing: 10.sp,
-                      fontSize: 24.sp,
-                      color: AppColors.white,
-                    ),
-                  ),
-                  SizedBox(height: 41.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        controller.cardBox.getAt(0)?.name ?? '',
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          color: AppColors.white,
-                        ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        'Senagat Bank',
+                        style: TextStyle(color: AppColors.white, fontSize: 14),
                       ),
-                      Text(
-                        controller.cardBox.getAt(0)?.expiryDate ?? '',
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          color: AppColors.white,
-                        ),
+                    ),
+                    SizedBox(height: 72.h),
+                    Text(
+                      controller.cardBox.getAt(0)?.cardNumber ?? '',
+                      style: TextStyle(
+                        wordSpacing: 10.sp,
+                        fontSize: 24.sp,
+                        color: AppColors.white,
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                    SizedBox(height: 41.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          controller.cardBox.getAt(0)?.name ?? '',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            color: AppColors.white,
+                          ),
+                        ),
+                        Text(
+                          controller.cardBox.getAt(0)?.expiryDate ?? '',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            color: AppColors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ] else ...[
@@ -1113,12 +1119,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      controller
-                              .userInformationModel
-                              ?.certificates?.first
-                              .certificateName ?? '',
-                      style: TextStyle(color: AppColors.white, fontSize: 14.sp),
+                    Expanded(
+                      child: Text(
+                        controller
+                                .userInformationModel
+                                ?.certificates?.first
+                                .certificateName ?? '',
+                        style: TextStyle(color: AppColors.white, fontSize: 14.sp),
+                      ),
                     ),
                     Row(
                       children: [

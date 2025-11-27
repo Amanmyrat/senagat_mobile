@@ -53,6 +53,7 @@ class _MapSearchScreenState extends State<MapSearchScreen> {
                     initialCenter: LatLng(c.lat ?? 0, c.lng ?? 0),
                     initialZoom: 12.0,
                     onMapReady: () {
+                      c.onMapReady();
                       c.initializeMap();
                       c.fitMarkersInView();
                     },
@@ -83,7 +84,7 @@ class _MapSearchScreenState extends State<MapSearchScreen> {
                           Navigator.pop(context);
                         },
                         child: Container(
-                          padding: EdgeInsets.all(16.w),
+                          padding: EdgeInsets.all(14.w),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.r),
                               border: Border.all(
@@ -96,75 +97,11 @@ class _MapSearchScreenState extends State<MapSearchScreen> {
                         ),
                       ),
                       SizedBox(width: 8.w),
-                      Expanded(
-                        child: TextFormField(
-                          controller: c.searchController,
-                          focusNode: c.searchFocusNode,
-                          keyboardType: TextInputType.text,
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontFamily: AppFonts.primaryFont,
-                          ),
-                          decoration: InputDecoration(
-                            fillColor: Colors.transparent,
-                            hintText: r'find_an_ATM'.tr,
-                            border: OutlineInputBorder(),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(
-                                AppDimensions.borderRadiusMedium,
-                              ),
-                              borderSide: BorderSide(
-                                color: AppColors.green,
-                                width: 1.w,
-                              ),
-                            ),
-                            prefixIconConstraints: BoxConstraints(
-                              minWidth: 20.w,
-                              minHeight: 20.h,
-                            ),
-                            prefixIcon: GestureDetector(
-                              onTap: () {
-                                if (c.hasSearchText) {
-                                  c.clearSearch();
-                                }
-                              },
-                              child: Padding(
-                                padding: EdgeInsets.only(left: AppDimensions.paddingExtraLarge.w, right: AppDimensions.paddingMedium.w),
-                                child: SvgPicture.asset(
-                                  c.hasSearchText 
-                                    ? AppAssets.deleteIcon 
-                                    : AppAssets.searchIcon,
-                                  width: 20.w,
-                                ),
-                              ),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(
-                                AppDimensions.borderRadiusMedium,
-                              ),
-                              borderSide: BorderSide(
-                                color: AppColors.greyInactive,
-                                width: 1.w,
-                              ),
-                            ),
-                            counter: const SizedBox(),
-                            contentPadding: EdgeInsets.symmetric(
-                              vertical: 16.h,
-                              horizontal: AppDimensions.paddingLarge.w,
-                            ),
-                          ),
-                        ),
-                      ),
+                      _buildUnifiedTabs(c),
                     ],
                   ),
                 ),
 
-                // Tabs (ATMs / Branches)
-                Positioned(
-                  top: MediaQuery.of(context).padding.top + 80,
-                  left: 20.w,
-                  child: _buildUnifiedTabs(c),
-                ),
               ],
             ),
           );

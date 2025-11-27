@@ -73,10 +73,180 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                             SizedBox(height: AppDimensions.padding40.h,),
                                           ],
                                         ),
+                                      if(controller.serviceName.isNotEmpty)
+                                        Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            accountWidget(controller),
+                                            Text(r'phone_number'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+                                            SizedBox(height: AppDimensions.paddingMedium.h,),
+                                            Row(
+                                              children: [
+                                                Container(
+                                                  padding: EdgeInsets.all(
+                                                    AppDimensions.paddingExtraLarge.w,
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    color: AppColors.inputFillBackground,
+                                                    borderRadius: BorderRadius.circular(
+                                                      AppDimensions.borderRadiusMedium,
+                                                    ),
+                                                  ),
+                                                  child: Text(
+                                                    '+993',
+                                                    style: TextStyle(fontSize: 14.sp),
+                                                  ),
+                                                ),
+                                                SizedBox(width: AppDimensions.paddingSmall.w),
+                                                Expanded(
+                                                  child: TextFormField(
+                                                    keyboardType: TextInputType.phone,
+                                                    controller: controller.phoneController,
+                                                    onChanged: (v)=> controller.isTextNotEmpty(),
+                                                    focusNode: controller.phoneFocus,
+                                                    maxLength: 8,
+                                                    style: TextStyle(
+                                                      fontSize: 14.sp,
+                                                      fontFamily: AppFonts.primaryFont,
+                                                    ),
+                                                    decoration: InputDecoration(
+                                                      hintText: r'enter_number'.tr,
+                                                      border: OutlineInputBorder(),
+                                                      focusedBorder: OutlineInputBorder(
+                                                        borderRadius: BorderRadius.circular(
+                                                          AppDimensions.borderRadiusMedium,
+                                                        ),
+                                                        borderSide: BorderSide(
+                                                          color: AppColors.green,
+                                                          width: 1.w,
+                                                        ),
+                                                      ),
+                                                      enabledBorder: OutlineInputBorder(
+                                                        borderRadius: BorderRadius.circular(
+                                                          AppDimensions.borderRadiusMedium,
+                                                        ),
+                                                        borderSide: BorderSide(
+                                                          color: AppColors.white,
+                                                          width: 1.w,
+                                                        ),
+                                                      ),
+                                                      counter: const SizedBox(),
+                                                      contentPadding: EdgeInsets.symmetric(
+                                                        vertical: AppDimensions.paddingExtraLarge.h,
+                                                        horizontal: AppDimensions.paddingLarge.w,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(height: 22.h,),
+
+                                            if(controller.serviceName == 'pygg_video')...[
+                                              isPyggVideo(controller),
+                                            ],
+                                            if(controller.serviceName == 'pygg_decision')...[
+                                              isPyggDecision(controller),
+                                            ],
+                                            if(controller.serviceIcon.isEmpty)
+                                              Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  SizedBox(height: 22.h,),
+
+                                                  Text(r'name'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+                                                  SizedBox(height: AppDimensions.paddingMedium.h,),
+                                                  TextFormField(
+                                                    keyboardType: TextInputType.name,
+                                                    controller: controller.nameController,
+                                                    onChanged: (value) => controller.isTextNotEmpty(),
+                                                    style: TextStyle(
+                                                      fontSize: 14.sp,
+                                                      fontFamily: AppFonts.primaryFont,
+                                                    ),
+                                                    decoration: InputDecoration(
+                                                      hintText: r'enter_name'.tr,
+                                                      border: OutlineInputBorder(),
+                                                      focusedBorder: OutlineInputBorder(
+                                                        borderRadius: BorderRadius.circular(
+                                                          AppDimensions.borderRadiusMedium,
+                                                        ),
+                                                        borderSide: BorderSide(
+                                                          color: AppColors.green,
+                                                          width: 1.w,
+                                                        ),
+                                                      ),
+                                                      enabledBorder: OutlineInputBorder(
+                                                        borderRadius: BorderRadius.circular(
+                                                          AppDimensions.borderRadiusMedium,
+                                                        ),
+                                                        borderSide: BorderSide(
+                                                          color: AppColors.white,
+                                                          width: 1.w,
+                                                        ),
+                                                      ),
+                                                      counter: const SizedBox(),
+                                                      contentPadding: EdgeInsets.symmetric(
+                                                        vertical: AppDimensions.paddingExtraLarge.h,
+                                                        horizontal: AppDimensions.paddingLarge.w,
+                                                      ),
+                                                    ),
+                                                  ),
+
+                                                  SizedBox(height: 22.h,),
+
+                                                ],
+                                              ),
+
+
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text(r'sum'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
+                                                TextFormField(
+                                                  keyboardType: TextInputType.number,
+                                                  controller: controller.sumController,
+                                                  onChanged: (value) => controller.isTextNotEmpty(),
+                                                  style: TextStyle(
+                                                      fontSize: 24.sp,
+                                                      fontFamily: AppFonts.primaryFont,
+                                                      color: AppColors.blackText
+                                                  ),
+                                                  decoration: InputDecoration(
+                                                    hintText: r'enter_sum'.tr,
+                                                    fillColor: AppColors.white,
+                                                    focusedBorder: UnderlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        strokeAlign: BorderSide.strokeAlignOutside,
+                                                        color: AppColors.green,
+                                                        width: 1.w,
+                                                      ),
+                                                    ),
+                                                    enabledBorder: UnderlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        strokeAlign: BorderSide.strokeAlignOutside,
+                                                        color: AppColors.dividerColor,
+                                                        width: 1.w,
+                                                      ),
+                                                    ),
+                                                    counter: const SizedBox(),
+                                                    contentPadding: EdgeInsets.symmetric(
+                                                      vertical: AppDimensions.paddingLarge.h,
+                                                      horizontal: AppDimensions.paddingLarge.w,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(width: AppDimensions.paddingMedium.h,),
+                                          ],
+                                        ),
+
+                                      SizedBox(height: AppDimensions.padding40.h,),
                                       Text(
                                         r'select_a_card'.tr,
                                         style: TextStyle(
-                                          fontSize: controller.serviceName.isNotEmpty ? 17.sp : 24.sp,
+                                          fontSize: controller.serviceName.isNotEmpty ? 14.sp : 24.sp,
                                           color: AppColors.blackText,
                                         ),
                                       ),
@@ -226,173 +396,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                           ],),
                                         ),
                                       ),
-                                      SizedBox(height: AppDimensions.padding40.h,),
-                                      if(controller.serviceName.isNotEmpty)
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            accountWidget(controller),
-                                            Text(r'phone_number'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
-                                            SizedBox(height: AppDimensions.paddingMedium.h,),
-                                            Row(
-                                              children: [
-                                                Container(
-                                                  padding: EdgeInsets.all(
-                                                    AppDimensions.paddingExtraLarge.w,
-                                                  ),
-                                                  decoration: BoxDecoration(
-                                                    color: AppColors.inputFillBackground,
-                                                    borderRadius: BorderRadius.circular(
-                                                      AppDimensions.borderRadiusMedium,
-                                                    ),
-                                                  ),
-                                                  child: Text(
-                                                    '+993',
-                                                    style: TextStyle(fontSize: 14.sp),
-                                                  ),
-                                                ),
-                                                SizedBox(width: AppDimensions.paddingSmall.w),
-                                                Expanded(
-                                                  child: TextFormField(
-                                                    keyboardType: TextInputType.phone,
-                                                    controller: controller.phoneController,
-                                                    onChanged: (v)=> controller.isTextNotEmpty(),
-                                                    focusNode: controller.phoneFocus,
-                                                    maxLength: 8,
-                                                    style: TextStyle(
-                                                      fontSize: 14.sp,
-                                                      fontFamily: AppFonts.primaryFont,
-                                                    ),
-                                                    decoration: InputDecoration(
-                                                      hintText: r'enter_number'.tr,
-                                                      border: OutlineInputBorder(),
-                                                      focusedBorder: OutlineInputBorder(
-                                                        borderRadius: BorderRadius.circular(
-                                                          AppDimensions.borderRadiusMedium,
-                                                        ),
-                                                        borderSide: BorderSide(
-                                                          color: AppColors.green,
-                                                          width: 1.w,
-                                                        ),
-                                                      ),
-                                                      enabledBorder: OutlineInputBorder(
-                                                        borderRadius: BorderRadius.circular(
-                                                          AppDimensions.borderRadiusMedium,
-                                                        ),
-                                                        borderSide: BorderSide(
-                                                          color: AppColors.white,
-                                                          width: 1.w,
-                                                        ),
-                                                      ),
-                                                      counter: const SizedBox(),
-                                                      contentPadding: EdgeInsets.symmetric(
-                                                        vertical: AppDimensions.paddingExtraLarge.h,
-                                                        horizontal: AppDimensions.paddingLarge.w,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(height: 22.h,),
-                                            if(controller.serviceName == 'pygg_video')...[
-                                              isPyggVideo(controller),
-                                            ],
-                                            if(controller.serviceName == 'pygg_decision')...[
-                                              isPyggDecision(controller),
-                                            ],
-                                            if(controller.serviceIcon.isEmpty)
-                                              Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  SizedBox(height: 22.h,),
-
-                                                  Text(r'name'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
-                                                  SizedBox(height: AppDimensions.paddingMedium.h,),
-                                                  TextFormField(
-                                                    keyboardType: TextInputType.name,
-                                                    controller: controller.nameController,
-                                                    onChanged: (value) => controller.isTextNotEmpty(),
-                                                    style: TextStyle(
-                                                      fontSize: 14.sp,
-                                                      fontFamily: AppFonts.primaryFont,
-                                                    ),
-                                                    decoration: InputDecoration(
-                                                      hintText: r'enter_name'.tr,
-                                                      border: OutlineInputBorder(),
-                                                      focusedBorder: OutlineInputBorder(
-                                                        borderRadius: BorderRadius.circular(
-                                                          AppDimensions.borderRadiusMedium,
-                                                        ),
-                                                        borderSide: BorderSide(
-                                                          color: AppColors.green,
-                                                          width: 1.w,
-                                                        ),
-                                                      ),
-                                                      enabledBorder: OutlineInputBorder(
-                                                        borderRadius: BorderRadius.circular(
-                                                          AppDimensions.borderRadiusMedium,
-                                                        ),
-                                                        borderSide: BorderSide(
-                                                          color: AppColors.white,
-                                                          width: 1.w,
-                                                        ),
-                                                      ),
-                                                      counter: const SizedBox(),
-                                                      contentPadding: EdgeInsets.symmetric(
-                                                        vertical: AppDimensions.paddingExtraLarge.h,
-                                                        horizontal: AppDimensions.paddingLarge.w,
-                                                      ),
-                                                    ),
-                                                  ),
-
-                                                ],
-                                              ),
-
-
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Text(r'sum'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
-                                                TextFormField(
-                                                  keyboardType: TextInputType.number,
-                                                  controller: controller.sumController,
-                                                  onChanged: (value) => controller.isTextNotEmpty(),
-                                                  style: TextStyle(
-                                                      fontSize: 24.sp,
-                                                      fontFamily: AppFonts.primaryFont,
-                                                      color: AppColors.blackText
-                                                  ),
-                                                  decoration: InputDecoration(
-                                                    hintText: r'enter_sum'.tr,
-                                                    fillColor: AppColors.white,
-                                                    focusedBorder: UnderlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        strokeAlign: BorderSide.strokeAlignOutside,
-                                                        color: AppColors.green,
-                                                        width: 1.w,
-                                                      ),
-                                                    ),
-                                                    enabledBorder: UnderlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        strokeAlign: BorderSide.strokeAlignOutside,
-                                                        color: AppColors.dividerColor,
-                                                        width: 1.w,
-                                                      ),
-                                                    ),
-                                                    counter: const SizedBox(),
-                                                    contentPadding: EdgeInsets.symmetric(
-                                                      vertical: AppDimensions.paddingLarge.h,
-                                                      horizontal: AppDimensions.paddingLarge.w,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(width: AppDimensions.paddingMedium.h,),
-                                          ],
-                                        ),
-
                                     ],
                                   ),
                                 ),
@@ -444,61 +447,47 @@ Widget accountWidget(PaymentController controller){
     children: [
       Text(r'your_account'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
       SizedBox(height: AppDimensions.paddingMedium.h,),
-      Row(
-        children: [
-          Container(
-            padding: EdgeInsets.all(
-              AppDimensions.paddingExtraLarge.w,
-            ),
-            decoration: BoxDecoration(
-              color: AppColors.inputFillBackground,
-              borderRadius: BorderRadius.circular(
-                AppDimensions.borderRadiusMedium,
-              ),
-            ),
-            child: Text(
-              '${r'your_account'.tr}:',
-              style: TextStyle(fontSize: 14.sp),
-            ),
+      Container(
+        width: MediaQuery.of(Get.context!).size.width,
+        padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(
+            AppDimensions.borderRadiusMedium.r,
           ),
-          SizedBox(width: AppDimensions.paddingSmall.w),
-          Expanded(
-            child: TextFormField(
-              readOnly: true,
-              controller: controller.accountController,
-              style: TextStyle(
-                fontSize: 14.sp,
-                fontFamily: AppFonts.primaryFont,
-              ),
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(
-                    AppDimensions.borderRadiusMedium,
+          border: Border.all(color: AppColors.dividerColor, width: 1.w, style: BorderStyle.solid),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.dividerColor,
+              blurRadius: 4.r,
+            ),
+          ],
+          color: AppColors.white,
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    r'balance'.tr,
+                    style: TextStyle(
+                      color: AppColors.greyInactive,
+                      fontSize: 14.sp,
+                    ),
                   ),
-                  borderSide: BorderSide(
-                    color: AppColors.white,
-                    width: 1.w,
+                  Text(
+                    '40 Manat',
+                    style: TextStyle(
+                      color: AppColors.green,
+                      fontSize: 17.sp,
+                    ),
                   ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(
-                    AppDimensions.borderRadiusMedium,
-                  ),
-                  borderSide: BorderSide(
-                    color: AppColors.white,
-                    width: 1.w,
-                  ),
-                ),
-                counter: const SizedBox(),
-                contentPadding: EdgeInsets.symmetric(
-                  vertical: AppDimensions.paddingExtraLarge.h,
-                  horizontal: AppDimensions.paddingLarge.w,
-                ),
+                ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       SizedBox(height: AppDimensions.paddingExtraLarge.w),
 

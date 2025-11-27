@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/globals.dart';
 import 'package:senagat_mobile/src/features/map_search/repository/location_repository.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
+import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/constants/app_assets.dart';
 import '../../../utils/theme/constants/app_colors.dart';
@@ -48,58 +49,10 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                         child: SingleChildScrollView(
                           child: Column(
                             children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      controller.onBack();
-                                    },
-                                    child: Container(
-                                      padding: EdgeInsets.all(
-                                        AppDimensions.paddingMedium,
-                                      ),
-                                      margin: EdgeInsets.all(
-                                        AppDimensions.paddingExtraLarge,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(
-                                          10.r,
-                                        ),
-                                        border: Border.all(
-                                          color: AppColors.greyInactive,
-                                          width: 1.w,
-                                          style: BorderStyle.solid,
-                                        ),
-                                        color: AppColors.white,
-                                      ),
-                                      child: SvgPicture.asset(
-                                        AppAssets.arrowLeftIcon,
-                                        width: 20.w,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                      right: AppDimensions.paddingExtraLarge,
-                                      top: 22.h,
-                                    ),
-                                    child: Align(
-                                      alignment: Alignment.bottomRight,
-                                      child: Text(
-                                        'step_of_5'.trParams({
-                                          'page': controller.pageIndex
-                                              .toString(),
-                                        }),
-                                        style: TextStyle(fontSize: 14.sp),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              if (controller.pageIndex == 1)
-                                Padding(
+
+                              CustomAppBar(),
+
+                              Padding(
                                   padding: EdgeInsets.symmetric(
                                     horizontal:
                                         AppDimensions.paddingExtraLarge.w,
@@ -171,58 +124,23 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                             .toList(),
                                       ),
 
-                                      if (controller.continueEnabled)
-                                        Column(
-                                          children: [
-                                            SizedBox(height: 16.h),
-                                            Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                SvgPicture.asset(
-                                                  AppAssets.infoIcon,
-                                                  width: 18.w,
-                                                  color: AppColors.green,
-                                                ),
-                                                SizedBox(width: 6.h),
-                                                Expanded(
-                                                  child: Text(
-                                                    r'confirm_that_you_have_an_account'
-                                                        .tr,
-                                                    style: TextStyle(
-                                                      fontSize: 14.sp,
-                                                      color:
-                                                          AppColors.blackText,
-                                                      fontFamily: AppFonts
-                                                          .secondaryFont,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
                                     ],
                                   ),
                                 ),
-                              if (controller.pageIndex == 2)
+                              if (controller.isDropdownSelected)
                                 Padding(
                                   padding: EdgeInsets.symmetric(
                                     horizontal:
                                         AppDimensions.paddingExtraLarge.w,
+                                    vertical:
+                                    AppDimensions.paddingExtraLarge.w,
+
                                   ),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        r'information_for_reference'.tr,
-                                        style: TextStyle(
-                                          fontSize: 24.sp,
-                                          color: AppColors.blackText,
-                                        ),
-                                      ),
-                                      SizedBox(height: 32.h),
+
                                       Text(
                                         r'bank_branch'.tr,
                                         style: TextStyle(
