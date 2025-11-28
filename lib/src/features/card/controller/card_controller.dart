@@ -21,6 +21,10 @@ class CardController extends GetxController with StateControlMixin {
   final cardBox = Hive.box<CardModel>('cardsBox');
   UserInformationModel? userInformationModel;
   AuthRepository authRepository;
+  late final String cardNumber;
+
+  List<bool> isOpenList = [];
+
 
   late bool isOpen = false;
 
@@ -66,6 +70,7 @@ class CardController extends GetxController with StateControlMixin {
         .then((value) {
       userInformationModel = value;
       status = Status.completed;
+      initOpenStates(userInformationModel?.cards?.length ?? 0);
 
       update();
     }).catchError((e) {
@@ -77,4 +82,31 @@ class CardController extends GetxController with StateControlMixin {
     });
   }
 
+  void initOpenStates(int length) {
+    isOpenList = List.generate(length, (_) => false);
+    update();
+  }
+
+
+  String hideCardCenter(String number) {
+    if (number.length < 8) return number;
+
+    final start = number.substring(0, 4);
+    final end = number.substring(number.length - 4);
+    final hiddenCount = number.length - 7;
+
+    final hidden = '*' * hiddenCount;
+
+    final masked = '$start$hidden$end';
+
+    final buffer = StringBuffer();
+    for (int i = 0; i < masked.length; i++) {
+      buffer.write(masked[i]);
+      if ((i + 1) % 4 == 0 && i != masked.length - 1) {
+        buffer.write(' ');
+      }
+    }
+
+    return buffer.toString();
+  }
 }

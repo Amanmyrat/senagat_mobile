@@ -484,9 +484,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
 
     if (senagatIndex != null) {
       return Container(
-        height: 220.h,
-        padding: EdgeInsets.symmetric(
-          horizontal:
+        padding: EdgeInsets.all(
           AppDimensions.paddingExtraLarge,
         ),
         margin: EdgeInsets.symmetric(
@@ -498,7 +496,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
           ),
           image: DecorationImage(
             image: AssetImage(
-              controller.cardDesigns2[senagatIndex ?? 0],
+              controller.cardDesigns2[senagatIndex],
             ),
             fit: BoxFit.fill,
           ),
@@ -604,7 +602,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                         children: [
                           Text(
                             controller.nameController.text.isNotEmpty
-                                ? controller.nameController.text
+                                ? controller.nameController.text.toUpperCase()
                                 : r'name_on_the_card'.tr,
                             style: TextStyle(
                               fontSize: 14.sp,

@@ -22,7 +22,7 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
       body: SafeArea(
           child: GetBuilder<CardDetailsController>(
             init: CardDetailsController(),
-            builder: (context) {
+            builder: (controller) {
               return Column(
                 children: [
                   CustomAppBar(),
@@ -42,7 +42,7 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                                 borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
                                 color: AppColors.inputFillBackground
                               ),
-                              child: Text(r'3576 1239 1234 0689'.tr, style: TextStyle(color: AppColors.black, fontSize: 14.sp),),
+                              child: Text(controller.cardNumber, style: TextStyle(color: AppColors.black, fontSize: 14.sp),),
                             ),
                             SizedBox(height: 22.h,),
                             Row(
@@ -58,7 +58,7 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                                           borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
                                           color: AppColors.inputFillBackground
                                       ),
-                                      child: Text(r'Mergen Jumayew'.tr, style: TextStyle(color: AppColors.black, fontSize: 14.sp),),
+                                      child: Text(controller.cardName, style: TextStyle(color: AppColors.black, fontSize: 14.sp),),
                                     ),
                                   ],
                                 ),
@@ -74,7 +74,7 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                                           borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
                                           color: AppColors.inputFillBackground
                                       ),
-                                      child: Text(r'11/27'.tr, style: TextStyle(color: AppColors.black, fontSize: 14.sp),),
+                                      child: Text(controller.cardTerm, style: TextStyle(color: AppColors.black, fontSize: 14.sp),),
                                     ),
                                   ],
                                 ),

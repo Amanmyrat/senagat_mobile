@@ -3,7 +3,6 @@ class CardOrderModel {
   final int? userId;
   final int? profileId;
   final int? typeId;
-  final String? phoneNumber;
   final int? bankBranch;
   final String? workPosition;
   final int? workPhone;
@@ -16,7 +15,6 @@ class CardOrderModel {
     this.userId,
     this.profileId,
     this.typeId,
-    this.phoneNumber,
     this.bankBranch,
     this.workPosition,
     this.workPhone,
@@ -31,7 +29,6 @@ class CardOrderModel {
       userId: json['user_id'],
       profileId: json['profile_id'],
       typeId: json['card_type_id'],
-      phoneNumber: json['phone_number'],
       bankBranch: json['bank_branch_id'],
       workPosition: json['work_position'],
       workPhone: json['work_phone'],
@@ -44,7 +41,6 @@ class CardOrderModel {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       "card_type_id": typeId,
-      "phone_number": phoneNumber,
       "bank_branch_id": bankBranch,
       "work_position": workPosition,
       "work_phone": workPhone,

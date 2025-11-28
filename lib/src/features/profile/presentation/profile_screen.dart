@@ -81,10 +81,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   borderRadius: BorderRadius.circular(
                                     AppDimensions.borderRadiusMedium.r,
                                   ),
-                                  color: controller.homeController.isProfileRequired ? AppColors.greyInactive : AppColors.green,
+                                  color: controller.homeController.userInformationModel?.profileModel?.status == 'pending' ? AppColors.orange : AppColors.green,
                                 ),
                                 child: Text(
-                                  controller.homeController.isProfileRequired ? r'not_confirmed'.tr : r'confirmed'.tr,
+                                  controller.homeController.userInformationModel?.profileModel?.status?.tr ?? '',
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: AppColors.white,
@@ -104,41 +104,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     SizedBox(height: 32.h,),
                     Text(r'control'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.black,),),
                     SizedBox(height: 16.h,),
-                    GestureDetector(
-                      onTap: (){
-                        Get.toNamed(AccountScreen.route);
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                            AppDimensions.borderRadiusMedium.r,
-                          ),
-                          border: Border.all(color: AppColors.dividerColor, width: 1.w, style: BorderStyle.solid),
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColors.dividerColor,
-                              blurRadius: 4.r,
-                            ),
-                          ],
-                          color: AppColors.white,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                SvgPicture.asset(AppAssets.edit,width: 24.w,),
-                                SizedBox(width: 10.w,),
-                                Text(r'accounts'.tr, style: TextStyle(fontSize: 14.sp.sp, color: AppColors.blackText, fontFamily: AppFonts.secondaryFont),),
-                              ],
-                            ),
-                            SvgPicture.asset(AppAssets.arrowRightIcon, color: AppColors.black, width: 16.w,)
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 16.h,),
+
                     Container(
                       padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
                       decoration: BoxDecoration(
@@ -158,19 +124,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: [
                           GestureDetector(
                             onTap: (){
-                              Get.toNamed(NotificationsSettingsScreen.route);
+                              Get.toNamed(AccountScreen.route);
                             },
                             child: Container(
                               padding: EdgeInsets.symmetric(vertical: AppDimensions.paddingMedium.h),
                               color: AppColors.white,
-                              child: Row(
+                              child:Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [
-                                      SvgPicture.asset(AppAssets.bellSimpleIcon, color: AppColors.green, width: 24.w,),
+                                      SvgPicture.asset(AppAssets.edit,width: 24.w,),
                                       SizedBox(width: 10.w,),
-                                      Text(r'notifications'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.blackText, fontFamily: AppFonts.secondaryFont),),
+                                      Text(r'accounts'.tr, style: TextStyle(fontSize: 14.sp.sp, color: AppColors.blackText, fontFamily: AppFonts.secondaryFont),),
                                     ],
                                   ),
                                   SvgPicture.asset(AppAssets.arrowRightIcon, color: AppColors.black, width: 16.w,)
@@ -201,44 +167,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                             ),
                           ),
+                          SizedBox(height: 26.h,),
+
+                          GestureDetector(
+                            onTap: (){
+                              Get.toNamed(AboutUsScreen.route);
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(vertical: AppDimensions.paddingMedium.h),
+                              color: AppColors.white,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      SvgPicture.asset(AppAssets.filledInfo),
+                                      SizedBox(width: 10.w,),
+                                      Text(r'about_Us_v2.0'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.blackText, fontFamily: AppFonts.secondaryFont),),
+                                    ],
+                                  ),
+                                  SvgPicture.asset(AppAssets.arrowRightIcon, color: AppColors.black, width: 16.w,)
+                                ],
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
-                    SizedBox(height: 16.h,),
-                    GestureDetector(
-                      onTap: (){
-                        Get.toNamed(AboutUsScreen.route);
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                            AppDimensions.borderRadiusMedium.r,
-                          ),
-                          border: Border.all(color: AppColors.dividerColor, width: 1.w, style: BorderStyle.solid),
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColors.dividerColor,
-                              blurRadius: 4.r,
-                            ),
-                          ],
-                          color: AppColors.white,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                SvgPicture.asset(AppAssets.filledInfo),
-                                SizedBox(width: 10.w,),
-                                Text(r'about_Us_v2.0'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.blackText, fontFamily: AppFonts.secondaryFont),),
-                              ],
-                            ),
-                            SvgPicture.asset(AppAssets.arrowRightIcon, color: AppColors.black, width: 16.w,)
-                          ],
-                        ),
-                      ),
-                    ),
+
                   ],
                 ),
               );

@@ -62,7 +62,7 @@ class _CardSettingsScreenState extends State<CardSettingsScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(r'Senagat Bank'.tr, style: TextStyle(color: AppColors.greyInactive, fontSize: 14.sp),),
-                              Text(r'xxxx 0689'.tr, style: TextStyle(color: AppColors.greyInactive, fontSize: 14.sp),),
+                              Text(controller.maskedNumber, style: TextStyle(color: AppColors.greyInactive, fontSize: 14.sp),),
                             ],
                           )
                         ],
@@ -90,7 +90,7 @@ class _CardSettingsScreenState extends State<CardSettingsScreen> {
                           children: [
                             GestureDetector(
                               onTap:(){
-                                Get.toNamed(CardDetailsScreen.route);
+                                Get.toNamed(CardDetailsScreen.route, arguments: {'index': controller.index});
                               },
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -231,7 +231,7 @@ class _CardSettingsScreenState extends State<CardSettingsScreen> {
                       SizedBox(height: 16.h,),
                       GestureDetector(
                         onTap: (){
-                          Get.toNamed(DeleteCardScreen.route);
+                          Get.toNamed(DeleteCardScreen.route, arguments: {'index': controller.index});
                         },
                         child: Container(
                           padding: EdgeInsets.all(

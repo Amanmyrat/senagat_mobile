@@ -30,6 +30,7 @@ class _CardScreenState extends State<CardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       body: SafeArea(
         child: GetBuilder<CardController>(
             init: CardController(AuthRepository(apiService: ApiServices.apiService)),
@@ -95,7 +96,7 @@ class _CardScreenState extends State<CardScreen> {
                               child: Container(
                                 height: 120.h,
                                 width:  MediaQuery.of(context).size.width,
-                                margin: EdgeInsets.only(bottom: 10),
+                                margin: EdgeInsets.only(bottom: 10.h),
                                 decoration:  BoxDecoration(
                                   borderRadius: BorderRadius.circular(
                                     AppDimensions.borderRadiusMedium.r,
@@ -117,39 +118,32 @@ class _CardScreenState extends State<CardScreen> {
                                  Expanded(
                                    child: GestureDetector(
                                      onTap:(){
-                                       Get.toNamed(CardSettingsScreen.route);
+                                       Get.toNamed(CardSettingsScreen.route, arguments: {'index': index});
                                      },
                                      child: Container(
                                         padding: EdgeInsets.all(
                                           AppDimensions.paddingExtraLarge,),
-                                        margin: EdgeInsets.only(bottom: 10),
+                                        margin: EdgeInsets.only(bottom: 10.h),
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(10.r),
                                           image: DecorationImage(
                                             image: AssetImage(controller.cardBox.getAt(index)!.cardDesign),
                                             fit: BoxFit.cover,),),
                                         child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Align(alignment: Alignment.topLeft,
                                               child: Text('Senagat Bank', style:
                                               TextStyle(
-                                                color: AppColors.white, fontSize: 14,),
+                                                color: AppColors.white, fontSize: 14.sp,),
                                               ),
                                             ),
                                             SizedBox(
                                               height: AppDimensions.paddingExtraLarge.h,),
-                                            Row(children: [
-                                              Text('xxxx', style: TextStyle(
-                                                fontSize: 24.sp, color: AppColors.white,),
+
+                                              Text(controller.hideCardCenter(controller.cardBox.getAt(index)?.cardNumber ?? ''), style: TextStyle(
+                                                fontSize: 17.sp, color: AppColors.white,),
                                               ),
-                                              SizedBox(
-                                                width: AppDimensions.paddingExtraLarge.h,),
-                                              Text('0689', style: TextStyle(
-                                                fontSize: 24.sp, color: AppColors.white,),
-                                              ),
-                                              SizedBox(
-                                                width: AppDimensions.paddingExtraLarge.h,),
-                                            ],),
                                           ],
                                         ),
                                       ),
@@ -191,6 +185,7 @@ class _CardScreenState extends State<CardScreen> {
                               physics: NeverScrollableScrollPhysics(),
                               itemBuilder: (context, index) {
                                 final card = controller.userInformationModel?.cards?[index];
+
                                 return Padding(
                                   padding: EdgeInsets.only(bottom: AppDimensions.padding40.h),
                                   child: Column(
@@ -202,14 +197,14 @@ class _CardScreenState extends State<CardScreen> {
                                           borderRadius: BorderRadius.circular(
                                             AppDimensions.borderRadiusMedium.r,
                                           ),
-                                          // border: Border.all(
-                                          //   color: AppColors.dividerColor,
-                                          //   width: 1.w,
-                                          //   style: BorderStyle.solid,
-                                          // ),
-                                          // boxShadow: [
-                                          //   BoxShadow(color: AppColors.dividerColor, blurRadius: 4.r),
-                                          // ],
+                                          border: Border.all(
+                                            color: AppColors.dividerColor,
+                                            width: 1.w,
+                                            style: BorderStyle.solid,
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(color: AppColors.dividerColor, blurRadius: 4.r),
+                                          ],
                                           color: AppColors.inputFillBackground,
                                         ),
                                         child: Column(
@@ -255,7 +250,7 @@ class _CardScreenState extends State<CardScreen> {
                                                   children: [
                                                     Expanded(
                                                       child: Column(
-                                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
                                                         children: [
                                                           Text(
                                                             r'card'.tr,
@@ -289,7 +284,7 @@ class _CardScreenState extends State<CardScreen> {
 
                                                     Expanded(
                                                       child: Column(
-                                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
                                                         children: [
                                                           Text(
                                                             r'payment_amount'.tr,
@@ -315,44 +310,47 @@ class _CardScreenState extends State<CardScreen> {
                                                   ],
                                                 ),
                                                 SizedBox(height: AppDimensions.paddingLarge.h,),
-                                                Container(
-                                                  width: MediaQuery.of(context).size.width,
-                                                  height: 1.h,
-                                                  color: AppColors.dividerColor,
-                                                ),
                                               ],
                                             ),
 
                                             SizedBox(height: AppDimensions.paddingExtraLarge.h),
                                             Row(
                                               children: [
-                                                // Expanded(
-                                                //   child: Column(
-                                                //     crossAxisAlignment: CrossAxisAlignment.start,
-                                                //     children: [
-                                                //       Text(
-                                                //         r'payment'.tr,
-                                                //         style: TextStyle(
-                                                //           color: AppColors.grey,
-                                                //           fontSize: 14.sp,
-                                                //           fontFamily: AppFonts.secondaryFont,
-                                                //         ),
-                                                //       ),
-                                                //       SizedBox(height: 4.h),
-                                                //       Text(
-                                                //         // card?.amount.toString() ??
-                                                //             '',
-                                                //         style: TextStyle(
-                                                //           color: AppColors.black,
-                                                //           fontSize: 14.sp,
-                                                //         ),
-                                                //       ),
-                                                //     ],
-                                                //   ),
-                                                // ),
                                                 Expanded(
                                                   child: Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                        r'bank_branch'.tr,
+                                                        style: TextStyle(
+                                                          color: AppColors.grey,
+                                                          fontSize: 14.sp,
+                                                          fontFamily: AppFonts.secondaryFont,
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 4.h),
+                                                      Text(
+                                                        card?.bankBranch ?? '',
+                                                        style: TextStyle(
+                                                          color: AppColors.black,
+                                                          fontSize: 14.sp,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Container(
+                                                  width: 1.w,
+                                                  height: 44.h,
+                                                  margin: EdgeInsets.symmetric(
+                                                    horizontal: AppDimensions.paddingExtraLarge.w,
+                                                  ),
+                                                  color: AppColors.dividerColor,
+                                                ),
+
+                                                Expanded(
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
                                                       Text(
                                                         r'delivery'.tr,

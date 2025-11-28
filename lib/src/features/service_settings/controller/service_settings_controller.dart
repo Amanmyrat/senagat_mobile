@@ -24,8 +24,8 @@ class ServiceSettingsController extends GetxController with StateControlMixin {
     r'CDMA',
     r'IP TV',
     r'home_phone',
-    r'internet',
-    r'internet',
+    r'Aştu internet',
+    r'Telekom internet',
     r'Belet',
     r'state_traffic_safety_inspectorate',
   ];

@@ -80,8 +80,6 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                             imageUrl:
                                 controller.selectedCardImage ??
                                 AppAssets.cardImage,
-                            width: 390.w,
-                            height: 250.h,
                             fit: BoxFit.cover,
                           ),
                           SizedBox(height: AppDimensions.padding40.h),
@@ -93,73 +91,6 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                             ),
                           ),
                           SizedBox(height: 32.h),
-                          Text(
-                            r'phone_number'.tr,
-                            style: TextStyle(
-                              color: AppColors.blackText,
-                              fontSize: 14.sp,
-                            ),
-                          ),
-                          SizedBox(height: AppDimensions.paddingMedium.h),
-                          Row(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.all(
-                                  AppDimensions.paddingExtraLarge.w,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: AppColors.inputFillBackground,
-                                  borderRadius: BorderRadius.circular(
-                                    AppDimensions.borderRadiusMedium,
-                                  ),
-                                ),
-                                child: Text(
-                                  '+993',
-                                  style: TextStyle(fontSize: 14.sp),
-                                ),
-                              ),
-                              SizedBox(width: AppDimensions.paddingSmall.w),
-                              Expanded(
-                                child: TextFormField(
-                                  keyboardType: TextInputType.phone,
-                                  controller: controller.phoneController,
-                                  onChanged: (v) =>
-                                      controller.onInformationNotEmpty(v),
-                                  maxLength: 8,
-                                  style: TextStyle(fontSize: 14.sp),
-                                  decoration: InputDecoration(
-                                    hintText: r'enter_number'.tr,
-                                    border: OutlineInputBorder(),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(
-                                        AppDimensions.borderRadiusMedium,
-                                      ),
-                                      borderSide: BorderSide(
-                                        color: AppColors.green,
-                                        width: 1.w,
-                                      ),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(
-                                        AppDimensions.borderRadiusMedium,
-                                      ),
-                                      borderSide: BorderSide(
-                                        color: AppColors.white,
-                                        width: 1.w,
-                                      ),
-                                    ),
-                                    counter: const SizedBox(),
-                                    contentPadding: EdgeInsets.symmetric(
-                                      vertical:
-                                          AppDimensions.paddingExtraLarge.h,
-                                      horizontal: AppDimensions.paddingLarge.w,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 22.h),
                           Text(
                             'work_phone'.tr,
                             style: TextStyle(
@@ -413,21 +344,28 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                                           fontSize: 14.sp,
                                         ),
                                       ),
-                                      RoundCheckBox(
-                                        size: 27.w,
-                                        checkedColor: Colors.transparent,
-                                        checkedWidget: SvgPicture.asset(
-                                          AppAssets.checkBoxIcon,
-                                          color: AppColors.green,
+                                      Container(
+                                        width: 27.w,
+                                        height: 27.w,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
+                                          border: Border.all(color: AppColors.black, width: 1.5.w),
                                         ),
-                                        border: Border.all(
-                                          color: AppColors.black,
+                                        child: RoundCheckBox(
+                                          size: 27.w,
+                                          checkedColor: AppColors.transparent,
+                                          uncheckedColor: AppColors.transparent,
+                                          checkedWidget: SvgPicture.asset(
+                                            AppAssets.checkBoxIcon,
+                                            color: AppColors.green,
+                                          ),
+                                          border: Border.all(color: Colors.transparent),
+                                          isRound: false,
+                                          isChecked: controller.internetService,
+                                          // ← make sure to bind it
+                                          onTap: (value) => controller
+                                              .onCheckBoxTap('internet'),
                                         ),
-                                        isRound: false,
-                                        isChecked: controller.internetService,
-                                        // ← make sure to bind it
-                                        onTap: (value) => controller
-                                            .onCheckBoxTap('internet'),
                                       ),
                                     ],
                                   ),
@@ -468,21 +406,28 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                                           fontSize: 14.sp,
                                         ),
                                       ),
-                                      RoundCheckBox(
-                                        size: 27.w,
-                                        checkedColor: Colors.transparent,
-                                        checkedWidget: SvgPicture.asset(
-                                          AppAssets.checkBoxIcon,
-                                          color: AppColors.green,
+                                      Container(
+                                        width: 27.w,
+                                        height: 27.w,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
+                                          border: Border.all(color: AppColors.black, width: 1.5.w),
                                         ),
-                                        border: Border.all(
-                                          color: AppColors.black,
+                                        child: RoundCheckBox(
+                                          size: 27.w,
+                                          isRound: false,
+                                          checkedColor: AppColors.transparent,
+                                          uncheckedColor: AppColors.transparent,
+                                          checkedWidget: SvgPicture.asset(
+                                            AppAssets.checkBoxIcon,
+                                            color: AppColors.green,
+                                          ),
+                                          border: Border.all(color: Colors.transparent),
+                                          isChecked: controller.delivery,
+                                          onTap: (value) => controller.onCheckBoxTap('delivery'),
                                         ),
-                                        isRound: false,
-                                        isChecked: controller.delivery,
-                                        onTap: (value) => controller
-                                            .onCheckBoxTap('delivery'),
-                                      ),
+                                      )
+
                                     ],
                                   ),
                                 ),

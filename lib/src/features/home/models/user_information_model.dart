@@ -42,8 +42,10 @@ class LoanModel {
   final int? amount;
   final double? monthlyPayment;
   final String? status;
+  final String? bankBranch;
 
-  LoanModel({this.creditName, this.amount, this.monthlyPayment, this.status});
+
+  LoanModel({this.creditName, this.amount, this.monthlyPayment, this.status, this.bankBranch});
 
   factory LoanModel.fromJson(Map<String, dynamic> json) {
     return LoanModel(
@@ -51,6 +53,8 @@ class LoanModel {
       amount: json['amount'],
       monthlyPayment: json['monthly_payment'],
       status: json['status'],
+      bankBranch: json['bank_branch'],
+
     );
   }
 }
@@ -60,8 +64,10 @@ class CertificateModel {
   final int? bankBranchId;
   final int? certificatePrice;
   final String? status;
+  final String? bankBranch;
 
-  CertificateModel({this.certificateName, this.bankBranchId, this.status, this.certificatePrice});
+
+  CertificateModel({this.certificateName, this.bankBranchId, this.status, this.certificatePrice, this.bankBranch});
 
   factory CertificateModel.fromJson(Map<String, dynamic> json) {
     return CertificateModel(
@@ -69,6 +75,7 @@ class CertificateModel {
       bankBranchId: json['bank_branch_id'],
       certificatePrice: json['certificate_price'],
       status: json['status'],
+      bankBranch: json['bank_branch'],
     );
   }
 }
@@ -78,8 +85,9 @@ class CardsModel {
   final double? cardPrice;
   final bool? delivery;
   final String? status;
+  final String? bankBranch;
 
-  CardsModel({this.cardTitle, this.cardPrice, this.delivery, this.status});
+  CardsModel({this.cardTitle, this.cardPrice, this.delivery, this.status, this.bankBranch});
 
   factory CardsModel.fromJson(Map<String, dynamic> json) {
     return CardsModel(
@@ -87,6 +95,7 @@ class CardsModel {
       status: json['status'],
       cardPrice: json['card_price'],
       delivery: json['delivery'],
+      bankBranch: json['bank_branch'],
     );
   }
 }

@@ -35,63 +35,31 @@ class _IdentifyScreenState extends State<IdentifyScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomAppBar(),
-                Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Center(
-                      child: Container(
-                        margin: EdgeInsets.only(top: 40.h),
-                        width: 80.w,
-                        height: 80.h,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: AppColors.dividerColor,
-                            width: 1.w,
-                            style: BorderStyle.solid,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColors.dividerColor,
-                              blurRadius: 4.r,
-                            ),
-                          ],
-                          color: AppColors.white,
-                        ),
-                        child: Image.asset(AppAssets.senagatIcon),
+
+                Center(
+                  child: Container(
+                    margin: EdgeInsets.only(top: 40.h),
+                    width: 80.w,
+                    height: 80.h,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: AppColors.dividerColor,
+                        width: 1.w,
+                        style: BorderStyle.solid,
                       ),
-                    ),
-                    Positioned(
-                      left: 210,
-                      bottom: 0,
-                      child: Center(
-                        child: Container(
-                          padding: EdgeInsets.all(1.w),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: AppColors.dividerColor,
-                              width: 1.w,
-                              style: BorderStyle.solid,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.dividerColor,
-                                blurRadius: 4.r,
-                              ),
-                            ],
-                            color: AppColors.white,
-                          ),
-                          child: SvgPicture.asset(
-                            AppAssets.edit,
-                            width: 20.w,
-                            color: AppColors.greyInactive,
-                          ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.dividerColor,
+                          blurRadius: 4.r,
                         ),
-                      ),
+                      ],
+                      color: AppColors.white,
                     ),
-                  ],
+                    child: Image.asset(AppAssets.senagatIcon),
+                  ),
                 ),
+
                 SizedBox(height: AppDimensions.padding40.h),
                 Expanded(
                   child: Padding(
@@ -121,10 +89,12 @@ class _IdentifyScreenState extends State<IdentifyScreen> {
                                   AppDimensions.borderRadiusMedium,
                                 ),
                               ),
-                              child: controller.phone != null ? Text(
-                                '+993',
-                                style: TextStyle(fontSize: 14.sp),
-                              ) : null,
+                              child: controller.phone != null
+                                  ? Text(
+                                      '+993',
+                                      style: TextStyle(fontSize: 14.sp),
+                                    )
+                                  : null,
                             ),
                             SizedBox(width: AppDimensions.paddingSmall.w),
                             Expanded(
@@ -211,10 +181,21 @@ class _IdentifyScreenState extends State<IdentifyScreen> {
                                         borderRadius: BorderRadius.circular(
                                           AppDimensions.borderRadiusMedium.r,
                                         ),
-                                        color: controller.homeController.isProfileRequired ? AppColors.greyInactive : AppColors.green,
+                                        color:
+                                            controller
+                                                .homeController
+                                                .isProfileRequired
+                                            ? AppColors.greyInactive
+                                            : AppColors.green,
                                       ),
                                       child: Text(
-                                        controller.homeController.isProfileRequired ? r'not_confirmed'.tr : r'confirmed'.tr,
+                                        controller
+                                                .homeController
+                                                .userInformationModel
+                                                ?.profileModel
+                                                ?.status
+                                                ?.tr ??
+                                            '',
                                         style: TextStyle(
                                           fontSize: 14,
                                           color: AppColors.white,

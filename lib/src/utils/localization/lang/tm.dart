@@ -52,7 +52,7 @@ const Map<String, String> tkTk = {
   r'atm': r'Bankomatlar',
   r'branch': r'Şahamçalar',
   r'add_a_card': r'Kart goşmak',
-  r'adding_a_card': r'Kart goşylýar',
+  r'adding_a_card': r'Kart goşulýar',
   r'tune': r'Sazlamak',
   r'fast_operations': r'Çalt amallar',
   r'donations_of_any_amount': r'Islendik mukdarda haýyr-sahawat kabul edilýär.',
@@ -167,7 +167,7 @@ const Map<String, String> tkTk = {
   r'air_tickets': r'Howa biletleri',
   r'railway_tickets': r'Demir ýol biletleri',
   r'auto_tickets': r'Auto biletleri',
-  r'details_for_obtaining': r'Almak üçin maglumat',
+  r'details_for_obtaining': r'Kart almak üçin maglumat',
   r'get_a_card_in_just_a_few_seconds': r'Karty birnäçe sekuntda alyň',
   r'get_a_credit_in_just_a_few_seconds': r'Karzy birnäçe sekuntda alyň',
   r'most_functions': r'Funksiýalaryň köpüsi profiliňizi dolduranyňyzdan soň  işlär',
@@ -223,6 +223,7 @@ const Map<String, String> tkTk = {
   r'number_of_car': r'Awtoulagyň belgisi',
   r'bank_commission': r'Bankyň ýygymy 1.00 Manat',
   r'forget_password': r'Açar sözi ýatdan çykdy',
+  r'card_removed': r'Kart pozyldy',
 
 
 

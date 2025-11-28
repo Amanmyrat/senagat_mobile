@@ -35,6 +35,8 @@ class IdentityVerificationController extends GetxController
   final ProfileRepository repository;
   final GlobalKey<FormState> key;
 
+  String? selectedDropdownCity;
+
   bool continueEnabled = false;
   bool check = false;
 
@@ -57,7 +59,7 @@ class IdentityVerificationController extends GetxController
     r'home_address',
   ];
 
-  final List<String> citySelection = ["Option 1", "Option 2", "Option 3"];
+  final List<String> citySelection = ["12", "2", "3"];
   late List<TextEditingController> controllers;
   File? pdfFile;
 
@@ -184,6 +186,12 @@ class IdentityVerificationController extends GetxController
   Future<dio.MultipartFile> _parseImage() async {
     final fileName = pdfFile!.path.split('/').last;
     return dio.MultipartFile.fromFile(pdfFile!.path, filename: fileName);
+  }
+
+  void setDropdownCity(String? value) {
+    selectedDropdownCity = value;
+    onTextIsNotEmpty(value);
+    update();
   }
 
   @override
