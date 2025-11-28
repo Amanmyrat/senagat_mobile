@@ -631,6 +631,14 @@ class _LoanScreenState extends State<LoanScreen> {
                                                   AppDimensions.paddingExtraLarge.h,
                                                 ),
                                               ),
+                                              dropdownStyleData: DropdownStyleData(
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(10.r),
+
+                                                ),
+                                                elevation: 2,
+
+                                              ),
                                               iconStyleData: IconStyleData(
                                                 icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18,),
                                               ),

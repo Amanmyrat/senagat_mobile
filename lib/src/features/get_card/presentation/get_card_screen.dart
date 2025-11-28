@@ -111,37 +111,11 @@ class _GetCardScreenState extends State<GetCardScreen> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
-                                        RotatedBox(
-                                          quarterTurns: 1,
-                                          child: CachedNetworkImage(
-                                            imageUrl:
-                                                item.image ??
-                                                AppAssets.cardImage,
-                                            width: 343.w,
-                                            height: 220.h,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        SizedBox(height: 16.h),
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            SvgPicture.asset(
-                                              AppAssets.infoIcon,
-                                              color: AppColors.green,
-                                            ),
-                                            SizedBox(width: 6.w),
-                                            Flexible(
-                                              child: Text(
-                                                r'replenishment_bank'.tr,
-                                                style: TextStyle(
-                                                  fontSize: 14.sp,
-                                                  color: AppColors.black,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
+                                        CachedNetworkImage(
+                                          imageUrl:
+                                              item.image ??
+                                              AppAssets.cardImage,
+                                          fit: BoxFit.cover,
                                         ),
                                         SizedBox(height: 16.h),
                                         Container(

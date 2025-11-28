@@ -12,6 +12,7 @@ import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../widgets/header_widget.dart';
 import '../../auth/repository/auth_repository.dart';
@@ -49,6 +50,23 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
+                            padding:  EdgeInsets.symmetric(
+                horizontal: AppDimensions.paddingExtraLarge.w,
+              ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                HeaderWidget(),
+
+                                if (controller.isProfileRequired == true) ...[
+                                  profileIsRequiredWidget(controller),
+                                ],
+                              ],
+                            )
+                        ),
+                        cardsWidget(controller),
+
+                        Padding(
                           padding: EdgeInsets.symmetric(
                             horizontal: AppDimensions.paddingExtraLarge.w,
                             vertical: AppDimensions.paddingMedium.h,
@@ -56,13 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              HeaderWidget(),
 
-                              if (controller.isProfileRequired == true) ...[
-                                profileIsRequiredWidget(controller),
-                              ],
-
-                              cardsWidget(controller),
                               fastOperationsWidget(controller),
                               charityFoundationWidget(controller),
 
@@ -114,7 +126,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 SizedBox.shrink(),
                               ],
 
-                              if (controller.userInformationModel?.loan != null) ...[
+                              if (controller.userInformationModel?.loan !=
+                                  null) ...[
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -456,14 +469,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     ),
                                                     decoration: BoxDecoration(
                                                       shape: BoxShape.circle,
-                                                      color: AppColors.green,
+                                                      border: Border.all(
+                                                        color: AppColors.dividerColor,
+                                                        width: 1.w,
+                                                        style: BorderStyle.solid,),
                                                     ),
-                                                    child: SvgPicture.asset(
+                                                    child: Image.asset(
                                                       controller.payBox
                                                               .getAt(index)
                                                               ?.serviceIcon ??
-                                                          '',
-                                                      color: AppColors.white,
+                                                          AppAssets.deviceMobileIcon
                                                     ),
                                                   ),
                                                   SizedBox(
@@ -483,7 +498,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         Text(
                                                           controller.payBox
                                                                   .getAt(index)
-                                                                  ?.serviceName.tr ??
+                                                                  ?.serviceName
+                                                                  .tr ??
                                                               '',
                                                           style: TextStyle(
                                                             color: AppColors
@@ -746,63 +762,98 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         children: [
           if (controller.cardBox.isNotEmpty) ...[
-            GestureDetector(
-              onTap: (){
-                Get.toNamed(CardSettingsScreen.route);
-              },
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.all(AppDimensions.paddingExtraLarge),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.r),
-                  image: DecorationImage(
-                    image: AssetImage(controller.cardBox.getAt(0)!.cardDesign),
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        'Senagat Bank',
-                        style: TextStyle(color: AppColors.white, fontSize: 14),
+            SizedBox(
+              height: 240.h,
+              child: PageView.builder(
+                controller: controller.pageController,
+                itemCount: controller.cardBox.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      Get.toNamed(CardSettingsScreen.route, arguments: {'index': index});
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.all(AppDimensions.paddingExtraLarge),
+                      margin: EdgeInsets.symmetric(
+                        horizontal: AppDimensions.marginExtraLarge,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.r),
+                        image: DecorationImage(
+                          image: AssetImage(
+                            controller.cardBox.getAt(index)!.cardDesign,
+                          ),
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              'Senagat Bank',
+                              style: TextStyle(
+                                color: AppColors.white,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 72.h),
+                          Text(
+                            controller.cardBox.getAt(index)?.cardNumber ?? '',
+                            style: TextStyle(
+                              wordSpacing: 10.sp,
+                              fontSize: 24.sp,
+                              color: AppColors.white,
+                            ),
+                          ),
+                          SizedBox(height: 41.h),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                controller.cardBox.getAt(index)?.name ?? '',
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  color: AppColors.white,
+                                ),
+                              ),
+                              Text(
+                                controller.cardBox.getAt(index)?.expiryDate ??
+                                    '',
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  color: AppColors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
-                    SizedBox(height: 72.h),
-                    Text(
-                      controller.cardBox.getAt(0)?.cardNumber ?? '',
-                      style: TextStyle(
-                        wordSpacing: 10.sp,
-                        fontSize: 24.sp,
-                        color: AppColors.white,
-                      ),
-                    ),
-                    SizedBox(height: 41.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          controller.cardBox.getAt(0)?.name ?? '',
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            color: AppColors.white,
-                          ),
-                        ),
-                        Text(
-                          controller.cardBox.getAt(0)?.expiryDate ?? '',
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            color: AppColors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                  );
+                },
               ),
             ),
+            if (controller.cardBox.length > 1) ...[
+              SizedBox(height: AppDimensions.paddingMedium.h),
+              Center(
+                child: SmoothPageIndicator(
+                  count: controller.cardBox.length,
+                  controller: controller.pageController,
+                  effect: WormEffect(
+                    dotHeight: 10.h,
+                    dotWidth: 10.w,
+                    spacing: 4,
+                    activeDotColor: AppColors.green,
+                    dotColor: AppColors.green.withOpacity(0.5),
+                  ),
+                ),
+              ),
+            ],
           ] else ...[
             GestureDetector(
               onTap: () {
@@ -882,10 +933,6 @@ class _HomeScreenState extends State<HomeScreen> {
               itemCount: controller.getFastOperationsCount(),
 
               itemBuilder: (context, index) {
-                final isSelected =
-                    controller.lastTap == HomeTapType.fastOperation &&
-                    controller.lastFastServiceTapIndex == index;
-
                 if (controller
                             .fastServiceController
                             .selectedServiceTitle
@@ -962,7 +1009,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           blurRadius: 4.r,
                         ),
                       ],
-                      color: isSelected ? AppColors.green : AppColors.white,
+                      color: AppColors.white,
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -972,7 +1019,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: 50.h,
                           padding: EdgeInsets.all(AppDimensions.paddingSmall.w),
                           decoration: BoxDecoration(
-                            border: Border.all(color: AppColors.dividerColor, width: 1.w),
+                            border: Border.all(
+                              color: AppColors.dividerColor,
+                              width: 1.w,
+                            ),
                             shape: BoxShape.circle,
                             // color: isSelected ? AppColors.white : AppColors.green
                           ),
@@ -991,9 +1041,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           maxLines: 1,
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: isSelected
-                                ? AppColors.white
-                                : AppColors.blackText,
+                            color: AppColors.blackText,
                             fontSize: 14.sp,
                             fontFamily: AppFonts.secondaryFont,
                           ),
@@ -1123,9 +1171,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Text(
                         controller
                                 .userInformationModel
-                                ?.certificates?.first
-                                .certificateName ?? '',
-                        style: TextStyle(color: AppColors.white, fontSize: 14.sp),
+                                ?.certificates
+                                ?.first
+                                .certificateName ??
+                            '',
+                        style: TextStyle(
+                          color: AppColors.white,
+                          fontSize: 14.sp,
+                        ),
                       ),
                     ),
                     Row(
@@ -1259,38 +1312,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
 
-                    Container(
-                      width: 1.w,
-                      height: 44.h,
-                      margin: EdgeInsets.symmetric(
-                        horizontal: AppDimensions.paddingExtraLarge.w,
-                      ),
-                      color: AppColors.white,
-                    ),
 
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            r'remainder'.tr,
-                            style: TextStyle(
-                              color: AppColors.white,
-                              fontSize: 14.sp,
-                              fontFamily: AppFonts.secondaryFont,
-                            ),
-                          ),
-                          SizedBox(height: 4.h),
-                          Text(
-                            r'8,000'.tr,
-                            style: TextStyle(
-                              color: AppColors.white,
-                              fontSize: 17.sp,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
                   ],
                 ),
               ],

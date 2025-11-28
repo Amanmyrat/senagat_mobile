@@ -91,7 +91,6 @@ class InquiriesController extends GetxController with StateControlMixin {
     getInquiriesId();
     return InquiriesOrderModel(
       typeId: inquiriesId,
-      phoneNumber: phoneController.text,
       homeAddress: addressController.text,
       bankBranch: selectedDropdownBranch,
     );

@@ -14,7 +14,6 @@ class CreditOrderModel {
   final String? workplace;
   final String? position;
   final String? managerWorkAddress;
-  final String? phoneNumber;
   final int? salary;
 
   CreditOrderModel({
@@ -31,7 +30,6 @@ class CreditOrderModel {
     this.workplace,
     this.position,
     this.managerWorkAddress,
-    this.phoneNumber,
     this.salary,
   });
 
@@ -50,7 +48,6 @@ class CreditOrderModel {
       workplace: json['workplace'],
       position: json['position'],
       managerWorkAddress: json['manager_work_address'],
-      phoneNumber: json['phone_number'],
       salary: json['salary'],
     );
   }
@@ -82,7 +79,6 @@ class CreditOrderModel {
       'workplace': workplace,
       'position': position,
       'manager_work_address': managerWorkAddress,
-      'phone_number': phoneNumber,
       'salary': salary,
     };
   }

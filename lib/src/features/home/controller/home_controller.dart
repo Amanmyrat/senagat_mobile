@@ -27,7 +27,7 @@ import '../../qr_code/presentation/qr_code_screen.dart';
 import '../../service_settings/controller/service_settings_controller.dart';
 import '../../profile/controller/profile_controller.dart';
 
-enum HomeTapType { none, qr, foundation, service, fastOperation, notification }
+enum HomeTapType { none, qr, foundation, service, notification }
 
 class HomeController extends GetxController with StateControlMixin {
   HomeTapType lastTap = HomeTapType.none;
@@ -43,6 +43,7 @@ class HomeController extends GetxController with StateControlMixin {
   late ServiceSettingsController fastServiceController;
   late AddCardController addCardController;
   late AccountLoginStatusController accountLoginStatusController;
+  late final PageController pageController;
 
   final cardBox = Hive.box<CardModel>('cardsBox');
   final payBox = Hive.box<PayModel>('payBox');
@@ -115,9 +116,6 @@ class HomeController extends GetxController with StateControlMixin {
   }
 
   void onFastServiceTap(int index) {
-    lastTap = HomeTapType.fastOperation;
-    lastFastServiceTapIndex = index;
-    update();
 
     if (fastServiceController.selectedServiceTitle[index] == r'state_traffic_safety_inspectorate') {
       Get.toNamed(
@@ -142,6 +140,7 @@ class HomeController extends GetxController with StateControlMixin {
 
   @override
   void onInit() {
+    pageController = PageController();
     fastServiceController = Get.find<ServiceSettingsController>();
     addCardController = Get.find<AddCardController>();
     accountLoginStatusController = Get.find<AccountLoginStatusController>();
@@ -236,7 +235,7 @@ class HomeController extends GetxController with StateControlMixin {
   }
 
   checkProfile() {
-    if (userInformationModel?.profileModel == null) {
+    if (userInformationModel?.profileModel?.status == '') {
       isProfileRequired = true;
       update();
     } else {

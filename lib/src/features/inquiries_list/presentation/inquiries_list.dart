@@ -84,12 +84,36 @@ class _InquiriesListState extends State<InquiriesList> {
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
+                                          Container(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal:
+                                              AppDimensions.paddingMedium.w,
+                                              vertical: 4,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(
+                                                AppDimensions.borderRadiusMedium.r,
+                                              ),
+                                              color: inquiries?.status == r'pending' ? AppColors.orange : inquiries?.status == r'rejected' ? AppColors.redDark : AppColors.green,
+                                            ),
+                                            child: Text(
+                                              inquiries?.status?.tr ?? '',
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                color: AppColors.white,
+                                                fontFamily: AppFonts.secondaryFont,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(height: AppDimensions.paddingMedium.h,),
                                           Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Text(
-                                                inquiries?.certificateName ?? '',
-                                                style: TextStyle(color: AppColors.black, fontSize: 14.sp),
+                                              Expanded(
+                                                child: Text(
+                                                  inquiries?.certificateName ?? '',
+                                                  style: TextStyle(color: AppColors.black, fontSize: 14.sp),
+                                                ),
                                               ),
                                               Row(
                                                 children: [
@@ -127,7 +151,7 @@ class _InquiriesListState extends State<InquiriesList> {
                                                     ),
                                                     SizedBox(height: 4.h),
                                                     Text(
-                                                      inquiries?.certificatePrice.toString() ??
+                                                      '${inquiries?.certificatePrice} Manat' ??
                                                           '',
                                                       style: TextStyle(
                                                         color: AppColors.black,
@@ -148,58 +172,30 @@ class _InquiriesListState extends State<InquiriesList> {
                                               ),
 
                                               Expanded(
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
-                                                    Container(
-                                                      padding: EdgeInsets.symmetric(
-                                                        horizontal:
-                                                        AppDimensions.paddingMedium.w,
-                                                        vertical: 4,
+                                                    Text(
+                                                      r'payment'.tr,
+                                                      style: TextStyle(
+                                                        color: AppColors.grey,
+                                                        fontSize: 14.sp,
+                                                        fontFamily: AppFonts.secondaryFont,
                                                       ),
-                                                      decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(
-                                                          AppDimensions.borderRadiusMedium.r,
-                                                        ),
-                                                        color: inquiries?.status == r'pending' ? AppColors.orange : inquiries?.status == r'rejected' ? AppColors.redDark : AppColors.green,
-                                                      ),
-                                                      child: Text(
-                                                        inquiries?.status?.tr ?? '',
-                                                        style: TextStyle(
-                                                          fontSize: 14,
-                                                          color: AppColors.white,
-                                                          fontFamily: AppFonts.secondaryFont,
-                                                        ),
+                                                      maxLines: 1,
+                                                    ),
+                                                    SizedBox(height: 4.h),
+                                                    Text(
+                                                      // inquiries?.monthlyPayment.toString() ??
+                                                          '',
+                                                      style: TextStyle(
+                                                        color: AppColors.black,
+                                                        fontSize: 14.sp,
                                                       ),
                                                     ),
                                                   ],
                                                 ),
                                               ),
-                                              // Expanded(
-                                              //   child: Column(
-                                              //     crossAxisAlignment: CrossAxisAlignment.start,
-                                              //     children: [
-                                              //       Text(
-                                              //         r'payment'.tr,
-                                              //         style: TextStyle(
-                                              //           color: AppColors.grey,
-                                              //           fontSize: 14.sp,
-                                              //           fontFamily: AppFonts.secondaryFont,
-                                              //         ),
-                                              //         maxLines: 1,
-                                              //       ),
-                                              //       SizedBox(height: 4.h),
-                                              //       Text(
-                                              //         // inquiries?.monthlyPayment.toString() ??
-                                              //             '',
-                                              //         style: TextStyle(
-                                              //           color: AppColors.black,
-                                              //           fontSize: 14.sp,
-                                              //         ),
-                                              //       ),
-                                              //     ],
-                                              //   ),
-                                              // ),
 
                                             ],
                                           ),

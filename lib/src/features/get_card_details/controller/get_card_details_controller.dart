@@ -85,7 +85,6 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
   Future<CardOrderModel> _getCardOrderModel() async {
     return CardOrderModel(
       typeId: selectedCardId,
-      phoneNumber: phoneController.text,
       workPhone: int.parse(workPhoneController.text),
       workPosition: workPositionController.text,
       bankBranch: selectedDropdownBranch,

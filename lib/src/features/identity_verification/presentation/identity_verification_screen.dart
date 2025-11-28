@@ -1,3 +1,4 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -81,63 +82,121 @@ class _IdentityVerificationScreenState
                                       ),
                                       Row(
                                         children: [
-                                          SizedBox(
-                                            width: 72.w,
-                                            height: 62.h,
-                                            child: TextFormField(
-                                              textAlign: TextAlign.center,
-                                              textInputAction:
-                                                  TextInputAction.next,
-                                              keyboardType: TextInputType.text,
-                                              maxLength: 2,
-                                              controller:
-                                                  controller.asController,
-                                              onChanged: (v) => controller
-                                                  .onTextIsNotEmpty(v),
-                                              style: TextStyle(fontSize: 14.sp),
-                                              decoration: InputDecoration(
-                                                hintText: 'AS',
-                                                border:
-                                                    const OutlineInputBorder(),
-                                                focusedBorder: OutlineInputBorder(
-                                                  borderRadius:
-                                                  BorderRadius.circular(
-                                                    AppDimensions
-                                                        .borderRadiusMedium,
-                                                  ),
-                                                  borderSide: BorderSide(
-                                                    color: controller.status == Status.error
-                                                        ? AppColors.redDark
-                                                        : AppColors.green,
-                                                    width: 1.w,
-                                                  ),
-                                                ),
-                                                enabledBorder: OutlineInputBorder(
-                                                  borderRadius: BorderRadius.circular(
-                                                    AppDimensions.borderRadiusMedium,
-                                                  ),
-                                                  borderSide: BorderSide(
-                                                    color: controller.status == Status.error
-                                                        ? AppColors.redDark
-                                                        : AppColors.white,
-                                                    width: 1,
-                                                  ),
-                                                ),
-                                                counter: const SizedBox(),
-                                                contentPadding:
-                                                    EdgeInsets.symmetric(
-                                                      vertical: AppDimensions
-                                                          .paddingExtraLarge
-                                                          .h,
-                                                      horizontal: AppDimensions
-                                                          .paddingLarge
-                                                          .w,
+                                          Expanded(
+                                            child: Theme(
+                                              data: Theme.of(context).copyWith(
+                                                canvasColor: AppColors.inputFillBackground,
+                                                cardTheme:  CardThemeData(
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.all(
+                                                      Radius.circular(AppDimensions.borderRadiusMedium.r),
                                                     ),
+                                                  ),
+                                                ),
+                                              ),
+                                              child: DropdownButtonFormField2<String>(
+                                                value: controller.selectedDropdownCity,
+                                                hint: Text(
+                                                  "I".tr,
+                                                  style: TextStyle(fontSize: 14.sp),
+                                                ),
+                                                decoration: InputDecoration(
+                                                  contentPadding: EdgeInsets.fromLTRB(
+                                                    0,
+                                                    AppDimensions.paddingExtraLarge.h,
+                                                    AppDimensions.paddingMedium.w,
+                                                    AppDimensions.paddingLarge.h,
+                                                  ),
+                                                ),
+                                                dropdownStyleData: DropdownStyleData(
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(10.r),
+
+                                                  ),
+                                                  elevation: 2,
+
+                                                ),
+                                                iconStyleData: IconStyleData(
+                                                  icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18.w,),
+                                                ),
+                                                onChanged: (v) => controller.selectedDropdownCity,
+
+                                                items: controller.citySelection
+                                                    .map(
+                                                      (item) =>
+                                                      DropdownMenuItem<String>(
+                                                        value: item,
+                                                        child: Text(
+                                                          item,
+                                                          style: TextStyle(
+                                                            fontSize: 14.sp,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                ).toList(),
                                               ),
                                             ),
                                           ),
                                           SizedBox(width: 4.w),
                                           Expanded(
+                                            child: Theme(
+                                              data: Theme.of(context).copyWith(
+                                                canvasColor: AppColors.inputFillBackground,
+                                                cardTheme:  CardThemeData(
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.all(
+                                                      Radius.circular(AppDimensions.borderRadiusMedium.r),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              child: DropdownButtonFormField2<String>(
+                                                value: controller.selectedDropdownCity,
+                                                hint: Text(
+                                                  "I".tr,
+                                                  style: TextStyle(fontSize: 14.sp),
+                                                ),
+                                                decoration: InputDecoration(
+                                                  contentPadding: EdgeInsets.fromLTRB(
+                                                    0,
+                                                    AppDimensions.paddingExtraLarge.h,
+                                                    AppDimensions.paddingMedium.w,
+                                                    AppDimensions.paddingLarge.h,
+                                                  ),
+                                                ),
+                                                dropdownStyleData: DropdownStyleData(
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(10.r),
+
+                                                  ),
+                                                  elevation: 2,
+
+                                                ),
+                                                iconStyleData: IconStyleData(
+                                                  icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18.w,),
+                                                ),
+                                                onChanged: (v) => controller.selectedDropdownCity,
+
+                                                items: controller.citySelection
+                                                    .map(
+                                                      (item) =>
+                                                      DropdownMenuItem<String>(
+                                                        value: item,
+                                                        child: Text(
+                                                          item,
+                                                          style: TextStyle(
+                                                            fontSize: 14.sp,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                ).toList(),
+                                              ),
+                                            ),
+                                          ),
+
+                                          SizedBox(width: 4.w),
+                                          SizedBox(
+                                            width: MediaQuery.of(context).size.width / 2,
                                             child: TextFormField(
                                               textInputAction:
                                                   TextInputAction.next,
@@ -324,14 +383,6 @@ class _IdentityVerificationScreenState
                                             fontSize: 14.sp,
                                           ),
                                         ),
-                                      ]else ...[
-                                        Text(
-                                          r'scan_sent'.tr,
-                                          style: TextStyle(
-                                            color: AppColors.blackText,
-                                            fontSize: 14.sp,
-                                          ),
-                                        ),
                                       ],
                                       SizedBox(
                                         width: AppDimensions.paddingMedium.w,
@@ -351,8 +402,7 @@ class _IdentityVerificationScreenState
                                         color: controller.pdfFile == null
                                             ? AppColors.grey
                                             : AppColors.green,
-                                      ),
-            ]
+                                      ),]
                                     ],
                                   ),
                                 ),

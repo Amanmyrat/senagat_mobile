@@ -40,38 +40,41 @@ class _DeleteCardScreenState extends State<DeleteCardScreen> {
                             CustomAppBar(),
                             Expanded(
                               child: Padding(
-                                padding: EdgeInsets.all(AppDimensions.paddingExtraLarge),
+                                padding: EdgeInsets.symmetric(horizontal: AppDimensions.paddingExtraLarge.w, vertical: AppDimensions.paddingMedium.h),
                                 child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Container(
-                                      padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(
-                                          AppDimensions.borderRadiusMedium.r,
-                                        ),
-                                        border: Border.all(color: AppColors.dividerColor, width: 1.w, style: BorderStyle.solid),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: AppColors.dividerColor,
-                                            blurRadius: 4.r,
-                                          ),
-                                        ],
-                                        color: AppColors.white,
-                                      ),
-                                      child: Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          SvgPicture.asset(AppAssets.infoIcon, color: AppColors.green,),
-                                          SizedBox(width: 6.w,),
-                                          Flexible(
-                                            child: Text(r'replenishment_bank'.tr,
-                                              style: TextStyle(fontSize: 14.sp, color: AppColors.black, fontFamily: AppFonts.secondaryFont),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(height: 22.h,),
+                                    Text(r'remove_card'.tr, style: TextStyle(color: AppColors.black, fontSize: 24.sp),),
+                                    SizedBox(height: 16.h,),
+                                    // Container(
+                                    //   padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
+                                    //   decoration: BoxDecoration(
+                                    //     borderRadius: BorderRadius.circular(
+                                    //       AppDimensions.borderRadiusMedium.r,
+                                    //     ),
+                                    //     border: Border.all(color: AppColors.dividerColor, width: 1.w, style: BorderStyle.solid),
+                                    //     boxShadow: [
+                                    //       BoxShadow(
+                                    //         color: AppColors.dividerColor,
+                                    //         blurRadius: 4.r,
+                                    //       ),
+                                    //     ],
+                                    //     color: AppColors.white,
+                                    //   ),
+                                    //   child: Row(
+                                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                                    //     children: [
+                                    //       SvgPicture.asset(AppAssets.infoIcon, color: AppColors.green,),
+                                    //       SizedBox(width: 6.w,),
+                                    //       Flexible(
+                                    //         child: Text(r'replenishment_bank'.tr,
+                                    //           style: TextStyle(fontSize: 14.sp, color: AppColors.black, fontFamily: AppFonts.secondaryFont),
+                                    //         ),
+                                    //       ),
+                                    //     ],
+                                    //   ),
+                                    // ),
+                                    // SizedBox(height: 22.h,),
                                     Container(
                                       width: MediaQuery.of(context).size.width,
                                       padding: EdgeInsets.all(
@@ -100,7 +103,7 @@ class _DeleteCardScreenState extends State<DeleteCardScreen> {
                                           ),
                                           SizedBox(height: 72.h,),
                                           Text(
-                                             '2131 2312 3123 1231',
+                                             controller.cardNumber,
                                             style: TextStyle(
                                               wordSpacing: 10.sp,
                                               fontSize: 24.sp,
@@ -112,14 +115,14 @@ class _DeleteCardScreenState extends State<DeleteCardScreen> {
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
-                                                 'aaaaa',
+                                                 controller.cardName,
                                                 style: TextStyle(
                                                   fontSize: 14.sp,
                                                   color: AppColors.white,
                                                 ),
                                               ),
                                               Text(
-                                                '11/27',
+                                                controller.cardTerm,
                                                 style: TextStyle(
                                                   fontSize: 14.sp,
                                                   color: AppColors.white,

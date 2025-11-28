@@ -88,7 +88,7 @@ class AddCardController extends GetxController with StateControlMixin {
     final box = Hive.box<CardModel>('cardsBox');
     final card = CardModel(
       cardNumber: cardNumberController.text,
-      name: nameController.text,
+      name: nameController.text.toUpperCase(),
       expiryDate: termController.text,
       cardDesign: cardDesigns[selectedDesign],
     );

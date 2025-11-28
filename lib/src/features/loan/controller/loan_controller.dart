@@ -106,7 +106,6 @@ class LoanController extends GetxController
       pageIndex = 2;
       continueEnabled = false;
       update();
-
     } else if (pageIndex == 2 && continueEnabled) {
       startBankVerification();
       update();
@@ -155,10 +154,9 @@ class LoanController extends GetxController
       managerWorkAddress: managerWorkAddressController.text,
       workplace: workplaceController.text,
       position: positionAtWorkController.text,
-      phoneNumber: phoneController.text,
       salary: salary,
-        country: selectedDropdownCity,
-        bankId: selectedDropdownBank
+      country: selectedDropdownCity,
+      bankId: selectedDropdownBank,
     );
   }
 
@@ -173,16 +171,14 @@ class LoanController extends GetxController
       registrationNumber: registerNumController.text,
       workAddress: workAddressController.text,
       country: selectedDropdownCity,
-      bankId: selectedDropdownBank
+      bankId: selectedDropdownBank,
     );
   }
-
 
   Future<void> startBankVerification() async {
     check = true;
     status = Status.loading;
     update();
-
 
     final creditWorkInfoModel = selectedTabIndex == 0
         ? await _getCreditWorkInfoModelForEntrepreneur()
@@ -190,34 +186,33 @@ class LoanController extends GetxController
 
     await repository
         .creditOrder(
-      data: selectedTabIndex == 0
-          ? creditWorkInfoModel.toMap()
-          : creditWorkInfoModel.toMap2(),
-    )
+          data: selectedTabIndex == 0
+              ? creditWorkInfoModel.toMap()
+              : creditWorkInfoModel.toMap2(),
+        )
         .then((value) {
-      status = Status.completed;
-      update();
-
-    })
+          status = Status.completed;
+          update();
+        })
         .catchError((e) {
-      status = Status.error;
-      update();
-      final errorText = ErrorUtils.extractErrorText(e);
-      ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
+          status = Status.error;
+          update();
+          final errorText = ErrorUtils.extractErrorText(e);
+          ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
 
-      debugPrint(e.toString());
-    });
+          debugPrint(e.toString());
+        });
 
     update();
   }
 
   void setDropdownCity(String? value) {
     selectedDropdownCity = value;
-    try{
+    try {
       if (selectedDropdownBank != null) {
         continueEnabled = true;
       }
-    } catch(e){
+    } catch (e) {
       print(e);
     }
     update();
@@ -229,7 +224,7 @@ class LoanController extends GetxController
       if (selectedDropdownCity!.isNotEmpty) {
         continueEnabled = true;
       }
-    } catch(e){
+    } catch (e) {
       print(e);
     }
 
