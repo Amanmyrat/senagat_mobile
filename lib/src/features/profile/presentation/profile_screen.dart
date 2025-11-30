@@ -81,10 +81,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   borderRadius: BorderRadius.circular(
                                     AppDimensions.borderRadiusMedium.r,
                                   ),
-                                  color: controller.homeController.userInformationModel?.profileModel?.status == 'pending' ? AppColors.orange : AppColors.green,
+                                  color: controller.checkProfileStatus(),
                                 ),
                                 child: Text(
-                                  controller.homeController.userInformationModel?.profileModel?.status?.tr ?? '',
+                                  controller.homeController.userInformationModel?.profileModel?.status?.tr ?? 'not_confirmed'.tr,
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: AppColors.white,

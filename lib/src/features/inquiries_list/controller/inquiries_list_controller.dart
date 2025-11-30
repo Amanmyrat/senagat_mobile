@@ -6,6 +6,7 @@ import 'package:senagat_mobile/src/features/home/models/user_information_model.d
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/services/show_snack.dart';
 import '../../../utils/services/error_utils.dart';
+import '../../../utils/theme/constants/app_colors.dart';
 
 class InquiriesListController extends GetxController with StateControlMixin {
 
@@ -23,6 +24,17 @@ class InquiriesListController extends GetxController with StateControlMixin {
     getUserProfileInfo();
   }
 
+  Color checkCertificateStatus(int index)  {
+    if(userInformationModel?.certificates?[index].status == 'pending'){
+      return AppColors.orange;
+    }else if(userInformationModel?.certificates?[index].status == 'rejected'){
+      return AppColors.redDark;
+    }else if(userInformationModel?.certificates?[index].status == 'approved'){
+      return AppColors.green;
+    }else{
+      return AppColors.grey;
+    }
+  }
 
   void getUserProfileInfo() async {
     if (_isFetchingUserInfo) return;

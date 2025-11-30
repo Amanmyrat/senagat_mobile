@@ -94,7 +94,7 @@ class _InquiriesListState extends State<InquiriesList> {
                                               borderRadius: BorderRadius.circular(
                                                 AppDimensions.borderRadiusMedium.r,
                                               ),
-                                              color: inquiries?.status == r'pending' ? AppColors.orange : inquiries?.status == r'rejected' ? AppColors.redDark : AppColors.green,
+                                              color: controller.checkCertificateStatus(index),
                                             ),
                                             child: Text(
                                               inquiries?.status?.tr ?? '',
@@ -151,8 +151,7 @@ class _InquiriesListState extends State<InquiriesList> {
                                                     ),
                                                     SizedBox(height: 4.h),
                                                     Text(
-                                                      '${inquiries?.certificatePrice} Manat' ??
-                                                          '',
+                                                      '${inquiries?.certificatePrice} Manat',
                                                       style: TextStyle(
                                                         color: AppColors.black,
                                                         fontSize: 14.sp,
@@ -176,7 +175,7 @@ class _InquiriesListState extends State<InquiriesList> {
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      r'payment'.tr,
+                                                      r'bank_branch'.tr,
                                                       style: TextStyle(
                                                         color: AppColors.grey,
                                                         fontSize: 14.sp,
@@ -186,7 +185,7 @@ class _InquiriesListState extends State<InquiriesList> {
                                                     ),
                                                     SizedBox(height: 4.h),
                                                     Text(
-                                                      // inquiries?.monthlyPayment.toString() ??
+                                                      inquiries?.bankBranch.toString() ??
                                                           '',
                                                       style: TextStyle(
                                                         color: AppColors.black,

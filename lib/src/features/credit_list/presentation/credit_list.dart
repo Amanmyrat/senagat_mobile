@@ -93,7 +93,7 @@ class _CreditListState extends State<CreditList> {
                                                 borderRadius: BorderRadius.circular(
                                                   AppDimensions.borderRadiusMedium.r,
                                                 ),
-                                                color: loan?.status == r'pending' ? AppColors.orange : loan?.status == r'rejected' ? AppColors.redDark : AppColors.green,
+                                                color: controller.checkCreditStatus(index),
                                               ),
                                               child: Text(
                                                 loan?.status?.tr ?? '',

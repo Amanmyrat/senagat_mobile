@@ -794,7 +794,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              'Senagat Bank',
+                              controller.cardBox.getAt(index)?.nickName ?? '',
                               style: TextStyle(
                                 color: AppColors.white,
                                 fontSize: 14,
@@ -855,34 +855,37 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ] else ...[
-            GestureDetector(
-              onTap: () {
-                Get.toNamed(AddCardScreen.route);
-              },
-              child: Container(
-                width: 390.w,
-                height: 220.h,
-                decoration: BoxDecoration(
-                  color: AppColors.inputFillBackground,
-                  borderRadius: BorderRadius.circular(
-                    AppDimensions.borderRadiusMedium.r,
-                  ),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(AppAssets.plusIcon, width: 32.w),
-
-                    SizedBox(height: AppDimensions.paddingMedium),
-
-                    Text(
-                      r'add_a_card'.tr,
-                      style: TextStyle(
-                        color: AppColors.blackText,
-                        fontSize: 17.sp,
-                      ),
+            Padding(
+              padding: EdgeInsets.only(left: AppDimensions.paddingExtraLarge.w),
+              child: GestureDetector(
+                onTap: () {
+                  Get.toNamed(AddCardScreen.route);
+                },
+                child: Container(
+                  width: 390.w,
+                  height: 220.h,
+                  decoration: BoxDecoration(
+                    color: AppColors.inputFillBackground,
+                    borderRadius: BorderRadius.circular(
+                      AppDimensions.borderRadiusMedium.r,
                     ),
-                  ],
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(AppAssets.plusIcon, width: 32.w),
+
+                      SizedBox(height: AppDimensions.paddingMedium),
+
+                      Text(
+                        r'add_a_card'.tr,
+                        style: TextStyle(
+                          color: AppColors.blackText,
+                          fontSize: 17.sp,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

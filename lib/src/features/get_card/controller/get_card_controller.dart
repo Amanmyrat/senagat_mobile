@@ -33,7 +33,7 @@ class GetCardController extends GetxController
         .getCardTypes()
         .then((value) {
           _cards.addAll(value);
-          tabController = TabController(length: _cards.length, vsync: this);
+          tabController = TabController(length: _cards.where((c) => c.category == 'individual').length, vsync: this);
           tabController.addListener(() {
             selectedTabIndex = tabController.index;
             update();

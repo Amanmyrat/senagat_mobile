@@ -224,6 +224,7 @@ const Map<String, String> ruRu = {
   r'number_of_car': r'Номер транспортного средства',
   r'bank_commission': r'Комиссия банка 1.00 Манат',
   r'forget_password': r'Забыл пароль',
+  r'rejected': r'Отклонено',
 
 
 

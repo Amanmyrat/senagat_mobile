@@ -51,6 +51,7 @@ class HomeController extends GetxController with StateControlMixin {
   String cardKey = 'card';
 
   bool isProfileRequired = true;
+  bool isServiceRequired = false;
 
   final _exchange = <ExchangeRateModel>[];
   List<ExchangeRateModel> get exchange => _exchange;
@@ -105,7 +106,7 @@ class HomeController extends GetxController with StateControlMixin {
   }
 
   void onServiceTap(int index) {
-    if (!isProfileRequired) {
+    if (isServiceRequired) {
       lastTap = HomeTapType.service;
       lastServiceTapIndex = index;
       update();
@@ -183,7 +184,6 @@ class HomeController extends GetxController with StateControlMixin {
 
           update();
           final errorText = ErrorUtils.extractErrorText(e);
-          ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
           debugPrint(e.toString());
         })
         .whenComplete(() {
@@ -210,7 +210,6 @@ class HomeController extends GetxController with StateControlMixin {
             );
             phoneBox.put('phone', userInformationModel!.phone!);
 
-            // Notify ProfileController to refresh
             try {
               final profileController = Get.find<ProfileController>();
               profileController.refreshProfile();
@@ -226,7 +225,6 @@ class HomeController extends GetxController with StateControlMixin {
           status = Status.error;
           update();
           final errorText = ErrorUtils.extractErrorText(e);
-          ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
           debugPrint(e.toString());
         })
         .whenComplete(() {
@@ -235,11 +233,21 @@ class HomeController extends GetxController with StateControlMixin {
   }
 
   checkProfile() {
-    if (userInformationModel?.profileModel?.status == '') {
+    if (userInformationModel?.profileModel == null) {
       isProfileRequired = true;
       update();
     } else {
       isProfileRequired = false;
+      update();
+    }
+  }
+
+  checkProfileStatus() {
+    if (userInformationModel?.profileModel?.status == 'approved') {
+      isServiceRequired = true;
+      update();
+    } else {
+      isServiceRequired = false;
       update();
     }
   }

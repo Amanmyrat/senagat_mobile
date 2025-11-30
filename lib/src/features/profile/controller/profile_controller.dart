@@ -1,7 +1,10 @@
+import 'dart:ui';
+
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/dashboard/controller/dashboard_controller.dart';
+import '../../../utils/theme/constants/app_colors.dart';
 import '../../home/controller/home_controller.dart';
 import '../../identity_verification/models/profile_model.dart';
 
@@ -24,6 +27,18 @@ class ProfileController extends GetxController with StateControlMixin, GetSingle
   void onReady() {
     super.onReady();
     refreshProfile();
+  }
+
+  Color checkProfileStatus()  {
+    if(homeController.userInformationModel?.profileModel?.status == 'pending'){
+      return AppColors.orange;
+    }else if(homeController.userInformationModel?.profileModel?.status == 'rejected'){
+      return AppColors.redDark;
+    }else if(homeController.userInformationModel?.profileModel?.status == 'approved'){
+      return AppColors.green;
+    }else{
+      return AppColors.grey;
+    }
   }
 
   void refreshProfile() {

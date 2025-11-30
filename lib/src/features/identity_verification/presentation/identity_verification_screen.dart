@@ -25,7 +25,7 @@ class IdentityVerificationScreen extends StatefulWidget {
 
 class _IdentityVerificationScreenState
     extends State<IdentityVerificationScreen> {
-  final _key = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -34,402 +34,98 @@ class _IdentityVerificationScreenState
         child: GetBuilder<IdentityVerificationController>(
           init: IdentityVerificationController(
             ProfileRepository(apiService: ApiServices.apiService),
-            _key,
+            _formKey,
           ),
           builder: (controller) {
             return Column(
               children: [
                 CustomAppBar(),
+
                 Expanded(
                   child: SingleChildScrollView(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: AppDimensions.paddingExtraLarge.w,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            r'identity_verification'.tr,
-                            style: TextStyle(
-                              fontSize: 24.sp,
-                              color: AppColors.blackText,
-                            ),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: AppDimensions.paddingExtraLarge.w,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // TITLE
+                        Text(
+                          'identity_verification'.tr,
+                          style: TextStyle(
+                            fontSize: 24.sp,
+                            color: AppColors.blackText,
                           ),
-                          SizedBox(height: 32.h),
-                          ListView.builder(
-                            itemCount: controller.controllers.length,
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              if (controller.controllers[index] ==
-                                  controller.passportNumberController) {
-                                return Padding(
-                                  padding: EdgeInsets.only(bottom: 22.h),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        controller.textFieldTitle[index].tr,
-                                        style: TextStyle(
-                                          color: AppColors.blackText,
-                                          fontSize: 14.sp,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: AppDimensions.paddingMedium.h,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Expanded(
-                                            child: Theme(
-                                              data: Theme.of(context).copyWith(
-                                                canvasColor: AppColors.inputFillBackground,
-                                                cardTheme:  CardThemeData(
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius: BorderRadius.all(
-                                                      Radius.circular(AppDimensions.borderRadiusMedium.r),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              child: DropdownButtonFormField2<String>(
-                                                value: controller.selectedDropdownCity,
-                                                hint: Text(
-                                                  "I".tr,
-                                                  style: TextStyle(fontSize: 14.sp),
-                                                ),
-                                                decoration: InputDecoration(
-                                                  contentPadding: EdgeInsets.fromLTRB(
-                                                    0,
-                                                    AppDimensions.paddingExtraLarge.h,
-                                                    AppDimensions.paddingMedium.w,
-                                                    AppDimensions.paddingLarge.h,
-                                                  ),
-                                                ),
-                                                dropdownStyleData: DropdownStyleData(
-                                                  decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(10.r),
+                        ),
 
-                                                  ),
-                                                  elevation: 2,
+                        SizedBox(height: 32.h),
 
-                                                ),
-                                                iconStyleData: IconStyleData(
-                                                  icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18.w,),
-                                                ),
-                                                onChanged: (v) => controller.selectedDropdownCity,
+                        // FORM FIELDS
+                        ListView.builder(
+                          itemCount: controller.controllers.length,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            final ctrl = controller.controllers[index];
+                            final title = controller.textFieldTitle[index];
 
-                                                items: controller.citySelection
-                                                    .map(
-                                                      (item) =>
-                                                      DropdownMenuItem<String>(
-                                                        value: item,
-                                                        child: Text(
-                                                          item,
-                                                          style: TextStyle(
-                                                            fontSize: 14.sp,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                ).toList(),
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(width: 4.w),
-                                          Expanded(
-                                            child: Theme(
-                                              data: Theme.of(context).copyWith(
-                                                canvasColor: AppColors.inputFillBackground,
-                                                cardTheme:  CardThemeData(
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius: BorderRadius.all(
-                                                      Radius.circular(AppDimensions.borderRadiusMedium.r),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              child: DropdownButtonFormField2<String>(
-                                                value: controller.selectedDropdownCity,
-                                                hint: Text(
-                                                  "I".tr,
-                                                  style: TextStyle(fontSize: 14.sp),
-                                                ),
-                                                decoration: InputDecoration(
-                                                  contentPadding: EdgeInsets.fromLTRB(
-                                                    0,
-                                                    AppDimensions.paddingExtraLarge.h,
-                                                    AppDimensions.paddingMedium.w,
-                                                    AppDimensions.paddingLarge.h,
-                                                  ),
-                                                ),
-                                                dropdownStyleData: DropdownStyleData(
-                                                  decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(10.r),
+                            // 1. PASSPORT NUMBER + PREFIX FIELDS
+                            if (ctrl == controller.passportNumberController) {
+                              return _passportNumberRow(controller);
+                            }
 
-                                                  ),
-                                                  elevation: 2,
-
-                                                ),
-                                                iconStyleData: IconStyleData(
-                                                  icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18.w,),
-                                                ),
-                                                onChanged: (v) => controller.selectedDropdownCity,
-
-                                                items: controller.citySelection
-                                                    .map(
-                                                      (item) =>
-                                                      DropdownMenuItem<String>(
-                                                        value: item,
-                                                        child: Text(
-                                                          item,
-                                                          style: TextStyle(
-                                                            fontSize: 14.sp,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                ).toList(),
-                                              ),
-                                            ),
-                                          ),
-
-                                          SizedBox(width: 4.w),
-                                          SizedBox(
-                                            width: MediaQuery.of(context).size.width / 2,
-                                            child: TextFormField(
-                                              textInputAction:
-                                                  TextInputAction.next,
-                                              keyboardType:
-                                                  TextInputType.number,
-                                              maxLength: 7,
-                                              controller: controller
-                                                  .passportNumberController,
-                                              onChanged: (v) => controller
-                                                  .onTextIsNotEmpty(v),
-                                              style: TextStyle(fontSize: 14.sp),
-                                              decoration: InputDecoration(
-                                                hintText: 'passport_number'.tr,
-                                                border:
-                                                    const OutlineInputBorder(),
-                                                focusedBorder: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                        AppDimensions
-                                                            .borderRadiusMedium,
-                                                      ),
-                                                  borderSide: BorderSide(
-                                                    color: controller.status == Status.error
-                                                        ? AppColors.redDark
-                                                        : AppColors.green,
-                                                    width: 1.w,
-                                                  ),
-                                                ),
-                                                enabledBorder: OutlineInputBorder(
-                                                  borderRadius: BorderRadius.circular(
-                                                    AppDimensions.borderRadiusMedium,
-                                                  ),
-                                                  borderSide: BorderSide(
-                                                    color: controller.status == Status.error
-                                                        ? AppColors.redDark
-                                                        : AppColors.white,
-                                                    width: 1,
-                                                  ),
-                                                ),
-                                                counter: const SizedBox(),
-                                                contentPadding:
-                                                    EdgeInsets.symmetric(
-                                                      vertical: AppDimensions
-                                                          .paddingExtraLarge
-                                                          .h,
-                                                      horizontal: AppDimensions
-                                                          .paddingLarge
-                                                          .w,
-                                                    ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }
-                              if(controller.controllers[index] == controller.asController){
-                                return SizedBox.shrink();
-                              }
-                              // Default text fields
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    controller.textFieldTitle[index].tr,
-                                    style: TextStyle(
-                                      color: AppColors.blackText,
-                                      fontSize: 14.sp,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: AppDimensions.paddingMedium.h,
-                                  ),
-                                  TextFormField(
-                                    textInputAction: TextInputAction.next,
-                                    keyboardType:
-                                        (controller.controllers[index] ==
-                                                controller
-                                                    .dateOfBirthController ||
-                                            controller.controllers[index] ==
-                                                controller
-                                                    .dateIssueController ||
-                                            controller.controllers[index] ==
-                                                controller.homePhoneController)
-                                        ? TextInputType.number
-                                        : TextInputType.name,
-                                    controller: controller.controllers[index],
-                                    inputFormatters:
-                                        (controller.controllers[index] ==
-                                                controller
-                                                    .dateOfBirthController ||
-                                            controller.controllers[index] ==
-                                                controller.dateIssueController)
-                                        ? [controller.dateFormatter]
-                                        : [],
-                                    onChanged: (v) =>
-                                        controller.onTextIsNotEmpty(v),
-                                    style: TextStyle(fontSize: 14.sp),
-                                    decoration: InputDecoration(
-                                      hintText:
-                                          controller.textFieldTitle[index].tr,
-                                      border: const OutlineInputBorder(),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                          AppDimensions.borderRadiusMedium,
-                                        ),
-                                        borderSide: BorderSide(
-                                          color: controller.status == Status.error
-                                              ? AppColors.redDark
-                                              : AppColors.green,
-                                          width: 1.w,
-                                        ),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(
-                                          AppDimensions.borderRadiusMedium,
-                                        ),
-                                        borderSide: BorderSide(
-                                          color: controller.status == Status.error
-                                              ? AppColors.redDark
-                                              : AppColors.transparent,
-                                          width: 1,
-                                        ),
-                                      ),
-                                      counter: const SizedBox(),
-                                      contentPadding: EdgeInsets.symmetric(
-                                        vertical:
-                                            AppDimensions.paddingExtraLarge.h,
-                                        horizontal:
-                                            AppDimensions.paddingLarge.w,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(height: 22.h),
-                                ],
+                            // 2. DATE FIELDS (Birthdate, Issue Date)
+                            if (ctrl == controller.dateOfBirthController ||
+                                ctrl == controller.dateIssueController) {
+                              return _datePickerField(
+                                controller: controller,
+                                title: title.tr,
+                                ctrl: ctrl,
                               );
-                            },
-                          ),
+                            }
 
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                r'passport_scan'.tr,
-                                style: TextStyle(
-                                  color: AppColors.blackText,
-                                  fontSize: 14.sp,
-                                ),
-                              ),
-                              SizedBox(height: AppDimensions.paddingMedium.h),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width,
-                                child: ElevatedButtonWithState(
-                                  customStyle: ElevatedButton.styleFrom(
-                                    backgroundColor: AppColors.white,
-                                    side: BorderSide(
-                                      color: controller.status == Status.error? AppColors.redDark : AppColors.dividerColor,
-                                    ),
-                                    shadowColor: Colors.transparent,
-                                  ),
-                                  isLoading: false,
-                                  isError: false,
-                                  onPressed: () {
-                                    controller.pickPdf();
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      if (controller.pdfFile == null) ...[
-                                        Text(
-                                          r'passport_scan'.tr,
-                                          style: TextStyle(
-                                            color: AppColors.greyInactive,
-                                            fontSize: 14.sp,
-                                          ),
-                                        ),
-                                      ] else if(controller.status == Status.error) ...[
-                                        Text(
-                                          r'passport_scan'.tr,
-                                          style: TextStyle(
-                                            color: AppColors.blackText,
-                                            fontSize: 14.sp,
-                                          ),
-                                        ),
-                                      ],
-                                      SizedBox(
-                                        width: AppDimensions.paddingMedium.w,
-                                      ),
-                                      if(controller.status == Status.error)...[
-                                        SvgPicture.asset(
-                                          AppAssets.X,
-                                          width: 24.w,
-                                          color: AppColors.redDark,
-                                        ),
-                                      ]else...[
-                                      SvgPicture.asset(
-                                        controller.pdfFile == null
-                                            ? AppAssets.pdfIcon
-                                            : AppAssets.checkIcon,
-                                        width: 24.w,
-                                        color: controller.pdfFile == null
-                                            ? AppColors.grey
-                                            : AppColors.green,
-                                      ),]
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                            if (ctrl == controller.homePhoneController) {
+                              return _defaultField(
+                                controller: controller,
+                                title: title.tr,
+                                ctrl: ctrl,
+                                textType: TextInputType.number,
+                                maxLength: 10,
+                              );
+                            }
+
+                            // 3. DEFAULT TEXT FIELDS
+                            return _defaultField(
+                              controller: controller,
+                              title: title.tr,
+                              ctrl: ctrl,
+                            );
+                          },
+                        ),
+
+                        // PDF UPLOAD
+                        SizedBox(height: 16.h),
+                        _pdfUpload(controller),
+                      ],
                     ),
                   ),
                 ),
+
+                // SUBMIT BUTTON
                 Padding(
                   padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
                   child: Opacity(
                     opacity: controller.continueEnabled ? 1.0 : 0.5,
                     child: SizedBox(
-                      width: MediaQuery.of(context).size.width,
+                      width: double.infinity,
                       child: ElevatedButtonWithState(
                         isLoading: controller.status == Status.loading,
                         isError: controller.status == Status.error,
-                        onPressed: () {
-                          if(controller.continueEnabled) {
-                            controller.startBankVerification();
-                          }
-                        },
+                        onPressed: controller.continueEnabled
+                            ? () => controller.startBankVerification()
+                            : null,
                         child: Text(
-                          r'submit_for_review'.tr,
+                          'confirm'.tr,
                           style: TextStyle(
                             fontSize: 14.sp,
                             color: AppColors.white,
@@ -443,6 +139,300 @@ class _IdentityVerificationScreenState
             );
           },
         ),
+      ),
+    );
+  }
+
+  // --------------------------------------------------------------------------
+  // COMPONENTS
+  // --------------------------------------------------------------------------
+
+  Widget _defaultField({
+    required IdentityVerificationController controller,
+    required String title,
+    required TextEditingController ctrl,
+    TextInputType? textType,
+    int? maxLength,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: TextStyle(fontSize: 14.sp, color: AppColors.blackText),
+        ),
+        SizedBox(height: AppDimensions.paddingMedium.h),
+        TextFormField(
+          maxLength: maxLength,
+          textInputAction: TextInputAction.next,
+          keyboardType: textType,
+          controller: ctrl,
+          style: TextStyle(fontSize: 14.sp),
+          onChanged: controller.onTextIsNotEmpty,
+          decoration: _inputDecoration(controller, title),
+        ),
+        SizedBox(height: 22.h),
+      ],
+    );
+  }
+
+  // DATE FIELD WITH PICKER
+  Widget _datePickerField({
+    required IdentityVerificationController controller,
+    required String title,
+    required TextEditingController ctrl,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: TextStyle(fontSize: 14.sp, color: AppColors.blackText),
+        ),
+        SizedBox(height: AppDimensions.paddingMedium.h),
+
+        GestureDetector(
+          onTap: () => controller.pickDate(context, ctrl),
+          child: AbsorbPointer(
+            child: TextFormField(
+              controller: ctrl,
+              readOnly: true,
+              style: TextStyle(fontSize: 14.sp),
+              decoration: InputDecoration(
+                hintText: title,
+                border: const OutlineInputBorder(),
+                counterText: '',
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(
+                    AppDimensions.borderRadiusMedium,
+                  ),
+                  borderSide: BorderSide(
+                    color: controller.status == Status.error
+                        ? AppColors.redDark
+                        : AppColors.green,
+                    width: 1.w,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(
+                    AppDimensions.borderRadiusMedium,
+                  ),
+                  borderSide: BorderSide(
+                    color: controller.status == Status.error
+                        ? AppColors.redDark
+                        : AppColors.transparent,
+                  ),
+                ),
+                suffixIconConstraints: BoxConstraints(
+                  maxWidth: 40.w,
+                  maxHeight: 40.h,
+                ),
+                suffixIcon: Padding(
+                  padding: EdgeInsets.only(right: 20.w),
+                  child: SvgPicture.asset(AppAssets.date, width: 18.w),
+                ),
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: AppDimensions.paddingExtraLarge.h,
+                  horizontal: AppDimensions.paddingLarge.w,
+                ),
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: 22.h),
+      ],
+    );
+  }
+
+  // PASSPORT NUMBER + DROPDOWNS
+  Widget _passportNumberRow(IdentityVerificationController controller) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 22.h),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            controller
+                .textFieldTitle[controller.controllers.indexOf(
+                  controller.passportNumberController,
+                )]
+                .tr,
+            style: TextStyle(fontSize: 14.sp, color: AppColors.blackText),
+          ),
+          SizedBox(height: AppDimensions.paddingMedium.h),
+
+          Row(
+            children: [
+              _dropdown(
+                controller,
+                items: controller.number,
+                hint: 'I',
+                onChange: (v) {
+                  controller.selectedDropdownNumber = v!;
+                  controller.update();
+                },
+              ),
+              SizedBox(width: 4.w),
+
+              _dropdown(
+                controller,
+                items: controller.citySelection,
+                hint: 'AS',
+                onChange: (v) {
+                  controller.selectedDropdownLetters = v!;
+                  controller.update();
+                },
+              ),
+              SizedBox(width: 4.w),
+
+              // PASSPORT NUMBER FIELD
+              Expanded(
+                child: TextFormField(
+                  controller: controller.passportNumberController,
+                  maxLength: 7,
+                  keyboardType: TextInputType.number,
+                  onChanged: controller.onTextIsNotEmpty,
+                  style: TextStyle(fontSize: 14.sp),
+                  decoration: _inputDecoration(
+                    controller,
+                    'passport_number'.tr,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _dropdown(
+    IdentityVerificationController controller, {
+    required List<String> items,
+    required Function(String?) onChange,
+    required String hint,
+  }) {
+    return SizedBox(
+      width: 72.w,
+      child: Theme(
+        data: Theme.of(
+          context,
+        ).copyWith(canvasColor: AppColors.inputFillBackground),
+        child: DropdownButtonFormField2<String>(
+          hint: Text(hint.tr, style: TextStyle(fontSize: 14.sp)),
+          value: items.contains(hint) ? hint : null,
+          onChanged: onChange,
+          items: items
+              .map(
+                (e) => DropdownMenuItem(
+                  value: e,
+                  child: Text(e, style: TextStyle(fontSize: 14.sp)),
+                ),
+              )
+              .toList(),
+          dropdownStyleData: DropdownStyleData(
+            width: 72.w,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.r),
+            ),
+          ),
+          iconStyleData: IconStyleData(
+            icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18.w),
+          ),
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.symmetric(
+              vertical: 17.h,
+              horizontal: AppDimensions.paddingLarge.w,
+            ),
+            border: OutlineInputBorder(),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // PDF UPLOAD BUTTON
+  Widget _pdfUpload(IdentityVerificationController controller) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'passport_scan'.tr,
+          style: TextStyle(fontSize: 14.sp, color: AppColors.blackText),
+        ),
+        SizedBox(height: AppDimensions.paddingMedium.h),
+        SizedBox(
+          width: double.infinity,
+          child: ElevatedButtonWithState(
+            isLoading: false,
+            isError: controller.status == Status.error,
+            customStyle: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.white,
+              side: BorderSide(
+                color: controller.status == Status.error
+                    ? AppColors.redDark
+                    : AppColors.dividerColor,
+              ),
+              shadowColor: Colors.transparent,
+            ),
+            onPressed: controller.pickPdf,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'passport_scan'.tr,
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    color: AppColors.greyInactive,
+                  ),
+                ),
+                SizedBox(width: AppDimensions.paddingMedium.w),
+                SvgPicture.asset(
+                  controller.pdfFile == null
+                      ? AppAssets.pdfIcon
+                      : AppAssets.checkIcon,
+                  width: 24.w,
+                  color: controller.pdfFile == null
+                      ? AppColors.grey
+                      : AppColors.green,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  // INPUT DECORATION
+  InputDecoration _inputDecoration(
+    IdentityVerificationController controller,
+    String hint,
+  ) {
+    return InputDecoration(
+      hintText: hint,
+      border: const OutlineInputBorder(),
+      counterText: '',
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium),
+        borderSide: BorderSide(
+          color: controller.status == Status.error
+              ? AppColors.redDark
+              : AppColors.green,
+          width: 1.w,
+        ),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium),
+        borderSide: BorderSide(
+          color: controller.status == Status.error
+              ? AppColors.redDark
+              : AppColors.transparent,
+        ),
+      ),
+      contentPadding: EdgeInsets.symmetric(
+        vertical: AppDimensions.paddingExtraLarge.h,
+        horizontal: AppDimensions.paddingLarge.w,
       ),
     );
   }

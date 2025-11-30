@@ -132,7 +132,6 @@ class _CardSettingsScreenState extends State<CardSettingsScreen> {
                                                     TextField(
                                                       keyboardType: TextInputType.name,
                                                       textInputAction: TextInputAction.done,
-                                                      onChanged: controller.onTextChanged,
                                                       controller: controller.cardNumberController,
                                                       style: TextStyle(
                                                         fontSize: 14.sp,
@@ -182,20 +181,17 @@ class _CardSettingsScreenState extends State<CardSettingsScreen> {
                                                     ),
                                                     SizedBox(height: 22.h,),
                                                     (controller.status != Status.loading) ?
-                                                      Opacity(
-                                                      opacity: controller.continueEnabled  ? 1.0 : 0.5,
-                                                      child: SizedBox(
+                                                      SizedBox(
                                                         width: MediaQuery.of(context).size.width,
                                                         child: ElevatedButtonWithState(
-                                                          isLoading: false,
-                                                          isError: false,
-                                                          onPressed: (){
-                                                            controller.startBankVerification();
-                                                          },
-                                                          child: Text(r'confirm'.tr, style: TextStyle(color: AppColors.white, fontSize: 14.sp),),
+                                                        isLoading: false,
+                                                        isError: false,
+                                                        onPressed: (){
+                                                          controller.onChangeNickName();
+                                                        },
+                                                        child: Text(r'confirm'.tr, style: TextStyle(color: AppColors.white, fontSize: 14.sp),),
                                                         ),
-                                                      ),
-                                                    ):
+                                                      ):
                                                     (controller.status == Status.loading)?
                                                       SizedBox(
                                                           width: 24.w,

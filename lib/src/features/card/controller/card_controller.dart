@@ -15,33 +15,15 @@ import '../../qr_code/presentation/qr_code_screen.dart';
 enum CardTapType { none, qr, foundation, service, fastOperation, notification }
 
 class CardController extends GetxController with StateControlMixin {
-
   CardTapType lastTap = CardTapType.none;
   late AddCardController addCardController;
   final cardBox = Hive.box<CardModel>('cardsBox');
   UserInformationModel? userInformationModel;
   AuthRepository authRepository;
-  late final String cardNumber;
 
   List<bool> isOpenList = [];
 
-
-  late bool isOpen = false;
-
   CardController(this.authRepository);
-
-  void onQrScanTap() {
-    lastTap = CardTapType.qr;
-    update();
-    Get.toNamed(QrCodeScreen.route);
-  }
-  void onNotificationScanTap() {
-    lastTap = CardTapType.notification;
-    update();
-    Get.toNamed(NotificationsScreen.route);
-  }
-
-
 
   @override
   void onInit() {
@@ -50,26 +32,36 @@ class CardController extends GetxController with StateControlMixin {
     getUserProfileInfo();
   }
 
-  void onOpenApplication(){
-    if(!isOpen){
-      isOpen = true;
-      update();
-    }else{
-      isOpen = false;
-      update();
-    }
+  void onOpenApplication(int index) {
+    isOpenList[index] = !isOpenList[index];
+    update();
+  }
+
+  void initOpenStates(int length) {
+    isOpenList = List.generate(length, (_) => false);
+    update();
+  }
+
+  void onQrScanTap() {
+    lastTap = CardTapType.qr;
+    update();
+    Get.toNamed(QrCodeScreen.route);
+  }
+
+  void onNotificationScanTap() {
+    lastTap = CardTapType.notification;
+    update();
+    Get.toNamed(NotificationsScreen.route);
   }
 
   void getUserProfileInfo() async {
-
     status = Status.loading;
     update();
 
-    await authRepository
-        .getUserInformation()
-        .then((value) {
+    await authRepository.getUserInformation().then((value) {
       userInformationModel = value;
       status = Status.completed;
+
       initOpenStates(userInformationModel?.cards?.length ?? 0);
 
       update();
@@ -82,21 +74,13 @@ class CardController extends GetxController with StateControlMixin {
     });
   }
 
-  void initOpenStates(int length) {
-    isOpenList = List.generate(length, (_) => false);
-    update();
-  }
-
-
   String hideCardCenter(String number) {
     if (number.length < 8) return number;
 
     final start = number.substring(0, 4);
     final end = number.substring(number.length - 4);
     final hiddenCount = number.length - 7;
-
     final hidden = '*' * hiddenCount;
-
     final masked = '$start$hidden$end';
 
     final buffer = StringBuffer();

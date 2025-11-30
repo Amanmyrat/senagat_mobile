@@ -91,6 +91,7 @@ class AddCardController extends GetxController with StateControlMixin {
       name: nameController.text.toUpperCase(),
       expiryDate: termController.text,
       cardDesign: cardDesigns[selectedDesign],
+      nickName: 'Senagat Bank',
     );
     await box.add(card);
   }

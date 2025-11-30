@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
+import 'package:senagat_mobile/src/features/card/controller/card_controller.dart';
+import 'package:senagat_mobile/src/features/dashboard/controller/dashboard_controller.dart';
+import 'package:senagat_mobile/src/features/dashboard/utils/nested_nav_ids.dart';
+import 'package:senagat_mobile/src/features/home/controller/home_controller.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../add_card/model/card_model.dart';
 
@@ -13,20 +17,26 @@ class CardSettingsController extends GetxController with StateControlMixin {
   late final String cardNumber;
   late String maskedNumber;
   late final int index;
+  final homeController = Get.find<HomeController>();
+  final cardController = Get.find<CardController>();
 
-  void onTextChanged(String val) {
-    continueEnabled = cardNumberController.text.isNotEmpty;
-    update();
-  }
-  void startBankVerification() {
-    status = Status.loading;
-    update();
-    Future.delayed(Duration(seconds: 3),(){
-      status = Status.completed;
-      cardNumberController.clear();
-      Get.back();
-    });
 
+  void onChangeNickName() {
+    final card = cardBox.getAt(index);
+    if (card != null) {
+      card.nickName = cardNumberController.text;
+      card.save();
+    }
+    if(cardNumberController.text.isEmpty){
+      cardNumberController.text = r'Senagat Bank';
+    }
+    cardController.refresh();
+    homeController.refresh();
+
+    status = Status.completed;
+    cardNumberController.clear();
+    update();
+    Get.back();
   }
 
   void onClearText(){
@@ -42,7 +52,7 @@ class CardSettingsController extends GetxController with StateControlMixin {
     cardNumber = cardBox.getAt(index)?.cardNumber ?? '';
     maskedNumber = hideCardCenter(cardNumber);
 
-    cardNumberController = TextEditingController();
+    cardNumberController = TextEditingController(text: cardBox.getAt(index)?.nickName);
   }
 
   String hideCardCenter(String number) {

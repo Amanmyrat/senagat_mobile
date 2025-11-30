@@ -8,6 +8,7 @@ import '../../../core/control_state_variable_mixin.dart';
 import '../../../core/local/key_value_storage_service.dart';
 import '../../../core/networking/custom_exception.dart';
 import '../../../core/states/stateful_data.dart';
+import '../../../utils/theme/constants/app_colors.dart';
 import '../../auth/controller/account_status_controller.dart';
 import '../../dashboard/controller/dashboard_controller.dart';
 import '../../dashboard/utils/nested_nav_ids.dart';
@@ -47,6 +48,18 @@ class IdentificationController extends GetxController with StateControlMixin {
 
     Navigator.of(Get.context!).pushNamedAndRemoveUntil(
         WelcomeScreen.route, (Route<dynamic> route) => false);
+  }
+
+  Color checkProfileStatus()  {
+    if(homeController.userInformationModel?.profileModel?.status == 'pending'){
+      return AppColors.orange;
+    }else if(homeController.userInformationModel?.profileModel?.status == 'rejected'){
+      return AppColors.redDark;
+    }else if(homeController.userInformationModel?.profileModel?.status == 'approved'){
+      return AppColors.green;
+    }else{
+      return AppColors.grey;
+    }
   }
 
   @override

@@ -224,6 +224,8 @@ const Map<String, String> tkTk = {
   r'bank_commission': r'Bankyň ýygymy 1.00 Manat',
   r'forget_password': r'Açar sözi ýatdan çykdy',
   r'card_removed': r'Kart pozyldy',
+  r'rejected': r'Ret edilen',
+
 
 
 

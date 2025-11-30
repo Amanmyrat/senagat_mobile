@@ -48,6 +48,7 @@ class AppAssets {
   static const diagram = 'assets/icons/diagramma.svg';
   static const lock = 'assets/icons/Lock.svg';
   static const X = 'assets/icons/Xbold.svg';
+  static const date = 'assets/icons/date.svg';
   static const foundation = 'assets/images/foundation.webp';
 
 

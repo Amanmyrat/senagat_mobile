@@ -16,7 +16,6 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
 
 
   late final TextEditingController workPhoneController;
-  late final TextEditingController phoneController;
   late final TextEditingController emailController;
   late final TextEditingController workPositionController;
   late bool internetService = false;
@@ -51,7 +50,6 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
     selectedCardId = Get.arguments['selectedCardId'];
     sum = Get.arguments['sum'];
     workPhoneController = TextEditingController();
-    phoneController = TextEditingController();
     emailController = TextEditingController();
     workPositionController = TextEditingController();
     getBranches();
@@ -61,7 +59,6 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
     if (workPhoneController.text.isNotEmpty &&
         emailController.text.isNotEmpty &&
         workPositionController.text.isNotEmpty &&
-        phoneController.text.length >= 8 &&
         workPhoneController.text.length >= 8 &&
         selectedDropdownBranch != null) {
       continueEnabled = true;

@@ -132,7 +132,7 @@ const Map<String, String> enUs = {
   r'card_removed': r'Card removed',
   r'replenishment_bank': r'Replenishment of this bank card with cash is not allowed (only salary can be transferred)',
   r'not_confirmed': r'Not confirmed',
-  r'confirmed': r'Confirmed',
+  r'approved': r'Confirmed',
   r'control': r'Control',
   r'accounts': r'Accounts',
   r'your_account': r'Your account',
@@ -224,6 +224,7 @@ const Map<String, String> enUs = {
   r'bank_commission': 'Bank\'s comission 1.00 Manat',
   r'application_send': r'The application has been sent',
   r'forget_password': r'Forgot password',
+  r'rejected': r'Rejected',
 
 
   r'otp_not_match': r'OTP did not match',
