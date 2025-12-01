@@ -85,13 +85,7 @@ class _IdentityVerificationScreenState
                             }
 
                             if (ctrl == controller.homePhoneController) {
-                              return _defaultField(
-                                controller: controller,
-                                title: title.tr,
-                                ctrl: ctrl,
-                                textType: TextInputType.number,
-                                maxLength: 10,
-                              );
+                              return _homePhoneRow(controller, title, ctrl);
                             }
 
                             // 3. DEFAULT TEXT FIELDS
@@ -151,8 +145,6 @@ class _IdentityVerificationScreenState
     required IdentityVerificationController controller,
     required String title,
     required TextEditingController ctrl,
-    TextInputType? textType,
-    int? maxLength,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -163,9 +155,7 @@ class _IdentityVerificationScreenState
         ),
         SizedBox(height: AppDimensions.paddingMedium.h),
         TextFormField(
-          maxLength: maxLength,
           textInputAction: TextInputAction.next,
-          keyboardType: textType,
           controller: ctrl,
           style: TextStyle(fontSize: 14.sp),
           onChanged: controller.onTextIsNotEmpty,
@@ -296,6 +286,57 @@ class _IdentityVerificationScreenState
                   decoration: _inputDecoration(
                     controller,
                     'passport_number'.tr,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _homePhoneRow(
+    IdentityVerificationController controller,
+    String title,
+    TextEditingController ctrl,
+  ) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 22.h),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+           'home_phone'
+                .tr,
+            style: TextStyle(fontSize: 14.sp, color: AppColors.blackText),
+          ),
+          SizedBox(height: AppDimensions.paddingMedium.h),
+
+          Row(
+            children: [
+              Container(
+                padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
+                decoration: BoxDecoration(
+                  color: AppColors.inputFillBackground,
+                  borderRadius: BorderRadius.circular(
+                    AppDimensions.borderRadiusMedium,
+                  ),
+                ),
+                child: Text('+993', style: TextStyle(fontSize: 14.sp)),
+              ),
+              SizedBox(width: AppDimensions.paddingSmall.w),
+
+              Expanded(
+                child: TextFormField(
+                  controller: controller.homePhoneController,
+                  maxLength: 10,
+                  keyboardType: TextInputType.number,
+                  onChanged: controller.onTextIsNotEmpty,
+                  style: TextStyle(fontSize: 14.sp),
+                  decoration: _inputDecoration(
+                    controller,
+                    'home_phone'.tr,
                   ),
                 ),
               ),

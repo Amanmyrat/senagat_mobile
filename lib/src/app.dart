@@ -23,6 +23,7 @@ import 'package:senagat_mobile/src/features/identity_verification/presentation/i
 import 'package:senagat_mobile/src/features/inquiries_list/presentation/inquiries_list.dart';
 import 'package:senagat_mobile/src/features/lang_settings/presentation/lang_settings_screen.dart';
 import 'package:senagat_mobile/src/features/loan/presentation/loan_screen.dart';
+import 'package:senagat_mobile/src/features/map.dart';
 import 'package:senagat_mobile/src/features/net_and_tv/presentation/net_and_tv_screen.dart';
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
 import 'package:senagat_mobile/src/features/notifications_settings/presentation/notifications_settings_screen.dart';
@@ -237,6 +238,9 @@ class _SenagatAppState extends State<SenagatApp> {
               ),GetPage(
                 name: CreditList.route,
                 page: () => const CreditList(),
+              ),GetPage(
+                name: MapScreen.route,
+                page: () => const MapScreen(),
               ),
             ],
           ),

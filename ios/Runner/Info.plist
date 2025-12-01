@@ -51,5 +51,11 @@
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>Need location to show nearby ATMs and offices.</string>
 
+    <key>NSContactsUsageDescription</key>
+    <string>We need access to your contacts to select a phone number</string>
+
+    <key>YandexMapKitApiKey</key>
+    <string>2f755a72-2c4e-457e-820e-cad66298463d</string>
+
 </dict>
 </plist>

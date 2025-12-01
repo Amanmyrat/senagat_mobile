@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_contact_picker/model/contact.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -12,7 +13,10 @@ import '../../../utils/theme/constants/app_dimensions.dart';
 import '../../../utils/theme/constants/app_fonts.dart';
 import '../../../widgets/check_widget.dart';
 import '../../../widgets/elevated_button_with_state.dart';
+import '../../add_card/presentation/add_card_screen.dart';
 import '../../dashboard/presentation/dashboard_screen.dart';
+import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
+
 
 class PaymentScreen extends StatefulWidget {
   static const route = r'/payment';
@@ -24,6 +28,9 @@ class PaymentScreen extends StatefulWidget {
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
+  final FlutterNativeContactPicker _contactPicker =
+  FlutterNativeContactPicker();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,89 +106,65 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                             height:
                                                 AppDimensions.paddingMedium.h,
                                           ),
+
+
+
                                           Row(
                                             children: [
                                               Container(
-                                                padding: EdgeInsets.all(
-                                                  AppDimensions
-                                                      .paddingExtraLarge
-                                                      .w,
-                                                ),
+                                                padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
                                                 decoration: BoxDecoration(
-                                                  color: AppColors
-                                                      .inputFillBackground,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                        AppDimensions
-                                                            .borderRadiusMedium,
-                                                      ),
+                                                  color: AppColors.inputFillBackground,
+                                                  borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium),
                                                 ),
                                                 child: Text(
                                                   '+993',
-                                                  style: TextStyle(
-                                                    fontSize: 14.sp,
-                                                  ),
+                                                  style: TextStyle(fontSize: 14.sp),
                                                 ),
                                               ),
-                                              SizedBox(
-                                                width: AppDimensions
-                                                    .paddingSmall
-                                                    .w,
-                                              ),
+                                              SizedBox(width: AppDimensions.paddingSmall.w),
                                               Expanded(
                                                 child: TextFormField(
-                                                  keyboardType:
-                                                      TextInputType.phone,
-                                                  controller: controller
-                                                      .phoneController,
-                                                  onChanged: (v) => controller
-                                                      .isTextNotEmpty(),
-                                                  focusNode:
-                                                      controller.phoneFocus,
+                                                  keyboardType: TextInputType.phone,
+                                                  controller: controller.phoneController,
+                                                  onChanged: (v) => controller.isTextNotEmpty(),
+                                                  focusNode: controller.phoneFocus,
                                                   maxLength: 8,
                                                   style: TextStyle(
                                                     fontSize: 14.sp,
-                                                    fontFamily:
-                                                        AppFonts.primaryFont,
+                                                    fontFamily: AppFonts.primaryFont,
                                                   ),
                                                   decoration: InputDecoration(
-                                                    hintText:
-                                                        r'enter_number'.tr,
-                                                    border:
-                                                        OutlineInputBorder(),
+                                                    hintText: r'enter_number'.tr,
+                                                    border: OutlineInputBorder(),
                                                     focusedBorder: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                            AppDimensions
-                                                                .borderRadiusMedium,
-                                                          ),
-                                                      borderSide: BorderSide(
-                                                        color: AppColors.green,
-                                                        width: 1.w,
-                                                      ),
+                                                      borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium),
+                                                      borderSide: BorderSide(color: AppColors.green, width: 1.w),
                                                     ),
                                                     enabledBorder: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                            AppDimensions
-                                                                .borderRadiusMedium,
-                                                          ),
-                                                      borderSide: BorderSide(
-                                                        color: AppColors.white,
-                                                        width: 1.w,
-                                                      ),
+                                                      borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium),
+                                                      borderSide: BorderSide(color: AppColors.white, width: 1.w),
                                                     ),
                                                     counter: const SizedBox(),
-                                                    contentPadding:
-                                                        EdgeInsets.symmetric(
-                                                          vertical: AppDimensions
-                                                              .paddingExtraLarge
-                                                              .h,
-                                                          horizontal:
-                                                              AppDimensions
-                                                                  .paddingLarge
-                                                                  .w,
-                                                        ),
+                                                    contentPadding: EdgeInsets.symmetric(
+                                                      vertical: AppDimensions.paddingExtraLarge.h,
+                                                      horizontal: AppDimensions.paddingLarge.w,
+                                                    ),
+                                                    suffixIcon: IconButton(
+                                                      icon: Icon(Icons.contacts, color: AppColors.green),
+                                                      onPressed: () async {
+                                                        try {
+                                                          // Directly call the static method
+                                                          final Contact? contact = await _contactPicker.selectContact();
+                                                          if (contact != null && contact.phoneNumbers != null) {
+                                                            controller.phoneController.text = contact.selectedPhoneNumber!;
+                                                            controller.update();
+                                                          }
+                                                        } catch (e) {
+                                                          print('Contact picker cancelled or failed: $e');
+                                                        }
+                                                      },
+                                                    ),
                                                   ),
                                                 ),
                                               ),
@@ -352,55 +335,77 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                       ),
                                     ),
                                     SizedBox(height: 16.h),
-                                    GestureDetector(
-                                      onTap: () {
-                                       bottomSheet(controller);
-                                      },
-                                      child: Container(
-                                        padding: EdgeInsets.all(
-                                          AppDimensions.paddingExtraLarge,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                            AppDimensions.borderRadiusMedium.r,
+                                    if(controller.cardBox.isNotEmpty)...[
+                                      GestureDetector(
+                                        onTap: () {
+                                          bottomSheet(controller);
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.all(
+                                            AppDimensions.paddingExtraLarge,
                                           ),
-                                          image: DecorationImage(
-                                            image: AssetImage(
-                                              AppAssets.cardImage,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                              AppDimensions.borderRadiusMedium.r,
                                             ),
-                                            fit: BoxFit.cover,
+                                            image: DecorationImage(
+                                              image: AssetImage(
+                                                AppAssets.cardImage,
+                                              ),
+                                              fit: BoxFit.cover,
+                                            ),
                                           ),
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Align(
-                                              alignment: Alignment.topLeft,
-                                              child: Text(
-                                                'Senagat Bank',
-                                                style: TextStyle(
-                                                  color: AppColors.white,
-                                                  fontSize: 14.sp,
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Align(
+                                                alignment: Alignment.topLeft,
+                                                child: Text(
+                                                  controller.cardBox.getAt(0)?.nickName ?? '',
+                                                  style: TextStyle(
+                                                    color: AppColors.white,
+                                                    fontSize: 14.sp,
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                            SizedBox(
-                                              height: AppDimensions
-                                                  .paddingExtraLarge
-                                                  .h,
-                                            ),
-
-                                            Text(
-                                              controller.maskedNumber,
-                                              style: TextStyle(
-                                                fontSize: 24.sp,
-                                                color: AppColors.white,
+                                              SizedBox(
+                                                height: AppDimensions
+                                                    .paddingExtraLarge
+                                                    .h,
                                               ),
-                                            ),
-                                          ],
+
+                                              Text(
+                                                controller.maskedNumber,
+                                                style: TextStyle(
+                                                  fontSize: 24.sp,
+                                                  color: AppColors.white,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
+                                    ]else...[
+                                      GestureDetector(
+                                          onTap: () {
+                                            Get.toNamed(AddCardScreen.route);
+                                          },
+                                          child: Container(
+                                            height: 120.h,
+                                            width: MediaQuery.of(context).size.width,
+                                            margin: EdgeInsets.only(bottom: 10.h),
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(
+                                                  AppDimensions.borderRadiusMedium.r),
+                                              color: AppColors.inputFillBackground,
+                                            ),
+                                            child: Center(
+                                              child: SvgPicture.asset(AppAssets.plusIcon,
+                                                  width: 30.w, color: AppColors.black),
+                                            ),
+                                          )
+                                      ),
+                                    ]
                                   ],
                                 ),
                               ),

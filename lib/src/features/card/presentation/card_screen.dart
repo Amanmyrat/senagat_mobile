@@ -194,7 +194,7 @@ class _CardScreenState extends State<CardScreen> {
                             physics: NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               final card =
-                              controller.userInformationModel!.cards![index];
+                              controller.userInformationModel?.cards?[index];
 
                               return Padding(
                                 padding: EdgeInsets.only(bottom: 40.h),
@@ -203,7 +203,8 @@ class _CardScreenState extends State<CardScreen> {
                                   decoration: BoxDecoration(
                                     color: AppColors.inputFillBackground,
                                     borderRadius: BorderRadius.circular(
-                                        AppDimensions.borderRadiusMedium.r),
+                                        AppDimensions.borderRadiusMedium.r
+                                    ),
                                     border: Border.all(
                                       color: AppColors.dividerColor,
                                       width: 1.w,
@@ -211,7 +212,8 @@ class _CardScreenState extends State<CardScreen> {
                                     boxShadow: [
                                       BoxShadow(
                                           color: AppColors.dividerColor,
-                                          blurRadius: 4.r),
+                                          blurRadius: 4.r
+                                      ),
                                     ],
                                   ),
                                   child: Column(
@@ -221,15 +223,27 @@ class _CardScreenState extends State<CardScreen> {
                                           controller.onOpenApplication(index);
                                         },
                                         child: Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Expanded(
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal:
+                                                AppDimensions.paddingMedium.w,
+                                                vertical: 4,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(
+                                                  AppDimensions.borderRadiusMedium.r,
+                                                ),
+                                                color: controller.checkCardStatus(index),
+                                              ),
                                               child: Text(
-                                                card.status?.tr ?? '',
+                                                card?.status?.tr ?? '',
                                                 style: TextStyle(
-                                                    fontSize: 14.sp,
-                                                    color: AppColors.black),
+                                                  fontSize: 14.sp,
+                                                  color: AppColors.white,
+                                                  fontFamily: AppFonts.secondaryFont,
+                                                ),
                                               ),
                                             ),
                                             Row(
@@ -269,7 +283,7 @@ class _CardScreenState extends State<CardScreen> {
                                                           color: AppColors.grey,
                                                           fontSize: 14.sp)),
                                                   SizedBox(height: 4.h),
-                                                  Text(card.cardTitle ?? "",
+                                                  Text(card?.cardTitle ?? "",
                                                       style: TextStyle(
                                                           color: AppColors.black,
                                                           fontSize: 14.sp)),
@@ -293,7 +307,7 @@ class _CardScreenState extends State<CardScreen> {
                                                           color: AppColors.grey,
                                                           fontSize: 14.sp)),
                                                   SizedBox(height: 4.h),
-                                                  Text(card.cardPrice.toString(),
+                                                  Text(card?.cardPrice.toString() ?? '',
                                                       style: TextStyle(
                                                           color: AppColors.black,
                                                           fontSize: 14.sp)),
@@ -317,7 +331,7 @@ class _CardScreenState extends State<CardScreen> {
                                                           color: AppColors.grey,
                                                           fontSize: 14.sp)),
                                                   SizedBox(height: 4.h),
-                                                  Text(card.bankBranch ?? "",
+                                                  Text(card?.bankBranch ?? "",
                                                       style: TextStyle(
                                                           color: AppColors.black,
                                                           fontSize: 14.sp)),
@@ -342,7 +356,7 @@ class _CardScreenState extends State<CardScreen> {
                                                           fontSize: 14.sp)),
                                                   SizedBox(height: 4.h),
                                                   Text(
-                                                    (card.delivery ?? false)
+                                                    (card?.delivery ?? false)
                                                         ? r'delivery_service_available'
                                                         .tr
                                                         : r'no_delivery_service'.tr,

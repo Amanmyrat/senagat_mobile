@@ -7,6 +7,7 @@ import 'package:senagat_mobile/src/features/notifications/presentation/notificat
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/services/error_utils.dart';
 import '../../../utils/services/show_snack.dart';
+import '../../../utils/theme/constants/app_colors.dart';
 import '../../add_card/model/card_model.dart';
 import '../../auth/repository/auth_repository.dart';
 import '../../home/models/user_information_model.dart';
@@ -72,6 +73,18 @@ class CardController extends GetxController with StateControlMixin {
       ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
       debugPrint(e.toString());
     });
+  }
+
+  Color checkCardStatus(int index)  {
+    if(userInformationModel?.cards?[index].status == 'pending'){
+      return AppColors.orange;
+    }else if(userInformationModel?.cards?[index].status == 'rejected'){
+      return AppColors.redDark;
+    }else if(userInformationModel?.cards?[index].status == 'approved'){
+      return AppColors.green;
+    }else{
+      return AppColors.grey;
+    }
   }
 
   String hideCardCenter(String number) {

@@ -24,7 +24,7 @@ class PaymentController extends GetxController with StateControlMixin {
   String serviceIcon = '';
   bool isInquiries = false;
   bool isFoundation = false;
-  late final String cardNumber;
+  late String cardNumber = '';
   late final String maskedNumber;
 
 
@@ -44,7 +44,11 @@ class PaymentController extends GetxController with StateControlMixin {
       debugPrint('No or invalid arguments passed to this page');
     }
 
-    cardNumber = cardBox.getAt(0)?.cardNumber ?? '';
+    if(cardBox.isNotEmpty) {
+      cardNumber = cardBox
+          .getAt(0)
+          ?.cardNumber ?? '';
+    }
     maskedNumber = hideCardCenter(cardNumber);
 
     serviceSettingsController = Get.find<ServiceSettingsController>();

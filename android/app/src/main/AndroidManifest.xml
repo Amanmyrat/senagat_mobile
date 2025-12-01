@@ -39,13 +39,13 @@
             android:name="flutterEmbedding"
             android:value="2" />
 
-        <meta-data
-            android:name="com.yandex.android.maps.API_KEY"
-            android:value="69312aa7-182d-404c-8bf2-41afab7e5ad1"/>
 
         <meta-data
-            android:name="com.yandex.maps.apikey"
-            android:value="69312aa7-182d-404c-8bf2-41afab7e5ad1" />
+            android:name="com.yandex.mobile.maps.API_KEY"
+            android:value="2f755a72-2c4e-457e-820e-cad66298463d" />
+
+
+
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and

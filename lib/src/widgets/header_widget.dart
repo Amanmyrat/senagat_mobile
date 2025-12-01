@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:senagat_mobile/src/core/globals.dart';
 import 'package:senagat_mobile/src/features/auth/repository/auth_repository.dart';
 import 'package:senagat_mobile/src/features/home/repository/exchage_rate_repository.dart';
 import '../features/home/controller/home_controller.dart';
+import '../features/map.dart';
 import '../features/map_search/presentation/map_search_screen.dart';
 import '../utils/constants/app_assets.dart';
 import '../utils/theme/constants/app_colors.dart';
@@ -37,7 +37,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
               Expanded(
                 child: TextFormField(
                   onTap: () {
-                    Get.toNamed(MapSearchScreen.route);
+                    Get.toNamed(MapScreen.route);
                   },
                   readOnly: true,
                   keyboardType: TextInputType.text,
