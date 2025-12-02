@@ -50,19 +50,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                            padding:  EdgeInsets.symmetric(
-                horizontal: AppDimensions.paddingExtraLarge.w,
-              ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                HeaderWidget(),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: AppDimensions.paddingExtraLarge.w,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              HeaderWidget(),
 
-                                if (controller.isProfileRequired == true) ...[
-                                  profileIsRequiredWidget(controller),
-                                ],
+                              if (controller.isProfileRequired == true) ...[
+                                profileIsRequiredWidget(controller),
                               ],
-                            )
+                            ],
+                          ),
                         ),
                         cardsWidget(controller),
 
@@ -74,7 +74,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-
                               fastOperationsWidget(controller),
                               charityFoundationWidget(controller),
 
@@ -470,15 +469,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     decoration: BoxDecoration(
                                                       shape: BoxShape.circle,
                                                       border: Border.all(
-                                                        color: AppColors.dividerColor,
+                                                        color: AppColors
+                                                            .dividerColor,
                                                         width: 1.w,
-                                                        style: BorderStyle.solid,),
+                                                        style:
+                                                            BorderStyle.solid,
+                                                      ),
                                                     ),
                                                     child: Image.asset(
                                                       controller.payBox
                                                               .getAt(index)
                                                               ?.serviceIcon ??
-                                                          AppAssets.deviceMobileIcon
+                                                          AppAssets
+                                                              .deviceMobileIcon,
                                                     ),
                                                   ),
                                                   SizedBox(
@@ -771,7 +774,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
-                      Get.toNamed(CardSettingsScreen.route, arguments: {'index': index});
+                      Get.toNamed(
+                        CardSettingsScreen.route,
+                        arguments: {'index': index},
+                      );
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width,
@@ -1314,8 +1320,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                     ),
-
-
                   ],
                 ),
               ],

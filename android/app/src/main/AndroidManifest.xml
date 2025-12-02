@@ -44,6 +44,11 @@
             android:name="com.yandex.mobile.maps.API_KEY"
             android:value="2f755a72-2c4e-457e-820e-cad66298463d" />
 
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCJAZc--O8JvGpzLmentE_6nH8q_PRNWbcs"/>
+<!--        <meta-data android:name="com.google.android.geo.API_KEY"-->
+<!--            android:value="AIzaSyCSlYpD9YBJEhb1chpIyIYnzhKflt3jsE8"/>-->
+
 
 
     </application>

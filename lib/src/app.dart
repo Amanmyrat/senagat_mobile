@@ -235,13 +235,9 @@ class _SenagatAppState extends State<SenagatApp> {
               GetPage(
                 name: InquiriesList.route,
                 page: () => const InquiriesList(),
-              ),GetPage(
-                name: CreditList.route,
-                page: () => const CreditList(),
-              ),GetPage(
-                name: MapScreen.route,
-                page: () => const MapScreen(),
               ),
+              GetPage(name: CreditList.route, page: () => const CreditList()),
+              GetPage(name: MapScreen.route, page: () => const MapScreen()),
             ],
           ),
         );

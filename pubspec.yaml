@@ -60,6 +60,7 @@ dependencies:
   flutter_staggered_animations: ^1.1.1
   flutter_switch: ^0.3.2
   roundcheckbox: ^2.0.5
+  google_maps_flutter: ^2.14.0
 
 dev_dependencies:
   flutter_test:
