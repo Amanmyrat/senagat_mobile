@@ -92,7 +92,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          accountWidget(controller),
+                                          if(controller.isFoundation == false)...[
+                                            accountWidget(controller),
+                                          ],
                                           Text(
                                             r'phone_number'.tr,
                                             style: TextStyle(
@@ -519,29 +521,15 @@ Future bottomSheet(PaymentController controller){
                           MainAxisAlignment
                               .start,
                           children: [
-                            RoundCheckBox(
-                              size: 27.w,
-                              checkedColor:
-                              AppColors
-                                  .transparent,
-                              checkedWidget: SvgPicture.asset(
-                                AppAssets
-                                    .checkBoxIcon,
-                                color: AppColors
-                                    .green,
-                              ),
-                              border: Border.all(
-                                color: AppColors
-                                    .black,
-                              ),
-                              onTap:
-                                  (
-                                  value,
-                                  ) {},
+                            Checkbox(
+                              onChanged: (value,) {},
+                              value: true,
+                              side: BorderSide(width: 1),
+
                             ),
                             SizedBox(
                               width: AppDimensions
-                                  .paddingMedium
+                                  .paddingSmall
                                   .w,
                             ),
                             Column(
@@ -550,16 +538,38 @@ Future bottomSheet(PaymentController controller){
                                   .start,
                               children: [
 
-                                Text(
-                                  controller.cardBox.getAt(index)?.name ?? '',
-                                  style: TextStyle(
-                                    fontSize:
-                                    14.sp,
-                                    color:
-                                    AppColors.black,
-                                    fontFamily:
-                                    AppFonts.primaryFont,
-                                  ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      controller.cardBox.getAt(index)?.name ?? '',
+                                      style: TextStyle(
+                                        fontSize:
+                                        14.sp,
+                                        color:
+                                        AppColors.black,
+                                        fontFamily:
+                                        AppFonts.primaryFont,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: AppDimensions
+                                          .paddingSmall
+                                          .w,
+                                    ),
+                                    Text(
+                                     '(${controller.cardBox
+                                          .getAt(index)
+                                          ?.nickName})',
+                                      style: TextStyle(
+                                        fontSize:
+                                        14.sp,
+                                        color:
+                                        AppColors.black,
+                                        fontFamily:
+                                        AppFonts.primaryFont,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 Text(
                                   controller.hideCardCenter(controller.cardBox.getAt(index)?.cardNumber ?? ''),

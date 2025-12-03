@@ -38,7 +38,7 @@ class _LangSettingsScreenState extends State<LangSettingsScreen> {
                         SizedBox(height: 32.h,),
                         GestureDetector(
                           onTap: (){
-                            controller.updateLanguage('TK');
+                            controller.updateLanguage('TM');
                           },
                           child: Container(
                             color: AppColors.white,
@@ -46,13 +46,11 @@ class _LangSettingsScreenState extends State<LangSettingsScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(r'Turkmen'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.black,),),
-                                RoundCheckBox(
-                                    size: 27.w,
-                                    checkedColor: Colors.transparent,
-                                    checkedWidget: SvgPicture.asset(AppAssets.checkBoxIcon, color: AppColors.green,),
-                                    border: Border.all(color: AppColors.black),
-                                    isChecked: controller.currentLang == 'TM' || controller.currentLang == 'TK',
-                                    onTap: (value) {
+                                Checkbox(
+                                  side: BorderSide(width: 1.w),
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.r)),
+                                    value: controller.currentLang == 'TM' || controller.currentLang == 'TK',
+                                    onChanged: (value) {
                                       controller.updateLanguage('TM');
                                     }
                                 ),
@@ -60,7 +58,6 @@ class _LangSettingsScreenState extends State<LangSettingsScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 32.h,),
                         GestureDetector(
                           onTap: (){
                             controller.updateLanguage('RU');
@@ -71,16 +68,11 @@ class _LangSettingsScreenState extends State<LangSettingsScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(r'Русский'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.black,),),
-                                RoundCheckBox(
-                                    size: 27.w,
-                                    checkedColor: Colors.transparent,
-                                    checkedWidget: Padding(
-                                      padding: EdgeInsets.all(2.w),
-                                      child: SvgPicture.asset(AppAssets.checkBoxIcon, color: AppColors.green, width: 12.w,),
-                                    ),
-                                    border: Border.all(color: AppColors.black),
-                                    isChecked: controller.currentLang == 'RU',
-                                    onTap: (value) {
+                                Checkbox(
+                                    side: BorderSide(width: 1.w),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.r)),
+                                    value: controller.currentLang == 'RU' || controller.currentLang == 'RU',
+                                    onChanged: (value) {
                                       controller.updateLanguage('RU');
                                     }
                                 ),
@@ -88,7 +80,6 @@ class _LangSettingsScreenState extends State<LangSettingsScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 32.h,),
                         GestureDetector(
                           onTap: (){
                             controller.updateLanguage('EN');
@@ -99,13 +90,11 @@ class _LangSettingsScreenState extends State<LangSettingsScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(r'English'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.black,),),
-                                RoundCheckBox(
-                                    size: 27.w,
-                                    checkedColor: Colors.transparent,
-                                    checkedWidget: SvgPicture.asset(AppAssets.checkBoxIcon, color: AppColors.green, width: 12.w,),
-                                    border: Border.all(color: AppColors.black),
-                                    isChecked: controller.currentLang == 'EN',
-                                    onTap: (value) {
+                                Checkbox(
+                                    side: BorderSide(width: 1.w),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.r)),
+                                    value: controller.currentLang == 'EN' || controller.currentLang == 'EN',
+                                    onChanged: (value) {
                                       controller.updateLanguage('EN');
                                     }
                                 ),

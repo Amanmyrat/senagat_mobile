@@ -39,7 +39,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Get.toNamed(IdentifyScreen.route);
                       },
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Center(
                             child: Container(
@@ -68,9 +68,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               SvgPicture.asset(AppAssets.arrowRightIcon, color: AppColors.black, width: 18.w,)
                             ],
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                          Column(
                             children: [
+
+                              Text('+993 ${controller.phoneBox.get('phone')}', style: TextStyle(fontSize: 17.sp, color: AppColors.black,),),
+                              SizedBox(height: 5.h,),
+
                               Container(
                                 padding: EdgeInsets.symmetric(
                                   horizontal:
@@ -86,14 +89,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 child: Text(
                                   controller.homeController.userInformationModel?.profileModel?.status?.tr ?? 'not_confirmed'.tr,
                                   style: TextStyle(
-                                    fontSize: 14,
+                                    fontSize: 14.sp,
                                     color: AppColors.white,
                                     fontFamily: AppFonts.secondaryFont,
                                   ),
                                 ),
                               ),
-                                SizedBox(width: 10.w,),
-                                Text('+993 ${controller.phoneBox.get('phone')}', style: TextStyle(fontSize: 14.sp, color: AppColors.black,),),
+
 
                             ],
                           ),

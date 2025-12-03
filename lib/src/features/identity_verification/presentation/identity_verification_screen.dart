@@ -267,7 +267,7 @@ class _IdentityVerificationScreenState
               _dropdown(
                 controller,
                 items: controller.citySelection,
-                hint: 'AS',
+                hint: 'AŞ',
                 onChange: (v) {
                   controller.selectedDropdownLetters = v!;
                   controller.update();
@@ -279,7 +279,7 @@ class _IdentityVerificationScreenState
               Expanded(
                 child: TextFormField(
                   controller: controller.passportNumberController,
-                  maxLength: 7,
+                  maxLength: 6,
                   keyboardType: TextInputType.number,
                   onChanged: controller.onTextIsNotEmpty,
                   style: TextStyle(fontSize: 14.sp),

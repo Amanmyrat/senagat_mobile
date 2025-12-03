@@ -524,7 +524,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                 children: [
                   Text(
                     controller.nameController.text.isNotEmpty
-                        ? controller.nameController.text
+                        ? controller.nameController.text.toUpperCase()
                         : r'name_on_the_card'.tr,
                     style: TextStyle(
                       fontSize: 14.sp,
@@ -580,7 +580,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                       Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                          'Senagat Bank',
+                          'Beýleki Bank',
                           style: TextStyle(
                             color: AppColors.white,
                             fontSize: 14.sp,

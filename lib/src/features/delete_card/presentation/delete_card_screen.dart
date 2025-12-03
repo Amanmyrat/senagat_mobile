@@ -46,35 +46,7 @@ class _DeleteCardScreenState extends State<DeleteCardScreen> {
                                   children: [
                                     Text(r'remove_card'.tr, style: TextStyle(color: AppColors.black, fontSize: 24.sp),),
                                     SizedBox(height: 16.h,),
-                                    // Container(
-                                    //   padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
-                                    //   decoration: BoxDecoration(
-                                    //     borderRadius: BorderRadius.circular(
-                                    //       AppDimensions.borderRadiusMedium.r,
-                                    //     ),
-                                    //     border: Border.all(color: AppColors.dividerColor, width: 1.w, style: BorderStyle.solid),
-                                    //     boxShadow: [
-                                    //       BoxShadow(
-                                    //         color: AppColors.dividerColor,
-                                    //         blurRadius: 4.r,
-                                    //       ),
-                                    //     ],
-                                    //     color: AppColors.white,
-                                    //   ),
-                                    //   child: Row(
-                                    //     crossAxisAlignment: CrossAxisAlignment.start,
-                                    //     children: [
-                                    //       SvgPicture.asset(AppAssets.infoIcon, color: AppColors.green,),
-                                    //       SizedBox(width: 6.w,),
-                                    //       Flexible(
-                                    //         child: Text(r'replenishment_bank'.tr,
-                                    //           style: TextStyle(fontSize: 14.sp, color: AppColors.black, fontFamily: AppFonts.secondaryFont),
-                                    //         ),
-                                    //       ),
-                                    //     ],
-                                    //   ),
-                                    // ),
-                                    // SizedBox(height: 22.h,),
+
                                     Container(
                                       width: MediaQuery.of(context).size.width,
                                       padding: EdgeInsets.all(
@@ -84,7 +56,7 @@ class _DeleteCardScreenState extends State<DeleteCardScreen> {
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
                                         image: DecorationImage(
-                                          image: AssetImage(AppAssets.cardImage),
+                                          image: AssetImage(controller.cardDesign),
                                           fit: BoxFit.fill,
                                         ),
                                       ),

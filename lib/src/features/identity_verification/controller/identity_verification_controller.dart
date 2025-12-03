@@ -60,7 +60,7 @@ class IdentityVerificationController extends GetxController
     r'home_address',
   ];
 
-  final List<String> citySelection = ["AS", "AH", "AE"];
+  final List<String> citySelection = ["AŞ", "AH", "LB", 'MR', 'DŞ'];
   final List<String> number = ["I", "II", "III", 'IV'];
 
   late List<TextEditingController> controllers;
@@ -81,8 +81,7 @@ class IdentityVerificationController extends GetxController
     }
 
     /// Extract dropdown values from saved passport number
-    if (savedProfile?.passportNumber != null &&
-        savedProfile!.passportNumber!.length >= 3) {
+    if (savedProfile?.passportNumber != null && savedProfile!.passportNumber!.length >= 3) {
       selectedDropdownLetters =
           savedProfile.passportNumber!.substring(0, 2);
       selectedDropdownNumber =

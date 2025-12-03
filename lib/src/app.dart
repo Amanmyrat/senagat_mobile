@@ -257,7 +257,7 @@ class DashboardBinding extends Bindings {
     Get.put(DashboardController(), permanent: true);
     Get.put(AuthController(), permanent: true);
     Get.put(ServiceSettingsController());
-    Get.put(AddCardController());
+    Get.put(AddCardController(),permanent: true);
     Get.put(
       HomeController(
         ExchangeRateRepository(apiService: ApiServices.apiService),

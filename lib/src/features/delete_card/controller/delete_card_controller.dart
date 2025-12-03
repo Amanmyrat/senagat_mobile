@@ -13,6 +13,7 @@ class DeleteCardController extends GetxController with StateControlMixin {
  late final String cardNumber;
  late final String cardName;
  late final String cardTerm;
+ late final String cardDesign;
  late final int index;
 
  void startBankVerification() {
@@ -43,6 +44,7 @@ class DeleteCardController extends GetxController with StateControlMixin {
    cardNumber = cardBox.getAt(index)?.cardNumber ?? '';
    cardName = cardBox.getAt(index)?.name ?? '';
    cardTerm = cardBox.getAt(index)?.expiryDate ?? '';
+   cardDesign = cardBox.getAt(index)?.cardDesign ?? '';
    super.onInit();
   }
 }

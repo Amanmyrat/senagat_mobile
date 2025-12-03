@@ -131,7 +131,7 @@ const Map<String, String> tkTk = {
   r'remove_card': r'Karty pozmak',
   r'replenishment_bank': r'Bu karty nagt bilen doldurmak gadagan (diňe aýlyk geçiriler)',
   r'not_confirmed': r'Tassyklanmadyk',
-  r'confirmed': r'Tassyklanyldy',
+  r'approved': r'Tassyklanyldy',
   r'control': r'Dolandyryş',
   r'accounts': r'Hasaplar',
   r'your_account': r'Hasabyňyz',
@@ -229,6 +229,7 @@ const Map<String, String> tkTk = {
   r'exit_app?': r'Programmadan çykmak isleýärsiňizmi?',
   r'no': r'Ýok',
   r'yes': r'Hawa',
+  r'other_bank': r'Beýleki Bank',
 
 
 

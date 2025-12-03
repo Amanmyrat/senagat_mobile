@@ -262,41 +262,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       ),
                                                     ),
 
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        SizedBox(
-                                                          width: 110.h,
-                                                          child: Text(
-                                                            controller
-                                                                .serviceSecondaryTitles[index]
-                                                                .tr,
-                                                            style: TextStyle(
-                                                              color: isSelected
-                                                                  ? AppColors
-                                                                        .white
-                                                                  : AppColors
-                                                                        .blackText,
-                                                              fontSize: 14.sp,
-                                                              fontFamily: AppFonts
-                                                                  .secondaryFont,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
                                                   ],
                                                 ),
                                               ),
-                                              Positioned(
-                                                top: 0,
-                                                right: 0,
+                                              Center(
                                                 child: Image.asset(
                                                   controller.serviceImage[index],
-                                                  width: 163.w,
-                                                  height: 200.h,
+                                                  width: 200.w,
+                                                  height: 250.h,
                                                 ),
                                               ),
                                               Padding(
@@ -1103,7 +1076,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Expanded(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       r'charitable_foundation'.tr,
@@ -1111,24 +1084,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: controller.lastTap == HomeTapType.foundation
                             ? AppColors.white
                             : AppColors.blackText,
-                        fontSize: 17.sp,
+                        fontSize: 20.sp,
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: AppDimensions.paddingMedium.h,
-                      ),
-                      child: Text(
-                        r'donations_of_any_amount'.tr,
-                        style: TextStyle(
-                          color: controller.lastTap == HomeTapType.foundation
-                              ? AppColors.lightGreen
-                              : AppColors.blackText,
-                          fontSize: 14.sp,
-                          fontFamily: AppFonts.secondaryFont,
-                        ),
-                      ),
-                    ),
+                    SizedBox(height: AppDimensions.paddingExtraLarge.h,),
+                
                     Row(
                       children: [
                         Text(

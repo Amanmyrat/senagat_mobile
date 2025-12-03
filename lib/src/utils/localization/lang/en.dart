@@ -229,6 +229,7 @@ const Map<String, String> enUs = {
   r'exit_app?': r'Do you want to exit the app?',
   r'no': r'No',
   r'yes': r'Yes',
+  r'other_bank': r'Other Bank',
 
 
   r'otp_not_match': r'OTP did not match',

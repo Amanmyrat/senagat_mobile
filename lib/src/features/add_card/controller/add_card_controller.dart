@@ -34,6 +34,22 @@ class AddCardController extends GetxController with StateControlMixin {
     AppAssets.familyCard,
   ];
 
+  int? senagatIndex;
+
+  final Map<String, int> prefixToIndex = {
+    '993470': 0,
+    '993407': 0,
+    '993420': 0,
+    '993402': 0,
+    '993471': 0,
+    '993421': 0,
+    '993472': 0,
+    '993473': 1,
+    '993474': 2,
+    '993475': 3,
+  };
+
+
   late final cardNumberFormatter = MaskTextInputFormatter(
     mask: '#### #### #### ####',
     filter: {"#": RegExp(r'\d')},
@@ -41,8 +57,12 @@ class AddCardController extends GetxController with StateControlMixin {
 
   late final termFormatter = MaskTextInputFormatter(
     mask: '##/##',
-    filter: {"#": RegExp(r'\d')},
+    filter: {
+      "#": RegExp(r'[0-9]'),
+    },
+    type: MaskAutoCompletionType.lazy,
   );
+
 
   String get maskedCardNumber {
     String numbers = cardNumberController.text.replaceAll(' ', '');
@@ -74,8 +94,22 @@ class AddCardController extends GetxController with StateControlMixin {
   void onTextChanged(String val) {
     continueEnabled = cardNumberController.text.length >= 19 &&
         nameController.text.isNotEmpty &&
-        termController.text.length >= 5 &&
+        isValidExpiry(termController.text) &&
         cvcController.text.length >=3;
+
+    if (termController.text.length >= 2) {
+      final month = int.tryParse(termController.text.substring(0, 2)) ?? 0;
+
+      if (month > 12) {
+        termController.text = '12/${termController.text.substring(3)}';
+        termController.selection = TextSelection.fromPosition(
+          TextPosition(offset: termController.text.length),
+        );
+      }
+    }
+
+    updateCardDesignByPrefix();
+
     update();
   }
 
@@ -90,8 +124,10 @@ class AddCardController extends GetxController with StateControlMixin {
       cardNumber: cardNumberController.text,
       name: nameController.text.toUpperCase(),
       expiryDate: termController.text,
-      cardDesign: cardDesigns[selectedDesign],
-      nickName: 'Senagat Bank',
+      cardDesign: senagatIndex != null
+          ? cardDesigns2[senagatIndex!]
+          : cardDesigns[selectedDesign],
+      nickName: senagatIndex != null ? '' : r'other_bank'.tr,
     );
     await box.add(card);
   }
@@ -109,11 +145,37 @@ class AddCardController extends GetxController with StateControlMixin {
     }
   }
 
+  bool isValidExpiry(String value) {
+    if (value.length != 5) return false;
+    if (!value.contains('/')) return false;
+
+    final parts = value.split('/');
+    final month = int.tryParse(parts[0]) ?? 0;
+    final year  = int.tryParse(parts[1]) ?? 0;
+
+    if (month < 1 || month > 12) return false;
+    if (year < 0 || year > 99) return false;
+
+    return true;
+  }
+
+
+  void updateCardDesignByPrefix() {
+    final cardNumber = cardNumberController.text.replaceAll(' ', '');
+    final prefix6 = cardNumber.length >= 6 ? cardNumber.substring(0, 6) : '';
+    senagatIndex = prefixToIndex[prefix6];
+
+    if (senagatIndex != null) {
+      selectedDesign = senagatIndex!;
+    }
+    update();
+  }
+
   void startBankVerification() {
     check = true;
     status = Status.loading;
     update();
-    Future.delayed(Duration(seconds: 3),(){
+    Future.delayed(Duration(seconds: 2),(){
       status = Status.completed;
       update();
 
@@ -127,6 +189,10 @@ class AddCardController extends GetxController with StateControlMixin {
     });
   }
 
+  void deleteAddController(){
+    Get.delete<AddCardController>();
+  }
+
   @override
   void dispose() {
     cardNumberController.dispose();
@@ -134,5 +200,15 @@ class AddCardController extends GetxController with StateControlMixin {
     pageController.dispose();
     termController.dispose();
     super.dispose();
+  }
+
+
+  @override
+  void onClose() {
+    cardNumberController.clear();
+    nameController.clear();
+    termController.clear();
+    cvcController.clear();
+    super.onClose();
   }
 }

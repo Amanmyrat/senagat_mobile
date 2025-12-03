@@ -132,7 +132,7 @@ const Map<String, String> ruRu = {
   r'card_removed': r'Карта удалена',
   r'replenishment_bank': r'Пополнение этой карты наличными не разрешено (только зарплата)',
   r'not_confirmed': r'Не подтверждено',
-  r'confirmed': r'Потвержден',
+  r'approved': r'Потвержден',
   r'control': r'Контроль',
   r'accounts': r'Счета',
   r'your_account': r'Ваш счет',
@@ -229,6 +229,8 @@ const Map<String, String> ruRu = {
   'exit_app?': r'Вы хотите выйти из приложения?',
   'no': r'Нет',
   'yes': r'Да',
+  r'other_bank': r'Другой Банк',
+
 
 
   r'otp_not_match': r'Код не совпадает',

@@ -61,7 +61,7 @@ class _CardSettingsScreenState extends State<CardSettingsScreen> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(r'Senagat Bank'.tr, style: TextStyle(color: AppColors.greyInactive, fontSize: 14.sp),),
+                              Text(controller.cardBox.getAt(0)?.nickName ?? '', style: TextStyle(color: AppColors.greyInactive, fontSize: 14.sp),),
                               Text(controller.maskedNumber, style: TextStyle(color: AppColors.greyInactive, fontSize: 14.sp),),
                             ],
                           )
@@ -92,18 +92,21 @@ class _CardSettingsScreenState extends State<CardSettingsScreen> {
                               onTap:(){
                                 Get.toNamed(CardDetailsScreen.route, arguments: {'index': controller.index});
                               },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      SvgPicture.asset(AppAssets.navigationCreditCardIcon, width: 24.w, color: AppColors.green,),
-                                      SizedBox(width: 10.w,),
-                                      Text(r'card_details'.tr, style: TextStyle(color: AppColors.black, fontSize: 14.sp, fontFamily: AppFonts.secondaryFont),),
-                                    ],
-                                  ),
-                                  SvgPicture.asset(AppAssets.arrowRightIcon, width: 16.w,)
-                                ],
+                              child: Container(
+                                color: AppColors.transparent,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        SvgPicture.asset(AppAssets.navigationCreditCardIcon, width: 24.w, color: AppColors.green,),
+                                        SizedBox(width: 10.w,),
+                                        Text(r'card_details'.tr, style: TextStyle(color: AppColors.black, fontSize: 14.sp, fontFamily: AppFonts.secondaryFont),),
+                                      ],
+                                    ),
+                                    SvgPicture.asset(AppAssets.arrowRightIcon, width: 16.w,)
+                                  ],
+                                ),
                               ),
                             ),
                             SizedBox(height: 26.h,),
@@ -207,18 +210,21 @@ class _CardSettingsScreenState extends State<CardSettingsScreen> {
                                       );
                                 });
                               },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      SvgPicture.asset(AppAssets.edit, width: 24.w,),
-                                      SizedBox(width: 10.w,),
-                                      Text(r'card_name'.tr, style: TextStyle(color: AppColors.black, fontSize: 14.sp,fontFamily: AppFonts.secondaryFont),),
-                                    ],
-                                  ),
-                                  SvgPicture.asset(AppAssets.arrowRightIcon, width: 16.w,)
-                                ],
+                              child: Container(
+                                color: AppColors.transparent,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        SvgPicture.asset(AppAssets.edit, width: 24.w,),
+                                        SizedBox(width: 10.w,),
+                                        Text(r'card_name'.tr, style: TextStyle(color: AppColors.black, fontSize: 14.sp,fontFamily: AppFonts.secondaryFont),),
+                                      ],
+                                    ),
+                                    SvgPicture.asset(AppAssets.arrowRightIcon, width: 16.w,)
+                                  ],
+                                ),
                               ),
                             ),
                           ],

@@ -51,7 +51,7 @@ class HomeController extends GetxController with StateControlMixin {
   String cardKey = 'card';
 
   bool isProfileRequired = true;
-  bool isServiceRequired = false;
+  bool isServiceRequired = true;
 
   final _exchange = <ExchangeRateModel>[];
   List<ExchangeRateModel> get exchange => _exchange;
@@ -106,7 +106,7 @@ class HomeController extends GetxController with StateControlMixin {
   }
 
   void onServiceTap(int index) {
-    if (isServiceRequired) {
+    if (isServiceRequired == false) {
       lastTap = HomeTapType.service;
       lastServiceTapIndex = index;
       update();
@@ -244,10 +244,10 @@ class HomeController extends GetxController with StateControlMixin {
 
   checkProfileStatus() {
     if (userInformationModel?.profileModel?.status == 'approved') {
-      isServiceRequired = true;
+      isServiceRequired = false;
       update();
     } else {
-      isServiceRequired = false;
+      isServiceRequired = true;
       update();
     }
   }
