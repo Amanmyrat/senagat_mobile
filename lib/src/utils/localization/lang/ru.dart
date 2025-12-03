@@ -225,7 +225,10 @@ const Map<String, String> ruRu = {
   r'bank_commission': r'Комиссия банка 1.00 Манат',
   r'forget_password': r'Забыл пароль',
   r'rejected': r'Отклонено',
-
+  r'are_you_sure?': r'Вы уверены?',
+  'exit_app?': r'Вы хотите выйти из приложения?',
+  'no': r'Нет',
+  'yes': r'Да',
 
 
   r'otp_not_match': r'Код не совпадает',

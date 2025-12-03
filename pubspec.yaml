@@ -50,8 +50,6 @@ dependencies:
   universal_image: ^1.0.11
   file_picker: ^8.0.0
   flutter_native_contact_picker: ^0.0.11
-  yandex_mapkit: ^4.2.1
-  mapbox_maps_flutter: ^2.12.0
 
 
   flutter_map: ^7.0.2

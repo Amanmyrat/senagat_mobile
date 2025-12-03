@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:get_storage/get_storage.dart';
 import 'package:senagat_mobile/src/utils/localization/lang/tm.dart';
+import 'package:senagat_mobile/src/utils/localization/tk_material_localizations.dart';
 
 import 'lang/ru.dart';
 import 'lang/en.dart';
@@ -30,7 +31,9 @@ class LocalizationService extends Translations {
     return [
       GlobalMaterialLocalizations.delegate,
       GlobalWidgetsLocalizations.delegate,
-      GlobalCupertinoLocalizations.delegate
+      GlobalCupertinoLocalizations.delegate,
+      TkMaterialLocalizationsDelegate(),
+
     ];
   }
 

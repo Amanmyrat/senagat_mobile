@@ -225,6 +225,10 @@ const Map<String, String> enUs = {
   r'application_send': r'The application has been sent',
   r'forget_password': r'Forgot password',
   r'rejected': r'Rejected',
+  r'are_you_sure?': r'Are you sure?',
+  r'exit_app?': r'Do you want to exit the app?',
+  r'no': r'No',
+  r'yes': r'Yes',
 
 
   r'otp_not_match': r'OTP did not match',

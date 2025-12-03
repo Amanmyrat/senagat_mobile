@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
+import 'package:flutter_native_contact_picker/model/contact.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
@@ -26,8 +28,7 @@ class PaymentController extends GetxController with StateControlMixin {
   bool isFoundation = false;
   late String cardNumber = '';
   late final String maskedNumber;
-
-
+  final FlutterNativeContactPicker _contactPicker = FlutterNativeContactPicker();
 
   late final FocusNode phoneFocus;
 
@@ -122,6 +123,42 @@ class PaymentController extends GetxController with StateControlMixin {
 
     return buffer.toString();
   }
+
+  Future<void> contactPicker() async {
+    try {
+      final Contact? contact = await _contactPicker.selectContact();
+      if (contact == null) {
+        print('No contact selected');
+        return;
+      }
+
+      String? phone = contact.selectedPhoneNumber;
+
+      // If selectedPhoneNumber is null, use the first phone number if available
+      if (phone == null && contact.phoneNumbers != null) {
+        phone = contact.phoneNumbers?.first ?? '';
+      }
+
+      if (phone == null) {
+        print('Contact has no phone number');
+        return;
+      }
+
+      // Remove +993 or leading 8
+      if (phone.startsWith('+993')) {
+        phone = phone.substring(4);
+      } else if (phone.startsWith('8')) {
+        phone = phone.substring(1);
+      }
+
+      print('Phone after formatting: $phone');
+      phoneController.text = phone;
+      update();
+    } catch (e) {
+      print('Contact picker cancelled or failed: $e');
+    }
+  }
+
 
   @override
   void dispose() {

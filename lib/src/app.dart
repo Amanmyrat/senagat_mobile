@@ -179,7 +179,10 @@ class _SenagatAppState extends State<SenagatApp> {
                 name: GetCreditScreen.route,
                 page: () => const GetCreditScreen(),
               ),
-              GetPage(name: LoanScreen.route, page: () => const LoanScreen()),
+              GetPage(
+                  name: LoanScreen.route,
+                  page: () => const LoanScreen(),
+              ),
               GetPage(
                 name: NotificationsSettingsScreen.route,
                 page: () => const NotificationsSettingsScreen(),

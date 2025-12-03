@@ -28,8 +28,6 @@ class PaymentScreen extends StatefulWidget {
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
-  final FlutterNativeContactPicker _contactPicker =
-  FlutterNativeContactPicker();
 
   @override
   Widget build(BuildContext context) {
@@ -153,16 +151,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                                     suffixIcon: IconButton(
                                                       icon: Icon(Icons.contacts, color: AppColors.green),
                                                       onPressed: () async {
-                                                        try {
-                                                          // Directly call the static method
-                                                          final Contact? contact = await _contactPicker.selectContact();
-                                                          if (contact != null && contact.phoneNumbers != null) {
-                                                            controller.phoneController.text = contact.selectedPhoneNumber!;
-                                                            controller.update();
-                                                          }
-                                                        } catch (e) {
-                                                          print('Contact picker cancelled or failed: $e');
-                                                        }
+                                                       controller.contactPicker();
                                                       },
                                                     ),
                                                   ),

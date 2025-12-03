@@ -225,7 +225,10 @@ const Map<String, String> tkTk = {
   r'forget_password': r'Açar sözi ýatdan çykdy',
   r'card_removed': r'Kart pozyldy',
   r'rejected': r'Ret edilen',
-
+  r'are_you_sure?': r'Özüňe ynanýarsyňmy?',
+  r'exit_app?': r'Programmadan çykmak isleýärsiňizmi?',
+  r'no': r'Ýok',
+  r'yes': r'Hawa',
 
 
 

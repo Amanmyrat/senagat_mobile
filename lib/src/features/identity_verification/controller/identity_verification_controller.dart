@@ -103,7 +103,7 @@ class IdentityVerificationController extends GetxController
       passportNumberController = TextEditingController(
         text: savedProfile?.passportNumber != null &&
             savedProfile!.passportNumber!.length > 3
-            ? savedProfile.passportNumber!.substring(3)
+            ? savedProfile.passportNumber!.substring(4)
             : savedProfile?.passportNumber ?? '',
       ),
       dateIssueController =
@@ -244,9 +244,9 @@ class IdentityVerificationController extends GetxController
     );
 
     if (picked != null) {
-      controller.text = "${picked.day.toString().padLeft(2, '0')}"
-          ".${picked.month.toString().padLeft(2, '0')}"
-          ".${picked.year}";
+      controller.text = "${picked.day.toString().padLeft(2, '0')}-"
+          "${picked.month.toString().padLeft(2, '0')}-"
+          "${picked.year}";
       update();
     }
   }
