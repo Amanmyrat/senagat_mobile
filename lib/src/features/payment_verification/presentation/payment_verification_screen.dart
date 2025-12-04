@@ -119,7 +119,8 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                                                           ),
                                                           SizedBox(height: 6.h,),
                                                           Text(
-                                                            '${controller.sum} Manat' ?? '',
+                                                            '${controller.sum} ${r'manat'
+                                                                .tr}' ?? '',
                                                             style: TextStyle(
                                                               fontSize: 35.sp,
                                                               color: AppColors.white,

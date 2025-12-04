@@ -230,6 +230,7 @@ const Map<String, String> enUs = {
   r'no': r'No',
   r'yes': r'Yes',
   r'other_bank': r'Other Bank',
+  r'manat': r'Manat',
 
 
   r'otp_not_match': r'OTP did not match',

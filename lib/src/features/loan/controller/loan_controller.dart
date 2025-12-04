@@ -19,7 +19,6 @@ class LoanController extends GetxController
   late final TextEditingController positionAtWorkController;
   late final TextEditingController managerWorkAddressController;
   late final TextEditingController wagesController;
-  late final TextEditingController phoneController;
 
   String? selectedDropdownCity;
   int? selectedDropdownBank;
@@ -60,7 +59,6 @@ class LoanController extends GetxController
     positionAtWorkController = TextEditingController();
     managerWorkAddressController = TextEditingController();
     wagesController = TextEditingController();
-    phoneController = TextEditingController();
 
     tabController = TabController(length: 2, vsync: this);
     tabController.addListener(() {
@@ -77,8 +75,7 @@ class LoanController extends GetxController
 
   void onInformationNotEmpty(String? v) {
     if (selectedTabIndex == 1) {
-      if (phoneController.text.length >= 8 &&
-          workplaceController.text.isNotEmpty &&
+      if (workplaceController.text.isNotEmpty &&
           positionAtWorkController.text.isNotEmpty &&
           managerWorkAddressController.text.isNotEmpty &&
           wagesController.text.isNotEmpty) {

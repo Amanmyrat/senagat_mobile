@@ -18,6 +18,8 @@ class AddCardController extends GetxController with StateControlMixin {
   bool continueEnabled = false;
   bool check = false;
 
+  String cardName = '';
+
   int selectedDesign = 0;
 
   List<String> cardDesigns = [
@@ -167,6 +169,12 @@ class AddCardController extends GetxController with StateControlMixin {
 
     if (senagatIndex != null) {
       selectedDesign = senagatIndex!;
+    }
+
+    if(cardNumberController.text.length >= 19 && senagatIndex ==null){
+      cardName = 'other_bank';
+    }else{
+      cardName = '';
     }
     update();
   }

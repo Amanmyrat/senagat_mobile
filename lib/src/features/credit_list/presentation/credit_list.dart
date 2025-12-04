@@ -115,7 +115,7 @@ class _CreditListState extends State<CreditList> {
                                                 Row(
                                                   children: [
                                                     Text(
-                                                      r'01 Августа, 10:15'.tr,
+                                                      loan?.createdAt ?? '',
                                                       style: TextStyle(
                                                         color: AppColors.grey,
                                                         fontSize: 14.sp,

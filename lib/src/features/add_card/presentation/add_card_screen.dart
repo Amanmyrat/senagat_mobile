@@ -580,7 +580,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                       Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                          'Beýleki Bank',
+                          controller.cardName.tr,
                           style: TextStyle(
                             color: AppColors.white,
                             fontSize: 14.sp,

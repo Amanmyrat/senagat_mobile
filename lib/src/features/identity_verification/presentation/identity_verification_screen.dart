@@ -257,8 +257,9 @@ class _IdentityVerificationScreenState
                 controller,
                 items: controller.number,
                 hint: 'I',
+                value: controller.selectedRoman,
                 onChange: (v) {
-                  controller.selectedDropdownNumber = v!;
+                  controller.selectedRoman = v!;
                   controller.update();
                 },
               ),
@@ -268,8 +269,9 @@ class _IdentityVerificationScreenState
                 controller,
                 items: controller.citySelection,
                 hint: 'AŞ',
+                value: controller.selectedCity,
                 onChange: (v) {
-                  controller.selectedDropdownLetters = v!;
+                  controller.selectedCity = v!;
                   controller.update();
                 },
               ),
@@ -352,6 +354,7 @@ class _IdentityVerificationScreenState
     required List<String> items,
     required Function(String?) onChange,
     required String hint,
+    required String? value,
   }) {
     return SizedBox(
       width: 72.w,
@@ -361,7 +364,7 @@ class _IdentityVerificationScreenState
         ).copyWith(canvasColor: AppColors.inputFillBackground),
         child: DropdownButtonFormField2<String>(
           hint: Text(hint.tr, style: TextStyle(fontSize: 14.sp)),
-          value: items.contains(hint) ? hint : null,
+          value: value,
           onChanged: onChange,
           items: items
               .map(

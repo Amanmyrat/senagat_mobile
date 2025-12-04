@@ -118,7 +118,7 @@ class _InquiriesListState extends State<InquiriesList> {
                                               Row(
                                                 children: [
                                                   Text(
-                                                    r'01 Августа, 10:15'.tr,
+                                                    inquiries?.createdAt ?? '',
                                                     style: TextStyle(
                                                       color: AppColors.grey,
                                                       fontSize: 14.sp,
@@ -151,7 +151,7 @@ class _InquiriesListState extends State<InquiriesList> {
                                                     ),
                                                     SizedBox(height: 4.h),
                                                     Text(
-                                                      '${inquiries?.certificatePrice} Manat',
+                                                      '${inquiries?.certificatePrice} ${r'manat'.tr}',
                                                       style: TextStyle(
                                                         color: AppColors.black,
                                                         fontSize: 14.sp,

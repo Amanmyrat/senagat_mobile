@@ -230,6 +230,7 @@ const Map<String, String> tkTk = {
   r'no': r'Ýok',
   r'yes': r'Hawa',
   r'other_bank': r'Beýleki Bank',
+  r'manat': r'Manat',
 
 
 
