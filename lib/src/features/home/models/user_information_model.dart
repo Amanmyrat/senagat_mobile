@@ -43,9 +43,10 @@ class LoanModel {
   final double? monthlyPayment;
   final String? status;
   final String? bankBranch;
+  final String? createdAt;
 
 
-  LoanModel({this.creditName, this.amount, this.monthlyPayment, this.status, this.bankBranch});
+  LoanModel({this.creditName, this.amount, this.monthlyPayment, this.status, this.bankBranch, this.createdAt});
 
   factory LoanModel.fromJson(Map<String, dynamic> json) {
     return LoanModel(
@@ -54,6 +55,7 @@ class LoanModel {
       monthlyPayment: json['monthly_payment'],
       status: json['status'],
       bankBranch: json['bank_branch'],
+      createdAt: json['created_at'],
 
     );
   }
@@ -65,9 +67,10 @@ class CertificateModel {
   final int? certificatePrice;
   final String? status;
   final String? bankBranch;
+  final String? createdAt;
 
 
-  CertificateModel({this.certificateName, this.bankBranchId, this.status, this.certificatePrice, this.bankBranch});
+  CertificateModel({this.certificateName, this.bankBranchId, this.status, this.certificatePrice, this.bankBranch, this.createdAt});
 
   factory CertificateModel.fromJson(Map<String, dynamic> json) {
     return CertificateModel(
@@ -76,18 +79,21 @@ class CertificateModel {
       certificatePrice: json['certificate_price'],
       status: json['status'],
       bankBranch: json['bank_branch'],
+      createdAt: json['created_at'],
+
     );
   }
 }
 
 class CardsModel {
   final String? cardTitle;
-  final double? cardPrice;
+  final int? cardPrice;
   final bool? delivery;
   final String? status;
   final String? bankBranch;
+  final String? createdAt;
 
-  CardsModel({this.cardTitle, this.cardPrice, this.delivery, this.status, this.bankBranch});
+  CardsModel({this.cardTitle, this.cardPrice, this.delivery, this.status, this.bankBranch, this.createdAt});
 
   factory CardsModel.fromJson(Map<String, dynamic> json) {
     return CardsModel(
@@ -96,6 +102,8 @@ class CardsModel {
       cardPrice: json['card_price'],
       delivery: json['delivery'],
       bankBranch: json['bank_branch'],
+      createdAt: json['created_at'],
+
     );
   }
 }

@@ -36,8 +36,11 @@ class IdentityVerificationController extends GetxController
   final GlobalKey<FormState> key;
 
   /// NEW VARIABLES FOR DROPDOWNS
-  String? selectedDropdownLetters;
-  String? selectedDropdownNumber;
+  String? selectedCity;
+  String? selectedRoman;
+  String parsedRoman = "";
+  String parsedCity = "";
+  String parsedNumbers = "";
 
   bool continueEnabled = false;
   bool check = false;
@@ -80,50 +83,50 @@ class IdentityVerificationController extends GetxController
       savedProfile = null;
     }
 
-    /// Extract dropdown values from saved passport number
-    if (savedProfile?.passportNumber != null && savedProfile!.passportNumber!.length >= 3) {
-      selectedDropdownLetters =
-          savedProfile.passportNumber!.substring(0, 2);
-      selectedDropdownNumber =
-          savedProfile.passportNumber!.substring(2, 3);
-    } else {
-      selectedDropdownLetters = "AS";
-      selectedDropdownNumber = null;
+    if (savedProfile?.passportNumber != null &&
+        savedProfile!.passportNumber!.isNotEmpty) {
+      parsePassport(savedProfile.passportNumber!);
     }
 
+    // ------------ CONTROLLERS SETUP -------------
     controllers = [
       nameController = TextEditingController(text: savedProfile?.firstName),
-      lastNameController =
-          TextEditingController(text: savedProfile?.lastName),
-      surNameController =
-          TextEditingController(text: savedProfile?.middleName),
-      dateOfBirthController =
-          TextEditingController(text: savedProfile?.birthDate),
-      passportNumberController = TextEditingController(
-        text: savedProfile?.passportNumber != null &&
-            savedProfile!.passportNumber!.length > 3
-            ? savedProfile.passportNumber!.substring(4)
-            : savedProfile?.passportNumber ?? '',
-      ),
-      dateIssueController =
-          TextEditingController(text: savedProfile?.issuedDate),
-      placeIssueController =
-          TextEditingController(text: savedProfile?.issuedBy),
-      citizenshipController =
-          TextEditingController(text: savedProfile?.citizenship),
-      homePhoneController = TextEditingController(
-          text: savedProfile?.homePhone.toString()),
-      homeAddressController =
-          TextEditingController(text: savedProfile?.homeAddress),
+      lastNameController = TextEditingController(text: savedProfile?.lastName),
+      surNameController = TextEditingController(text: savedProfile?.middleName),
+      dateOfBirthController = TextEditingController(text: savedProfile?.birthDate),
+
+      // use correct numeric part from parsed passport
+      passportNumberController = TextEditingController(text: parsedNumbers),
+
+      dateIssueController = TextEditingController(text: savedProfile?.issuedDate),
+      placeIssueController = TextEditingController(text: savedProfile?.issuedBy),
+      citizenshipController = TextEditingController(text: savedProfile?.citizenship),
+      homePhoneController = TextEditingController(text: savedProfile?.homePhone.toString()),
+      homeAddressController = TextEditingController(text: savedProfile?.homeAddress),
     ];
   }
+
+  void parsePassport(String value) {
+    final regex = RegExp(r'^(I|II|III|IV)(AŞ|AH|LB|MR|DŞ)(\d+)$');
+    final match = regex.firstMatch(value);
+
+    if (match != null) {
+      parsedRoman = match.group(1)!;    // III
+      parsedCity  = match.group(2)!;    // MR
+      parsedNumbers = match.group(3)!;  // 123456
+
+      selectedRoman = parsedRoman;
+      selectedCity  = parsedCity;
+    }
+  }
+
 
   /// VALIDATION
   void onTextIsNotEmpty(String? v) {
     continueEnabled = controllers.every((c) => c.text.isNotEmpty) &&
         pdfFile != null &&
-        selectedDropdownNumber != null &&
-        selectedDropdownLetters != null;
+        selectedRoman != null &&
+        selectedCity != null;
 
     update();
   }
@@ -140,7 +143,7 @@ class IdentityVerificationController extends GetxController
 
       /// NEW PASSPORT FORMAT
       passportNumber:
-      "${selectedDropdownLetters ?? ''}${selectedDropdownNumber ?? ''}${passportNumberController.text}",
+      "${selectedRoman ?? ''}${selectedCity ?? ''}${passportNumberController.text}",
 
       issuedDate: dateIssueController.text,
       issuedBy: placeIssueController.text,
@@ -212,13 +215,13 @@ class IdentityVerificationController extends GetxController
 
   /// UPDATE DROPDOWNS
   void setDropdownCity(String? value) {
-    selectedDropdownLetters = value;
+    selectedCity = value;
     onTextIsNotEmpty(value);
     update();
   }
 
   void setDropdownNumber(String? value) {
-    selectedDropdownNumber = value;
+    selectedRoman = value;
     onTextIsNotEmpty(value);
     update();
   }

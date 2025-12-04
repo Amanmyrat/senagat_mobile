@@ -324,8 +324,11 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                                 onTap: () =>
                                     controller.onCheckBoxTap('internet'),
                                 child: Container(
-                                  padding: EdgeInsets.all(
+                                  padding: EdgeInsets.fromLTRB(
                                     AppDimensions.paddingExtraLarge.w,
+                                    AppDimensions.paddingSmall.h,
+                                    AppDimensions.paddingSmall.h,
+                                    AppDimensions.paddingSmall.h,
                                   ),
                                   decoration: BoxDecoration(
                                     color: AppColors.inputFillBackground,
@@ -344,28 +347,12 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                                           fontSize: 14.sp,
                                         ),
                                       ),
-                                      Container(
-                                        width: 27.w,
-                                        height: 27.w,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
-                                          border: Border.all(color: AppColors.black, width: 1.5.w),
-                                        ),
-                                        child: RoundCheckBox(
-                                          size: 27.w,
-                                          checkedColor: AppColors.transparent,
-                                          uncheckedColor: AppColors.transparent,
-                                          checkedWidget: SvgPicture.asset(
-                                            AppAssets.checkBoxIcon,
-                                            color: AppColors.green,
-                                          ),
-                                          border: Border.all(color: Colors.transparent),
-                                          isRound: false,
-                                          isChecked: controller.internetService,
-                                          // ← make sure to bind it
-                                          onTap: (value) => controller
-                                              .onCheckBoxTap('internet'),
-                                        ),
+                                      Checkbox(
+                                        side: BorderSide(width: 1.w),
+                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.r)),
+                                        value: controller.internetService,
+                                        onChanged: (value) => controller
+                                            .onCheckBoxTap('internet'),
                                       ),
                                     ],
                                   ),
@@ -386,8 +373,11 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                                 onTap: () =>
                                     controller.onCheckBoxTap('delivery'),
                                 child: Container(
-                                  padding: EdgeInsets.all(
-                                    AppDimensions.paddingExtraLarge.w,
+                                  padding: EdgeInsets.fromLTRB(
+                                   AppDimensions.paddingExtraLarge.w,
+                                   AppDimensions.paddingSmall.h,
+                                   AppDimensions.paddingSmall.h,
+                                   AppDimensions.paddingSmall.h,
                                   ),
                                   decoration: BoxDecoration(
                                     color: AppColors.inputFillBackground,
@@ -406,26 +396,11 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                                           fontSize: 14.sp,
                                         ),
                                       ),
-                                      Container(
-                                        width: 27.w,
-                                        height: 27.w,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
-                                          border: Border.all(color: AppColors.black, width: 1.5.w),
-                                        ),
-                                        child: RoundCheckBox(
-                                          size: 27.w,
-                                          isRound: false,
-                                          checkedColor: AppColors.transparent,
-                                          uncheckedColor: AppColors.transparent,
-                                          checkedWidget: SvgPicture.asset(
-                                            AppAssets.checkBoxIcon,
-                                            color: AppColors.green,
-                                          ),
-                                          border: Border.all(color: Colors.transparent),
-                                          isChecked: controller.delivery,
-                                          onTap: (value) => controller.onCheckBoxTap('delivery'),
-                                        ),
+                                      Checkbox(
+                                        side: BorderSide(width: 1.w),
+                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.r)),
+                                        value: controller.delivery,
+                                        onChanged: (value) => controller.onCheckBoxTap('delivery'),
                                       )
 
                                     ],

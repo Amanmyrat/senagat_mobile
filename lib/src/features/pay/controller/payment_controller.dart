@@ -19,6 +19,8 @@ class PaymentController extends GetxController with StateControlMixin {
   late final TextEditingController nameController;
   late final TextEditingController accountController;
   late ServiceSettingsController serviceSettingsController;
+  late final PageController pageController;
+
   final cardBox = Hive.box<CardModel>('cardsBox');
 
 
@@ -34,6 +36,7 @@ class PaymentController extends GetxController with StateControlMixin {
 
   @override
   void onInit() {
+
     final args = Get.arguments;
 
     if (args is Map<String, dynamic>) {
@@ -53,6 +56,8 @@ class PaymentController extends GetxController with StateControlMixin {
     maskedNumber = hideCardCenter(cardNumber);
 
     serviceSettingsController = Get.find<ServiceSettingsController>();
+
+    pageController = PageController();
     phoneController = TextEditingController();
     phoneFocus = FocusNode();
     sumController = TextEditingController();

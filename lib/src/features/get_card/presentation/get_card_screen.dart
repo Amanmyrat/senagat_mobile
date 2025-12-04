@@ -93,6 +93,7 @@ class _GetCardScreenState extends State<GetCardScreen> {
                                   color: AppColors.blackText,
                                 ),
                                 tabs: controller.cards
+                                    .where((c) => c.category == 'individual')
                                     .map((item) => Tab(text: item.title?.tr))
                                     .toList(),
                               ),
@@ -101,7 +102,7 @@ class _GetCardScreenState extends State<GetCardScreen> {
                             Expanded(
                               child: TabBarView(
                                 controller: controller.tabController,
-                                children: controller.cards.map((item) {
+                                children: controller.cards.where((c) => c.category == 'individual').map((item) {
                                   return Padding(
                                     padding: EdgeInsets.symmetric(
                                       horizontal:

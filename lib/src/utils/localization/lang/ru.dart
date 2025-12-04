@@ -230,6 +230,7 @@ const Map<String, String> ruRu = {
   'no': r'Нет',
   'yes': r'Да',
   r'other_bank': r'Другой Банк',
+  r'manat': r'Манат',
 
 
 

@@ -249,7 +249,7 @@ class _CardScreenState extends State<CardScreen> {
                                             Row(
                                               children: [
                                                 Text(
-                                                  "01 Августа, 10:15",
+                                                  card?.createdAt ?? '',
                                                   style: TextStyle(
                                                       color: AppColors.grey,
                                                       fontSize: 14.sp),

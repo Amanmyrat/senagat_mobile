@@ -219,6 +219,7 @@ class HomeController extends GetxController with StateControlMixin {
           }
 
           checkProfile();
+          checkProfileStatus();
           update();
         })
         .catchError((e) {

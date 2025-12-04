@@ -1159,7 +1159,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Row(
                       children: [
                         Text(
-                          r'01 Августа, 10:15'.tr,
+                          controller.userInformationModel?.certificates?.first.createdAt ?? '',
                           style: TextStyle(
                             color: AppColors.orangeLight,
                             fontSize: 14.sp,
@@ -1210,7 +1210,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Row(
                       children: [
                         Text(
-                          r'01 Августа, 10:15'.tr,
+                          controller.userInformationModel?.loan?.first.createdAt ?? '',
                           style: TextStyle(
                             color: AppColors.blueLight,
                             fontSize: 14.sp,

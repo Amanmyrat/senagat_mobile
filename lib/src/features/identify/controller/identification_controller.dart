@@ -20,6 +20,7 @@ class IdentificationController extends GetxController with StateControlMixin {
   final profileBox = Hive.box<ProfileModel>('profileBox');
   final phoneBox = Hive.box<String>('phoneBox');
   final cardsBox = Hive.box<CardModel>('cardsBox');
+  final fastOperation = Hive.box('fastOperations');
 
   final _keyValueStorageService = KeyValueStorageService();
   final _accountLoginStatusController =
@@ -38,6 +39,7 @@ class IdentificationController extends GetxController with StateControlMixin {
     phoneBox.clear();
     phoneBox.delete('phone');
     cardsBox.clear();
+    fastOperation.clear();
 
     print(phoneBox.get('phone'));
 
