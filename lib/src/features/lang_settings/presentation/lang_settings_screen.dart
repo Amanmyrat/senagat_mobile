@@ -45,7 +45,7 @@ class _LangSettingsScreenState extends State<LangSettingsScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(r'Turkmen'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.black,),),
+                                Text(r'Türkmen'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.black,),),
                                 Checkbox(
                                   side: BorderSide(width: 1.w),
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.r)),

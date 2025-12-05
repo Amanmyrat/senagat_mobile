@@ -531,18 +531,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                         ),
                                       ],
                                     ] else ...[
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                          left:
-                                              AppDimensions.paddingExtraLarge.w,
-                                        ),
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            Get.toNamed(AddCardScreen.route);
-                                          },
+                                      GestureDetector(
+                                        onTap: () {
+                                          Get.toNamed(AddCardScreen.route);
+                                        },
+                                        child: Expanded(
                                           child: Container(
-                                            width: 390.w,
-                                            height: 220.h,
+                                            height: 120.h,
                                             decoration: BoxDecoration(
                                               color:
                                                   AppColors.inputFillBackground,
@@ -553,28 +548,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                                         .r,
                                                   ),
                                             ),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                SvgPicture.asset(
-                                                  AppAssets.plusIcon,
-                                                  width: 32.w,
-                                                ),
-
-                                                SizedBox(
-                                                  height: AppDimensions
-                                                      .paddingMedium,
-                                                ),
-
-                                                Text(
-                                                  r'add_a_card'.tr,
-                                                  style: TextStyle(
-                                                    color: AppColors.blackText,
-                                                    fontSize: 17.sp,
-                                                  ),
-                                                ),
-                                              ],
+                                            child: Center(
+                                              child: SvgPicture.asset(
+                                                AppAssets.plusIcon,
+                                                width: 32.w,
+                                              ),
                                             ),
                                           ),
                                         ),

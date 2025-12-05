@@ -141,7 +141,8 @@ class _SenagatAppState extends State<SenagatApp> {
               ),
               GetPage(
                 name: AddCardScreen.route,
-                page: () => const AddCardScreen(),
+                page: () => AddCardScreen(),
+                binding: AddCardBinding(),
               ),
               GetPage(
                 name: PaymentScreen.route,
@@ -257,7 +258,7 @@ class DashboardBinding extends Bindings {
     Get.put(DashboardController(), permanent: true);
     Get.put(AuthController(), permanent: true);
     Get.put(ServiceSettingsController());
-    Get.put(AddCardController(),permanent: true);
+    Get.put(AddCardController());
     Get.put(
       HomeController(
         ExchangeRateRepository(apiService: ApiServices.apiService),

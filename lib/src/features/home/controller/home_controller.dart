@@ -112,7 +112,18 @@ class HomeController extends GetxController with StateControlMixin {
       update();
       Get.toNamed(serviceRoute[index]);
     } else {
-      ShowSnack.showSnack(r'most_functions'.tr, SnackType.warning);
+
+      ShowSnack.showSnack(textStatus(), SnackType.warning);
+    }
+  }
+
+  String textStatus()  {
+    if(userInformationModel?.profileModel?.status == 'pending'){
+      return r'pending'.tr;
+    }else if(userInformationModel?.profileModel?.status == 'rejected'){
+      return 'rejected'.tr;
+    }else {
+      return '';
     }
   }
 

@@ -53,7 +53,8 @@ class _NetAndTvScreenState extends State<NetAndTvScreen> {
                                     onTap: (){
                                       controller.onServiceTap(index);
                                     },
-                                    child: Padding(
+                                    child: Container(
+                                      color: AppColors.transparent,
                                       padding: EdgeInsets.only(bottom: AppDimensions.paddingExtraLarge.h),
                                       child: Row(
                                         children: [

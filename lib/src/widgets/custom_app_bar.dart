@@ -6,10 +6,9 @@ import '../utils/theme/constants/app_colors.dart';
 import '../utils/theme/constants/app_dimensions.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
-  final bool showBack;
   final Widget? actionWidget;
 
-  const CustomAppBar({super.key, this.showBack = true, this.actionWidget});
+  const CustomAppBar({super.key,  this.actionWidget});
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -28,18 +27,6 @@ class _CustomAppBarState extends State<CustomAppBar> {
             ? MainAxisAlignment.start
             : MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          if (widget.showBack) ...[
-            // Padding(
-            //   padding: const EdgeInsets.only(
-            //       right: AppDimensions.paddingSmall,
-            //       left: AppDimensions.paddingSmall),
-            //   child: SvgPicture.asset(
-            //     color: AppColors.white,
-            //     AppAssets.arrowLeftIcon,
-            //     height: 20.w,
-            //   ),
-            // ),
-          ],
           GestureDetector(
             onTap: () => Navigator.pop(context),
             child: Container(

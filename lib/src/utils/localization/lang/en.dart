@@ -231,6 +231,8 @@ const Map<String, String> enUs = {
   r'yes': r'Yes',
   r'other_bank': r'Other Bank',
   r'manat': r'Manat',
+  r'profile_pending': r'Pending profile verification',
+  r'profile_rejected': r'Profile rejected',
 
 
   r'otp_not_match': r'OTP did not match',

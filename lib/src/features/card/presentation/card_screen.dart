@@ -67,7 +67,7 @@ class _CardScreenState extends State<CardScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      '200,00',
+                                      '200,00 ${r'manat'.tr}',
                                       style: TextStyle(fontSize: 24.sp, color: AppColors.white),
                                     ),
                                     Text(
