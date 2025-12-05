@@ -45,12 +45,6 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               CustomAppBar(),
-                              if(controller.isInquiries)
-                                Padding(
-                                  padding: EdgeInsets.only(right: AppDimensions.paddingExtraLarge, top: 22.h),
-                                  child: Align(alignment: Alignment.bottomRight,child:
-                                  Text('step_4_of_5'.tr, style: TextStyle(fontSize: 14.sp), )),
-                                ),
                             ],
                           ),
                           Expanded(

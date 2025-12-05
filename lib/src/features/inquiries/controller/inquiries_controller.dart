@@ -15,7 +15,6 @@ import '../models/inquiries_order_model.dart';
 
 class InquiriesController extends GetxController with StateControlMixin {
   late final TextEditingController addressController;
-  late final TextEditingController phoneController;
 
   InquiriesRepository repository;
   LocationRepository locRepository;
@@ -64,14 +63,12 @@ class InquiriesController extends GetxController with StateControlMixin {
   void onInit() {
     super.onInit();
     addressController = TextEditingController();
-    phoneController = TextEditingController();
     getInquiries();
     getBranches();
   }
 
   void onInformationNotEmpty(v) {
     if (addressController.text.isNotEmpty &&
-        phoneController.text.length >= 8 &&
         selectedDropdownBranch != null) {
       continueEnabled = true;
       update();

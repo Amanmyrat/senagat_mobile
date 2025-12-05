@@ -183,6 +183,7 @@ const Map<String, String> tkTk = {
   r'cash_withdrawal_fee': r'Nagt pul çekmegiň ýygymy',
   r'annual_interest_rate': r'Ýyllyk hasaplama göterim derejesi',
   r'get_a_card': r'Kart almak',
+  r'get_credits': r'Karz almak',
   r'obtain_certificate': r'Bank hasaby barada hat almak',
   r'letter_stating_that_there_is_no_debt': r'Karzyň galyndysy barada güwänama',
   r'about_the_wage_situation': r'Zähmet haklarynyň ýagdaýy barada',

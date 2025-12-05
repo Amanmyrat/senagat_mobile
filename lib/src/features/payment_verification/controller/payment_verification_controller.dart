@@ -56,7 +56,9 @@ class PaymentVerificationController extends GetxController with StateControlMixi
   }
 
   void startBankVerification() {
-    saveCard();
+    if(isInquiries == false) {
+      saveCard();
+    }
     check = true;
     status = Status.loading;
     update();

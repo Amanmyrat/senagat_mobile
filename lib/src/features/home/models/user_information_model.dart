@@ -87,7 +87,7 @@ class CertificateModel {
 
 class CardsModel {
   final String? cardTitle;
-  final int? cardPrice;
+  final double? cardPrice;
   final bool? delivery;
   final String? status;
   final String? bankBranch;
