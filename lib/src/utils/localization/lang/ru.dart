@@ -231,7 +231,8 @@ const Map<String, String> ruRu = {
   'yes': r'Да',
   r'other_bank': r'Другой Банк',
   r'manat': r'Манат',
-
+  r'profile_pending': r'Профиль пока не потвержден',
+  r'profile_rejected': r'Ваш профиль отклонён',
 
 
   r'otp_not_match': r'Код не совпадает',

@@ -67,7 +67,7 @@ class _CardScreenState extends State<CardScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      '200,00',
+                                      '200,00 ${r'manat'.tr}',
                                       style: TextStyle(fontSize: 24.sp, color: AppColors.white),
                                     ),
                                     Text(
@@ -135,11 +135,28 @@ class _CardScreenState extends State<CardScreen> {
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text(
-                                            controller.cardBox.getAt(index)?.nickName ?? '',
-                                            style: TextStyle(
-                                                fontSize: 14.sp,
-                                                color: AppColors.white),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                '${controller.cardBox.getAt(index)?.name} ',
+                                                style: TextStyle(
+                                                  color: AppColors
+                                                      .white,
+                                                  fontSize: 14.sp,
+                                                ),
+                                              ),
+                                              SizedBox(width: 10.w,),
+                                              if(controller.cardBox.getAt(index)?.nickName != '')...[
+                                                Text(
+                                                  '(${controller.cardBox.getAt(index)?.nickName})',
+                                                  style: TextStyle(
+                                                    color: AppColors
+                                                        .white,
+                                                    fontSize: 14.sp,
+                                                  ),
+                                                ),
+                                              ]
+                                            ],
                                           ),
                                           SizedBox(height: 20.h),
                                           Text(

@@ -231,7 +231,8 @@ const Map<String, String> tkTk = {
   r'yes': r'Hawa',
   r'other_bank': r'Beýleki Bank',
   r'manat': r'Manat',
-
+  r'profile_pending': r'Profil entäk tassyklanmady',
+  r'profile_rejected': r'Profil ret edilen',
 
 
   r'otp_not_match': r'Kod gabat gelmedi',
