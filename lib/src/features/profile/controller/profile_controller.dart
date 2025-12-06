@@ -30,11 +30,13 @@ class ProfileController extends GetxController with StateControlMixin, GetSingle
   }
 
   Color checkProfileStatus()  {
-    if(homeController.userInformationModel?.profileModel?.status == 'pending'){
+    final savedProfile = profileBox.get('currentProfile');
+
+    if(savedProfile?.status == 'pending'){
       return AppColors.orange;
-    }else if(homeController.userInformationModel?.profileModel?.status == 'rejected'){
+    }else if(savedProfile?.status == 'rejected'){
       return AppColors.redDark;
-    }else if(homeController.userInformationModel?.profileModel?.status == 'approved'){
+    }else if(savedProfile?.status == 'approved'){
       return AppColors.green;
     }else{
       return AppColors.grey;
@@ -43,6 +45,7 @@ class ProfileController extends GetxController with StateControlMixin, GetSingle
 
   void refreshProfile() {
     final savedProfile = profileBox.get('currentProfile');
+
     fullName = '${savedProfile?.firstName ?? r'name'.tr} ${savedProfile?.lastName ?? r'last_name'.tr}';
 
     update();

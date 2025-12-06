@@ -53,7 +53,7 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                r'getting_a_loan'.tr,
+                                r'get_a_loan'.tr,
                                 style: TextStyle(
                                   fontSize: 24.sp,
                                   color: AppColors.blackText,

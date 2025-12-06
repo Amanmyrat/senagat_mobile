@@ -60,7 +60,7 @@ class HomeController extends GetxController with StateControlMixin {
 
   UserInformationModel? userInformationModel;
 
-  final List<String> serviceTitles = [r'get_inquiries', r'get_a_card', r'get_a_credit'];
+  final List<String> serviceTitles = [r'get_inquiries', r'get_a_card', r'get_a_loan'];
 
 
   final List<String> serviceImage = [

@@ -40,25 +40,7 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CustomAppBar(),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        right: AppDimensions.paddingExtraLarge,
-                        top: 22.h,
-                      ),
-                      child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: Text(
-                          'step_of_5'.trParams({'page': '2'}),
-                          style: TextStyle(fontSize: 14.sp),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                CustomAppBar(),
                 Expanded(
                   child: SingleChildScrollView(
                     child: Padding(

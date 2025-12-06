@@ -102,7 +102,7 @@ const Map<String, String> ruRu = {
   r'calculator': r'Калькулятор',
   r'loan_type': r'Тип кредита',
   r'select_loan_type': r'Выберите тип кредита',
-  r'getting_a_loan': r'Получение кредита',
+  r'get_a_loan': r'Получить кредит',
   r'confirm_that_you_have_an_account': r'Подтвердите, что у вас есть счёт, личный кабинет или он закрыт',
   r'passport_details': r'Паспортные данные',
   r'place_of_issue': r'Место выдачи',

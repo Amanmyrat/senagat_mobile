@@ -181,16 +181,10 @@ class _IdentifyScreenState extends State<IdentifyScreen> {
                                         borderRadius: BorderRadius.circular(
                                           AppDimensions.borderRadiusMedium.r,
                                         ),
-                                        color:
-                                           controller.checkProfileStatus(),
+                                        color: controller.checkProfileStatus(),
                                       ),
                                       child: Text(
-                                        controller
-                                                .homeController
-                                                .userInformationModel
-                                                ?.profileModel
-                                                ?.status
-                                                ?.tr ??
+                                        controller.profileStatus ??
                                             'not_confirmed'.tr,
                                         style: TextStyle(
                                           fontSize: 14,

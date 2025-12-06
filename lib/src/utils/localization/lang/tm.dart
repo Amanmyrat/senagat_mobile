@@ -103,7 +103,7 @@ const Map<String, String> tkTk = {
   r'calculator': r'Kalkulýator',
   r'loan_type': r'Karzyň görnüşleri',
   r'select_loan_type': r'Karzyň görnüşini saýlaň',
-  r'getting_a_loan': r'Karz almak',
+  r'get_a_loan': r'Karz almak',
   r'confirm_that_you_have_an_account': r'Siziň hasabyňyz bar, şahsy hasap ýa-da ýapylandygyny tassyklaň',
   r'passport_details': r'Pasport maglumatlary',
   r'place_of_issue': r'Berlen ýeri',

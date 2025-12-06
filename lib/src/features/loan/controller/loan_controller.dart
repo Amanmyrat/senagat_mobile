@@ -20,7 +20,6 @@ class LoanController extends GetxController
   late final TextEditingController managerWorkAddressController;
   late final TextEditingController wagesController;
 
-  String? selectedDropdownCity;
   int? selectedDropdownBank;
   bool continueEnabled = false;
   bool check = false;
@@ -40,8 +39,6 @@ class LoanController extends GetxController
 
   late TabController tabController;
   int selectedTabIndex = 0;
-
-  final List<String> citySelection = ["Option 1", "Option 2", "Option 3"];
 
   late List<TextEditingController> controllers;
 
@@ -152,7 +149,6 @@ class LoanController extends GetxController
       workplace: workplaceController.text,
       position: positionAtWorkController.text,
       salary: salary,
-      country: selectedDropdownCity,
       bankId: selectedDropdownBank,
     );
   }
@@ -167,7 +163,6 @@ class LoanController extends GetxController
       patentNumber: patentNumController.text,
       registrationNumber: registerNumController.text,
       workAddress: workAddressController.text,
-      country: selectedDropdownCity,
       bankId: selectedDropdownBank,
     );
   }
@@ -203,28 +198,10 @@ class LoanController extends GetxController
     update();
   }
 
-  void setDropdownCity(String? value) {
-    selectedDropdownCity = value;
-    try {
-      if (selectedDropdownBank != null) {
-        continueEnabled = true;
-      }
-    } catch (e) {
-      print(e);
-    }
-    update();
-  }
 
   void setDropdownBank(int? value) {
     selectedDropdownBank = value;
-    try {
-      if (selectedDropdownCity!.isNotEmpty) {
-        continueEnabled = true;
-      }
-    } catch (e) {
-      print(e);
-    }
-
+    continueEnabled = true;
     update();
   }
 }

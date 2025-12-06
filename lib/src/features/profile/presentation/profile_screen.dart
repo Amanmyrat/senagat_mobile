@@ -87,7 +87,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   color: controller.checkProfileStatus(),
                                 ),
                                 child: Text(
-                                  controller.homeController.userInformationModel?.profileModel?.status?.tr ?? 'not_confirmed'.tr,
+                                  controller.profileBox.get('currentProfile')?.status?.tr ?? 'not_confirmed'.tr,
                                   style: TextStyle(
                                     fontSize: 14.sp,
                                     color: AppColors.white,

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/features/add_card/model/card_model.dart';
 import 'package:senagat_mobile/src/features/home/controller/home_controller.dart';
+import 'package:senagat_mobile/src/features/pay/model/pay_model.dart';
 import 'package:senagat_mobile/src/features/welcome/presentation/welcome_screen.dart';
 import '../../../core/control_state_variable_mixin.dart';
 import '../../../core/local/key_value_storage_service.dart';
@@ -16,19 +17,22 @@ import '../../identity_verification/models/profile_model.dart';
 import '../../register_confirmation/models/account_model.dart';
 
 class IdentificationController extends GetxController with StateControlMixin {
-
   final profileBox = Hive.box<ProfileModel>('profileBox');
   final phoneBox = Hive.box<String>('phoneBox');
   final cardsBox = Hive.box<CardModel>('cardsBox');
   final fastOperation = Hive.box('fastOperations');
+  final paymentBox = Hive.box<PayModel>('payBox');
 
   final _keyValueStorageService = KeyValueStorageService();
-  final _accountLoginStatusController =
-      Get.put(AccountLoginStatusController(), permanent: true);
+  final _accountLoginStatusController = Get.put(
+    AccountLoginStatusController(),
+    permanent: true,
+  );
 
   AccountModel? currentUser;
   final homeController = Get.find<HomeController>();
   late final String? phone;
+  late final String? profileStatus;
 
   void logout() {
     _keyValueStorageService.resetKeys();
@@ -37,11 +41,9 @@ class IdentificationController extends GetxController with StateControlMixin {
     );
     profileBox.clear();
     phoneBox.clear();
-    phoneBox.delete('phone');
     cardsBox.clear();
     fastOperation.clear();
-
-    print(phoneBox.get('phone'));
+    paymentBox.clear();
 
     update();
 
@@ -49,17 +51,21 @@ class IdentificationController extends GetxController with StateControlMixin {
     dashboardController.updateCurrentIndex(NestedNavigationIds.home);
 
     Navigator.of(Get.context!).pushNamedAndRemoveUntil(
-        WelcomeScreen.route, (Route<dynamic> route) => false);
+      WelcomeScreen.route,
+      (Route<dynamic> route) => false,
+    );
   }
 
-  Color checkProfileStatus()  {
-    if(homeController.userInformationModel?.profileModel?.status == 'pending'){
+  Color checkProfileStatus() {
+    final currentProfile = profileBox.get('currentProfile');
+
+    if (currentProfile?.status == 'pending') {
       return AppColors.orange;
-    }else if(homeController.userInformationModel?.profileModel?.status == 'rejected'){
+    } else if (currentProfile?.status == 'rejected') {
       return AppColors.redDark;
-    }else if(homeController.userInformationModel?.profileModel?.status == 'approved'){
+    } else if (currentProfile?.status == 'approved') {
       return AppColors.green;
-    }else{
+    } else {
       return AppColors.grey;
     }
   }
@@ -67,9 +73,10 @@ class IdentificationController extends GetxController with StateControlMixin {
   @override
   void onInit() {
     super.onInit();
-    phone = homeController.userInformationModel?.phone;
+    final currentProfile = profileBox.get('currentProfile');
 
+    phone = phoneBox.get('phone');
+    profileStatus = currentProfile?.status;
+    print(profileStatus);
   }
-
-
 }

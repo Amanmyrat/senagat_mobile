@@ -62,7 +62,7 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        r'select_the_type_of_certificate'.tr,
+                                        r'get_inquiries'.tr,
                                         style: TextStyle(
                                           fontSize: 24.sp,
                                           color: AppColors.blackText,

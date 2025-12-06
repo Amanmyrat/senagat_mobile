@@ -66,7 +66,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(right: AppDimensions.paddingExtraLarge, top: 22),
+                                  padding: EdgeInsets.only(right: AppDimensions.paddingExtraLarge, top: 22.h),
                                   child: Align(alignment: Alignment.bottomRight,child:
                                   Text('step_of_3'.trParams({'page':controller.pageIndex.toString()}), style: TextStyle(fontSize: 14.sp), )),
                                 ),
@@ -488,54 +488,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                           ),
                                           SizedBox(height: 16.h,),
                     
-                                          Text(r'city'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
-                                          SizedBox(height: AppDimensions.paddingMedium,),
-                                          Theme(
-                                            data: Theme.of(context).copyWith(
-                                              canvasColor: AppColors.inputFillBackground,
-                                              cardTheme:  CardThemeData(
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.all(
-                                                    Radius.circular(AppDimensions.borderRadiusMedium.r),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            child: DropdownButtonFormField2<String>(
-                                              value: controller.selectedDropdownCity,
-                                              hint: Text(
-                                                r"select_city".tr,
-                                                style: TextStyle(fontSize: 14.sp),
-                                              ),
-                                              decoration: InputDecoration(
-                                                contentPadding: EdgeInsets.fromLTRB(0, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.w, AppDimensions.paddingExtraLarge.h, ),
-                                              ),
-                                              dropdownStyleData: DropdownStyleData(
-                                                decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(10),
 
-                                                ),
-                                                elevation: 2,
-
-                                              ),
-                                              iconStyleData: IconStyleData(
-                                                icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18,),
-                                              ),
-                                              onChanged: (v) => controller.setDropdownCity(v),
-                                              items: controller.citySelection
-                                                  .map(
-                                                    (item) => DropdownMenuItem<String>(
-                                                  value: item,
-                                                  child: Text(
-                                                    item,
-                                                    style: TextStyle(fontSize: 14.sp),
-                                                  ),
-                                                ),
-                                              )
-                                                  .toList(),
-                                            ),
-                                          ),
-                                          SizedBox(height: 22.h,),
                                           Text(r'bank'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
                                           SizedBox(height: AppDimensions.paddingMedium,),
                     
@@ -573,7 +526,7 @@ class _LoanScreenState extends State<LoanScreen> {
 
                                               ),
                                               iconStyleData: IconStyleData(
-                                                icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18,),
+                                                icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18.w,),
                                               ),
                                               onChanged: (v) => controller.setDropdownBank(v),
 

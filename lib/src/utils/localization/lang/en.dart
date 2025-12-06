@@ -102,7 +102,7 @@ const Map<String, String> enUs = {
   r'calculator': r'Calculator',
   r'loan_type': r'Loan type',
   r'select_loan_type': r'Select loan type',
-  r'getting_a_loan': r'Getting a loan',
+  r'get_a_loan': r'Get a loan',
   r'confirm_that_you_have_an_account': r'Confirm that you have an account, personal account or it is closed',
   r'passport_details': r'Passport details',
   r'place_of_issue': r'Place of issue',

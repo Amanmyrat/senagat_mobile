@@ -54,7 +54,7 @@ class _GetCardScreenState extends State<GetCardScreen> {
                                 horizontal: AppDimensions.paddingExtraLarge.w,
                               ),
                               child: Text(
-                                r'select_a_card'.tr,
+                                r'get_a_card'.tr,
                                 style: TextStyle(
                                   color: AppColors.black,
                                   fontSize: 24.sp,
