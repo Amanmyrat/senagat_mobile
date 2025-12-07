@@ -311,7 +311,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                                   keyboardType:
                                                   TextInputType.name,
                                                   controller:
-                                                  controller.nameController,
+                                                  controller.lastnameController,
                                                   onChanged: (value) =>
                                                       controller
                                                           .isTextNotEmpty(),

@@ -17,6 +17,7 @@ class PaymentController extends GetxController with StateControlMixin {
   late final TextEditingController phoneController;
   late final TextEditingController sumController;
   late final TextEditingController nameController;
+  late final TextEditingController lastnameController;
   late final TextEditingController accountController;
   late ServiceSettingsController serviceSettingsController;
   late final PageController pageController;
@@ -62,6 +63,7 @@ class PaymentController extends GetxController with StateControlMixin {
     phoneFocus = FocusNode();
     sumController = TextEditingController();
     nameController = TextEditingController();
+    lastnameController = TextEditingController();
     accountController = TextEditingController(text: '100');
 
     super.onInit();
@@ -102,7 +104,7 @@ class PaymentController extends GetxController with StateControlMixin {
 
   void isTextNotEmpty(){
     serviceIcon.isEmpty?
-    phoneController.text.length >= 8 && sumController.text.isNotEmpty && nameController.text.isNotEmpty ? continueEnabled = true: continueEnabled = false:
+    phoneController.text.length >= 8 && sumController.text.isNotEmpty && nameController.text.isNotEmpty && lastnameController.text.isNotEmpty ? continueEnabled = true: continueEnabled = false:
     phoneController.text.length >= 8 && sumController.text.isNotEmpty ? continueEnabled = true : continueEnabled = false;
     update();
   }
