@@ -520,168 +520,171 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ],
                                       ),
                                 SizedBox(height: AppDimensions.padding40.h),
-                                Text(
-                                  r'exchange_rates'.tr,
-                                  style: TextStyle(
-                                    color: AppColors.blackText,
-                                    fontSize: 17.sp,
-                                  ),
-                                ),
-                                SizedBox(height: 16.h),
 
-                                Container(
-                                  padding: EdgeInsets.all(
-                                    AppDimensions.paddingExtraLarge.w,
+                                if(controller.exchange.isNotEmpty)...[
+                                  Text(
+                                    r'exchange_rates'.tr,
+                                    style: TextStyle(
+                                      color: AppColors.blackText,
+                                      fontSize: 17.sp,
+                                    ),
                                   ),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(
-                                      AppDimensions.borderRadiusMedium.r,
+                                  SizedBox(height: 16.h),
+
+                                  Container(
+                                    padding: EdgeInsets.all(
+                                      AppDimensions.paddingExtraLarge.w,
                                     ),
-                                    border: Border.all(
-                                      color: AppColors.dividerColor,
-                                      width: 1.w,
-                                      style: BorderStyle.solid,
-                                    ),
-                                    boxShadow: [
-                                      BoxShadow(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(
+                                        AppDimensions.borderRadiusMedium.r,
+                                      ),
+                                      border: Border.all(
                                         color: AppColors.dividerColor,
-                                        blurRadius: 4.r,
+                                        width: 1.w,
+                                        style: BorderStyle.solid,
                                       ),
-                                    ],
-                                    color: AppColors.white,
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Expanded(
-                                            child: Text(
-                                              r'currency'.tr,
-                                              style: TextStyle(
-                                                color: AppColors.blackText,
-                                                fontSize: 14.sp,
-                                              ),
-                                            ),
-                                          ),
-                                          Row(
-                                            children: [
-                                              Text(
-                                                r'purchase'.tr,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: AppColors.dividerColor,
+                                          blurRadius: 4.r,
+                                        ),
+                                      ],
+                                      color: AppColors.white,
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                r'currency'.tr,
                                                 style: TextStyle(
                                                   color: AppColors.blackText,
                                                   fontSize: 14.sp,
                                                 ),
                                               ),
-                                              SizedBox(
-                                                width: AppDimensions
-                                                    .paddingExtraLarge
-                                                    .w,
-                                              ),
-                                              Text(
-                                                r'sale'.tr,
-                                                style: TextStyle(
-                                                  color: AppColors.blackText,
-                                                  fontSize: 14.sp,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-
-                                      ListView.builder(
-                                        physics: NeverScrollableScrollPhysics(),
-                                        shrinkWrap: true,
-                                        itemCount: controller.exchange.length,
-                                        itemBuilder: (context, index) {
-                                          return Padding(
-                                            padding: EdgeInsets.only(
-                                              top: AppDimensions
-                                                  .paddingExtraLarge
-                                                  .h,
                                             ),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceBetween,
+                                            Row(
                                               children: [
-                                                Row(
-                                                  children: [
-                                                    Image.network(
-                                                      controller
-                                                              .exchange[index]
-                                                              .flag ??
-                                                          '',
-                                                      width: 28.w,
-                                                      height: 20.h,
-                                                    ),
-                                                    SizedBox(width: 4.w),
-                                                    Text(
-                                                      controller
-                                                              .exchange[index]
-                                                              .currency ??
-                                                          '',
-                                                      style: TextStyle(
-                                                        color:
-                                                            AppColors.blackText,
-                                                        fontSize: 14.sp,
-                                                      ),
-                                                    ),
-                                                  ],
+                                                Text(
+                                                  r'purchase'.tr,
+                                                  style: TextStyle(
+                                                    color: AppColors.blackText,
+                                                    fontSize: 14.sp,
+                                                  ),
                                                 ),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    SizedBox(
-                                                      width: AppDimensions
-                                                          .padding60
-                                                          .w,
-                                                      child: Text(
-                                                        textAlign: TextAlign.end,
-                                                        controller
-                                                                .exchange[index]
-                                                                .purchase ??
-                                                            '',
-                                                        style: TextStyle(
-                                                          color:
-                                                              AppColors.blackText,
-                                                          fontSize: 14.sp,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      width: AppDimensions
-                                                          .paddingSuperExtraLarge
-                                                          .w,
-                                                    ),
-                                                    SizedBox(
-                                                      width: AppDimensions
-                                                          .padding60
-                                                          .w,
-                                                      child: Text(
-                                                        textAlign: TextAlign.end,
-                                                        controller
-                                                                .exchange[index]
-                                                                .sale ??
-                                                            '',
-                                                        style: TextStyle(
-                                                          color:
-                                                              AppColors.blackText,
-                                                          fontSize: 14.sp,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
+                                                SizedBox(
+                                                  width: AppDimensions
+                                                      .paddingExtraLarge
+                                                      .w,
+                                                ),
+                                                Text(
+                                                  r'sale'.tr,
+                                                  style: TextStyle(
+                                                    color: AppColors.blackText,
+                                                    fontSize: 14.sp,
+                                                  ),
                                                 ),
                                               ],
                                             ),
-                                          );
-                                        },
-                                      ),
-                                    ],
+                                          ],
+                                        ),
+
+                                        ListView.builder(
+                                          physics: NeverScrollableScrollPhysics(),
+                                          shrinkWrap: true,
+                                          itemCount: controller.exchange.length,
+                                          itemBuilder: (context, index) {
+                                            return Padding(
+                                              padding: EdgeInsets.only(
+                                                top: AppDimensions
+                                                    .paddingExtraLarge
+                                                    .h,
+                                              ),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Image.network(
+                                                        controller
+                                                            .exchange[index]
+                                                            .flag ??
+                                                            '',
+                                                        width: 28.w,
+                                                        height: 20.h,
+                                                      ),
+                                                      SizedBox(width: 4.w),
+                                                      Text(
+                                                        controller
+                                                            .exchange[index]
+                                                            .currency ??
+                                                            '',
+                                                        style: TextStyle(
+                                                          color:
+                                                          AppColors.blackText,
+                                                          fontSize: 14.sp,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                    children: [
+                                                      SizedBox(
+                                                        width: AppDimensions
+                                                            .padding60
+                                                            .w,
+                                                        child: Text(
+                                                          textAlign: TextAlign.end,
+                                                          controller
+                                                              .exchange[index]
+                                                              .purchase ??
+                                                              '',
+                                                          style: TextStyle(
+                                                            color:
+                                                            AppColors.blackText,
+                                                            fontSize: 14.sp,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: AppDimensions
+                                                            .paddingSuperExtraLarge
+                                                            .w,
+                                                      ),
+                                                      SizedBox(
+                                                        width: AppDimensions
+                                                            .padding60
+                                                            .w,
+                                                        child: Text(
+                                                          textAlign: TextAlign.end,
+                                                          controller
+                                                              .exchange[index]
+                                                              .sale ??
+                                                              '',
+                                                          style: TextStyle(
+                                                            color:
+                                                            AppColors.blackText,
+                                                            fontSize: 14.sp,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
+                                ]
                               ],
                             ),
                           ),

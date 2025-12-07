@@ -184,7 +184,7 @@ class _IdentifyScreenState extends State<IdentifyScreen> {
                                         color: controller.checkProfileStatus(),
                                       ),
                                       child: Text(
-                                        controller.profileStatus ??
+                                        controller.profileStatus?.tr ??
                                             'not_confirmed'.tr,
                                         style: TextStyle(
                                           fontSize: 14,
