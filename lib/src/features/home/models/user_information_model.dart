@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:senagat_mobile/src/features/identity_verification/models/profile_model.dart';
 
 class UserInformationModel {
@@ -64,7 +66,7 @@ class LoanModel {
 class CertificateModel {
   final String? certificateName;
   final int? bankBranchId;
-  final int? certificatePrice;
+  final double? certificatePrice;
   final String? status;
   final String? bankBranch;
   final String? createdAt;
@@ -76,7 +78,7 @@ class CertificateModel {
     return CertificateModel(
       certificateName: json['certificate_name'],
       bankBranchId: json['bank_branch_id'],
-      certificatePrice: json['certificate_price'],
+      certificatePrice: (json['certificate_price']as num?)?.toDouble(),
       status: json['status'],
       bankBranch: json['bank_branch'],
       createdAt: json['created_at'],
@@ -99,7 +101,7 @@ class CardsModel {
     return CardsModel(
       cardTitle: json['card_title'],
       status: json['status'],
-      cardPrice: json['card_price'],
+      cardPrice: (json['card_price']as num?)?.toDouble(),
       delivery: json['delivery'],
       bankBranch: json['bank_branch'],
       createdAt: json['created_at'],

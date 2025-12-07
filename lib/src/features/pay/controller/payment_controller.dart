@@ -104,7 +104,7 @@ class PaymentController extends GetxController with StateControlMixin {
 
   void isTextNotEmpty(){
     serviceIcon.isEmpty?
-    phoneController.text.length >= 8 && sumController.text.isNotEmpty && nameController.text.isNotEmpty && lastnameController.text.isNotEmpty ? continueEnabled = true: continueEnabled = false:
+    sumController.text.isNotEmpty && nameController.text.isNotEmpty && lastnameController.text.isNotEmpty ? continueEnabled = true: continueEnabled = false:
     phoneController.text.length >= 8 && sumController.text.isNotEmpty ? continueEnabled = true : continueEnabled = false;
     update();
   }
