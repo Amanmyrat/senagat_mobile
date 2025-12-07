@@ -324,6 +324,7 @@ class _IdentityVerificationScreenState
                   borderRadius: BorderRadius.circular(
                     AppDimensions.borderRadiusMedium,
                   ),
+                  border: Border.all(color: controller.status == Status.error ? AppColors.redDark :AppColors.transparent)
                 ),
                 child: Text('+993', style: TextStyle(fontSize: 14.sp)),
               ),
@@ -431,7 +432,14 @@ class _IdentityVerificationScreenState
                   ),
                 ),
                 SizedBox(width: AppDimensions.paddingMedium.w),
-                SvgPicture.asset(
+                if(controller.status == Status.error)...[
+                  SvgPicture.asset(
+                    AppAssets.X,
+                    width: 24.w,
+                    color:  AppColors.redDark,
+                  ),
+                ]else...[
+                  SvgPicture.asset(
                   controller.pdfFile == null
                       ? AppAssets.pdfIcon
                       : AppAssets.checkIcon,
@@ -439,7 +447,8 @@ class _IdentityVerificationScreenState
                   color: controller.pdfFile == null
                       ? AppColors.grey
                       : AppColors.green,
-                ),
+                ),],
+
               ],
             ),
           ),

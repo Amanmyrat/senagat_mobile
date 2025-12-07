@@ -73,6 +73,7 @@ const Map<String, String> enUs = {
   r'phone_number': r'Phone number',
   r'name': r'Name',
   r'enter_name': r'Enter name',
+  r'enter_lastname': r'Enter last name',
   r'enter_sum': r'Enter sum',
   r'sum': r'Sum',
   r'confirmation': r'Confirmation',

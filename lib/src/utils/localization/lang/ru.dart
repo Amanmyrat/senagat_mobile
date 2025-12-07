@@ -73,6 +73,7 @@ const Map<String, String> ruRu = {
   r'phone_number': r'Номер телефона',
   r'name': r'Имя',
   r'enter_name': r'Введите имя',
+  r'enter_lastname': r'Введите фамилию',
   r'enter_sum': r'Введите сумму',
   r'sum': r'Сумма',
   r'confirmation': r'Подтверждение',

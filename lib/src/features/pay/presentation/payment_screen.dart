@@ -218,7 +218,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                               'pygg_decision') ...[
                                             isPyggDecision(controller),
                                           ],
-                                          if (controller.serviceIcon.isEmpty)
+                                          if (controller.isFoundation)...[
                                             Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
@@ -291,7 +291,80 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                                 SizedBox(height: 22.h),
                                               ],
                                             ),
+                                            Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  r'last_name'.tr,
+                                                  style: TextStyle(
+                                                    color: AppColors.blackText,
+                                                    fontSize: 14.sp,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: AppDimensions
+                                                      .paddingMedium
+                                                      .h,
+                                                ),
+                                                TextFormField(
+                                                  keyboardType:
+                                                  TextInputType.name,
+                                                  controller:
+                                                  controller.nameController,
+                                                  onChanged: (value) =>
+                                                      controller
+                                                          .isTextNotEmpty(),
+                                                  style: TextStyle(
+                                                    fontSize: 14.sp,
+                                                    fontFamily:
+                                                    AppFonts.primaryFont,
+                                                  ),
+                                                  decoration: InputDecoration(
+                                                    hintText: r'enter_lastname'.tr,
+                                                    border:
+                                                    OutlineInputBorder(),
+                                                    focusedBorder: OutlineInputBorder(
+                                                      borderRadius:
+                                                      BorderRadius.circular(
+                                                        AppDimensions
+                                                            .borderRadiusMedium,
+                                                      ),
+                                                      borderSide: BorderSide(
+                                                        color: AppColors.green,
+                                                        width: 1.w,
+                                                      ),
+                                                    ),
+                                                    enabledBorder: OutlineInputBorder(
+                                                      borderRadius:
+                                                      BorderRadius.circular(
+                                                        AppDimensions
+                                                            .borderRadiusMedium,
+                                                      ),
+                                                      borderSide: BorderSide(
+                                                        color: AppColors.white,
+                                                        width: 1.w,
+                                                      ),
+                                                    ),
+                                                    counter: const SizedBox(),
+                                                    contentPadding:
+                                                    EdgeInsets.symmetric(
+                                                      vertical: AppDimensions
+                                                          .paddingExtraLarge
+                                                          .h,
+                                                      horizontal:
+                                                      AppDimensions
+                                                          .paddingLarge
+                                                          .w,
+                                                    ),
+                                                  ),
+                                                ),
 
+                                                SizedBox(height: 22.h),
+                                              ],
+                                            ),
+
+                                          ],
                                           Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,

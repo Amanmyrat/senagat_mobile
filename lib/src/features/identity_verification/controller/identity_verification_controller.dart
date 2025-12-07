@@ -82,10 +82,10 @@ class IdentityVerificationController extends GetxController
       profileBox.delete('currentProfile');
       savedProfile = null;
     }
+    print(savedProfile?.passportNumber);
 
-    if (savedProfile?.passportNumber != null &&
-        savedProfile!.passportNumber!.isNotEmpty) {
-      parsePassport(savedProfile.passportNumber!);
+    if (savedProfile?.passportNumber != null) {
+      parsePassport(savedProfile?.passportNumber ?? 'aaaa');
     }
 
     // ------------ CONTROLLERS SETUP -------------

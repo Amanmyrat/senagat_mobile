@@ -74,6 +74,7 @@ const Map<String, String> tkTk = {
   r'phone_number': r'Telefon belgi',
   r'name': r'Ady',
   r'enter_name': r'Ady giriziň',
+  r'enter_lastname': r'Familiýany giriziň',
   r'enter_sum': r'Mukdary giriziň',
   r'sum': r'Mukdar',
   r'confirmation': r'Tassyklamak',

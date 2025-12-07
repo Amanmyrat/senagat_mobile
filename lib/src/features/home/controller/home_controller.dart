@@ -36,6 +36,7 @@ class HomeController extends GetxController with StateControlMixin {
   AccountModel accountModel = AccountModel();
   final profileBox = Hive.box<ProfileModel>('profileBox');
   final phoneBox = Hive.box<String>('phoneBox');
+  late final currentProfile;
 
   ExchangeRateRepository repository;
   AuthRepository authRepository;
@@ -113,9 +114,9 @@ class HomeController extends GetxController with StateControlMixin {
   }
 
   String textStatus()  {
-    if(userInformationModel?.profileModel?.status == 'pending'){
+    if(currentProfile?.status == 'pending'){
       return r'pending'.tr;
-    }else if(userInformationModel?.profileModel?.status == 'rejected'){
+    }else if(currentProfile?.status == 'rejected'){
       return 'rejected'.tr;
     }else {
       return '';
@@ -152,6 +153,7 @@ class HomeController extends GetxController with StateControlMixin {
     addCardController = Get.find<AddCardController>();
     accountLoginStatusController = Get.find<AccountLoginStatusController>();
 
+    currentProfile = profileBox.get('currentProfile');
     ever(accountLoginStatusController.accountLoginStatus, (
       AccountLoginStatus status,
     ) {
@@ -166,7 +168,8 @@ class HomeController extends GetxController with StateControlMixin {
       getUserProfileInfo();
       getExchangeRates();
     }
-
+    checkProfile();
+    checkProfileStatus();
     super.onInit();
   }
 
@@ -240,7 +243,7 @@ class HomeController extends GetxController with StateControlMixin {
   }
 
   checkProfile() {
-    if (userInformationModel?.profileModel == null) {
+    if (currentProfile == null) {
       isProfileRequired = true;
       update();
     } else {
@@ -250,7 +253,7 @@ class HomeController extends GetxController with StateControlMixin {
   }
 
   checkProfileStatus() {
-    if (userInformationModel?.profileModel?.status == 'approved') {
+    if (currentProfile?.status == 'approved') {
       isServiceRequired = false;
       update();
     } else {
