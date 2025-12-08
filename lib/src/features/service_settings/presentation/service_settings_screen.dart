@@ -31,33 +31,32 @@ class _ServiceSettingsScreenState extends State<ServiceSettingsScreen> {
                 /// Top bar
                 CustomAppBar(
                   actionWidget: GestureDetector(
-                    onTap: controller.selected.isEmpty
-                        ? null
-                        : controller.saveData,
+                    onTap: controller.hasChanges ? controller.saveData : null,
                     child: Container(
                       padding: EdgeInsets.all(AppDimensions.paddingMedium),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.r),
                         border: Border.all(
-                          color: controller.selected.isEmpty
-                              ? AppColors.greyInactive
-                              : AppColors.green,
+                          color: controller.hasChanges
+                              ? AppColors.green
+                              : AppColors.greyInactive,
                           width: 1.w,
                         ),
-                        color: controller.selected.isEmpty
-                            ? Colors.transparent
-                            : AppColors.green,
+                        color: controller.hasChanges
+                            ? AppColors.green
+                            : Colors.transparent,
                       ),
                       child: SvgPicture.asset(
                         AppAssets.checkIcon,
                         width: 20.w,
-                        color: controller.selected.isEmpty
-                            ? AppColors.greyInactive
-                            : AppColors.white,
+                        color: controller.hasChanges
+                            ? AppColors.white
+                            : AppColors.greyInactive,
                       ),
                     ),
                   ),
                 ),
+
 
                 Expanded(
                   child: SingleChildScrollView(

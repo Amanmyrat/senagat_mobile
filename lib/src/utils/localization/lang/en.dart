@@ -65,6 +65,7 @@ const Map<String, String> enUs = {
   r'purchase': r'Purchase',
   r'sale': r'Sale',
   r'telecom_internet': r'Telecom Internet',
+  r'astu_internet': r'ASTU internet',
   r'notifications': r'Notifications',
   r'no_notifications': r'No notifications',
   r'cable_TV': r'Cable TV',

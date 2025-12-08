@@ -7,14 +7,11 @@ import 'package:senagat_mobile/src/features/map_search/repository/location_repos
 import 'package:senagat_mobile/src/features/payment_verification/presentation/payment_verification_screen.dart';
 
 import '../../../core/states/stateful_data.dart';
-import '../../../utils/services/show_snack.dart';
-import '../../../utils/services/error_utils.dart';
+import '../../../utils/api_error_handler.dart';
 import '../../get_card/repository/card_repository.dart';
 import '../../map_search/model/location_model.dart';
 
 class GetCardDetailsController extends GetxController with StateControlMixin {
-
-
   late final TextEditingController workPhoneController;
   late final TextEditingController emailController;
   late final TextEditingController workPositionController;
@@ -78,7 +75,6 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
     update();
   }
 
-
   Future<CardOrderModel> _getCardOrderModel() async {
     return CardOrderModel(
       typeId: selectedCardId,
@@ -102,19 +98,20 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
             status = Status.completed;
             update();
 
-            Get.toNamed(PaymentVerificationScreen.route, arguments: {
-              'serviceName': r'get_a_card',
-              'sum': sum,
-              'isInquiries': true,
-              'isFoundation': false,
-            });
+            Get.toNamed(
+              PaymentVerificationScreen.route,
+              arguments: {
+                'serviceName': r'get_a_card',
+                'sum': sum,
+                'isInquiries': true,
+                'isFoundation': false,
+              },
+            );
           })
           .catchError((e) {
             status = Status.error;
             update();
-            final errorText = ErrorUtils.extractErrorText(e);
-            ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
-
+            ApiErrorHandler.handleApiError(e);
             debugPrint(e.toString());
           });
     }
@@ -127,16 +124,16 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
     await locRepository
         .getBranches()
         .then((value) {
-      _branches.addAll(value);
-      status = Status.completed;
-      update();
-    }).catchError((e) {
-      status = Status.error;
-      update();
-      final errorText = ErrorUtils.extractErrorText(e);
-      ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
-      debugPrint(e.toString());
-    });
+          _branches.addAll(value);
+          status = Status.completed;
+          update();
+        })
+        .catchError((e) {
+          status = Status.error;
+          update();
+          ApiErrorHandler.handleApiError(e);
+          debugPrint(e.toString());
+        });
   }
 
   void setDropdownBranch(int? value) {

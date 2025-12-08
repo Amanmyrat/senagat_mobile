@@ -9,12 +9,10 @@ import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
 
 import '../../../core/states/stateful_data.dart';
-import '../../../utils/services/show_snack.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../../widgets/elevated_button_with_state.dart';
 import '../model/location_model.dart';
-import '../../../core/networking/custom_exception.dart';
-import '../../../utils/services/error_utils.dart';
+import '../../../utils/api_error_handler.dart';
 
 class MapSearchController extends GetxController with StateControlMixin {
   /// ---------------------------------------
@@ -64,34 +62,35 @@ class MapSearchController extends GetxController with StateControlMixin {
     status = Status.loading;
     update();
 
-    await repository.getLocations().then((value) {
-      _locations.addAll(value);
-      status = Status.completed;
+    await repository
+        .getLocations()
+        .then((value) {
+          _locations.addAll(value);
+          status = Status.completed;
 
-      if (_locations.isNotEmpty) {
-        lat = _locations.first.lat;
-        lng = _locations.first.lng;
-      }
-      print("VISIBLE ${selected.name}: "
-          "${visibleLocations.length}");
+          if (_locations.isNotEmpty) {
+            lat = _locations.first.lat;
+            lng = _locations.first.lng;
+          }
+          print(
+            "VISIBLE ${selected.name}: "
+            "${visibleLocations.length}",
+          );
 
-      update();
+          update();
 
-      // wait map load
-      Future.delayed(const Duration(milliseconds: 300), () {
-        initializeMap();
-        fitMarkersInView();
-      });
-
-    }).catchError((e) {
-      status = Status.error;
-      update();
-
-      final errorText = ErrorUtils.extractErrorText(e);
-      ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
-
-      debugPrint(e.toString());
-    });
+          // wait map load
+          Future.delayed(const Duration(milliseconds: 300), () {
+            initializeMap();
+            fitMarkersInView();
+          });
+        })
+        .catchError((e) {
+          status = Status.error;
+          update();
+          ApiErrorHandler.handleApiError(e);
+          debugPrint(e.toString());
+        });
   }
 
   /// ---------------------------------------
@@ -200,19 +199,13 @@ class MapSearchController extends GetxController with StateControlMixin {
           child: SizedBox(
             width: MediaQuery.of(Get.context!).size.width,
             child: Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: 20.h,
-                horizontal: 20.w,
-              ),
+              padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
                     loc.type.name.tr,
-                    style: TextStyle(
-                      color: AppColors.black,
-                      fontSize: 24.sp,
-                    ),
+                    style: TextStyle(color: AppColors.black, fontSize: 24.sp),
                   ),
                   SizedBox(height: 22.h),
                   Row(
@@ -230,8 +223,7 @@ class MapSearchController extends GetxController with StateControlMixin {
                     ],
                   ),
                   SizedBox(height: 22.h),
-                  if (loc.workingHours != null &&
-                      loc.workingHours!.isNotEmpty)
+                  if (loc.workingHours != null && loc.workingHours!.isNotEmpty)
                     ...loc.workingHours!.map((item) {
                       return Padding(
                         padding: EdgeInsets.only(bottom: 10.h),

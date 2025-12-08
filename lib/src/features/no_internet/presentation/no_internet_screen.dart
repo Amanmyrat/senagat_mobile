@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,7 +29,7 @@ class _NoInternetScreenState extends State<NoInternetScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Нет интернета', style: TextStyle(fontSize: 24.sp)),
+              Text('no_internet_connection'.tr, style: TextStyle(fontSize: 24.sp)),
               SizedBox(height: AppDimensions.paddingMedium.h,),
               Text('Требуется подключение к интернету', style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.secondaryFont)),
               SizedBox(height: 32.h,),
@@ -39,11 +41,13 @@ class _NoInternetScreenState extends State<NoInternetScreen> {
                   width: MediaQuery.of(context).size.width,
                   child: ElevatedButtonWithState(
                     onPressed: () async {
-                      final result = await Connectivity().checkConnectivity();
-                      if (result != ConnectivityResult.none) {
-                        Get.back(); // Close no internet screen
+                      final hasInternet = await _checkInternet();
+
+                      if (hasInternet) {
+                        Get.back();
                       }
                     },
+
                     isError: false,
                     isLoading:false,
                     child: Text('Повторить подключение', style: TextStyle(fontSize: 14.sp, color: AppColors.white),),
@@ -55,5 +59,13 @@ class _NoInternetScreenState extends State<NoInternetScreen> {
         ),
       ),
     );
+  }
+}
+Future<bool> _checkInternet() async {
+  try {
+    final result = await InternetAddress.lookup('google.com');
+    return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
+  } catch (_) {
+    return false;
   }
 }

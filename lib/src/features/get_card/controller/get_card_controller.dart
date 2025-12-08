@@ -4,8 +4,7 @@ import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/get_card/models/card_type_model.dart';
 import 'package:senagat_mobile/src/features/get_card/repository/card_repository.dart';
 import '../../../core/states/stateful_data.dart';
-import '../../../utils/services/show_snack.dart';
-import '../../../utils/services/error_utils.dart';
+import '../../../utils/api_error_handler.dart';
 import '../../get_card_details/presentation/get_card_details_screen.dart';
 
 class GetCardController extends GetxController
@@ -33,7 +32,10 @@ class GetCardController extends GetxController
         .getCardTypes()
         .then((value) {
           _cards.addAll(value);
-          tabController = TabController(length: _cards.where((c) => c.category == 'individual').length, vsync: this);
+          tabController = TabController(
+            length: _cards.where((c) => c.category == 'individual').length,
+            vsync: this,
+          );
           tabController.addListener(() {
             selectedTabIndex = tabController.index;
             update();
@@ -44,9 +46,7 @@ class GetCardController extends GetxController
         .catchError((e) {
           status = Status.error;
           update();
-          final errorText = ErrorUtils.extractErrorText(e);
-          ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
-
+          ApiErrorHandler.handleApiError(e);
           debugPrint(e.toString());
         });
   }
@@ -55,17 +55,20 @@ class GetCardController extends GetxController
   void onInit() {
     super.onInit();
     getCards();
-
   }
 
   void onTap() {
     Get.toNamed(
       GetCardDetailsScreen.route,
-      arguments: {'selectedCardTitle': currentTabText, 'selectedCardImage': cards[selectedTabIndex].image, 'selectedCardId': selectedTabIndex + 1, 'sum': cards[selectedTabIndex].price.toString()},
+      arguments: {
+        'selectedCardTitle': currentTabText,
+        'selectedCardImage': cards[selectedTabIndex].image,
+        'selectedCardId': selectedTabIndex + 1,
+        'sum': cards[selectedTabIndex].price.toString(),
+      },
     );
   }
 
-  String get currentTabText => cards.isNotEmpty
-      ? cards[selectedTabIndex].title ?? ''
-      : '';
+  String get currentTabText =>
+      cards.isNotEmpty ? cards[selectedTabIndex].title ?? '' : '';
 }

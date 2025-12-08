@@ -4,8 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
 import '../../../core/states/stateful_data.dart';
-import '../../../utils/services/error_utils.dart';
-import '../../../utils/services/show_snack.dart';
+import '../../../utils/api_error_handler.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../add_card/model/card_model.dart';
 import '../../auth/repository/auth_repository.dart';
@@ -56,30 +55,32 @@ class CardController extends GetxController with StateControlMixin {
     status = Status.loading;
     update();
 
-    await authRepository.getUserInformation().then((value) {
-      userInformationModel = value;
-      status = Status.completed;
+    await authRepository
+        .getUserInformation()
+        .then((value) {
+          userInformationModel = value;
+          status = Status.completed;
 
-      initOpenStates(userInformationModel?.cards?.length ?? 0);
+          initOpenStates(userInformationModel?.cards?.length ?? 0);
 
-      update();
-    }).catchError((e) {
-      status = Status.error;
-      update();
-      final errorText = ErrorUtils.extractErrorText(e);
-      ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
-      debugPrint(e.toString());
-    });
+          update();
+        })
+        .catchError((e) {
+          status = Status.error;
+          update();
+          ApiErrorHandler.handleApiError(e);
+          debugPrint(e.toString());
+        });
   }
 
-  Color checkCardStatus(int index)  {
-    if(userInformationModel?.cards?[index].status == 'pending'){
+  Color checkCardStatus(int index) {
+    if (userInformationModel?.cards?[index].status == 'pending') {
       return AppColors.orange;
-    }else if(userInformationModel?.cards?[index].status == 'rejected'){
+    } else if (userInformationModel?.cards?[index].status == 'rejected') {
       return AppColors.redDark;
-    }else if(userInformationModel?.cards?[index].status == 'approved'){
+    } else if (userInformationModel?.cards?[index].status == 'approved') {
       return AppColors.green;
-    }else{
+    } else {
       return AppColors.grey;
     }
   }

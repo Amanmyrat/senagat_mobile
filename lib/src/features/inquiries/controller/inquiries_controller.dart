@@ -7,12 +7,9 @@ import 'package:senagat_mobile/src/features/inquiries/repository/inquiries_repos
 import 'package:senagat_mobile/src/features/map_search/repository/location_repository.dart';
 import 'package:senagat_mobile/src/features/payment_verification/presentation/payment_verification_screen.dart';
 
-import '../../../core/networking/custom_exception.dart';
 import '../../../core/states/stateful_data.dart';
-import '../../../utils/services/show_snack.dart';
-import '../../../utils/services/error_utils.dart';
+import '../../../utils/api_error_handler.dart';
 import '../../map_search/model/location_model.dart';
-import '../../no_internet/presentation/no_internet_screen.dart';
 import '../models/inquiries_order_model.dart';
 
 class InquiriesController extends GetxController with StateControlMixin {
@@ -41,7 +38,6 @@ class InquiriesController extends GetxController with StateControlMixin {
     filter: {"#": RegExp(r'[0-9]')},
   );
 
-
   List<String> textFieldTitle = [
     r'name',
     r'last_name',
@@ -58,8 +54,7 @@ class InquiriesController extends GetxController with StateControlMixin {
     4: r'certificate_of_loan_balance',
   };
 
-
-  InquiriesController(this.repository, this.locRepository ,this.key,);
+  InquiriesController(this.repository, this.locRepository, this.key);
 
   @override
   void onInit() {
@@ -70,8 +65,7 @@ class InquiriesController extends GetxController with StateControlMixin {
   }
 
   void onInformationNotEmpty(v) {
-    if (addressController.text.isNotEmpty &&
-        selectedDropdownBranch != null) {
+    if (addressController.text.isNotEmpty && selectedDropdownBranch != null) {
       continueEnabled = true;
       update();
     } else {
@@ -97,61 +91,51 @@ class InquiriesController extends GetxController with StateControlMixin {
 
   Future<void> onTap() async {
     if (continueEnabled) {
+      status = Status.loading;
+      update();
+      final inquiriesOrderModel = await _getInquiriesOrderModel();
+      await repository
+          .createInquiresOrder(data: inquiriesOrderModel.toMap())
+          .then((value) {
+            status = Status.completed;
+            update();
+            getInquiriesPrice();
 
-        status = Status.loading;
-        update();
-        final inquiriesOrderModel = await _getInquiriesOrderModel();
-        await repository
-            .createInquiresOrder(data: inquiriesOrderModel.toMap())
-            .then((value) {
-              status = Status.completed;
-              update();
-              getInquiriesPrice();
-
-              Get.toNamed(
-                PaymentVerificationScreen.route,
-                arguments: {'isInquiries': true, 'isFoundation': false, 'serviceName': r'get_inquiries', 'sum': inquiriesPrice.toString()},
-              );
-            })
-            .catchError((e) {
-              status = Status.error;
-              update();
-              final errorText = ErrorUtils.extractErrorText(e);
-              ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
-
-              debugPrint(e.toString());
-            });
+            Get.toNamed(
+              PaymentVerificationScreen.route,
+              arguments: {
+                'isInquiries': true,
+                'isFoundation': false,
+                'serviceName': r'get_inquiries',
+                'sum': inquiriesPrice.toString(),
+              },
+            );
+          })
+          .catchError((e) {
+            status = Status.error;
+            update();
+            ApiErrorHandler.handleApiError(e);
+            debugPrint(e.toString());
+          });
     }
   }
-  void getInquiries() async{
+
+  void getInquiries() async {
     status = Status.loading;
     update();
-    await repository.getInquiriesTypes().then((value){
-      status = Status.completed;
-      update();
-      _inquiries.addAll(value);
-    }).catchError((e){
-      status = Status.error;
-      handleApiError(e);
-      update();
-      final errorText = ErrorUtils.extractErrorText(e);
-      ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
-
-      debugPrint(e.toString());
-    });
-  }
-  void handleApiError(dynamic error) {
-    if (error is CustomException) {
-      if (error.exceptionType == ExceptionType.FetchDataException ||
-          error.exceptionType == ExceptionType.SocketException ||
-          error.message.contains("network_error")) {
-        Get.to(() => const NoInternetScreen());
-        return;
-      }
-    }
-
-    // fallback
-    Get.snackbar("Ошибка", error.toString());
+    await repository
+        .getInquiriesTypes()
+        .then((value) {
+          status = Status.completed;
+          update();
+          _inquiries.addAll(value);
+        })
+        .catchError((e) {
+          status = Status.error;
+          update();
+          ApiErrorHandler.handleApiError(e);
+          debugPrint(e.toString());
+        });
   }
 
   void getBranches() async {
@@ -161,42 +145,41 @@ class InquiriesController extends GetxController with StateControlMixin {
     await locRepository
         .getBranches()
         .then((value) {
-      _branches.addAll(value);
-      status = Status.completed;
-      update();
-    }).catchError((e) {
-      status = Status.error;
-      update();
-      final errorText = ErrorUtils.extractErrorText(e);
-      ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
-      debugPrint(e.toString());
-    });
+          _branches.addAll(value);
+          status = Status.completed;
+          update();
+        })
+        .catchError((e) {
+          status = Status.error;
+          update();
+          ApiErrorHandler.handleApiError(e);
+          debugPrint(e.toString());
+        });
   }
 
-
-  getInquiriesId(){
+  getInquiriesId() {
     final selectedType = selectedDropdownType;
 
     final selectedInquiry = _inquiries.firstWhere(
-          (inquiry) => inquiry.title == selectedType,
+      (inquiry) => inquiry.title == selectedType,
       orElse: () => InquiriesModel(id: -1, title: ''),
     );
 
     inquiriesId = selectedInquiry.id!;
   }
 
-  getInquiriesPrice(){
+  getInquiriesPrice() {
     final selectedType = selectedDropdownType;
 
     final selectedInquiry = _inquiries.firstWhere(
-          (inquiry) => inquiry.title == selectedType,
+      (inquiry) => inquiry.title == selectedType,
       orElse: () => InquiriesModel(id: -1, title: ''),
     );
 
     inquiriesPrice = selectedInquiry.price!;
   }
 
-    void setDropdownBranch(int? value) {
+  void setDropdownBranch(int? value) {
     selectedDropdownBranch = value;
     onInformationNotEmpty(value);
     update();

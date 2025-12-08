@@ -7,14 +7,14 @@ import 'package:senagat_mobile/src/features/register_confirmation/controller/reg
 import 'package:senagat_mobile/src/features/register_password_setup/models/new_password_model.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../core/control_state_variable_mixin.dart';
-import '../../../utils/services/show_snack.dart';
-import '../../../utils/services/error_utils.dart';
+import '../../../utils/api_error_handler.dart';
 import '../../auth/controller/auth_controller.dart';
 import '../../auth/repository/auth_repository.dart';
 import '../../register/controller/register_controller.dart';
 import '../models/register_model.dart';
 
-class RegisterPasswordSetupController extends GetxController with StateControlMixin {
+class RegisterPasswordSetupController extends GetxController
+    with StateControlMixin {
   final GlobalKey<FormState> key = GlobalKey<FormState>();
   final authController = Get.find<AuthController>();
 
@@ -33,7 +33,7 @@ class RegisterPasswordSetupController extends GetxController with StateControlMi
 
   int currentStep = 3;
 
-  RegisterPasswordSetupController(this.repository,);
+  RegisterPasswordSetupController(this.repository);
 
   @override
   void onInit() {
@@ -57,8 +57,13 @@ class RegisterPasswordSetupController extends GetxController with StateControlMi
   Future<RegisterModel> _getRegisterModel() async {
     return RegisterModel(otpToken: otpToken, password: passwordController.text);
   }
+
   Future<NewPasswordModel> _getNewPasswordModel() async {
-    return NewPasswordModel(phone: phoneBox.get('phone') ?? '', otpToken: otpToken, password: passwordController.text);
+    return NewPasswordModel(
+      phone: phoneBox.get('phone') ?? '',
+      otpToken: otpToken,
+      password: passwordController.text,
+    );
   }
 
   Future<void> confirmPassword() async {
@@ -68,22 +73,22 @@ class RegisterPasswordSetupController extends GetxController with StateControlMi
       update();
 
       final registerModel = await _getRegisterModel();
-      await repository.register(data: registerModel.toMap()).then((value) {
-        status = Status.completed;
-        update();
-        authController.onAccountUpdate(value);
-        authController.onTokenUpdate(value);
+      await repository
+          .register(data: registerModel.toMap())
+          .then((value) {
+            status = Status.completed;
+            update();
+            authController.onAccountUpdate(value);
+            authController.onTokenUpdate(value);
 
-        Get.toNamed(AuthSuccessScreen.route);
-      }).catchError((e) {
-        status = Status.error;
-        update();
-        final errorText = ErrorUtils.extractErrorText(e);
-        ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
-
-        debugPrint(e.toString());
-      });
-
+            Get.toNamed(AuthSuccessScreen.route);
+          })
+          .catchError((e) {
+            status = Status.error;
+            update();
+            ApiErrorHandler.handleApiError(e);
+            debugPrint(e.toString());
+          });
     }
   }
 
@@ -94,26 +99,25 @@ class RegisterPasswordSetupController extends GetxController with StateControlMi
       update();
 
       final newPassword = await _getNewPasswordModel();
-      await repository.resetPassword(data: newPassword.toMap()).then((value) {
-        status = Status.completed;
+      await repository
+          .resetPassword(data: newPassword.toMap())
+          .then((value) {
+            status = Status.completed;
 
-
-        Get.delete<RegisterController>(force: true);
-        Get.delete<RegisterConfirmationController>(force: true);
-        Get.toNamed(RegisterScreen.route, arguments: {'login': 'login'});
-        update();
-
-      }).catchError((e) {
-        status = Status.error;
-        update();
-        final errorText = ErrorUtils.extractErrorText(e);
-        ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
-
-        debugPrint(e.toString());
-      });
-
+            Get.delete<RegisterController>(force: true);
+            Get.delete<RegisterConfirmationController>(force: true);
+            Get.toNamed(RegisterScreen.route, arguments: {'login': 'login'});
+            update();
+          })
+          .catchError((e) {
+            status = Status.error;
+            update();
+            ApiErrorHandler.handleApiError(e);
+            debugPrint(e.toString());
+          });
     }
   }
+
   @override
   void dispose() {
     passwordController.dispose();

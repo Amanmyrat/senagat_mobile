@@ -4,12 +4,10 @@ import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/auth/repository/auth_repository.dart';
 import 'package:senagat_mobile/src/features/home/models/user_information_model.dart';
 import '../../../core/states/stateful_data.dart';
-import '../../../utils/services/show_snack.dart';
-import '../../../utils/services/error_utils.dart';
+import '../../../utils/api_error_handler.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 
 class InquiriesListController extends GetxController with StateControlMixin {
-
   AuthRepository authRepository;
 
   bool _isFetchingUserInfo = false;
@@ -24,14 +22,16 @@ class InquiriesListController extends GetxController with StateControlMixin {
     getUserProfileInfo();
   }
 
-  Color checkCertificateStatus(int index)  {
-    if(userInformationModel?.certificates?[index].status == 'pending'){
+  Color checkCertificateStatus(int index) {
+    if (userInformationModel?.certificates?[index].status == 'pending') {
       return AppColors.orange;
-    }else if(userInformationModel?.certificates?[index].status == 'rejected'){
+    } else if (userInformationModel?.certificates?[index].status ==
+        'rejected') {
       return AppColors.redDark;
-    }else if(userInformationModel?.certificates?[index].status == 'approved'){
+    } else if (userInformationModel?.certificates?[index].status ==
+        'approved') {
       return AppColors.green;
-    }else{
+    } else {
       return AppColors.grey;
     }
   }
@@ -46,21 +46,19 @@ class InquiriesListController extends GetxController with StateControlMixin {
     await authRepository
         .getUserInformation()
         .then((value) {
-      userInformationModel = value;
-      status = Status.completed;
+          userInformationModel = value;
+          status = Status.completed;
 
-      update();
-    }).catchError((e) {
-      status = Status.error;
-      update();
-      final errorText = ErrorUtils.extractErrorText(e);
-      ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
-      debugPrint(e.toString());
-    })
+          update();
+        })
+        .catchError((e) {
+          status = Status.error;
+          update();
+          ApiErrorHandler.handleApiError(e);
+          debugPrint(e.toString());
+        })
         .whenComplete(() {
-      _isFetchingUserInfo = false;
-    });
+          _isFetchingUserInfo = false;
+        });
   }
-
-
 }

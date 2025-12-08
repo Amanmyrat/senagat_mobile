@@ -4,8 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/register/models/request_otp.dart';
-import '../../../utils/services/show_snack.dart';
-import '../../../utils/services/error_utils.dart';
+import '../../../utils/api_error_handler.dart';
 import '../../register_confirmation/presentation/register_confirmation.dart';
 import '../models/pre_login_model.dart';
 import '../../auth/repository/auth_repository.dart';
@@ -30,7 +29,6 @@ class RegisterController extends GetxController with StateControlMixin {
 
   final phoneBox = Hive.box<String>('phoneBox');
 
-
   @override
   void onInit() {
     login = Get.arguments['login'];
@@ -50,10 +48,7 @@ class RegisterController extends GetxController with StateControlMixin {
   }
 
   Future<RequestModel> _getRequestModel() async {
-    return RequestModel(
-      phone: phoneController.text,
-      purpose: login,
-    );
+    return RequestModel(phone: phoneController.text, purpose: login);
   }
 
   void onRegisterTap() async {
@@ -80,27 +75,20 @@ class RegisterController extends GetxController with StateControlMixin {
       await repository
           .requestOTP(data: requestModel.toMap())
           .then((value) {
-        status = Status.completed;
-        phoneBox.put('phone', phoneController.text);
-        update();
+            status = Status.completed;
+            phoneBox.put('phone', phoneController.text);
+            update();
 
-        Get.toNamed(
-          RegisterConfirmationScreen.route,
-          arguments: {
-            'phone': phoneController.text,
-            'login': login,
-          },
-        );
-      })
+            Get.toNamed(
+              RegisterConfirmationScreen.route,
+              arguments: {'phone': phoneController.text, 'login': login},
+            );
+          })
           .catchError((e) {
-        status = Status.error;
-        update();
-        final errorText = ErrorUtils.extractErrorText(e);
-        ShowSnack.showSnack(
-          errorText ?? r'error'.tr,
-          SnackType.error,
-        );
-      });
+            status = Status.error;
+            update();
+            ApiErrorHandler.handleApiError(e);
+          });
     }
   }
 
@@ -127,8 +115,7 @@ class RegisterController extends GetxController with StateControlMixin {
           .catchError((e) {
             status = Status.error;
             update();
-            final errorText = ErrorUtils.extractErrorText(e);
-            ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
+            ApiErrorHandler.handleApiError(e);
           });
     }
   }

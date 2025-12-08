@@ -4,8 +4,7 @@ import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/credit/repository/credit_repository.dart';
 import 'package:senagat_mobile/src/features/loan/models/credit_order_model.dart';
 import '../../../core/states/stateful_data.dart';
-import '../../../utils/services/show_snack.dart';
-import '../../../utils/services/error_utils.dart';
+import '../../../utils/api_error_handler.dart';
 import '../../map_search/model/location_model.dart';
 import '../../map_search/repository/location_repository.dart';
 
@@ -131,8 +130,7 @@ class LoanController extends GetxController
         .catchError((e) {
           status = Status.error;
           update();
-          final errorText = ErrorUtils.extractErrorText(e);
-          ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
+          ApiErrorHandler.handleApiError(e);
           debugPrint(e.toString());
         });
   }
@@ -189,15 +187,12 @@ class LoanController extends GetxController
         .catchError((e) {
           status = Status.error;
           update();
-          final errorText = ErrorUtils.extractErrorText(e);
-          ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
-
+          ApiErrorHandler.handleApiError(e);
           debugPrint(e.toString());
         });
 
     update();
   }
-
 
   void setDropdownBank(int? value) {
     selectedDropdownBank = value;

@@ -11,8 +11,7 @@ import 'package:senagat_mobile/src/features/home/controller/home_controller.dart
 import 'package:senagat_mobile/src/features/identity_verification/repository/profile_repository.dart';
 import 'package:senagat_mobile/src/features/profile/controller/profile_controller.dart';
 import 'package:senagat_mobile/src/utils/localization/localization_service.dart';
-import 'package:senagat_mobile/src/utils/services/show_snack.dart';
-import 'package:senagat_mobile/src/utils/services/error_utils.dart';
+import 'package:senagat_mobile/src/utils/api_error_handler.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../dashboard/controller/dashboard_controller.dart';
 import '../../dashboard/utils/nested_nav_ids.dart';
@@ -93,16 +92,28 @@ class IdentityVerificationController extends GetxController
       nameController = TextEditingController(text: savedProfile?.firstName),
       lastNameController = TextEditingController(text: savedProfile?.lastName),
       surNameController = TextEditingController(text: savedProfile?.middleName),
-      dateOfBirthController = TextEditingController(text: savedProfile?.birthDate),
+      dateOfBirthController = TextEditingController(
+        text: savedProfile?.birthDate,
+      ),
 
       // use correct numeric part from parsed passport
       passportNumberController = TextEditingController(text: parsedNumbers),
 
-      dateIssueController = TextEditingController(text: savedProfile?.issuedDate),
-      placeIssueController = TextEditingController(text: savedProfile?.issuedBy),
-      citizenshipController = TextEditingController(text: savedProfile?.citizenship),
-      homePhoneController = TextEditingController(text: savedProfile?.homePhone.toString()),
-      homeAddressController = TextEditingController(text: savedProfile?.homeAddress),
+      dateIssueController = TextEditingController(
+        text: savedProfile?.issuedDate,
+      ),
+      placeIssueController = TextEditingController(
+        text: savedProfile?.issuedBy,
+      ),
+      citizenshipController = TextEditingController(
+        text: savedProfile?.citizenship,
+      ),
+      homePhoneController = TextEditingController(
+        text: savedProfile?.homePhone.toString(),
+      ),
+      homeAddressController = TextEditingController(
+        text: savedProfile?.homeAddress,
+      ),
     ];
   }
 
@@ -111,19 +122,19 @@ class IdentityVerificationController extends GetxController
     final match = regex.firstMatch(value);
 
     if (match != null) {
-      parsedRoman = match.group(1)!;    // III
-      parsedCity  = match.group(2)!;    // MR
-      parsedNumbers = match.group(3)!;  // 123456
+      parsedRoman = match.group(1)!; // III
+      parsedCity = match.group(2)!; // MR
+      parsedNumbers = match.group(3)!; // 123456
 
       selectedRoman = parsedRoman;
-      selectedCity  = parsedCity;
+      selectedCity = parsedCity;
     }
   }
 
-
   /// VALIDATION
   void onTextIsNotEmpty(String? v) {
-    continueEnabled = controllers.every((c) => c.text.isNotEmpty) &&
+    continueEnabled =
+        controllers.every((c) => c.text.isNotEmpty) &&
         pdfFile != null &&
         selectedRoman != null &&
         selectedCity != null;
@@ -143,7 +154,7 @@ class IdentityVerificationController extends GetxController
 
       /// NEW PASSPORT FORMAT
       passportNumber:
-      "${selectedRoman ?? ''}${selectedCity ?? ''}${passportNumberController.text}",
+          "${selectedRoman ?? ''}${selectedCity ?? ''}${passportNumberController.text}",
 
       issuedDate: dateIssueController.text,
       issuedBy: placeIssueController.text,
@@ -182,13 +193,12 @@ class IdentityVerificationController extends GetxController
 
       Navigator.of(Get.context!).pushNamedAndRemoveUntil(
         DashboardScreen.route,
-            (Route<dynamic> route) => false,
+        (Route<dynamic> route) => false,
       );
     } catch (e) {
       status = Status.error;
-      final errorText = ErrorUtils.extractErrorText(e);
-      ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
       update();
+      ApiErrorHandler.handleApiError(e);
     }
   }
 
@@ -236,7 +246,9 @@ class IdentityVerificationController extends GetxController
 
   /// DATE PICKER
   Future<void> pickDate(
-      BuildContext context, TextEditingController controller) async {
+    BuildContext context,
+    TextEditingController controller,
+  ) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       locale: LocalizationService.defaultLocale,
@@ -246,7 +258,8 @@ class IdentityVerificationController extends GetxController
     );
 
     if (picked != null) {
-      controller.text = "${picked.day.toString().padLeft(2, '0')}-"
+      controller.text =
+          "${picked.day.toString().padLeft(2, '0')}-"
           "${picked.month.toString().padLeft(2, '0')}-"
           "${picked.year}";
       update();

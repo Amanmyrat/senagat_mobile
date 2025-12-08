@@ -15,14 +15,12 @@ import 'package:senagat_mobile/src/features/net_and_tv/presentation/net_and_tv_s
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/payment_screen.dart';
 import 'package:senagat_mobile/src/features/register_confirmation/models/account_model.dart';
-import '../../../core/networking/custom_exception.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/constants/app_assets.dart';
 import '../../../utils/services/show_snack.dart';
-import '../../../utils/services/error_utils.dart';
+import '../../../utils/api_error_handler.dart';
 import '../../identity_verification/models/profile_model.dart';
 import '../../inquiries/presentation/inquiries_screen.dart';
-import '../../no_internet/presentation/no_internet_screen.dart';
 import '../../pay/model/pay_model.dart';
 import '../../qr_code/presentation/qr_code_screen.dart';
 import '../../service_settings/controller/service_settings_controller.dart';
@@ -62,8 +60,11 @@ class HomeController extends GetxController with StateControlMixin {
 
   UserInformationModel? userInformationModel;
 
-  final List<String> serviceTitles = [r'get_inquiries', r'get_a_card', r'get_a_loan'];
-
+  final List<String> serviceTitles = [
+    r'get_inquiries',
+    r'get_a_card',
+    r'get_a_loan',
+  ];
 
   final List<String> serviceImage = [
     AppAssets.spreadsheet,
@@ -94,12 +95,14 @@ class HomeController extends GetxController with StateControlMixin {
   void onFoundationTap() {
     lastTap = HomeTapType.foundation;
     update();
-    Get.toNamed(PaymentScreen.route, arguments: {
-      'selectedServiceTitle': r'charitable_foundation'.tr,
-      'isInquiries': false,
-      'isFoundation': true,
-
-    });
+    Get.toNamed(
+      PaymentScreen.route,
+      arguments: {
+        'selectedServiceTitle': r'charitable_foundation'.tr,
+        'isInquiries': false,
+        'isFoundation': true,
+      },
+    );
   }
 
   void onServiceTap(int index) {
@@ -109,17 +112,16 @@ class HomeController extends GetxController with StateControlMixin {
       update();
       Get.toNamed(serviceRoute[index]);
     } else {
-
       ShowSnack.showSnack(textStatus(), SnackType.warning);
     }
   }
 
-  String textStatus()  {
-    if(currentProfile?.status == 'pending'){
+  String textStatus() {
+    if (currentProfile?.status == 'pending') {
       return r'pending'.tr;
-    }else if(currentProfile?.status == 'rejected'){
+    } else if (currentProfile?.status == 'rejected') {
       return 'rejected'.tr;
-    }else {
+    } else {
       return '';
     }
   }
@@ -130,9 +132,7 @@ class HomeController extends GetxController with StateControlMixin {
     if (item.title == r'state_traffic_safety_inspectorate') {
       Get.toNamed(
         NetAndTvScreen.route,
-        arguments: {
-          'selectedServiceTitle': item.title,
-        },
+        arguments: {'selectedServiceTitle': item.title},
       );
     } else {
       Get.toNamed(
@@ -189,27 +189,13 @@ class HomeController extends GetxController with StateControlMixin {
     } catch (e) {
       status = Status.error;
       debugPrint("ERROR => $e");
-
-      handleApiError(e);
+      ApiErrorHandler.handleApiError(e);
     } finally {
       update();
       _isFetchingExchangeRates = false;
     }
   }
 
-  void handleApiError(dynamic error) {
-    if (error is CustomException) {
-      if (error.exceptionType == ExceptionType.FetchDataException ||
-          error.exceptionType == ExceptionType.SocketException ||
-          error.message.contains("network_error")) {
-        Get.to(() => const NoInternetScreen());
-        return;
-      }
-    }
-
-    // fallback
-    Get.snackbar("Ошибка", error.toString());
-  }
   void getUserProfileInfo() async {
     if (_isFetchingUserInfo) return;
 
@@ -244,7 +230,7 @@ class HomeController extends GetxController with StateControlMixin {
         .catchError((e) {
           status = Status.error;
           update();
-          final errorText = ErrorUtils.extractErrorText(e);
+          ApiErrorHandler.handleApiError(e);
           debugPrint(e.toString());
         })
         .whenComplete(() {
@@ -276,5 +262,4 @@ class HomeController extends GetxController with StateControlMixin {
     final count = fastServiceController.selected.length;
     return count <= 4 ? count + 1 : count;
   }
-
 }

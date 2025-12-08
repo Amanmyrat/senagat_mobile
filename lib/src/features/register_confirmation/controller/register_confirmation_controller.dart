@@ -8,8 +8,7 @@ import 'package:senagat_mobile/src/features/auth_success/presentation/auth_succe
 import 'package:senagat_mobile/src/features/register_confirmation/models/verify_otp_model.dart';
 import 'package:senagat_mobile/src/features/register_password_setup/presentation/register_password_setup_screen.dart';
 
-import '../../../utils/services/show_snack.dart';
-import '../../../utils/services/error_utils.dart';
+import '../../../utils/api_error_handler.dart';
 import '../../auth/controller/auth_controller.dart';
 import '../../auth/repository/auth_repository.dart';
 import '../../register/models/request_otp.dart';
@@ -18,7 +17,6 @@ import '../models/login_model.dart';
 
 class RegisterConfirmationController extends GetxController
     with StateControlMixin {
-
   final AuthRepository repository;
 
   String phoneNumber = '';
@@ -72,34 +70,26 @@ class RegisterConfirmationController extends GetxController
   }
 
   Future<RequestModel> _getRequestModel() async {
-    return RequestModel(
-      phone: phoneNumber,
-      purpose: login,
-    );
+    return RequestModel(phone: phoneNumber, purpose: login);
   }
 
   void resendOtpCode() async {
-      status = Status.loading;
-      update();
+    status = Status.loading;
+    update();
 
-      final requestModel = await _getRequestModel();
-      await repository
-          .requestOTP(data: requestModel.toMap())
-          .then((value) {
-        status = Status.completed;
-        startTimer();
-        update();
-
-      })
-          .catchError((e) {
-        status = Status.error;
-        update();
-        final errorText = ErrorUtils.extractErrorText(e);
-        ShowSnack.showSnack(
-          errorText ?? r'error'.tr,
-          SnackType.error,
-        );
-      });
+    final requestModel = await _getRequestModel();
+    await repository
+        .requestOTP(data: requestModel.toMap())
+        .then((value) {
+          status = Status.completed;
+          startTimer();
+          update();
+        })
+        .catchError((e) {
+          status = Status.error;
+          update();
+          ApiErrorHandler.handleApiError(e);
+        });
   }
 
   void _onOtpChanged() {
@@ -112,8 +102,13 @@ class RegisterConfirmationController extends GetxController
   Future<LoginModel> _getLoginModel() async {
     return LoginModel(phone: phoneNumber, otpNumber: otpController.text);
   }
+
   Future<VerifyOtpModel> _getVerifyOtpModel() async {
-    return VerifyOtpModel(phone: phoneNumber, code: otpController.text, purpose: login);
+    return VerifyOtpModel(
+      phone: phoneNumber,
+      code: otpController.text,
+      purpose: login,
+    );
   }
 
   void applyOtpCode() async {
@@ -124,23 +119,28 @@ class RegisterConfirmationController extends GetxController
       update();
 
       final loginModel = await _getLoginModel();
-      await repository.login(data: loginModel.toMap()).then((value) {
-        status = Status.completed;
-        update();
+      await repository
+          .login(data: loginModel.toMap())
+          .then((value) {
+            status = Status.completed;
+            update();
 
-        authController.onAccountUpdate(value);
-        authController.onTokenUpdate(value);
+            authController.onAccountUpdate(value);
+            authController.onTokenUpdate(value);
 
-        accountModel = value;
-        Get.toNamed(login == 'login' ? AuthSuccessScreen.route : RegisterPasswordSetupScreen.route,);
-      }).catchError((e) {
-        status = Status.error;
-        update();
-        final errorText = ErrorUtils.extractErrorText(e);
-        ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
-
-        debugPrint(e.toString());
-      });
+            accountModel = value;
+            Get.toNamed(
+              login == 'login'
+                  ? AuthSuccessScreen.route
+                  : RegisterPasswordSetupScreen.route,
+            );
+          })
+          .catchError((e) {
+            status = Status.error;
+            update();
+            ApiErrorHandler.handleApiError(e);
+            debugPrint(e.toString());
+          });
     }
   }
 
@@ -152,23 +152,24 @@ class RegisterConfirmationController extends GetxController
       update();
 
       final verifyOtpModel = await _getVerifyOtpModel();
-      await repository.verifyOTP(data: verifyOtpModel.toMap()).then((value) {
-        status = Status.completed;
-        update();
-        print(value);
+      await repository
+          .verifyOTP(data: verifyOtpModel.toMap())
+          .then((value) {
+            status = Status.completed;
+            update();
+            print(value);
 
-        Get.toNamed(RegisterPasswordSetupScreen.route, arguments: {
-          'otpToken': value,
-          'login': login,
-        });
-      }).catchError((e) {
-        status = Status.error;
-        update();
-        final errorText = ErrorUtils.extractErrorText(e);
-        ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
-
-        debugPrint(e.toString());
-      });
+            Get.toNamed(
+              RegisterPasswordSetupScreen.route,
+              arguments: {'otpToken': value, 'login': login},
+            );
+          })
+          .catchError((e) {
+            status = Status.error;
+            update();
+            ApiErrorHandler.handleApiError(e);
+            debugPrint(e.toString());
+          });
     }
   }
 

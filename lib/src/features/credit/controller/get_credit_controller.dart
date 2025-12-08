@@ -7,12 +7,11 @@ import 'package:senagat_mobile/src/features/credit/models/credit_types_model.dar
 import 'package:senagat_mobile/src/features/credit/repository/credit_repository.dart';
 
 import '../../../core/states/stateful_data.dart';
-import '../../../utils/services/show_snack.dart';
-import '../../../utils/services/error_utils.dart';
+import '../../../utils/api_error_handler.dart';
 import '../../loan/presentation/loan_screen.dart';
 
-class GetCreditController extends GetxController with StateControlMixin, GetSingleTickerProviderStateMixin {
-
+class GetCreditController extends GetxController
+    with StateControlMixin, GetSingleTickerProviderStateMixin {
   late MoneyMaskedTextController sumController;
 
   late TextEditingController bidController;
@@ -36,7 +35,6 @@ class GetCreditController extends GetxController with StateControlMixin, GetSing
 
   double currentValue = 0;
 
-
   List<CreditTypeModel> get credits => _credits;
 
   String? selectedDropdownValue;
@@ -45,7 +43,6 @@ class GetCreditController extends GetxController with StateControlMixin, GetSing
   CreditRepository repository;
 
   GetCreditController(this.repository);
-
 
   void setDropdownValue(String? value) {
     selectedDropdownValue = value;
@@ -74,8 +71,8 @@ class GetCreditController extends GetxController with StateControlMixin, GetSing
     update();
   }
 
-  void onTabTap(){
-    term = tabBarController.index +1;
+  void onTabTap() {
+    term = tabBarController.index + 1;
     month = (term * 12);
     updateText(currentValue);
   }
@@ -94,22 +91,22 @@ class GetCreditController extends GetxController with StateControlMixin, GetSing
         .catchError((e) {
           status = Status.error;
           update();
-          final errorText = ErrorUtils.extractErrorText(e);
-          ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
-
+          ApiErrorHandler.handleApiError(e);
           debugPrint(e.toString());
         });
   }
 
-
   Future<void> onTap() async {
     if (continueEnabled) {
-      Get.toNamed(LoanScreen.route, arguments: {
-        'creditId': creditId,
-        'term': term,
-        'amount': currentValue.toInt(),
-        'monthlyPayment': monthlyPayment,
-      });
+      Get.toNamed(
+        LoanScreen.route,
+        arguments: {
+          'creditId': creditId,
+          'term': term,
+          'amount': currentValue.toInt(),
+          'monthlyPayment': monthlyPayment,
+        },
+      );
     }
   }
 
@@ -126,7 +123,7 @@ class GetCreditController extends GetxController with StateControlMixin, GetSing
 
     paymentController = TextEditingController();
     tabBarController = TabController(length: 3, vsync: this);
-    term = tabBarController.index +1;
+    term = tabBarController.index + 1;
     month = (term * 12);
     super.onInit();
   }
@@ -137,7 +134,6 @@ class GetCreditController extends GetxController with StateControlMixin, GetSing
     );
 
     if (selectedCredit != null) {
-
       creditId = selectedCredit.id ?? -1;
 
       interest = selectedCredit.interest!;
@@ -154,12 +150,10 @@ class GetCreditController extends GetxController with StateControlMixin, GetSing
       formatBid(interest);
 
       calculate();
-
     } else {
       debugPrint('⚠️ Credit type not found for $selectedDropdownValue');
     }
   }
-
 
   void calculate() {
     double totalWithInterest = currentValue + (currentValue * interest / 100);
@@ -177,7 +171,6 @@ class GetCreditController extends GetxController with StateControlMixin, GetSing
     paymentController.text = formatted;
     update();
   }
-
 
   void formatBid(int value) {
     String formatted;

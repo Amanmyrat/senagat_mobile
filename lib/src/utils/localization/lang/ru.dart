@@ -65,6 +65,7 @@ const Map<String, String> ruRu = {
   r'purchase': r'Покупка',
   r'sale': r'Продажа',
   r'telecom_internet': r'Телеком Интернет',
+  r'astu_internet': r'АГТС Интернет',
   r'notifications': r'Уведомления',
   r'no_notifications': r'Нет уведомлений',
   r'cable_TV': r'Кабельное ТВ',

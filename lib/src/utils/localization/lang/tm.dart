@@ -66,6 +66,7 @@ const Map<String, String> tkTk = {
   r'purchase': r'Satyn almak',
   r'sale': r'Satyş',
   r'telecom_internet': r'Telekom Internet',
+  r'astu_internet': r'AŞTU Internet',
   r'notifications': r'Bildirişler',
   r'no_notifications': r'Bildiriş ýok',
   r'cable_TV': r'Kabel TV',
