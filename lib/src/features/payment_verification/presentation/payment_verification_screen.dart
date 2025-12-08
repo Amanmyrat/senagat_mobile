@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:senagat_mobile/src/features/foundation/presentation/foundation_screen.dart';
-import 'package:senagat_mobile/src/features/pay/presentation/payment_screen.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
 import 'package:senagat_mobile/src/widgets/check_widget.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
@@ -114,7 +113,7 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                                                           SizedBox(height: 6.h,),
                                                           Text(
                                                             '${controller.sum} ${r'manat'
-                                                                .tr}' ?? '',
+                                                                .tr}',
                                                             style: TextStyle(
                                                               fontSize: 35.sp,
                                                               color: AppColors.white,
@@ -308,7 +307,7 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                       if(controller.check == true)
                         CheckWidget(isLoading: controller.status == Status.loading,
                           isTitle: false, route: controller.isInquiries ? FoundationScreen.route : DashboardScreen.route,
-                          buttonTitle:controller.isFoundation ? r'fund_page'.tr : r'home_page'.tr, successTitle: 'payment_was_successful',
+                          buttonTitle: controller.isFoundation ? r'fund_page'.tr : r'home_page'.tr, successTitle: 'application_send',
                         ),
                     ],
                   ),

@@ -18,182 +18,255 @@ class ServiceSettingsScreen extends StatefulWidget {
 }
 
 class _ServiceSettingsScreenState extends State<ServiceSettingsScreen> {
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: GetBuilder(
-            init: ServiceSettingsController(),
-            builder: (controller) {
+        child: GetBuilder<ServiceSettingsController>(
+          init: ServiceSettingsController(),
+          builder: (controller) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomAppBar(actionWidget: GestureDetector(
-                  onTap: (){
-                    controller.saveData();
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(AppDimensions.paddingMedium),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.r),
-                      border: Border.all(
-                        color: controller.selectedServiceTitle.isEmpty ? AppColors.greyInactive : AppColors.green,
-                        width: 1.w,
-                        style: BorderStyle.solid,
+                /// Top bar
+                CustomAppBar(
+                  actionWidget: GestureDetector(
+                    onTap: controller.selected.isEmpty
+                        ? null
+                        : controller.saveData,
+                    child: Container(
+                      padding: EdgeInsets.all(AppDimensions.paddingMedium),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.r),
+                        border: Border.all(
+                          color: controller.selected.isEmpty
+                              ? AppColors.greyInactive
+                              : AppColors.green,
+                          width: 1.w,
+                        ),
+                        color: controller.selected.isEmpty
+                            ? Colors.transparent
+                            : AppColors.green,
                       ),
-                      color: controller.selectedServiceTitle.isEmpty ? Colors.transparent : AppColors.green,
+                      child: SvgPicture.asset(
+                        AppAssets.checkIcon,
+                        width: 20.w,
+                        color: controller.selected.isEmpty
+                            ? AppColors.greyInactive
+                            : AppColors.white,
+                      ),
                     ),
-                    child: SvgPicture.asset(AppAssets.checkIcon, width: 20.w, color: controller.selectedServiceTitle.isNotEmpty ? AppColors.white : AppColors.greyInactive,),
                   ),
-                ),),
+                ),
+
                 Expanded(
                   child: SingleChildScrollView(
                     child: Padding(
                       padding: EdgeInsets.symmetric(
-                        horizontal: AppDimensions.paddingExtraLarge.w,
-                      ),
-                      child: Form(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  r'quick_navigation_buttons'.tr,
-                                  style: TextStyle(
-                                    fontSize: 24.sp,
-                                    color: AppColors.blackText,
+                          horizontal: AppDimensions.paddingExtraLarge.w),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          /// Title
+                          Text(
+                            r'quick_navigation_buttons'.tr,
+                            style: TextStyle(
+                              fontSize: 24.sp,
+                              color: AppColors.blackText,
+                            ),
+                          ),
+
+                          SizedBox(
+                              height:
+                              controller.selected.isNotEmpty ? 40.h : 0),
+
+                          /// Selected count
+                          if (controller.selected.isNotEmpty)
+                            Text(
+                              '${r"selected".tr} ${controller.selected.length} / 4',
+                              style: TextStyle(
+                                  fontSize: 14.sp, color: AppColors.grey),
+                            ),
+
+                          SizedBox(height: 6.h),
+
+                          /// SELECTED LIST
+                          ReorderableListView.builder(
+                            itemCount: controller.selected.length,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            onReorder: controller.changeItemPositions,
+                            itemBuilder: (context, index) {
+                              final item = controller.selected[index];
+
+                              return GestureDetector(
+                                key: ValueKey(item.title),
+                                onTap: () => controller.removeSelectedService(item),
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: AppDimensions.paddingMedium.h),
+                                  color: AppColors.white,
+                                  child: Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        AppAssets.minusCircleIcon,
+                                        color: AppColors.redDark,
+                                      ),
+                                      SizedBox(width: AppDimensions.paddingMedium.w),
+
+                                      /// Icon
+                                      Container(
+                                        width: 50.w,
+                                        height: 50.h,
+                                        padding: EdgeInsets.all(
+                                            AppDimensions.paddingSmall.w),
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: AppColors.dividerColor,
+                                              width: 1.w),
+                                          shape: BoxShape.circle,
+                                          color: AppColors.white,
+                                        ),
+                                        child: Image.asset(item.icon,
+                                            width: 30.w),
+                                      ),
+
+                                      SizedBox(width: AppDimensions.paddingMedium.w),
+
+                                      /// Title
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsets.all(
+                                                  AppDimensions.paddingMedium.w),
+                                              child: Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: Text(
+                                                      item.title.tr,
+                                                      style: TextStyle(
+                                                          color: AppColors
+                                                              .blackText,
+                                                          fontSize: 14.sp),
+                                                    ),
+                                                  ),
+                                                  SvgPicture.asset(
+                                                    AppAssets.listIcon,
+                                                    color:
+                                                    AppColors.greyInactive,
+                                                    width: 18.w,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            const Divider(
+                                                height: 1,
+                                                color: AppColors.dividerColor),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                SizedBox(height: controller.selectedServiceTitle.isNotEmpty ? AppDimensions.padding40.h : 0),
+                              );
+                            },
+                          ),
 
-                                if(controller.selectedServiceTitle.isNotEmpty)
-                                  Text('${r'selected'.tr} ${controller.selectedServiceTitle.length} ${'/'} 4', style: TextStyle(
-                                    fontSize: 14.sp,
-                                    color: AppColors.grey,
-                                  ),),
+                          SizedBox(height: AppDimensions.padding40.h),
 
-                                SizedBox(height: 6.h,),
-                                ReorderableListView.builder(
-                                    itemCount: controller.selectedServiceTitle.length,
-                                    shrinkWrap: true,
-                                    physics: NeverScrollableScrollPhysics(),
-                                    itemBuilder: (context, index){
-                                      return GestureDetector(
-                                        key: ValueKey(controller.selectedServiceTitle[index]),
-                                        onTap: (){
-                                          controller.removeSelectedService(controller.selectedServiceTitle[index], controller.selectedServiceIcons[index]);
-                                        },
-                                        child: Container(
-                                          padding: EdgeInsets.symmetric(vertical: AppDimensions.paddingMedium.h),
-                                          color: AppColors.white,
-                                          child: Row(
-                                            children: [
-                                              SvgPicture.asset(AppAssets.minusCircleIcon, color: AppColors.redDark,),
+                          /// ALL
+                          Text(
+                            r'all'.tr,
+                            style: TextStyle(
+                                fontSize: 14.sp, color: AppColors.grey),
+                          ),
 
-                                              SizedBox(width: AppDimensions.paddingMedium.w,),
-                                              Container(
-                                                width: 50.w,
-                                                height: 50.h,
-                                                padding: EdgeInsets.all(AppDimensions.paddingSmall.w),
-                                                decoration: BoxDecoration(
-                                                    border: Border.all(color: AppColors.dividerColor, width: 1.w),
-                                                    shape: BoxShape.circle,
-                                                    color: AppColors.white
-                                                ),
-                                                child: Image.asset(controller.selectedServiceIcons[index], width: 30.w,),
-                                              ),
-                                              SizedBox(width: AppDimensions.paddingMedium.w,),
-                                              Expanded(
-                                                child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Padding(
-                                                      padding: EdgeInsets.all(AppDimensions.paddingMedium.w),
-                                                      child: Row(
-                                                        children: [
-                                                          Expanded(child: Text(controller.selectedServiceTitle[index].tr,
-                                                            style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),
-                                                          ),),
-                                                          SvgPicture.asset(AppAssets.listIcon, color: AppColors.greyInactive, width: 18.w,),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Divider(color: AppColors.dividerColor, height: 1,),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  onReorder: (int oldIndex, int newIndex) {
-                                      controller.changeItemPositions(oldIndex, newIndex);
-                                  },
-                                ),
-                                SizedBox(height: AppDimensions.padding40.h,),
-                                Text(r'all'.tr, style: TextStyle(
-                                  fontSize: 14.sp,
-                                  color: AppColors.grey,
-                                ),),
-                                SizedBox(height: 16.h,),
-                                ListView.builder(
-                                  itemCount: controller.serviceIcons.length,
-                                    shrinkWrap: true,
-                                    physics: NeverScrollableScrollPhysics(),
-                                    itemBuilder: (context, index){
-                                  return GestureDetector(
-                                    onTap: (){
-                                      controller.addSelectedService(controller.serviceTitle[index], controller.serviceIcons[index]);
-                                    },
-                                    child: Container(
-                                      padding: EdgeInsets.only(bottom: AppDimensions.paddingExtraLarge.h),
-                                      color: AppColors.white,
-                                      child: Row(
-                                        children: [
-                                          SvgPicture.asset(AppAssets.plusCircleIcon, color: AppColors.green,),
-                                          SizedBox(width: AppDimensions.paddingMedium.w,),
-                                          Container(
-                                            width: 50.w,
-                                            height: 50.h,
-                                            padding: EdgeInsets.all(AppDimensions.paddingSmall.w),
-                                            decoration: BoxDecoration(
-                                              border: Border.all(color: AppColors.dividerColor, width: 1.w),
-                                                shape: BoxShape.circle,
-                                                color: AppColors.white
-                                            ),
-                                            child: Image.asset(controller.serviceIcons[index], width: 30.w, ),
-                                          ),
-                                          SizedBox(width: AppDimensions.paddingMedium.w,),
-                                          Expanded(
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Padding(
-                                                  padding: EdgeInsets.all(AppDimensions.paddingMedium.w),
-                                                  child: Text(controller.serviceTitle[index].tr,
-                                                    style: TextStyle(color: AppColors.blackText, fontSize: 14.sp),
-                                                  ),
-                                                ),
-                                                Divider(color: AppColors.dividerColor, height: 1.h,),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
+                          SizedBox(height: 16.h),
+
+                          /// SERVICES LIST
+                          ListView.builder(
+                            itemCount: controller.services.length,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              final item = controller.services[index];
+
+                              return GestureDetector(
+                                onTap: () => controller.addSelectedService(item),
+                                child: Container(
+                                  padding: EdgeInsets.only(
+                                      bottom: AppDimensions.paddingExtraLarge.h),
+                                  color: AppColors.white,
+                                  child: Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        AppAssets.plusCircleIcon,
+                                        color: AppColors.green,
                                       ),
-                                    ),
-                                  );
-                                }),
-                              ],
-                            ),
+
+                                      SizedBox(
+                                          width: AppDimensions.paddingMedium.w),
+
+                                      /// Icon
+                                      Container(
+                                        width: 50.w,
+                                        height: 50.h,
+                                        padding: EdgeInsets.all(
+                                            AppDimensions.paddingSmall.w),
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: AppColors.dividerColor,
+                                              width: 1.w),
+                                          shape: BoxShape.circle,
+                                          color: AppColors.white,
+                                        ),
+                                        child: Image.asset(item.icon,
+                                            width: 30.w),
+                                      ),
+
+                                      SizedBox(
+                                          width: AppDimensions.paddingMedium.w),
+
+                                      /// Title
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsets.all(
+                                                  AppDimensions.paddingMedium.w),
+                                              child: Text(
+                                                item.title.tr,
+                                                style: TextStyle(
+                                                  color: AppColors.blackText,
+                                                  fontSize: 14.sp,
+                                                ),
+                                              ),
+                                            ),
+                                            const Divider(
+                                                height: 1,
+                                                color: AppColors.dividerColor),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
                       ),
                     ),
                   ),
                 ),
               ],
             );
-          }
+          },
         ),
       ),
     );

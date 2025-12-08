@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-import 'package:senagat_mobile/src/features/add_card/model/card_model.dart';
 import 'package:senagat_mobile/src/features/home/controller/home_controller.dart';
-import 'package:senagat_mobile/src/features/pay/model/pay_model.dart';
 import 'package:senagat_mobile/src/features/welcome/presentation/welcome_screen.dart';
 import '../../../core/control_state_variable_mixin.dart';
 import '../../../core/local/key_value_storage_service.dart';
@@ -19,9 +17,6 @@ import '../../register_confirmation/models/account_model.dart';
 class IdentificationController extends GetxController with StateControlMixin {
   final profileBox = Hive.box<ProfileModel>('profileBox');
   final phoneBox = Hive.box<String>('phoneBox');
-  final cardsBox = Hive.box<CardModel>('cardsBox');
-  final fastOperation = Hive.box('fastOperations');
-  final paymentBox = Hive.box<PayModel>('payBox');
 
   final _keyValueStorageService = KeyValueStorageService();
   final _accountLoginStatusController = Get.put(
@@ -34,16 +29,15 @@ class IdentificationController extends GetxController with StateControlMixin {
   late final String? phone;
   late final String? profileStatus;
 
-  void logout() {
+  Future<void> logout() async {
     _keyValueStorageService.resetKeys();
     _accountLoginStatusController.getAccountStatus(
       StatefulData.error(ExceptionType.UnauthorizedException),
     );
-    profileBox.clear();
-    phoneBox.clear();
-    cardsBox.clear();
-    fastOperation.clear();
-    paymentBox.clear();
+    await Hive.close();
+    await Hive.deleteFromDisk();
+
+    Get.reset();
 
     update();
 

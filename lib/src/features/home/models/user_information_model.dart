@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:senagat_mobile/src/features/identity_verification/models/profile_model.dart';
 
 class UserInformationModel {

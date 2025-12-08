@@ -25,6 +25,7 @@ import 'package:senagat_mobile/src/features/lang_settings/presentation/lang_sett
 import 'package:senagat_mobile/src/features/loan/presentation/loan_screen.dart';
 import 'package:senagat_mobile/src/features/map.dart';
 import 'package:senagat_mobile/src/features/net_and_tv/presentation/net_and_tv_screen.dart';
+import 'package:senagat_mobile/src/features/no_internet/presentation/no_internet_screen.dart';
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
 import 'package:senagat_mobile/src/features/notifications_settings/presentation/notifications_settings_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/payment_screen.dart';
@@ -41,6 +42,7 @@ import 'package:senagat_mobile/src/features/splash/presentation/splash_screen.da
 import 'package:senagat_mobile/src/utils/localization/controller/language_controller.dart';
 import 'package:senagat_mobile/src/utils/localization/localization_service.dart';
 import 'package:senagat_mobile/src/utils/theme/app_theme.dart';
+import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
 import 'package:senagat_mobile/src/utils/theme/controller/theme_controller.dart';
 import 'features/add_card/controller/add_card_controller.dart';
 import 'features/auth/controller/auth_controller.dart';
@@ -51,6 +53,7 @@ import 'features/dashboard/controller/dashboard_controller.dart';
 import 'features/dashboard/presentation/dashboard_screen.dart';
 import 'features/get_card/presentation/get_card_screen.dart';
 import 'features/inquiries/presentation/inquiries_screen.dart';
+import 'features/no_internet/controller/internet_checker.dart';
 import 'features/payment_verification/presentation/payment_verification_screen.dart';
 import 'features/map_search/presentation/map_search_screen.dart';
 
@@ -83,9 +86,7 @@ class _SenagatAppState extends State<SenagatApp> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
-    );
+
 
     return ScreenUtilInit(
       designSize: const Size(430, 932),
@@ -242,6 +243,7 @@ class _SenagatAppState extends State<SenagatApp> {
               ),
               GetPage(name: CreditList.route, page: () => const CreditList()),
               GetPage(name: MapScreen.route, page: () => const MapScreen()),
+              GetPage(name: NoInternetScreen.route, page: () => const NoInternetScreen()),
             ],
           ),
         );
@@ -266,5 +268,6 @@ class DashboardBinding extends Bindings {
       ),
     );
     Get.put(ProfileController());
+    Get.put(InternetChecker());
   }
 }

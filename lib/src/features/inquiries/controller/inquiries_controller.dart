@@ -7,10 +7,12 @@ import 'package:senagat_mobile/src/features/inquiries/repository/inquiries_repos
 import 'package:senagat_mobile/src/features/map_search/repository/location_repository.dart';
 import 'package:senagat_mobile/src/features/payment_verification/presentation/payment_verification_screen.dart';
 
+import '../../../core/networking/custom_exception.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/services/show_snack.dart';
 import '../../../utils/services/error_utils.dart';
 import '../../map_search/model/location_model.dart';
+import '../../no_internet/presentation/no_internet_screen.dart';
 import '../models/inquiries_order_model.dart';
 
 class InquiriesController extends GetxController with StateControlMixin {
@@ -130,6 +132,7 @@ class InquiriesController extends GetxController with StateControlMixin {
       _inquiries.addAll(value);
     }).catchError((e){
       status = Status.error;
+      handleApiError(e);
       update();
       final errorText = ErrorUtils.extractErrorText(e);
       ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
@@ -137,7 +140,19 @@ class InquiriesController extends GetxController with StateControlMixin {
       debugPrint(e.toString());
     });
   }
+  void handleApiError(dynamic error) {
+    if (error is CustomException) {
+      if (error.exceptionType == ExceptionType.FetchDataException ||
+          error.exceptionType == ExceptionType.SocketException ||
+          error.message.contains("network_error")) {
+        Get.to(() => const NoInternetScreen());
+        return;
+      }
+    }
 
+    // fallback
+    Get.snackbar("Ошибка", error.toString());
+  }
 
   void getBranches() async {
     status = Status.loading;

@@ -15,13 +15,14 @@ import 'package:senagat_mobile/src/features/net_and_tv/presentation/net_and_tv_s
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/payment_screen.dart';
 import 'package:senagat_mobile/src/features/register_confirmation/models/account_model.dart';
+import '../../../core/networking/custom_exception.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/constants/app_assets.dart';
 import '../../../utils/services/show_snack.dart';
 import '../../../utils/services/error_utils.dart';
-import '../../foundation/presentation/foundation_screen.dart';
 import '../../identity_verification/models/profile_model.dart';
 import '../../inquiries/presentation/inquiries_screen.dart';
+import '../../no_internet/presentation/no_internet_screen.dart';
 import '../../pay/model/pay_model.dart';
 import '../../qr_code/presentation/qr_code_screen.dart';
 import '../../service_settings/controller/service_settings_controller.dart';
@@ -124,23 +125,21 @@ class HomeController extends GetxController with StateControlMixin {
   }
 
   void onFastServiceTap(int index) {
+    final item = fastServiceController.selected[index];
 
-    if (fastServiceController.selectedServiceTitle[index] == r'state_traffic_safety_inspectorate') {
+    if (item.title == r'state_traffic_safety_inspectorate') {
       Get.toNamed(
         NetAndTvScreen.route,
         arguments: {
-          'selectedServiceTitle':
-              fastServiceController.selectedServiceTitle[index],
+          'selectedServiceTitle': item.title,
         },
       );
     } else {
       Get.toNamed(
         PaymentScreen.route,
         arguments: {
-          'selectedServiceTitle':
-              fastServiceController.selectedServiceTitle[index],
-          'selectedServiceIcon':
-              fastServiceController.selectedServiceIcons[index],
+          'selectedServiceTitle': item.title,
+          'selectedServiceIcon': item.icon,
         },
       );
     }
@@ -180,26 +179,37 @@ class HomeController extends GetxController with StateControlMixin {
     status = Status.loading;
     update();
 
-    await repository
-        .getExchangeRateTypes()
-        .then((value) {
-          _exchange.clear();
-          _exchange.addAll(value);
-          status = Status.completed;
-          update();
-        })
-        .catchError((e) {
-          status = Status.error;
+    try {
+      final value = await repository.getExchangeRateTypes();
 
-          update();
-          final errorText = ErrorUtils.extractErrorText(e);
-          debugPrint(e.toString());
-        })
-        .whenComplete(() {
-          _isFetchingExchangeRates = false;
-        });
+      _exchange.clear();
+      _exchange.addAll(value);
+
+      status = Status.completed;
+    } catch (e) {
+      status = Status.error;
+      debugPrint("ERROR => $e");
+
+      handleApiError(e);
+    } finally {
+      update();
+      _isFetchingExchangeRates = false;
+    }
   }
 
+  void handleApiError(dynamic error) {
+    if (error is CustomException) {
+      if (error.exceptionType == ExceptionType.FetchDataException ||
+          error.exceptionType == ExceptionType.SocketException ||
+          error.message.contains("network_error")) {
+        Get.to(() => const NoInternetScreen());
+        return;
+      }
+    }
+
+    // fallback
+    Get.snackbar("Ошибка", error.toString());
+  }
   void getUserProfileInfo() async {
     if (_isFetchingUserInfo) return;
 
@@ -262,9 +272,9 @@ class HomeController extends GetxController with StateControlMixin {
     }
   }
 
-  getFastOperationsCount() {
-    return fastServiceController.selectedServiceTitle.length <= 4
-        ? fastServiceController.selectedServiceTitle.length + 1
-        : fastServiceController.selectedServiceTitle.length;
+  int getFastOperationsCount() {
+    final count = fastServiceController.selected.length;
+    return count <= 4 ? count + 1 : count;
   }
+
 }

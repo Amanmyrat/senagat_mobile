@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async{
+      onWillPop: () async {
         return showBackDialog(context);
       },
       child: Scaffold(
@@ -49,7 +49,9 @@ class _HomeScreenState extends State<HomeScreen> {
               builder: (controller) {
                 return controller.status == Status.loading
                     ? Center(
-                        child: CircularProgressIndicator(color: AppColors.green),
+                        child: CircularProgressIndicator(
+                          color: AppColors.green,
+                        ),
                       )
                     : Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -122,7 +124,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                         onTap: () {
                                           Get.toNamed(InquiriesList.route);
                                         },
-                                        child: inquiriesWidget(controller, index),
+                                        child: inquiriesWidget(
+                                          controller,
+                                          index,
+                                        ),
                                       );
                                     },
                                   ),
@@ -257,17 +262,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       style: TextStyle(
                                                         color: isSelected
                                                             ? AppColors.white
-                                                            : AppColors.blackText,
+                                                            : AppColors
+                                                                  .blackText,
                                                         fontSize: 14.sp,
                                                       ),
                                                     ),
-
                                                   ],
                                                 ),
                                               ),
                                               Center(
                                                 child: Image.asset(
-                                                  controller.serviceImage[index],
+                                                  controller
+                                                      .serviceImage[index],
                                                   width: 200.w,
                                                   height: 250.h,
                                                 ),
@@ -310,7 +316,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 SizedBox(height: AppDimensions.padding40.h),
                                 controller.payBox.isEmpty
                                     ? Container(
-                                        width: MediaQuery.of(context).size.width,
+                                        width: MediaQuery.of(
+                                          context,
+                                        ).size.width,
                                         height: 200.h,
                                         padding: EdgeInsets.all(
                                           AppDimensions.paddingExtraLarge.w,
@@ -421,14 +429,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             .r,
                                                       ),
                                                   border: Border.all(
-                                                    color: AppColors.dividerColor,
+                                                    color:
+                                                        AppColors.dividerColor,
                                                     width: 1.w,
                                                     style: BorderStyle.solid,
                                                   ),
                                                   boxShadow: [
                                                     BoxShadow(
-                                                      color:
-                                                          AppColors.dividerColor,
+                                                      color: AppColors
+                                                          .dividerColor,
                                                       blurRadius: 4.r,
                                                     ),
                                                   ],
@@ -478,7 +487,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         children: [
                                                           Text(
                                                             controller.payBox
-                                                                    .getAt(index)
+                                                                    .getAt(
+                                                                      index,
+                                                                    )
                                                                     ?.serviceName
                                                                     .tr ??
                                                                 '',
@@ -490,7 +501,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           ),
                                                           Text(
                                                             controller.payBox
-                                                                    .getAt(index)
+                                                                    .getAt(
+                                                                      index,
+                                                                    )
                                                                     ?.number ??
                                                                 '',
                                                             style: TextStyle(
@@ -521,7 +534,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                 SizedBox(height: AppDimensions.padding40.h),
 
-                                if(controller.exchange.isNotEmpty)...[
+                                if (controller.exchange.isNotEmpty) ...[
                                   Text(
                                     r'exchange_rates'.tr,
                                     style: TextStyle(
@@ -592,7 +605,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
 
                                         ListView.builder(
-                                          physics: NeverScrollableScrollPhysics(),
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
                                           shrinkWrap: true,
                                           itemCount: controller.exchange.length,
                                           itemBuilder: (context, index) {
@@ -604,14 +618,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                               child: Row(
                                                 mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 children: [
                                                   Row(
                                                     children: [
                                                       Image.network(
                                                         controller
-                                                            .exchange[index]
-                                                            .flag ??
+                                                                .exchange[index]
+                                                                .flag ??
                                                             '',
                                                         width: 28.w,
                                                         height: 20.h,
@@ -619,12 +634,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       SizedBox(width: 4.w),
                                                       Text(
                                                         controller
-                                                            .exchange[index]
-                                                            .currency ??
+                                                                .exchange[index]
+                                                                .currency ??
                                                             '',
                                                         style: TextStyle(
-                                                          color:
-                                                          AppColors.blackText,
+                                                          color: AppColors
+                                                              .blackText,
                                                           fontSize: 14.sp,
                                                         ),
                                                       ),
@@ -632,22 +647,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   ),
                                                   Row(
                                                     mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
                                                     children: [
                                                       SizedBox(
                                                         width: AppDimensions
                                                             .padding60
                                                             .w,
                                                         child: Text(
-                                                          textAlign: TextAlign.end,
+                                                          textAlign:
+                                                              TextAlign.end,
                                                           controller
-                                                              .exchange[index]
-                                                              .purchase ??
+                                                                  .exchange[index]
+                                                                  .purchase ??
                                                               '',
                                                           style: TextStyle(
-                                                            color:
-                                                            AppColors.blackText,
+                                                            color: AppColors
+                                                                .blackText,
                                                             fontSize: 14.sp,
                                                           ),
                                                         ),
@@ -662,14 +678,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             .padding60
                                                             .w,
                                                         child: Text(
-                                                          textAlign: TextAlign.end,
+                                                          textAlign:
+                                                              TextAlign.end,
                                                           controller
-                                                              .exchange[index]
-                                                              .sale ??
+                                                                  .exchange[index]
+                                                                  .sale ??
                                                               '',
                                                           style: TextStyle(
-                                                            color:
-                                                            AppColors.blackText,
+                                                            color: AppColors
+                                                                .blackText,
                                                             fontSize: 14.sp,
                                                           ),
                                                         ),
@@ -684,7 +701,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ],
                                     ),
                                   ),
-                                ]
+                                ],
                               ],
                             ),
                           ),
@@ -922,18 +939,12 @@ class _HomeScreenState extends State<HomeScreen> {
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: controller.getFastOperationsCount(),
-
               itemBuilder: (context, index) {
-                if (controller
-                            .fastServiceController
-                            .selectedServiceTitle
-                            .length <=
-                        4 &&
-                    index ==
-                        controller
-                            .fastServiceController
-                            .selectedServiceTitle
-                            .length) {
+                final fastCtrl = controller.fastServiceController;
+                final selected = fastCtrl.selected;
+
+                /// ADD BUTTON — appears only when selected.length < 4
+                if (selected.length <= 4 && index == selected.length) {
                   return GestureDetector(
                     onTap: () {
                       Get.toNamed(ServiceSettingsScreen.route);
@@ -951,7 +962,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         border: Border.all(
                           color: AppColors.dividerColor,
                           width: 1.w,
-                          style: BorderStyle.solid,
                         ),
                         boxShadow: [
                           BoxShadow(
@@ -972,10 +982,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 }
 
+                /// FAST SERVICE ITEM
+                final item = selected[index];
+
                 return GestureDetector(
-                  onTap: () {
-                    controller.onFastServiceTap(index);
-                  },
+                  onTap: () => controller.onFastServiceTap(index),
                   child: Container(
                     width: 90.w,
                     height: 78.h,
@@ -992,7 +1003,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       border: Border.all(
                         color: AppColors.dividerColor,
                         width: 1.w,
-                        style: BorderStyle.solid,
                       ),
                       boxShadow: [
                         BoxShadow(
@@ -1015,20 +1025,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               width: 1.w,
                             ),
                             shape: BoxShape.circle,
-                            // color: isSelected ? AppColors.white : AppColors.green
                           ),
-                          child: Image.asset(
-                            controller
-                                .fastServiceController
-                                .selectedServiceIcons[index],
-                            width: 70.w,
-                          ),
+                          child: Image.asset(item.icon, width: 70.w),
                         ),
                         Text(
-                          controller
-                              .fastServiceController
-                              .selectedServiceTitle[index]
-                              .tr,
+                          item.title.tr,
                           maxLines: 1,
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -1090,8 +1091,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontSize: 20.sp,
                       ),
                     ),
-                    SizedBox(height: AppDimensions.paddingExtraLarge.h,),
-                
+                    SizedBox(height: AppDimensions.paddingExtraLarge.h),
+
                     Row(
                       children: [
                         Text(
@@ -1162,7 +1163,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     Row(
                       children: [
                         Text(
-                          controller.userInformationModel?.certificates?.first.createdAt ?? '',
+                          controller
+                                  .userInformationModel
+                                  ?.certificates
+                                  ?.first
+                                  .createdAt ??
+                              '',
                           style: TextStyle(
                             color: AppColors.orangeLight,
                             fontSize: 14.sp,
@@ -1213,7 +1219,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     Row(
                       children: [
                         Text(
-                          controller.userInformationModel?.loan?.first.createdAt ?? '',
+                          controller
+                                  .userInformationModel
+                                  ?.loan
+                                  ?.first
+                                  .createdAt ??
+                              '',
                           style: TextStyle(
                             color: AppColors.blueLight,
                             fontSize: 14.sp,
@@ -1318,5 +1329,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     ).then((value) => value ?? false);
   }
-
 }

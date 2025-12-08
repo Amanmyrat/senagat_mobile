@@ -50,6 +50,9 @@ dependencies:
   universal_image: ^1.0.11
   file_picker: ^8.0.0
   flutter_native_contact_picker: ^0.0.11
+  connectivity_plus: ^6.0.0
+  internet_connection_checker_plus: ^2.0.0
+
 
 
   flutter_map: ^7.0.2

@@ -2,35 +2,39 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
 import '../../../utils/constants/app_assets.dart';
-import '../../../core/control_state_variable_mixin.dart';
 
-class ServiceSettingsController extends GetxController with StateControlMixin {
-  final List<String> selectedServiceTitle = [];
-  final List<String> selectedServiceIcons = [];
+class ServiceItem {
+  final String title;
+  final String icon;
 
-  final List<String> serviceIcons = [
-    AppAssets.tmCell,
-    AppAssets.astu,
-    AppAssets.astu,
-    AppAssets.astu,
-    AppAssets.astu,
-    AppAssets.telecom,
-    AppAssets.beletIcon,
-    AppAssets.policeCar,
-  ];
+  ServiceItem(this.title, this.icon);
 
-  final List<String> serviceTitle = [
-    r'TM CELL',
-    r'CDMA',
-    r'IP TV',
-    r'home_phone',
-    r'Aştu internet',
-    r'Telekom internet',
-    r'Belet',
-    r'state_traffic_safety_inspectorate',
-  ];
+  Map<String, String> toMap() => {"title": title, "icon": icon};
 
+  factory ServiceItem.fromMap(Map data) =>
+      ServiceItem(data["title"], data["icon"]);
+}
+
+class ServiceSettingsController extends GetxController {
   late Box _box;
+
+  /// All available services
+  final List<ServiceItem> allServices = [
+    ServiceItem(r'TM CELL', AppAssets.tmCell),
+    ServiceItem(r'CDMA', AppAssets.astu),
+    ServiceItem(r'IP TV', AppAssets.astu),
+    ServiceItem(r'home_phone', AppAssets.astu),
+    ServiceItem(r'Aştu internet', AppAssets.astu),
+    ServiceItem(r'Telekom internet', AppAssets.telecom),
+    ServiceItem(r'Belet', AppAssets.beletIcon),
+    ServiceItem(r'state_traffic_safety_inspectorate', AppAssets.policeCar),
+  ];
+
+  /// Services shown as available
+  final List<ServiceItem> services = [];
+
+  /// Selected services (max 4)
+  final List<ServiceItem> selected = [];
 
   @override
   void onInit() {
@@ -39,57 +43,76 @@ class ServiceSettingsController extends GetxController with StateControlMixin {
     _loadSavedData();
   }
 
+  // ---------------------------------------------------------------------------
+  // LOADING DATA
+  // ---------------------------------------------------------------------------
+
+  void _loadSavedData() {
+    final saved = _box.get('selected', defaultValue: <dynamic>[]);
+
+    // Clear current
+    selected.clear();
+    services.clear();
+
+    // Copy all initial items into a new list
+    final fullList = List<ServiceItem>.from(allServices);
+
+    // Load saved selected items
+    final savedItems =
+    saved.map<ServiceItem>((e) => ServiceItem.fromMap(e)).toList();
+
+    selected.addAll(savedItems);
+
+    // Remove selected from full list → remaining items are unselected
+    for (final item in savedItems) {
+      fullList.removeWhere((x) => x.title == item.title);
+    }
+
+    services.addAll(fullList);
+
+    update();
+  }
+
+  // ---------------------------------------------------------------------------
+  // SAVE DATA TO HIVE
+  // ---------------------------------------------------------------------------
+
   void saveData() {
-    _box.put('selected_titles', selectedServiceTitle);
-    _box.put('selected_icons', selectedServiceIcons);
+    _box.put('selected', selected.map((e) => e.toMap()).toList());
     Get.toNamed(DashboardScreen.route);
   }
 
-  void _loadSavedData() {
-    final savedTitles = _box.get('selected_titles', defaultValue: <String>[]);
-    final savedIcons = _box.get('selected_icons', defaultValue: <String>[]);
+  // ---------------------------------------------------------------------------
+  // ADD SELECTED
+  // ---------------------------------------------------------------------------
 
-    selectedServiceTitle.clear();
-    selectedServiceIcons.clear();
-    selectedServiceTitle.addAll(savedTitles);
-    selectedServiceIcons.addAll(savedIcons);
+  void addSelectedService(ServiceItem item) {
+    if (selected.length >= 4) return;
 
-    for (int i = 0; i < savedTitles.length; i++) {
-      serviceTitle.remove(savedTitles[i]);
-      serviceIcons.remove(savedIcons[i]);
-    }
-
+    services.remove(item);
+    selected.add(item);
     update();
   }
 
-  void addSelectedService(String selectedTitle, String selectedIcon) {
-    if (selectedServiceTitle.length < 4) {
-      serviceTitle.remove(selectedTitle);
-      serviceIcons.remove(selectedIcon);
+  // ---------------------------------------------------------------------------
+  // REMOVE SELECTED
+  // ---------------------------------------------------------------------------
 
-      selectedServiceTitle.add(selectedTitle);
-      selectedServiceIcons.add(selectedIcon);
-    }
+  void removeSelectedService(ServiceItem item) {
+    selected.remove(item);
+    services.add(item);
     update();
   }
 
-  void removeSelectedService(String selectedTitle, String selectedIcon) {
-    selectedServiceTitle.remove(selectedTitle);
-    selectedServiceIcons.remove(selectedIcon);
-
-    serviceTitle.add(selectedTitle);
-    serviceIcons.add(selectedIcon);
-    update();
-  }
+  // ---------------------------------------------------------------------------
+  // REORDER SELECTED
+  // ---------------------------------------------------------------------------
 
   void changeItemPositions(int oldIndex, int newIndex) {
-    if (newIndex > oldIndex) {
-      newIndex -= 1;
-    }
-    final titleItem = selectedServiceTitle.removeAt(oldIndex);
-    final iconItem = selectedServiceIcons.removeAt(oldIndex);
-    selectedServiceTitle.insert(newIndex, titleItem);
-    selectedServiceIcons.insert(newIndex, iconItem);
+    if (newIndex > oldIndex) newIndex--;
+
+    final item = selected.removeAt(oldIndex);
+    selected.insert(newIndex, item);
     update();
   }
 }

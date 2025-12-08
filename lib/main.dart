@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:senagat_mobile/src/app.dart';
@@ -7,6 +8,7 @@ import 'package:senagat_mobile/src/features/add_card/model/card_model.dart';
 import 'package:senagat_mobile/src/features/identity_verification/models/profile_model.dart';
 import 'package:senagat_mobile/src/features/pay/model/pay_model.dart';
 import 'package:senagat_mobile/src/utils/path_provider_service.dart';
+import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,7 +17,12 @@ void main() async {
   await PathProviderService.init();
   await KeyValueStorageBase.init();
   await Hive.initFlutter();
-
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      statusBarColor: AppColors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+    ),
+  );
   Hive.registerAdapter(CardModelAdapter());
   Hive.registerAdapter(PayModelAdapter());
   Hive.registerAdapter(ProfileModelAdapter());

@@ -1,4 +1,6 @@
 // ignore_for_file: constant_identifier_names
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
@@ -61,7 +63,22 @@ class CustomException implements Exception {
   factory CustomException.fromDioException(Exception error) {
     try {
       if (error is DioError) {
+        print("RAW DIO ERROR TYPE: ${error.type}");
+        print("RAW DIO ERROR MSG: ${error.message}");
+        print("RAW DIO ERROR: $error");
         switch (error.type) {
+          case DioExceptionType.connectionError:
+            if (error.error is SocketException) {
+              return CustomException(
+                exceptionType: ExceptionType.FetchDataException,
+                message: 'network_error'.tr,
+              );
+            }
+            return CustomException(
+              exceptionType: ExceptionType.ApiException,
+              message: 'no_internet_connection'.tr,
+            );
+
           case DioErrorType.cancel:
             return CustomException(
               exceptionType: ExceptionType.CancelException,

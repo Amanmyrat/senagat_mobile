@@ -71,6 +71,7 @@ class AppAssets {
   static const telecom = 'assets/icons/telecom-logo.png';
   static const tmCell = 'assets/icons/tmCell.png';
   static const policeCar = 'assets/icons/policeCar.png';
+  static const wifi = 'assets/images/wifi.png';
 
   static const cardImage = 'assets/images/cardImage.jpg';
   static const cardImage2 = 'assets/images/cardImage2.jpg';
