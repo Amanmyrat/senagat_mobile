@@ -17,6 +17,7 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
   late final TextEditingController workPositionController;
   late bool internetService = false;
   late bool delivery = false;
+  String? emailError;
 
   String? selectedCardTitle;
   String? selectedCardImage;
@@ -53,18 +54,23 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
   }
 
   void onInformationNotEmpty(String v) {
-    if (workPhoneController.text.isNotEmpty &&
-        emailController.text.isNotEmpty &&
-        workPositionController.text.isNotEmpty &&
-        workPhoneController.text.length >= 8 &&
-        selectedDropdownBranch != null) {
-      continueEnabled = true;
-      update();
+    final emailText = emailController.text.trim();
+
+    if (emailText.isNotEmpty && !isValidEmail(emailText)) {
+      emailError = "email_invalid".tr;
     } else {
-      continueEnabled = false;
-      update();
+      emailError = null;
     }
+
+    // Only email (valid) + branch required
+    continueEnabled =
+        emailText.isNotEmpty &&
+            emailError == null &&
+            selectedDropdownBranch != null;
+
+    update();
   }
+
 
   void onCheckBoxTap(String type) {
     if (type == 'internet') {
@@ -78,14 +84,21 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
   Future<CardOrderModel> _getCardOrderModel() async {
     return CardOrderModel(
       typeId: selectedCardId,
-      workPhone: int.parse(workPhoneController.text),
-      workPosition: workPositionController.text,
+      workPhone: workPhoneController.text.isEmpty
+          ? null
+          : int.tryParse(workPhoneController.text),
+
+      workPosition: workPositionController.text.isEmpty
+          ? null
+          : workPositionController.text,
+
       bankBranch: selectedDropdownBranch,
       internetService: internetService,
       delivery: delivery,
       email: emailController.text,
     );
   }
+
 
   Future<void> onTap() async {
     if (continueEnabled) {
@@ -103,6 +116,7 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
               arguments: {
                 'serviceName': r'get_a_card',
                 'sum': sum,
+                'createdAt': value.createdAt,
                 'isInquiries': true,
                 'isFoundation': false,
               },
@@ -134,6 +148,13 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
           ApiErrorHandler.handleApiError(e);
           debugPrint(e.toString());
         });
+  }
+
+  bool isValidEmail(String email) {
+    final emailRegex = RegExp(
+      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+    );
+    return emailRegex.hasMatch(email);
   }
 
   void setDropdownBranch(int? value) {

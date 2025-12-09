@@ -14,6 +14,7 @@ class PaymentVerificationController extends GetxController with StateControlMixi
   late String? number;
   late String? sum;
   late String? userName;
+  late String? createdAt;
   late bool isInquiries;
   late bool isFoundation;
 
@@ -48,6 +49,7 @@ class PaymentVerificationController extends GetxController with StateControlMixi
       number = Get.arguments['number'];
       sum = Get.arguments['sum']?.replaceAll('.', ',');
       userName = Get.arguments['userName'];
+      createdAt = Get.arguments['createdAt'];
     }catch (e){
       print(e);
     }

@@ -104,7 +104,7 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                                                           ),
                                                           SizedBox(height: 6.h,),
                                                           Text(
-                                                            r'01 Августа, 10:15'.tr,
+                                                            controller.createdAt ?? '',
                                                             style: TextStyle(
                                                               fontSize: 14.sp,
                                                               color: AppColors.lightGreen,

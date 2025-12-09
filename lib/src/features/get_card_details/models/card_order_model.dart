@@ -9,6 +9,7 @@ class CardOrderModel {
   final bool? internetService;
   final bool? delivery;
   final String? email;
+  final String? createdAt;
 
   CardOrderModel({
     this.id,
@@ -21,6 +22,7 @@ class CardOrderModel {
     this.internetService,
     this.delivery,
     this.email,
+    this.createdAt,
   });
 
   factory CardOrderModel.fromJson(Map<String, dynamic> json) {
@@ -35,6 +37,7 @@ class CardOrderModel {
       internetService: json['internet_service'],
       delivery: json['delivery'],
       email: json['email'],
+      createdAt: json['created_at'],
     );
   }
 

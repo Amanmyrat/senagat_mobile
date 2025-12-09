@@ -134,13 +134,16 @@ class IdentityVerificationController extends GetxController
   /// VALIDATION
   void onTextIsNotEmpty(String? v) {
     continueEnabled =
-        controllers.every((c) => c.text.isNotEmpty) &&
-        pdfFile != null &&
-        selectedRoman != null &&
-        selectedCity != null;
+        controllers.where((c) =>
+        c != homePhoneController &&
+            c != surNameController).every((c) => c.text.isNotEmpty) &&
+            pdfFile != null &&
+            selectedRoman != null &&
+            selectedCity != null;
 
     update();
   }
+
 
   /// BUILD PROFILE MODEL
   Future<ProfileModel> _getProfileModel() async {

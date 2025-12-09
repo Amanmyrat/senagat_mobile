@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:roundcheckbox/roundcheckbox.dart';
 import 'package:senagat_mobile/src/core/globals.dart';
 import 'package:senagat_mobile/src/features/get_card/repository/card_repository.dart';
 import 'package:senagat_mobile/src/features/get_card_details/controller/get_card_details_controller.dart';
@@ -253,34 +252,36 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                                 ),
                               ),
                               SizedBox(height: AppDimensions.paddingMedium.h),
+
                               TextFormField(
                                 textInputAction: TextInputAction.next,
-                                keyboardType: TextInputType.text,
+                                keyboardType: TextInputType.emailAddress,
                                 controller: controller.emailController,
-                                onChanged: (v) =>
-                                    controller.onInformationNotEmpty(v),
+                                onChanged: controller.onInformationNotEmpty,
                                 style: TextStyle(fontSize: 14.sp),
                                 decoration: InputDecoration(
                                   hintText: 'Email'.tr,
                                   border: const OutlineInputBorder(),
+
                                   focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(
-                                      AppDimensions.borderRadiusMedium,
-                                    ),
+                                    borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium),
                                     borderSide: BorderSide(
-                                      color: AppColors.green,
+                                      color: controller.emailError == null
+                                          ? AppColors.green
+                                          : AppColors.redDark,   // <--- error border
                                       width: 1.w,
                                     ),
                                   ),
                                   enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(
-                                      AppDimensions.borderRadiusMedium,
-                                    ),
+                                    borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium),
                                     borderSide: BorderSide(
-                                      color: AppColors.white,
+                                      color: controller.emailError == null
+                                          ? AppColors.white
+                                          : AppColors.redDark,   // <--- error border
                                       width: 1.w,
                                     ),
                                   ),
+
                                   counter: const SizedBox(),
                                   contentPadding: EdgeInsets.symmetric(
                                     vertical: AppDimensions.paddingExtraLarge.h,
@@ -288,6 +289,7 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                                   ),
                                 ),
                               ),
+
                               SizedBox(height: 22.h),
                             ],
                           ),

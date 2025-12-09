@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import '../utils/constants/app_assets.dart';
 import '../utils/theme/constants/app_colors.dart';
 import '../utils/theme/constants/app_dimensions.dart';
@@ -28,7 +30,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
             : MainAxisAlignment.spaceBetween,
         children: <Widget>[
           GestureDetector(
-            onTap: () => Navigator.pop(context),
+            onTap: () => Get.back(),
             child: Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(

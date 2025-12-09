@@ -5,6 +5,7 @@ class InquiriesOrderModel {
   final int? typeId;
   final int? bankBranch;
   final String? homeAddress;
+  final String? createdAt;
 
   InquiriesOrderModel({
     this.id,
@@ -13,6 +14,7 @@ class InquiriesOrderModel {
     this.typeId,
     this.bankBranch,
     this.homeAddress,
+    this.createdAt,
   });
 
   factory InquiriesOrderModel.fromJson(Map<String, dynamic> json) {
@@ -23,6 +25,7 @@ class InquiriesOrderModel {
       typeId: json['certificate_type_id'],
       bankBranch: json['bank_branch_id'],
       homeAddress: json['home_address'],
+      createdAt: json['created_at'],
     );
   }
 
