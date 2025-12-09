@@ -68,7 +68,7 @@ class ServiceSettingsController extends GetxController {
 
     services.addAll(fullList);
 
-    hasChanges = false; // <-- no changes initially
+    hasChanges = false;
     update();
   }
 

@@ -15,6 +15,7 @@ class CreditOrderModel {
   final String? position;
   final String? managerWorkAddress;
   final int? salary;
+  final String? createdAt;
 
   CreditOrderModel({
     this.creditId,
@@ -31,6 +32,7 @@ class CreditOrderModel {
     this.position,
     this.managerWorkAddress,
     this.salary,
+    this.createdAt,
   });
 
   factory CreditOrderModel.fromJson(Map<String, dynamic> json) {
@@ -49,6 +51,7 @@ class CreditOrderModel {
       position: json['position'],
       managerWorkAddress: json['manager_work_address'],
       salary: json['salary'],
+      createdAt: json['created_at'],
     );
   }
 

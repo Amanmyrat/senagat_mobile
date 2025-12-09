@@ -107,6 +107,7 @@ class InquiriesController extends GetxController with StateControlMixin {
                 'isInquiries': true,
                 'isFoundation': false,
                 'serviceName': r'get_inquiries',
+                'createdAt': value.createdAt,
                 'sum': inquiriesPrice.toString(),
               },
             );
