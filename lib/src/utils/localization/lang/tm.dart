@@ -236,6 +236,8 @@ const Map<String, String> tkTk = {
   r'manat': r'Manat',
   r'profile_pending': r'Profil entäk tassyklanmady',
   r'profile_rejected': r'Profil ret edilen',
+  r'check_internet_connection': r'Internet birikmesini barlaň',
+  r'reconnect_internet': r'Gaýtadan birikmek',
 
 
   r'otp_not_match': r'Kod gabat gelmedi',

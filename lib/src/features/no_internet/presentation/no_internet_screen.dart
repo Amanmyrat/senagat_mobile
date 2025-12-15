@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -31,7 +29,7 @@ class _NoInternetScreenState extends State<NoInternetScreen> {
             children: [
               Text('no_internet_connection'.tr, style: TextStyle(fontSize: 24.sp)),
               SizedBox(height: AppDimensions.paddingMedium.h,),
-              Text('Требуется подключение к интернету', style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.secondaryFont)),
+              Text(r'check_internet_connection'.tr, style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.secondaryFont)),
               SizedBox(height: 32.h,),
               Image.asset(AppAssets.wifi, width: 190.w, height: 157.h),
               SizedBox(height: 32.h,),
@@ -50,7 +48,7 @@ class _NoInternetScreenState extends State<NoInternetScreen> {
 
                     isError: false,
                     isLoading:false,
-                    child: Text('Повторить подключение', style: TextStyle(fontSize: 14.sp, color: AppColors.white),),
+                    child: Text(r'reconnect_internet'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.white),),
                   ),
                 ),
               ),

@@ -236,6 +236,8 @@ const Map<String, String> ruRu = {
   r'manat': r'Манат',
   r'profile_pending': r'Профиль пока не потвержден',
   r'profile_rejected': r'Ваш профиль отклонён',
+  r'check_internet_connection': r'Проверте подключение к интернету',
+  r'reconnect_internet': r'Повторить подключение',
 
 
   r'otp_not_match': r'Код не совпадает',

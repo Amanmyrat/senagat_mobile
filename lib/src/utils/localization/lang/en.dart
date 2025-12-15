@@ -236,6 +236,8 @@ const Map<String, String> enUs = {
   r'manat': r'Manat',
   r'profile_pending': r'Pending profile verification',
   r'profile_rejected': r'Profile rejected',
+  r'check_internet_connection': r'Check internet connection',
+  r'reconnect_internet': r'Reconnect',
 
 
   r'otp_not_match': r'OTP did not match',
