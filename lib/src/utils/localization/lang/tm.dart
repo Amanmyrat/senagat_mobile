@@ -113,7 +113,7 @@ const Map<String, String> tkTk = {
   r'bank_branch': r'Bank şahamçasy',
   r'home_address': r'Öý salgysy',
   r'job_information': r'Iş barada maglumat',
-  r'entrepreneur': r'Telekeçi',
+  r'entrepreneur': r'Siz telekeçimi',
   r'manager': r'Menejer',
   r'patent_number': r'Patent belgisi',
   r'registration_number': r'Bellik belgisi',
@@ -139,7 +139,7 @@ const Map<String, String> tkTk = {
   r'your_account': r'Hasabyňyz',
   r'select': r'Saýlamak',
   r'language': r'Dil',
-  r'about_Us_v2.0': r'Biz hakynda v2.0',
+  r'about_Us_v1.0': r'Biz hakynda v@version',
   r'identity_verification': r'Şahsyýeti tassyklamak',
   r'logout': r'Ulgamdan çykmak',
   r'date_birth': r'Doglan güni',
@@ -149,8 +149,8 @@ const Map<String, String> tkTk = {
   r'date_issue': r'Berilen senesi',
   r'passport_scan': r'Pasport suraty',
   r'about_Us': r'Biz hakynda',
-  r'version_2.0': r'Wersiýa 2.0',
-  r'application_update_v2.0': r'Programma täzelenmesi v2.0',
+  r'version_1.0': r'Wersiýa @version',
+  r'application_update_v1.0': r'Programma täzelenmesi v@version',
   r'write_your_review': r'Teswir ýaz',
   r'recommend_to_your_friends': r'Dostlaryňyza maslahat beriň',
   r'sms': r'SMS',
@@ -238,6 +238,9 @@ const Map<String, String> tkTk = {
   r'profile_rejected': r'Profil ret edilen',
   r'check_internet_connection': r'Internet birikmesini barlaň',
   r'reconnect_internet': r'Gaýtadan birikmek',
+  r'online_reception': r'Onlaýn kabulhana',
+  r'online_applications': r'Bank hyzmatlary boýunça onlaýn arzalar',
+
 
 
   r'otp_not_match': r'Kod gabat gelmedi',

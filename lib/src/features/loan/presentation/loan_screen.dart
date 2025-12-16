@@ -92,7 +92,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                                     color: AppColors.blackText,
                                                   ),
                                                 ),
-                                                SizedBox(height: 16.h,),
+                                                SizedBox(height: 32.h,),
                     
                                               ],
                                             ),
@@ -100,7 +100,20 @@ class _LoanScreenState extends State<LoanScreen> {
                     
                                           Expanded(
                                             child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
+                                                Padding(
+                                                  padding: EdgeInsets.only(left: 20.h),
+                                                  child: Text(
+                                                    r'entrepreneur'.tr,
+                                                    style: TextStyle(
+                                                      fontSize: 17.sp,
+                                                      color: AppColors.blackText,
+                                                    ),
+                                                  ),
+                                                ),
+
+                                                SizedBox(height: 16.h),
                                                 Container(
                                                   height: 42.h,
                                                   margin: EdgeInsets.symmetric(horizontal: AppDimensions.paddingExtraLarge.w),
@@ -124,8 +137,8 @@ class _LoanScreenState extends State<LoanScreen> {
                                                         color: AppColors.blackText
                                                     ),
                                                     tabs: [
-                                                      Tab(text: r'entrepreneur'.tr,),
-                                                      Tab(text: r'manager'.tr,),
+                                                      Tab(text: r'yes'.tr,),
+                                                      Tab(text: r'no'.tr,),
                                                     ],),
                                                 ),
                                                 SizedBox(height: AppDimensions.padding40,),

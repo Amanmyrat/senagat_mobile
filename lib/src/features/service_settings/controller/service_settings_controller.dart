@@ -34,6 +34,7 @@ class ServiceSettingsController extends GetxController {
     ServiceItem(r'telecom_internet', AppAssets.telecom),
     ServiceItem(r'Belet', AppAssets.beletIcon),
     ServiceItem(r'state_traffic_safety_inspectorate', AppAssets.policeCar),
+    ServiceItem(r'ÄlemTv', AppAssets.alemTv),
   ];
 
   final List<ServiceItem> services = [];

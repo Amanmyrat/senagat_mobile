@@ -62,7 +62,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                         left: AppDimensions.paddingMedium.w,
                         right: AppDimensions.paddingExtraLarge.w,
                       ),
-                      child: SvgPicture.asset(AppAssets.searchIcon, width: 20.w),
+                      child: SvgPicture.asset(AppAssets.buildingApartmentIcon, width: 20.w),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(

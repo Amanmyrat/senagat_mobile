@@ -185,7 +185,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     children: [
                                       SvgPicture.asset(AppAssets.filledInfo),
                                       SizedBox(width: 10.w,),
-                                      Text(r'about_Us_v2.0'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.blackText, fontFamily: AppFonts.secondaryFont),),
+                                      Text(r'about_Us_v1.0'.trParams({'version': controller.appVersion}).tr, style: TextStyle(fontSize: 14.sp, color: AppColors.blackText, fontFamily: AppFonts.secondaryFont),),
                                     ],
                                   ),
                                   SvgPicture.asset(AppAssets.arrowRightIcon, color: AppColors.black, width: 16.w,)

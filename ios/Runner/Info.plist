@@ -57,5 +57,9 @@
     <key>YandexMapKitApiKey</key>
     <string>2f755a72-2c4e-457e-820e-cad66298463d</string>
 
+    <key>SKStoreReviewController</key>
+    <true/>
+
+
 </dict>
 </plist>

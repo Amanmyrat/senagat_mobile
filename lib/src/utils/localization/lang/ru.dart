@@ -112,7 +112,7 @@ const Map<String, String> ruRu = {
   r'bank_branch': r'Филиал банка',
   r'home_address': r'Домашний адрес',
   r'job_information': r'Информация о работе',
-  r'entrepreneur': r'Предприниматель',
+  r'entrepreneur': r'Вы предприниматель?',
   r'manager': r'Менеджер',
   r'patent_number': r'Номер патента',
   r'registration_number': r'Регистрационный номер',
@@ -139,7 +139,7 @@ const Map<String, String> ruRu = {
   r'accounts': r'Счета',
   r'your_account': r'Ваш счет',
   r'language': r'Язык',
-  r'about_Us_v2.0': r'О нас v2.0',
+  r'about_Us_v1.0': r'О нас v@version',
   r'identity_verification': r'Подтверждение личности',
   r'logout': r'Выйти',
   r'date_birth': r'Дата рождения',
@@ -149,8 +149,8 @@ const Map<String, String> ruRu = {
   r'date_issue': r'Дата выдачи',
   r'passport_scan': r'Скан паспорта',
   r'about_Us': r'О нас',
-  r'version_2.0': r'Версия 2.0',
-  r'application_update_v2.0': r'Обновление приложения v2.0',
+  r'version_1.0': r'Версия @version',
+  r'application_update_v1.0': r'Обновление приложения v@version',
   r'write_your_review': r'Напишите свой отзыв',
   r'recommend_to_your_friends': r'Рекомендуйте друзьям',
   r'sms': r'SMS',
@@ -238,6 +238,9 @@ const Map<String, String> ruRu = {
   r'profile_rejected': r'Ваш профиль отклонён',
   r'check_internet_connection': r'Проверте подключение к интернету',
   r'reconnect_internet': r'Повторить подключение',
+  r'online_reception': r'Онлайн прием',
+  r'online_applications': r'Онлайн-заявки на банковские услуги',
+
 
 
   r'otp_not_match': r'Код не совпадает',

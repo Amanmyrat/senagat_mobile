@@ -94,7 +94,7 @@ class _CardScreenState extends State<CardScreen> {
                               Get.toNamed(AddCardScreen.route);
                             },
                             child: Container(
-                              height: 120.h,
+                              height: 220.h,
                               width: MediaQuery.of(context).size.width,
                               margin: EdgeInsets.only(bottom: 10.h),
                               decoration: BoxDecoration(
@@ -112,87 +112,70 @@ class _CardScreenState extends State<CardScreen> {
                           physics: NeverScrollableScrollPhysics(),
                           itemCount: controller.cardBox.length,
                           itemBuilder: (context, index) {
-                            return Row(
-                              children: [
-                                Expanded(
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Get.toNamed(CardSettingsScreen.route,
-                                          arguments: {'index': index});
-                                    },
-                                    child: Container(
-                                      padding: EdgeInsets.all(AppDimensions.paddingExtraLarge),
-                                      margin: EdgeInsets.only(bottom: 10.h),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10.r),
-                                        image: DecorationImage(
-                                          image: AssetImage(controller.cardBox
-                                              .getAt(index)!
-                                              .cardDesign),
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Text(
-                                                '${controller.cardBox.getAt(index)?.name} ',
-                                                style: TextStyle(
-                                                  color: AppColors
-                                                      .white,
-                                                  fontSize: 14.sp,
-                                                ),
-                                              ),
-                                              SizedBox(width: 10.w,),
-                                              if(controller.cardBox.getAt(index)?.nickName != '')...[
-                                                Text(
-                                                  '(${controller.cardBox.getAt(index)?.nickName})',
-                                                  style: TextStyle(
-                                                    color: AppColors
-                                                        .white,
-                                                    fontSize: 14.sp,
-                                                  ),
-                                                ),
-                                              ]
-                                            ],
-                                          ),
-                                          SizedBox(height: 20.h),
-                                          Text(
-                                            controller.hideCardCenter(controller.cardBox
-                                                .getAt(index)!
-                                                .cardNumber),
-                                            style: TextStyle(
-                                                fontSize: 17.sp,
-                                                color: AppColors.white),
-                                          )
-                                        ],
-                                      ),
+                            return GestureDetector(
+                              onTap: () {
+                                Get.toNamed(CardSettingsScreen.route,
+                                    arguments: {'index': index});
+                              },
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                padding: EdgeInsets.all(AppDimensions.paddingExtraLarge),
+                                margin: EdgeInsets.only(bottom: AppDimensions.paddingMedium.h),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10.r),
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                      controller.cardBox.getAt(index)!.cardDesign,
                                     ),
+                                    fit: BoxFit.fill,
                                   ),
                                 ),
-                                SizedBox(width: 12.w),
-                                if (controller.cardBox.length == 1)
-                                  GestureDetector(
-                                    onTap: () {
-                                      Get.toNamed(AddCardScreen.route);
-                                    },
-                                    child: Container(
-                                      height: 120.h,
-                                      width: 90.w,
-                                      decoration: BoxDecoration(
-                                        color: AppColors.inputFillBackground,
-                                        borderRadius: BorderRadius.circular(
-                                            AppDimensions.borderRadiusMedium.r),
-                                      ),
-                                      child: Center(
-                                        child: SvgPicture.asset(AppAssets.plusIcon,
-                                            width: 30.w, color: AppColors.black),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Text(
+                                        controller.cardBox.getAt(index)?.nickName ?? '',
+                                        style: TextStyle(
+                                          color: AppColors.white,
+                                          fontSize: 14,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                              ],
+                                    SizedBox(height: 72.h),
+                                    Text(
+                                      controller.cardBox.getAt(index)?.cardNumber ?? '',
+                                      style: TextStyle(
+                                        wordSpacing: 10.sp,
+                                        fontSize: 24.sp,
+                                        color: AppColors.white,
+                                      ),
+                                    ),
+                                    SizedBox(height: 41.h),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          controller.cardBox.getAt(index)?.name ?? '',
+                                          style: TextStyle(
+                                            fontSize: 14.sp,
+                                            color: AppColors.white,
+                                          ),
+                                        ),
+                                        Text(
+                                          controller.cardBox.getAt(index)?.expiryDate ??
+                                              '',
+                                          style: TextStyle(
+                                            fontSize: 14.sp,
+                                            color: AppColors.white,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
                             );
                           },
                         ),
@@ -401,7 +384,7 @@ class _CardScreenState extends State<CardScreen> {
                 ),
               ),
 
-              if (controller.cardBox.length > 1)
+              if (controller.cardBox.length >= 1)
                 Padding(
                   padding: EdgeInsets.all(AppDimensions.paddingExtraLarge),
                   child: SizedBox(

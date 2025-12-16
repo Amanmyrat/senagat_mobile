@@ -136,7 +136,7 @@ class AddCardController extends GetxController with StateControlMixin {
 
   void _navigateToNextScreen() {
     try {
-      Get.offAllNamed(DashboardScreen.route);
+      Get.toNamed(DashboardScreen.route);
       cardNumberController.clear();
       nameController.clear();
       termController.clear();

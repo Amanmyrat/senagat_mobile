@@ -34,7 +34,6 @@ class IdentificationController extends GetxController with StateControlMixin {
     _accountLoginStatusController.getAccountStatus(
       StatefulData.error(ExceptionType.UnauthorizedException),
     );
-    await Hive.close();
     await Hive.deleteFromDisk();
 
     Get.reset();

@@ -27,6 +27,7 @@ class CategoryController extends GetxController with StateControlMixin {
   final List<String> serviceIcons = [
     AppAssets.beletIcon,
     AppAssets.policeCar,
+    AppAssets.alemTv,
   ];
 
   final List<String> paymentsTitle = [
@@ -41,6 +42,7 @@ class CategoryController extends GetxController with StateControlMixin {
   final List<String> serviceTitle = [
     r'Belet',
     r'state_traffic_safety_inspectorate',
+    r'ÄlemTv',
   ];
 
 

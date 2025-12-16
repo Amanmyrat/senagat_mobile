@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:senagat_mobile/src/core/globals.dart';
+import 'package:senagat_mobile/src/features/about_us/controller/about_us_controller.dart';
 import 'package:senagat_mobile/src/features/about_us/presentation/about_us_screen.dart';
 import 'package:senagat_mobile/src/features/add_card/presentation/add_card_screen.dart';
 import 'package:senagat_mobile/src/features/auth_success/presentation/auth_success_screen.dart';
@@ -261,6 +262,7 @@ class DashboardBinding extends Bindings {
     Get.put(AuthController(), permanent: true);
     Get.put(ServiceSettingsController());
     Get.put(AddCardController());
+    Get.put(AboutUsController());
     Get.put(
       HomeController(
         ExchangeRateRepository(apiService: ApiServices.apiService),
