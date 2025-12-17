@@ -112,22 +112,12 @@ class _CreditListState extends State<CreditList> {
                                                   loan?.creditName?.tr ?? '',
                                                   style: TextStyle(color: AppColors.black, fontSize: 14.sp),
                                                 ),
-                                                Row(
-                                                  children: [
-                                                    Text(
-                                                      loan?.createdAt ?? '',
-                                                      style: TextStyle(
-                                                        color: AppColors.grey,
-                                                        fontSize: 14.sp,
-                                                      ),
-                                                    ),
-                                                    SizedBox(width: 6.w),
-                                                    SvgPicture.asset(
-                                                      AppAssets.arrowRightIcon,
-                                                      width: 14.w,
-                                                      color: AppColors.grey,
-                                                    ),
-                                                  ],
+                                                Text(
+                                                  loan?.createdAt ?? '',
+                                                  style: TextStyle(
+                                                    color: AppColors.grey,
+                                                    fontSize: 14.sp,
+                                                  ),
                                                 ),
                                               ],
                                             ),

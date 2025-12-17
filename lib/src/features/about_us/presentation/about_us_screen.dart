@@ -199,7 +199,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 32.h,),
+                          SizedBox(height: 16.h,),
                           Container(
                             width: MediaQuery.of(context).size.width,
                             padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),

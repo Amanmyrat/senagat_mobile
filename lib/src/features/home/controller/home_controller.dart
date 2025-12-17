@@ -35,7 +35,7 @@ class HomeController extends GetxController with StateControlMixin {
   AccountModel accountModel = AccountModel();
   final profileBox = Hive.box<ProfileModel>('profileBox');
   final phoneBox = Hive.box<String>('phoneBox');
-  late final currentProfile;
+  late final currentProfile =  profileBox.get('currentProfile');
 
   ExchangeRateRepository repository;
   AuthRepository authRepository;
@@ -152,7 +152,6 @@ class HomeController extends GetxController with StateControlMixin {
     addCardController = Get.find<AddCardController>();
     accountLoginStatusController = Get.find<AccountLoginStatusController>();
 
-    currentProfile = profileBox.get('currentProfile');
     ever(accountLoginStatusController.accountLoginStatus, (
       AccountLoginStatus status,
     ) {
@@ -219,7 +218,6 @@ class HomeController extends GetxController with StateControlMixin {
               final profileController = Get.find<ProfileController>();
               profileController.refreshProfile();
             } catch (e) {
-              // ProfileController might not be initialized yet
             }
           }
 
@@ -239,7 +237,7 @@ class HomeController extends GetxController with StateControlMixin {
   }
 
   checkProfile() {
-    if (currentProfile == null) {
+    if (currentProfile == null && userInformationModel?.profileModel == null) {
       isProfileRequired = true;
       update();
     } else {

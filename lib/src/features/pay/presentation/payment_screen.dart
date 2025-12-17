@@ -194,6 +194,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                                             icon: Icon(
                                                               Icons.contacts,
                                                               color: AppColors.green,
+                                                              size: 20.w,
                                                             ),
                                                             onPressed: () async {
                                                               controller
@@ -601,24 +602,23 @@ class _PaymentScreenState extends State<PaymentScreen> {
                               onTap: () {
                                 Get.toNamed(AddCardScreen.route);
                               },
-                              child: Expanded(
-                                child: Container(
-                                  height: 220.h,
-                                  decoration: BoxDecoration(
-                                    color:
-                                    AppColors.inputFillBackground,
-                                    borderRadius:
-                                    BorderRadius.circular(
-                                      AppDimensions
-                                          .borderRadiusMedium
-                                          .r,
-                                    ),
+                              child: Container(
+                                height: 220.h,
+                                margin: EdgeInsets.symmetric(horizontal: 20.w),
+                                decoration: BoxDecoration(
+                                  color:
+                                  AppColors.inputFillBackground,
+                                  borderRadius:
+                                  BorderRadius.circular(
+                                    AppDimensions
+                                        .borderRadiusMedium
+                                        .r,
                                   ),
-                                  child: Center(
-                                    child: SvgPicture.asset(
-                                      AppAssets.plusIcon,
-                                      width: 32.w,
-                                    ),
+                                ),
+                                child: Center(
+                                  child: SvgPicture.asset(
+                                    AppAssets.plusIcon,
+                                    width: 32.w,
                                   ),
                                 ),
                               ),

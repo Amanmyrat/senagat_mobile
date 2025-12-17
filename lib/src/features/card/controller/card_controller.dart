@@ -19,8 +19,6 @@ class CardController extends GetxController with StateControlMixin {
   UserInformationModel? userInformationModel;
   AuthRepository authRepository;
 
-  List<bool> isOpenList = [];
-
   CardController(this.authRepository);
 
   @override
@@ -29,15 +27,6 @@ class CardController extends GetxController with StateControlMixin {
     getUserProfileInfo();
   }
 
-  void onOpenApplication(int index) {
-    isOpenList[index] = !isOpenList[index];
-    update();
-  }
-
-  void initOpenStates(int length) {
-    isOpenList = List.generate(length, (_) => false);
-    update();
-  }
 
   void onQrScanTap() {
     lastTap = CardTapType.qr;
@@ -60,8 +49,6 @@ class CardController extends GetxController with StateControlMixin {
         .then((value) {
           userInformationModel = value;
           status = Status.completed;
-
-          initOpenStates(userInformationModel?.cards?.length ?? 0);
 
           update();
         })
