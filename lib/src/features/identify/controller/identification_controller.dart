@@ -8,15 +8,20 @@ import '../../../core/local/key_value_storage_service.dart';
 import '../../../core/networking/custom_exception.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/theme/constants/app_colors.dart';
+import '../../add_card/model/card_model.dart';
 import '../../auth/controller/account_status_controller.dart';
 import '../../dashboard/controller/dashboard_controller.dart';
 import '../../dashboard/utils/nested_nav_ids.dart';
 import '../../identity_verification/models/profile_model.dart';
+import '../../pay/model/pay_model.dart';
 import '../../register_confirmation/models/account_model.dart';
 
 class IdentificationController extends GetxController with StateControlMixin {
   final profileBox = Hive.box<ProfileModel>('profileBox');
   final phoneBox = Hive.box<String>('phoneBox');
+  final cardsBox = Hive.box<CardModel>('cardsBox');
+  final fastOperation = Hive.box('fastOperations');
+  final paymentBox = Hive.box<PayModel>('payBox');
 
   final _keyValueStorageService = KeyValueStorageService();
   final _accountLoginStatusController = Get.put(
@@ -34,9 +39,11 @@ class IdentificationController extends GetxController with StateControlMixin {
     _accountLoginStatusController.getAccountStatus(
       StatefulData.error(ExceptionType.UnauthorizedException),
     );
-    await Hive.deleteFromDisk();
-
-    Get.reset();
+    profileBox.clear();
+    phoneBox.clear();
+    cardsBox.clear();
+    fastOperation.clear();
+    paymentBox.clear();
 
     update();
 

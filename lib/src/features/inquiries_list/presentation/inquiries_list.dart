@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/globals.dart';
 import 'package:senagat_mobile/src/features/auth/repository/auth_repository.dart';
 import 'package:senagat_mobile/src/features/inquiries_list/controller/inquiries_list_controller.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
-
 import '../../../core/states/stateful_data.dart';
-import '../../../utils/constants/app_assets.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
 import '../../../utils/theme/constants/app_fonts.dart';
@@ -115,22 +112,12 @@ class _InquiriesListState extends State<InquiriesList> {
                                                   style: TextStyle(color: AppColors.black, fontSize: 14.sp),
                                                 ),
                                               ),
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                    inquiries?.createdAt ?? '',
-                                                    style: TextStyle(
-                                                      color: AppColors.grey,
-                                                      fontSize: 14.sp,
-                                                    ),
-                                                  ),
-                                                  SizedBox(width: 6.w),
-                                                  SvgPicture.asset(
-                                                    AppAssets.arrowRightIcon,
-                                                    width: 14.w,
-                                                    color: AppColors.grey,
-                                                  ),
-                                                ],
+                                              Text(
+                                                inquiries?.createdAt ?? '',
+                                                style: TextStyle(
+                                                  color: AppColors.grey,
+                                                  fontSize: 14.sp,
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -139,7 +126,7 @@ class _InquiriesListState extends State<InquiriesList> {
                                             children: [
                                               Expanded(
                                                 child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
                                                       r'payment_amount'.tr,

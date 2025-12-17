@@ -218,57 +218,39 @@ class _CardScreenState extends State<CardScreen> {
                                   ),
                                   child: Column(
                                     children: [
-                                      GestureDetector(
-                                        onTap: () {
-                                          controller.onOpenApplication(index);
-                                        },
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Container(
-                                              padding: EdgeInsets.symmetric(
-                                                horizontal:
-                                                AppDimensions.paddingMedium.w,
-                                                vertical: 4,
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal:
+                                              AppDimensions.paddingMedium.w,
+                                              vertical: 4,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(
+                                                AppDimensions.borderRadiusMedium.r,
                                               ),
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(
-                                                  AppDimensions.borderRadiusMedium.r,
-                                                ),
-                                                color: controller.checkCardStatus(index),
-                                              ),
-                                              child: Text(
-                                                card?.status?.tr ?? '',
-                                                style: TextStyle(
-                                                  fontSize: 14.sp,
-                                                  color: AppColors.white,
-                                                  fontFamily: AppFonts.secondaryFont,
-                                                ),
+                                              color: controller.checkCardStatus(index),
+                                            ),
+                                            child: Text(
+                                              card?.status?.tr ?? '',
+                                              style: TextStyle(
+                                                fontSize: 14.sp,
+                                                color: AppColors.white,
+                                                fontFamily: AppFonts.secondaryFont,
                                               ),
                                             ),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  card?.createdAt ?? '',
-                                                  style: TextStyle(
-                                                      color: AppColors.grey,
-                                                      fontSize: 14.sp),
-                                                ),
-                                                SizedBox(width: 6.w),
-                                                SvgPicture.asset(
-                                                  controller.isOpenList[index]
-                                                      ? AppAssets.caretDownIcon
-                                                      : AppAssets.arrowRightIcon,
-                                                  width: 14.w,
-                                                  color: AppColors.grey,
-                                                ),
-                                              ],
-                                            )
-                                          ],
-                                        ),
+                                          ),
+                                          Text(
+                                            card?.createdAt ?? '',
+                                            style: TextStyle(
+                                                color: AppColors.grey,
+                                                fontSize: 14.sp),
+                                          ),
+                                        ],
                                       ),
 
-                                      if (controller.isOpenList[index]) ...[
                                         SizedBox(height: 20.h),
 
                                         Row(
@@ -371,7 +353,6 @@ class _CardScreenState extends State<CardScreen> {
                                           ],
                                         )
                                       ],
-                                    ],
                                   ),
                                 ),
                               );
