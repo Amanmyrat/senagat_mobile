@@ -256,6 +256,26 @@ class HomeController extends GetxController with StateControlMixin {
     }
   }
 
+  String hideCardCenter(String number) {
+    if (number.length < 8) return number;
+
+    final start = number.substring(0, 4);
+    final end = number.substring(number.length - 4);
+    final hiddenCount = number.length - 11;
+    final hidden = '*' * hiddenCount;
+    final masked = '$start$hidden$end';
+
+    final buffer = StringBuffer();
+    for (int i = 0; i < masked.length; i++) {
+      buffer.write(masked[i]);
+      if ((i + 1) % 4 == 0 && i != masked.length - 1) {
+        buffer.write(' ');
+      }
+    }
+
+    return buffer.toString();
+  }
+
   int getFastOperationsCount() {
     final count = fastServiceController.selected.length;
     return count <= 4 ? count + 1 : count;

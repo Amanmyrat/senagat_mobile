@@ -77,7 +77,7 @@ class CardController extends GetxController with StateControlMixin {
 
     final start = number.substring(0, 4);
     final end = number.substring(number.length - 4);
-    final hiddenCount = number.length - 7;
+    final hiddenCount = number.length - 11;
     final hidden = '*' * hiddenCount;
     final masked = '$start$hidden$end';
 

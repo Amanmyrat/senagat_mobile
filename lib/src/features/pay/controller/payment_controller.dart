@@ -32,6 +32,8 @@ class PaymentController extends GetxController with StateControlMixin {
   late String cardNumber = '';
   late final String maskedNumber;
   final FlutterNativeContactPicker _contactPicker = FlutterNativeContactPicker();
+  CardModel? selectedCard;
+
 
   late final FocusNode phoneFocus;
 
@@ -104,8 +106,8 @@ class PaymentController extends GetxController with StateControlMixin {
 
   void isTextNotEmpty(){
     serviceIcon.isEmpty?
-    sumController.text.isNotEmpty && nameController.text.isNotEmpty && lastnameController.text.isNotEmpty ? continueEnabled = true: continueEnabled = false:
-    phoneController.text.length >= 8 && sumController.text.isNotEmpty ? continueEnabled = true : continueEnabled = false;
+    sumController.text.isNotEmpty && nameController.text.isNotEmpty && lastnameController.text.isNotEmpty && selectedCard != null ? continueEnabled = true: continueEnabled = false:
+    phoneController.text.length >= 8 && sumController.text.isNotEmpty && selectedCard != null ? continueEnabled = true : continueEnabled = false;
     update();
   }
 
@@ -114,7 +116,7 @@ class PaymentController extends GetxController with StateControlMixin {
 
     final start = number.substring(0, 4);
     final end = number.substring(number.length - 4);
-    final hiddenCount = number.length - 7;
+    final hiddenCount = number.length - 11;
 
     final hidden = '*' * hiddenCount;
 

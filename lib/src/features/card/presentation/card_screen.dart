@@ -145,7 +145,7 @@ class _CardScreenState extends State<CardScreen> {
                                     ),
                                     SizedBox(height: 72.h),
                                     Text(
-                                      controller.cardBox.getAt(index)?.cardNumber ?? '',
+                                      controller.hideCardCenter(controller.cardBox.getAt(index)?.cardNumber ?? ''),
                                       style: TextStyle(
                                         wordSpacing: 10.sp,
                                         fontSize: 24.sp,
