@@ -240,7 +240,9 @@ const Map<String, String> ruRu = {
   r'reconnect_internet': r'Повторить подключение',
   r'online_reception': r'Онлайн прием',
   r'online_applications': r'Онлайн-заявки на банковские услуги',
-
+  r'senagat_bank': r'Сенагат банк',
+  r'rysgal_bank': r'Рысгал банк',
+  r'altyn_asyr': r'Алтын aсыр (остальные банки)',
 
 
   r'otp_not_match': r'Код не совпадает',

@@ -4,6 +4,7 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
+import 'package:senagat_mobile/src/features/add_card/model/bank_model.dart';
 import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
 import '../../../utils/constants/app_assets.dart';
 import '../model/card_model.dart';
@@ -21,6 +22,8 @@ class AddCardController extends GetxController with StateControlMixin {
   String cardName = '';
 
   int selectedDesign = 0;
+  BankModel? selectedDropdownBank;
+
 
   List<String> cardDesigns = [
       AppAssets.cardImage,
@@ -34,6 +37,21 @@ class AddCardController extends GetxController with StateControlMixin {
     AppAssets.salaryCard,
     AppAssets.goyumCard,
     AppAssets.familyCard,
+  ];
+
+  List<BankModel> bankList = [
+    BankModel(
+      name: r'altyn_asyr',
+      bankName: r'altyn_asyr',
+    ),
+    BankModel(
+      name: r'senagat_bank',
+      bankName: r'senagat',
+    ),
+    BankModel(
+      name: r'rysgal_bank',
+      bankName: r'rysgal',
+    ),
   ];
 
   int? senagatIndex;
@@ -112,6 +130,11 @@ class AddCardController extends GetxController with StateControlMixin {
 
     updateCardDesignByPrefix();
 
+    update();
+  }
+
+  void setDropdownBank(BankModel? value) {
+    selectedDropdownBank = value;
     update();
   }
 

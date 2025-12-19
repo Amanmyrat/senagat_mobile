@@ -3,7 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:latlong2/latlong.dart' hide LatLng;
 import 'package:senagat_mobile/src/core/globals.dart';
 
 import '../../../core/states/stateful_data.dart';
@@ -46,33 +47,22 @@ class _MapSearchScreenState extends State<MapSearchScreen> {
             child: Stack(
               children: [
               // The map - takes full screen height
-              Positioned.fill(
-                child: FlutterMap(
-                  mapController: c.mapController,
-                  options: MapOptions(
-                    initialCenter: LatLng(c.lat ?? 0, c.lng ?? 0),
-                    initialZoom: 12.0,
-                    onMapReady: () {
-                      c.onMapReady();
-                      c.initializeMap();
-                      c.fitMarkersInView();
-                    },
+                Positioned.fill(
+                  child: GoogleMap(
+                    initialCameraPosition: CameraPosition(
+                      target: LatLng(c.lat ?? 0, c.lng ?? 0),
+                      zoom: 12,
+                    ),
+                    onMapCreated: c.onMapCreated,
+                    markers: c.markers,
+                    myLocationButtonEnabled: false,
+                    zoomControlsEnabled: false,
+                    onTap: (_) => c.unfocusSearch(),
                   ),
-                  children: [
-                    // Standard OpenStreetMap tiles
-                    TileLayer(
-                      urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                      userAgentPackageName: 'com.example.senagat_mobile',
-                    ),
-                    // Markers layer
-                    MarkerLayer(
-                      markers: c.markers,
-                    ),
-                  ],
                 ),
-              ),
 
-              // Search bar row (visual) - positioned below status bar
+
+                // Search bar row (visual) - positioned below status bar
               Positioned(
                 top: MediaQuery.of(context).padding.top + 20,
                 left: 20.w,

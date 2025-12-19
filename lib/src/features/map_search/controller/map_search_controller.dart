@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart';
+import 'package:flutter_map/flutter_map.dart' hide Marker, LatLngBounds;
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:latlong2/latlong.dart' hide LatLng;
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/map_search/repository/location_repository.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
@@ -23,6 +24,7 @@ class MapSearchController extends GetxController with StateControlMixin {
 
   LocationRepository repository;
   MapSearchController(this.repository);
+  GoogleMapController? _mapController;
 
   /// Active tab
   LocationType selected = LocationType.atm;
@@ -53,6 +55,50 @@ class MapSearchController extends GetxController with StateControlMixin {
     });
 
     getLocations();
+  }
+  void onMapCreated(GoogleMapController controller) {
+    _mapController = controller;
+    _isMapReady = true;
+
+    if (_queuedCenter != null && _queuedZoom != null) {
+      _mapController!.moveCamera(
+        CameraUpdate.newLatLngZoom(_queuedCenter!, _queuedZoom!),
+      );
+      _queuedCenter = null;
+      _queuedZoom = null;
+    }
+  }
+
+  void initializeMap() {
+    if (lat == null || lng == null) return;
+
+    final center = LatLng(lat!, lng!);
+    const zoom = 13.0;
+
+    if (!_isMapReady) {
+      _queuedCenter = center;
+      _queuedZoom = zoom;
+      return;
+    }
+
+    _mapController!.moveCamera(
+      CameraUpdate.newLatLngZoom(center, zoom),
+    );
+  }
+
+  Set<Marker> get markers {
+    return visibleLocations.map((loc) {
+      return Marker(
+        markerId: MarkerId('${loc.lat}_${loc.lng}'),
+        position: LatLng(loc.lat, loc.lng),
+        icon: BitmapDescriptor.defaultMarkerWithHue(
+          loc.type == LocationType.atm
+              ? BitmapDescriptor.hueGreen
+              : BitmapDescriptor.hueAzure,
+        ),
+        onTap: () => showBottomSheet(loc),
+      );
+    }).toSet();
   }
 
   /// ---------------------------------------
@@ -92,37 +138,62 @@ class MapSearchController extends GetxController with StateControlMixin {
           debugPrint(e.toString());
         });
   }
+  void fitMarkersInView() {
+    if (visibleLocations.isEmpty || !_isMapReady) return;
+
+    double minLat = visibleLocations.first.lat;
+    double maxLat = visibleLocations.first.lat;
+    double minLng = visibleLocations.first.lng;
+    double maxLng = visibleLocations.first.lng;
+
+    for (final loc in visibleLocations) {
+      minLat = minLat < loc.lat ? minLat : loc.lat;
+      maxLat = maxLat > loc.lat ? maxLat : loc.lat;
+      minLng = minLng < loc.lng ? minLng : loc.lng;
+      maxLng = maxLng > loc.lng ? maxLng : loc.lng;
+    }
+
+    final bounds = LatLngBounds(
+      southwest: LatLng(minLat, minLng),
+      northeast: LatLng(maxLat, maxLng),
+    );
+
+    _mapController!.animateCamera(
+      CameraUpdate.newLatLngBounds(bounds, 80),
+    );
+  }
+
 
   /// ---------------------------------------
   /// MAP READY
   /// ---------------------------------------
-  void onMapReady() {
-    _isMapReady = true;
-
-    if (_queuedCenter != null && _queuedZoom != null) {
-      mapController.move(_queuedCenter!, _queuedZoom!);
-      _queuedCenter = null;
-      _queuedZoom = null;
-    }
-  }
-
-  /// ---------------------------------------
-  /// INIT MAP
-  /// ---------------------------------------
-  void initializeMap() {
-    if (lat == null || lng == null) return;
-
-    final center = LatLng(lat!, lng!);
-    const zoom = 13.0;
-
-    if (!_isMapReady) {
-      _queuedCenter = center;
-      _queuedZoom = zoom;
-      return;
-    }
-
-    mapController.move(center, zoom);
-  }
+  // void onMapReady() {
+  //   _isMapReady = true;
+  //
+  //   if (_queuedCenter != null && _queuedZoom != null) {
+  //     mapController.move(_queuedCenter!, _queuedZoom!);
+  //     _queuedCenter = null;
+  //     _queuedZoom = null;
+  //   }
+  // }
+  //
+  // /// ---------------------------------------
+  // /// INIT MAP
+  // /// ---------------------------------------
+  // void initializeMap() {
+  //   if (lat == null || lng == null) return;
+  //
+  //   final center = LatLng(lat!, lng!);
+  //   const zoom = 13.0;
+  //
+  //   if (!_isMapReady) {
+  //     _queuedCenter = center;
+  //     _queuedZoom = zoom;
+  //     return;
+  //   }
+  //
+  //   mapController.move(center, zoom);
+  // }
 
   /// ---------------------------------------
   /// CHOOSE ATM / BRANCH TAB
@@ -163,25 +234,25 @@ class MapSearchController extends GetxController with StateControlMixin {
   List<LocationModel> get visibleLocations =>
       _locations.where((e) => e.type == selected).toList();
 
-  List<Marker> get markers {
-    return visibleLocations.map((loc) {
-      final iconPath = (loc.type == LocationType.atm)
-          ? AppAssets.mapPinGreenIcon
-          : AppAssets.mapPinBlackIcon;
-
-      return Marker(
-        point: LatLng(loc.lat, loc.lng),
-        width: 40,
-        height: 40,
-        child: GestureDetector(
-          onTap: () {
-            showBottomSheet(loc);
-          },
-          child: Image.asset(iconPath, width: 40, height: 40),
-        ),
-      );
-    }).toList();
-  }
+  // List<Marker> get markers {
+  //   return visibleLocations.map((loc) {
+  //     final iconPath = (loc.type == LocationType.atm)
+  //         ? AppAssets.mapPinGreenIcon
+  //         : AppAssets.mapPinBlackIcon;
+  //
+  //     return Marker(
+  //       point: LatLng(loc.lat, loc.lng),
+  //       width: 40,
+  //       height: 40,
+  //       child: GestureDetector(
+  //         onTap: () {
+  //           showBottomSheet(loc);
+  //         },
+  //         child: Image.asset(iconPath, width: 40, height: 40),
+  //       ),
+  //     );
+  //   }).toList();
+  // }
 
   /// ---------------------------------------
   /// BOTTOM SHEET
@@ -296,39 +367,39 @@ class MapSearchController extends GetxController with StateControlMixin {
   /// ---------------------------------------
   /// FIT ALL MARKERS
   /// ---------------------------------------
-  void fitMarkersInView() {
-    if (visibleLocations.isEmpty) return;
-
-    double minLat = visibleLocations.first.lat;
-    double maxLat = visibleLocations.first.lat;
-    double minLng = visibleLocations.first.lng;
-    double maxLng = visibleLocations.first.lng;
-
-    for (final loc in visibleLocations) {
-      if (loc.lat < minLat) minLat = loc.lat;
-      if (loc.lat > maxLat) maxLat = loc.lat;
-      if (loc.lng < minLng) minLng = loc.lng;
-      if (loc.lng > maxLng) maxLng = loc.lng;
-    }
-
-    final center = LatLng((minLat + maxLat) / 2, (minLng + maxLng) / 2);
-
-    final latSpan = (maxLat - minLat).abs();
-    final lngSpan = (maxLng - minLng).abs();
-    final span = latSpan > lngSpan ? latSpan : lngSpan;
-
-    final zoom = span < 0.01
-        ? 14.5
-        : span < 0.03
-        ? 13.0
-        : 12.0;
-
-    if (!_isMapReady) {
-      _queuedCenter = center;
-      _queuedZoom = zoom;
-      return;
-    }
-
-    mapController.move(center, zoom);
-  }
+  // void fitMarkersInView() {
+  //   if (visibleLocations.isEmpty) return;
+  //
+  //   double minLat = visibleLocations.first.lat;
+  //   double maxLat = visibleLocations.first.lat;
+  //   double minLng = visibleLocations.first.lng;
+  //   double maxLng = visibleLocations.first.lng;
+  //
+  //   for (final loc in visibleLocations) {
+  //     if (loc.lat < minLat) minLat = loc.lat;
+  //     if (loc.lat > maxLat) maxLat = loc.lat;
+  //     if (loc.lng < minLng) minLng = loc.lng;
+  //     if (loc.lng > maxLng) maxLng = loc.lng;
+  //   }
+  //
+  //   final center = LatLng((minLat + maxLat) / 2, (minLng + maxLng) / 2);
+  //
+  //   final latSpan = (maxLat - minLat).abs();
+  //   final lngSpan = (maxLng - minLng).abs();
+  //   final span = latSpan > lngSpan ? latSpan : lngSpan;
+  //
+  //   final zoom = span < 0.01
+  //       ? 14.5
+  //       : span < 0.03
+  //       ? 13.0
+  //       : 12.0;
+  //
+  //   if (!_isMapReady) {
+  //     _queuedCenter = center;
+  //     _queuedZoom = zoom;
+  //     return;
+  //   }
+  //
+  //   mapController.move(center, zoom);
+  // }
 }

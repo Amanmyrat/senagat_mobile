@@ -165,7 +165,7 @@ const Map<String, String> tkTk = {
   r'type_of_certificate': r'Güwänamanyň görnüşleri',
   r'payment_was_successful': r'Töleg üstünlikli boldy',
   r'submit_for_review': r'Syn üçin iberiň',
-  r'expenses_per_month': r'Aýlyk çykdajylar',
+  r'expenses_per_month': r'Aýlyk çykdaýjylar',
   r'air_tickets': r'Howa biletleri',
   r'railway_tickets': r'Demir ýol biletleri',
   r'auto_tickets': r'Auto biletleri',
@@ -240,6 +240,9 @@ const Map<String, String> tkTk = {
   r'reconnect_internet': r'Gaýtadan birikmek',
   r'online_reception': r'Onlaýn kabulhana',
   r'online_applications': r'Bank hyzmatlary boýunça onlaýn arzalar',
+  r'senagat_bank': r'Senagat bank',
+  r'rysgal_bank': r'Rysgal bank',
+  r'altyn_asyr': r'Altyn asyr (beýleki banklar)',
 
 
 

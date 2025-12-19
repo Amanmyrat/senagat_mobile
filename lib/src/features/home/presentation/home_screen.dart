@@ -1058,6 +1058,7 @@ class _HomeScreenState extends State<HomeScreen> {
           controller.onFoundationTap();
         },
         child: Container(
+          height: 158.h,
           padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
@@ -1091,8 +1092,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontSize: 20.sp,
                       ),
                     ),
-                    SizedBox(height: AppDimensions.paddingExtraLarge.h),
-
+                
                     Row(
                       children: [
                         Text(

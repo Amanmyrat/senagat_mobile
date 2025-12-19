@@ -1,9 +1,11 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/features/add_card/controller/add_card_controller.dart';
+import 'package:senagat_mobile/src/features/add_card/model/bank_model.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/widgets/check_widget.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
@@ -67,6 +69,68 @@ class AddCardScreen extends StatelessWidget {
                                       ),
                                     ),
                                     SizedBox(height: 32.h),
+                                    Text(
+                                      r'select_bank'.tr,
+                                      style: TextStyle(
+                                        color: AppColors.blackText,
+                                        fontSize: 14.sp,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: AppDimensions.paddingMedium.h,
+                                    ),
+                                    DropdownButtonFormField2<BankModel>(
+                                      value: controller.selectedDropdownBank,
+                                      hint: Text(
+                                        r"select_bank".tr,
+                                        style: TextStyle(
+                                          fontSize: 14.sp,
+                                          color: AppColors.greyInactive,
+                                        ),
+                                      ),
+                                      decoration: InputDecoration(
+                                        contentPadding: EdgeInsets.fromLTRB(
+                                          0,
+                                          AppDimensions.paddingExtraLarge.w,
+                                          AppDimensions.paddingExtraLarge.w,
+                                          AppDimensions.paddingExtraLarge.h,
+                                        ),
+                                      ),
+                                      dropdownStyleData: DropdownStyleData(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            AppDimensions
+                                                .borderRadiusMedium
+                                                .r,
+                                          ),
+                                        ),
+                                        elevation: 2,
+                                      ),
+                                      iconStyleData: IconStyleData(
+                                        icon: SvgPicture.asset(
+                                          AppAssets.caretDownIcon,
+                                          width: 18.w,
+                                        ),
+                                      ),
+                                      onChanged: (v) =>
+                                          controller.setDropdownBank(v),
+                                      items: controller.bankList
+                                          .map(
+                                            (item) =>
+                                            DropdownMenuItem<BankModel>(
+                                              value: item,
+                                              child: Text(
+                                                item.name.tr,
+                                                style: TextStyle(
+                                                  fontSize: 14.sp,
+                                                ),
+                                              ),
+                                            ),
+                                      )
+                                          .toList(),
+                                    ),
+                                    SizedBox(height: 22.h),
+
                                     Text(
                                       r'card_number'.tr,
                                       style: TextStyle(

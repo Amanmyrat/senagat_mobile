@@ -240,7 +240,9 @@ const Map<String, String> enUs = {
   r'reconnect_internet': r'Reconnect',
   r'online_reception': r'Online reception',
   r'online_applications': r'Online applications for banking services',
-
+  r'senagat_bank': r'Senagat bank',
+  r'rysgal_bank': r'Rysgal bank',
+  r'altyn_asyr': r'Altyn asyr (other banks)',
 
   r'otp_not_match': r'OTP did not match',
   r'otp_code_has_expired.': r'OTP code has expired',

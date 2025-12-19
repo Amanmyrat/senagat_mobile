@@ -37,7 +37,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
               Expanded(
                 child: TextFormField(
                   onTap: () {
-                    Get.toNamed(MapScreen.route);
+                    Get.toNamed(MapSearchScreen.route);
                     // Get.toNamed(MapSearchScreen.route);
                   },
                   readOnly: true,

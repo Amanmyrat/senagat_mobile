@@ -62,7 +62,7 @@ class IdentityVerificationController extends GetxController
     r'home_address',
   ];
 
-  final List<String> citySelection = ["AŞ", "AH", "LB", 'MR', 'DŞ'];
+  final List<String> citySelection = ["AŞ", "AH", "LB", 'MR', 'DZ', 'BN'];
   final List<String> number = ["I", "II", "III", 'IV'];
 
   late List<TextEditingController> controllers;
