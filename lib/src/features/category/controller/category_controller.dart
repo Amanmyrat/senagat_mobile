@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
+import 'package:senagat_mobile/src/features/check_phone_balance/presentation/check_phone_balance.dart';
 import 'package:senagat_mobile/src/features/net_and_tv/presentation/net_and_tv_screen.dart';
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/payment_screen.dart';
@@ -67,7 +68,7 @@ class CategoryController extends GetxController with StateControlMixin {
       Get.toNamed(NetAndTvScreen.route, arguments: {
         'selectedServiceTitle': serviceTitle[index],
       });
-    }else {
+    } else {
       Get.toNamed(PaymentScreen.route, arguments: {
         'selectedServiceTitle': serviceTitle[index],
         'selectedServiceIcon': serviceIcons[index],
@@ -89,6 +90,11 @@ class CategoryController extends GetxController with StateControlMixin {
     if (paymentsTitle[index] == r'state_traffic_safety_inspectorate'.tr) {
       Get.toNamed(NetAndTvScreen.route, arguments: {
         'selectedServiceTitle': paymentsTitle[index],
+      });
+    }else if(paymentsIcons[index] == AppAssets.astu){
+      Get.toNamed(CheckPhoneBalanceScreen.route, arguments: {
+        'selectedServiceTitle': paymentsTitle[index],
+        'selectedServiceIcon': paymentsIcons[index],
       });
     } else {
       Get.toNamed(PaymentScreen.route, arguments: {

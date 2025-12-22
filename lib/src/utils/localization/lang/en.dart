@@ -243,6 +243,8 @@ const Map<String, String> enUs = {
   r'senagat_bank': r'Senagat bank',
   r'rysgal_bank': r'Rysgal bank',
   r'altyn_asyr': r'Altyn asyr (other banks)',
+  r'top_up_the_balance': r'Top up the balance',
+
 
   r'otp_not_match': r'OTP did not match',
   r'otp_code_has_expired.': r'OTP code has expired',

@@ -243,6 +243,7 @@ const Map<String, String> tkTk = {
   r'senagat_bank': r'Senagat bank',
   r'rysgal_bank': r'Rysgal bank',
   r'altyn_asyr': r'Altyn asyr (beýleki banklar)',
+  r'top_up_the_balance': r'Balansy doldurmak',
 
 
 

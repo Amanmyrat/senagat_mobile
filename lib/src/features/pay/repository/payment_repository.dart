@@ -1,0 +1,63 @@
+import 'package:senagat_mobile/src/features/home/models/user_information_model.dart';
+import 'package:senagat_mobile/src/features/pay/model/belet_balances_model.dart';
+import 'package:senagat_mobile/src/features/pay/model/belet_top_up_model.dart';
+import 'package:senagat_mobile/src/features/pay/model/belet_top_up_model.dart';
+import 'package:senagat_mobile/src/features/pay/model/belet_top_up_model.dart';
+import 'package:senagat_mobile/src/features/register_password_setup/models/new_password_model.dart';
+import 'package:senagat_mobile/src/features/register_password_setup/models/new_password_model.dart';
+import 'package:senagat_mobile/src/features/register_password_setup/models/new_password_model.dart';
+
+import '../../../core/networking/api_endpoint.dart';
+import '../../../core/networking/api_service.dart';
+import '../../../core/typedefs.dart';
+import '../../register_confirmation/models/account_model.dart';
+
+class PaymentRepository {
+  final ApiService _apiService;
+
+  const PaymentRepository({required ApiService apiService})
+      : _apiService = apiService;
+
+
+  Future<bool> checkPhone({required JSON data}) async {
+    return _apiService.setData<bool>(
+      endpoint: await ApiEndpoint.payment(PaymentEndpoint.CHECK_PHONE),
+      data: data,
+      converter: (response) {
+        return response.body['success'];
+      },
+    );
+  }
+
+  Future<List<BeletBalanceModel>> getBalance() async {
+    return await _apiService.getDocumentData(
+      endpoint: await ApiEndpoint.payment(PaymentEndpoint.BALANCE),
+      requiresAuthToken: true,
+      converter: (response) {
+        final List items = response['data']['items'];
+        return items
+            .map((e) => BeletBalanceModel.fromJson(e))
+            .toList();
+      },
+    );
+  }
+
+
+  Future<BeletTopUpModel> beletTopUp({required JSON data}) async {
+    return _apiService.setData<BeletTopUpModel>(
+      endpoint: await ApiEndpoint.payment(PaymentEndpoint.TOP_UP,),
+      data: data,
+      requiresAuthToken: true,
+      converter: (response) {
+        final responseData = response.body['data'];
+        if (responseData != null) {
+          return BeletTopUpModel.fromMap(responseData);
+        } else {
+          throw Exception('Profile data is null in response');
+        }
+      },
+    );
+  }
+
+
+}

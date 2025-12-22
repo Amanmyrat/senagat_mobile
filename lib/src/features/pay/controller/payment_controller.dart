@@ -5,14 +5,20 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
+import 'package:senagat_mobile/src/features/pay/model/belet_balances_model.dart';
+import 'package:senagat_mobile/src/features/pay/model/belet_top_up_model.dart';
+import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
 import 'package:senagat_mobile/src/features/service_settings/controller/service_settings_controller.dart';
+import 'package:senagat_mobile/src/features/web_view/presentation/web_view.dart';
+import '../../../utils/api_error_handler.dart';
+import '../../../utils/services/error_utils.dart';
+import '../../../utils/services/show_snack.dart';
 import '../../add_card/model/card_model.dart';
 import '../../payment_verification/presentation/payment_verification_screen.dart';
 
 class PaymentController extends GetxController with StateControlMixin {
   bool continueEnabled = false;
   bool check = false;
-
 
   late final TextEditingController phoneController;
   late final TextEditingController sumController;
@@ -24,91 +30,196 @@ class PaymentController extends GetxController with StateControlMixin {
 
   final cardBox = Hive.box<CardModel>('cardsBox');
 
+  final PaymentRepository repository;
+  final _beletBalances = <BeletBalanceModel>[];
+
+  List<BeletBalanceModel> get beletBalances => _beletBalances;
+
+  late var beletTopUpModel = BeletTopUpModel();
+
+  PaymentController(this.repository);
 
   String serviceName = '';
   String serviceIcon = '';
+  String number = '';
   bool isInquiries = false;
   bool isFoundation = false;
   late String cardNumber = '';
   late final String maskedNumber;
-  final FlutterNativeContactPicker _contactPicker = FlutterNativeContactPicker();
+  final FlutterNativeContactPicker _contactPicker =
+      FlutterNativeContactPicker();
   CardModel? selectedCard;
-
+  int? selectedBeletIndex;
 
   late final FocusNode phoneFocus;
 
   @override
   void onInit() {
-
     final args = Get.arguments;
 
     if (args is Map<String, dynamic>) {
-      serviceName   = args['selectedServiceTitle'] as String? ?? '';
-      serviceIcon   = args['selectedServiceIcon'] as String? ?? '';
-      isInquiries   = args['isInquiries']   as bool? ?? false;
-      isFoundation  = args['isFoundation']  as bool? ?? false;
+      serviceName = args['selectedServiceTitle'] as String? ?? '';
+      serviceIcon = args['selectedServiceIcon'] as String? ?? '';
+      number = args['number'] as String? ?? '';
+      isInquiries = args['isInquiries'] as bool? ?? false;
+      isFoundation = args['isFoundation'] as bool? ?? false;
     } else {
       debugPrint('No or invalid arguments passed to this page');
     }
 
-    if(cardBox.isNotEmpty) {
-      cardNumber = cardBox
-          .getAt(0)
-          ?.cardNumber ?? '';
+    if (cardBox.isNotEmpty) {
+      cardNumber = cardBox.getAt(0)?.cardNumber ?? '';
     }
     maskedNumber = hideCardCenter(cardNumber);
 
     serviceSettingsController = Get.find<ServiceSettingsController>();
 
     pageController = PageController();
-    phoneController = TextEditingController();
+    phoneController = TextEditingController(text: number);
     phoneFocus = FocusNode();
     sumController = TextEditingController();
     nameController = TextEditingController();
     lastnameController = TextEditingController();
     accountController = TextEditingController(text: '100');
 
+    getBeletBalances();
     super.onInit();
   }
 
   void onPayTap() async {
     status = Status.loading;
-      update();
-      await Future.delayed( Duration(seconds: 2), (){
-      });
-      status = Status.completed;
+    update();
+    await Future.delayed(Duration(seconds: 2), () {});
+    status = Status.completed;
 
-      update();
-      Get.toNamed(PaymentVerificationScreen.route,
-          arguments:
-          {'serviceName': serviceName,
-            'serviceIcon': serviceIcon,
-            'number': phoneController.text,
-            'sum': sumController.text,
-            'userName': nameController.text,
-            'isInquiries': isInquiries,
-            'isFoundation': isFoundation,
-      });
-
+    update();
+    Get.toNamed(
+      PaymentVerificationScreen.route,
+      arguments: {
+        'serviceName': serviceName,
+        'serviceIcon': serviceIcon,
+        'number': phoneController.text,
+        'sum': sumController.text,
+        'userName': nameController.text,
+        'isInquiries': isInquiries,
+        'isFoundation': isFoundation,
+      },
+    );
   }
 
   void startBankVerification() {
     check = true;
     status = Status.loading;
     update();
-    Future.delayed(Duration(seconds: 3),(){
+    Future.delayed(Duration(seconds: 3), () {
+      status = Status.completed;
+      update();
+    });
+  }
+
+  void isTextNotEmpty() {
+    serviceIcon.isEmpty
+        ? sumController.text.isNotEmpty &&
+                  nameController.text.isNotEmpty &&
+                  lastnameController.text.isNotEmpty &&
+                  selectedCard != null
+              ? continueEnabled = true
+              : continueEnabled = false
+        : phoneController.text.length >= 8 &&
+              sumController.text.isNotEmpty &&
+              selectedCard != null
+        ? continueEnabled = true
+        : continueEnabled = false;
+
+    if (serviceName == 'Belet' && phoneController.text.length >= 8) {
+      repository
+          .checkPhone(
+            data: <String, dynamic>{"phone": '993${phoneController.text}'},
+          )
+          .then((value) async {
+            if (value == false) {
+              status = Status.error;
+              ShowSnack.showSnack(r'phone_number_invalid'.tr, SnackType.error);
+              update();
+            }
+          })
+          .catchError((e) {
+            status = Status.error;
+            update();
+            final errorText = ErrorUtils.extractErrorText(e);
+            ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
+          });
+    }
+    update();
+  }
+
+  void getBeletBalances() async {
+    status = Status.loading;
+    update();
+
+    try {
+      final value = await repository.getBalance();
+
+      _beletBalances.clear();
+      _beletBalances.addAll(value);
+
+      status = Status.completed;
+    } catch (e) {
+      status = Status.error;
+      debugPrint("ERROR => $e");
+      ApiErrorHandler.handleApiError(e);
+    } finally {
+      update();
+    }
+  }
+
+  Future<BeletTopUpModel> _getBeletTopUpModel() async {
+    return BeletTopUpModel(
+      bankName: selectedCard?.bank ?? '',
+      amount: int.parse(sumController.text),
+      phone: '993${phoneController.text}',
+    );
+  }
+
+  Future<void> onTap() async {
+    if (!continueEnabled) return;
+
+    status = Status.loading;
+    update();
+
+    try {
+      final requestModel = await _getBeletTopUpModel();
+
+      final result = await repository.beletTopUp(
+        data: requestModel.toMap(),
+      );
+
+      // ✅ CORRECT assignment
+      beletTopUpModel = result;
+
+      final url = beletTopUpModel.formUrl;
+
+      print('FORM URL => $url');
+
+      if (url == null || url.isEmpty) {
+        throw Exception('formUrl is empty from API');
+      }
+
       status = Status.completed;
       update();
 
-    });
-
-  }
-
-  void isTextNotEmpty(){
-    serviceIcon.isEmpty?
-    sumController.text.isNotEmpty && nameController.text.isNotEmpty && lastnameController.text.isNotEmpty && selectedCard != null ? continueEnabled = true: continueEnabled = false:
-    phoneController.text.length >= 8 && sumController.text.isNotEmpty && selectedCard != null ? continueEnabled = true : continueEnabled = false;
-    update();
+      Get.toNamed(
+        WebViewScreen.route,
+        arguments: {
+          'url': url,
+        },
+      );
+    } catch (e) {
+      status = Status.error;
+      update();
+      ApiErrorHandler.handleApiError(e);
+      debugPrint(e.toString());
+    }
   }
 
   String hideCardCenter(String number) {
@@ -167,7 +278,6 @@ class PaymentController extends GetxController with StateControlMixin {
       print('Contact picker cancelled or failed: $e');
     }
   }
-
 
   @override
   void dispose() {

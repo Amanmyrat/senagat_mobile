@@ -243,6 +243,7 @@ const Map<String, String> ruRu = {
   r'senagat_bank': r'Сенагат банк',
   r'rysgal_bank': r'Рысгал банк',
   r'altyn_asyr': r'Алтын aсыр (остальные банки)',
+  r'top_up_the_balance': r'Пополнить баланс',
 
 
   r'otp_not_match': r'Код не совпадает',

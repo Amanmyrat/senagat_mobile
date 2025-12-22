@@ -55,6 +55,7 @@ dependencies:
   in_app_update: ^4.2.2
   in_app_review: ^2.0.8
   package_info_plus: ^8.0.0
+  webview_flutter: ^4.7.0
 
 
   flutter_map: ^7.0.2

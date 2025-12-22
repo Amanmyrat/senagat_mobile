@@ -19,6 +19,7 @@ import '../../../core/states/stateful_data.dart';
 import '../../../utils/constants/app_assets.dart';
 import '../../../utils/services/show_snack.dart';
 import '../../../utils/api_error_handler.dart';
+import '../../check_phone_balance/presentation/check_phone_balance.dart';
 import '../../identity_verification/models/profile_model.dart';
 import '../../inquiries/presentation/inquiries_screen.dart';
 import '../../pay/model/pay_model.dart';
@@ -134,6 +135,11 @@ class HomeController extends GetxController with StateControlMixin {
         NetAndTvScreen.route,
         arguments: {'selectedServiceTitle': item.title},
       );
+    }else if(item.icon == AppAssets.astu){
+      Get.toNamed(CheckPhoneBalanceScreen.route, arguments: {
+        'selectedServiceTitle': item.title,
+        'selectedServiceIcon': item.icon,
+      });
     } else {
       Get.toNamed(
         PaymentScreen.route,

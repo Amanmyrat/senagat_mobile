@@ -105,6 +105,21 @@ class ApiEndpoint {
         return '$path/exchange-rate';
     }
   }
+  static Future<String> payment(
+    PaymentEndpoint endpoint, {
+    int? id,
+    String? date,
+  }) async {
+    const path = '';
+    switch (endpoint) {
+      case PaymentEndpoint.CHECK_PHONE:
+        return '$path/belet/belet/check-phone';
+        case PaymentEndpoint.BALANCE:
+        return '$path/belet/balances';
+        case PaymentEndpoint.TOP_UP:
+        return '$path/belet/top-up';
+    }
+  }
 }
 
 enum AuthEndpoint {
@@ -128,3 +143,4 @@ enum CreditEndpoint { CREDIT_TYPES, CREDIT_ORDER }
 enum LocationEndpoint { LOCATION, LOCATION_BRANCHES }
 
 enum ExchangeRateEndpoint { EXCHANGE_RALE }
+enum PaymentEndpoint { CHECK_PHONE, BALANCE, TOP_UP}

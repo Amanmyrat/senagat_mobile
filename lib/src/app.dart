@@ -48,6 +48,7 @@ import 'package:senagat_mobile/src/utils/theme/controller/theme_controller.dart'
 import 'features/add_card/controller/add_card_controller.dart';
 import 'features/auth/controller/auth_controller.dart';
 import 'features/auth/repository/auth_repository.dart';
+import 'features/check_phone_balance/presentation/check_phone_balance.dart';
 import 'features/credit/presentation/get_credit_screen.dart';
 import 'features/credit_list/presentation/credit_list.dart';
 import 'features/dashboard/controller/dashboard_controller.dart';
@@ -57,6 +58,7 @@ import 'features/inquiries/presentation/inquiries_screen.dart';
 import 'features/no_internet/controller/internet_checker.dart';
 import 'features/payment_verification/presentation/payment_verification_screen.dart';
 import 'features/map_search/presentation/map_search_screen.dart';
+import 'features/web_view/presentation/web_view.dart';
 
 class SenagatApp extends StatefulWidget {
   const SenagatApp({super.key});
@@ -245,6 +247,8 @@ class _SenagatAppState extends State<SenagatApp> {
               GetPage(name: CreditList.route, page: () => const CreditList()),
               GetPage(name: MapScreen.route, page: () => const MapScreen()),
               GetPage(name: NoInternetScreen.route, page: () => const NoInternetScreen()),
+              GetPage(name: CheckPhoneBalanceScreen.route, page: () => const CheckPhoneBalanceScreen()),
+              GetPage(name: WebViewScreen.route, page: () => const WebViewScreen()),
             ],
           ),
         );

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:senagat_mobile/src/core/globals.dart';
 import 'package:senagat_mobile/src/features/pay/controller/payment_controller.dart';
+import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
 import '../../../core/states/stateful_data.dart';
@@ -30,14 +32,18 @@ class _PaymentScreenState extends State<PaymentScreen> {
     return Scaffold(
       body: SafeArea(
         child: GetBuilder<PaymentController>(
-          init: PaymentController(),
+          init: PaymentController(PaymentRepository(apiService: ApiServices.apiService)),
           builder: (controller) {
             return Column(
               children: [
                 Expanded(
                   child: Stack(
                     children: [
-                      Column(
+                      controller.status == Status.loading
+                          ? Center(
+                        child: CircularProgressIndicator(color: AppColors.green),
+                      )
+                          : Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
@@ -91,9 +97,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              if (controller.isFoundation ==
-                                                  false) ...[
-                                                accountWidget(controller),
+                                              if (controller.isFoundation == false) ...[
+                                                if(controller.serviceName != r'Belet')...[
+                                                  accountWidget(controller),
+                                                ],
                                                 Column(
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
@@ -170,8 +177,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                                                     ),
                                                                 borderSide:
                                                                     BorderSide(
-                                                                      color: AppColors
-                                                                          .green,
+                                                                      color: controller.status == Status.error ? AppColors.redDark : AppColors.green,
                                                                       width: 1.w,
                                                                     ),
                                                               ),
@@ -182,11 +188,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                                                           .borderRadiusMedium,
                                                                     ),
                                                                 borderSide:
-                                                                    BorderSide(
-                                                                      color: AppColors
-                                                                          .white,
-                                                                      width: 1.w,
-                                                                    ),
+                                                                BorderSide(
+                                                                  color: controller.status == Status.error ? AppColors.redDark : AppColors.transparent,
+                                                                  width: 1.w,
+                                                                ),
                                                               ),
                                                               counter:
                                                                   const SizedBox(),
@@ -373,6 +378,81 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                                   ],
                                                 ),
                                               ],
+                                              if (controller.serviceName == 'Belet') ...[
+                                                Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      r'top_up_the_balance'.tr,
+                                                      style: TextStyle(
+                                                        fontSize: 14.sp,
+                                                        color: AppColors.blackText,
+                                                      ),
+                                                    ),
+                                                    SizedBox(height: 16.h),
+                                                    GridView.builder(
+                                                      itemCount: controller.beletBalances.length,
+                                                      shrinkWrap: true,
+                                                      physics: const NeverScrollableScrollPhysics(),
+                                                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                                        crossAxisCount: 2,
+                                                        crossAxisSpacing: 10,
+                                                        mainAxisSpacing: 10,
+                                                        childAspectRatio: 3.5,
+                                                      ),
+                                                      itemBuilder: (context, index) {
+                                                        final item = controller.beletBalances[index];
+                                                        final isSelected = controller.selectedBeletIndex == index;
+
+                                                        return InkWell(
+                                                          borderRadius: BorderRadius.circular(
+                                                            AppDimensions.borderRadiusMedium.r,
+                                                          ),
+                                                          onTap: () {
+                                                            controller.selectedBeletIndex = index;
+                                                            controller.sumController.text = item.value.toString();
+                                                            controller.isTextNotEmpty();
+                                                            controller.update();
+                                                          },
+                                                          child: Container(
+                                                            decoration: BoxDecoration(
+                                                              color: isSelected
+                                                                  ? AppColors.green
+                                                                  : AppColors.inputFillBackground,
+                                                              borderRadius: BorderRadius.circular(
+                                                                AppDimensions.borderRadiusMedium.r,
+                                                              ),
+                                                              border: Border.all(
+                                                                color: isSelected
+                                                                    ? AppColors.green
+                                                                    : Colors.transparent,
+                                                                width: 1.2,
+                                                              ),
+                                                            ),
+                                                            child: Center(
+                                                              child: Text(
+                                                                item.title ?? '',
+                                                                style: TextStyle(
+                                                                  fontSize: 14.sp,
+                                                                  fontWeight: FontWeight.w500,
+                                                                  color: isSelected
+                                                                      ? Colors.white
+                                                                      : AppColors.blackText,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        );
+                                                      },
+
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+
+                                              SizedBox(
+                                                height: 22.h,
+                                              ),
                                               Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
@@ -389,8 +469,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                                         TextInputType.number,
                                                     controller:
                                                         controller.sumController,
-                                                    onChanged: (value) =>
-                                                        controller.isTextNotEmpty(),
+                                                    onChanged: (value) {
+                                                      controller.selectedBeletIndex = null;
+                                                      controller.isTextNotEmpty();
+                                                      controller.update();
+                                                    },
                                                     style: TextStyle(
                                                       fontSize: 24.sp,
                                                       fontFamily:
@@ -433,9 +516,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                                   ),
                                                 ],
                                               ),
-                                              SizedBox(
-                                                width: AppDimensions.paddingMedium.h,
-                                              ),
+
                                             ],
                                           ),
                             
@@ -453,11 +534,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                         SizedBox(height: 16.h),
                                         GestureDetector(
                                           onTap: () async {
-                                            final selected = await bottomSheet(
-                                              controller,
-                                            );
-                                            if (selected != null) {
-                                              setState(() {}); // refresh UI
+                                            if(controller.cardBox.isNotEmpty) {
+                                              final selected = await bottomSheet(
+                                                controller,
+                                              );
+                                              if (selected != null) {
+                                                setState(() {}); // refresh UI
+                                              }
                                             }
                                           },
                                           child: Container(
@@ -519,7 +602,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                     if (controller.serviceName.isNotEmpty) {
                                       controller.continueEnabled == false
                                           ? null
-                                          : controller.onPayTap();
+                                          : controller.onTap();
                                     } else {
                                       controller.startBankVerification();
                                     }
@@ -597,7 +680,7 @@ Future<CardModel?> bottomSheet(PaymentController controller) {
                       onTap: () {
                         controller.selectedCard = card;
                         controller.isTextNotEmpty();
-
+                        Get.back(result: card);
                       },
                       child: Container(
                         color: AppColors.white,

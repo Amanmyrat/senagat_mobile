@@ -19,11 +19,15 @@ class CardModel extends HiveObject {
   @HiveField(4)
   String nickName;
 
+  @HiveField(5)
+  String bank;
+
   CardModel({
     required this.cardNumber,
     required this.name,
     required this.expiryDate,
     required this.cardDesign,
     required this.nickName,
+    required this.bank,
   });
 }
