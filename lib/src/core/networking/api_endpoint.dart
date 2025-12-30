@@ -120,6 +120,17 @@ class ApiEndpoint {
         return '$path/belet/top-up';
     }
   }
+  static Future<String> charity(
+    CharityEndpoint endpoint, {
+    int? id,
+    String? date,
+  }) async {
+    const path = '';
+    switch (endpoint) {
+      case CharityEndpoint.CHARITY:
+        return '$path/charity';
+    }
+  }
 }
 
 enum AuthEndpoint {
@@ -143,4 +154,7 @@ enum CreditEndpoint { CREDIT_TYPES, CREDIT_ORDER }
 enum LocationEndpoint { LOCATION, LOCATION_BRANCHES }
 
 enum ExchangeRateEndpoint { EXCHANGE_RALE }
+
 enum PaymentEndpoint { CHECK_PHONE, BALANCE, TOP_UP}
+
+enum CharityEndpoint { CHARITY }

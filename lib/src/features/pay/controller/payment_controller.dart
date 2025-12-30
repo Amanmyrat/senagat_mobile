@@ -7,6 +7,8 @@ import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/pay/model/belet_balances_model.dart';
 import 'package:senagat_mobile/src/features/pay/model/belet_top_up_model.dart';
+import 'package:senagat_mobile/src/features/pay/model/charity_model.dart';
+import 'package:senagat_mobile/src/features/pay/model/charity_model.dart';
 import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
 import 'package:senagat_mobile/src/features/service_settings/controller/service_settings_controller.dart';
 import 'package:senagat_mobile/src/features/web_view/presentation/web_view.dart';
@@ -36,6 +38,7 @@ class PaymentController extends GetxController with StateControlMixin {
   List<BeletBalanceModel> get beletBalances => _beletBalances;
 
   late var beletTopUpModel = BeletTopUpModel();
+  late var charityModel = CharityModel();
 
   PaymentController(this.repository);
 
@@ -119,12 +122,7 @@ class PaymentController extends GetxController with StateControlMixin {
 
   void isTextNotEmpty() {
     serviceIcon.isEmpty
-        ? sumController.text.isNotEmpty &&
-                  nameController.text.isNotEmpty &&
-                  lastnameController.text.isNotEmpty &&
-                  selectedCard != null
-              ? continueEnabled = true
-              : continueEnabled = false
+        ? sumController.text.isNotEmpty && selectedCard != null ? continueEnabled = true : continueEnabled = false
         : phoneController.text.length >= 8 &&
               sumController.text.isNotEmpty &&
               selectedCard != null
@@ -181,28 +179,41 @@ class PaymentController extends GetxController with StateControlMixin {
     );
   }
 
+  Future<CharityModel> _getCharityModel() async {
+    return CharityModel(
+      bankName: selectedCard?.bank ?? '',
+      amount: int.parse(sumController.text),
+    );
+  }
+
   Future<void> onTap() async {
     if (!continueEnabled) return;
 
     status = Status.loading;
     update();
 
+    String? url;
+
     try {
-      final requestModel = await _getBeletTopUpModel();
+      if (serviceName == 'Belet') {
+        final requestModel = await _getBeletTopUpModel();
+        final result = await repository.beletTopUp(
+          data: requestModel.toMap(),
+        );
+        beletTopUpModel = result;
+        url = beletTopUpModel.formUrl;
 
-      final result = await repository.beletTopUp(
-        data: requestModel.toMap(),
-      );
-
-      // ✅ CORRECT assignment
-      beletTopUpModel = result;
-
-      final url = beletTopUpModel.formUrl;
-
-      print('FORM URL => $url');
+      } else if (isFoundation) {
+        final requestModel = await _getCharityModel();
+        final result = await repository.charity(
+          data: requestModel.toMap(),
+        );
+        charityModel = result;
+        url = charityModel.formUrl;
+      }
 
       if (url == null || url.isEmpty) {
-        throw Exception('formUrl is empty from API');
+        throw Exception('Payment URL is empty');
       }
 
       status = Status.completed;
@@ -210,9 +221,7 @@ class PaymentController extends GetxController with StateControlMixin {
 
       Get.toNamed(
         WebViewScreen.route,
-        arguments: {
-          'url': url,
-        },
+        arguments: {'url': url},
       );
     } catch (e) {
       status = Status.error;
@@ -221,6 +230,7 @@ class PaymentController extends GetxController with StateControlMixin {
       debugPrint(e.toString());
     }
   }
+
 
   String hideCardCenter(String number) {
     if (number.length < 8) return number;

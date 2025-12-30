@@ -3,6 +3,7 @@ import 'package:senagat_mobile/src/features/pay/model/belet_balances_model.dart'
 import 'package:senagat_mobile/src/features/pay/model/belet_top_up_model.dart';
 import 'package:senagat_mobile/src/features/pay/model/belet_top_up_model.dart';
 import 'package:senagat_mobile/src/features/pay/model/belet_top_up_model.dart';
+import 'package:senagat_mobile/src/features/pay/model/charity_model.dart';
 import 'package:senagat_mobile/src/features/register_password_setup/models/new_password_model.dart';
 import 'package:senagat_mobile/src/features/register_password_setup/models/new_password_model.dart';
 import 'package:senagat_mobile/src/features/register_password_setup/models/new_password_model.dart';
@@ -52,6 +53,22 @@ class PaymentRepository {
         final responseData = response.body['data'];
         if (responseData != null) {
           return BeletTopUpModel.fromMap(responseData);
+        } else {
+          throw Exception('Profile data is null in response');
+        }
+      },
+    );
+  }
+
+  Future<CharityModel> charity({required JSON data}) async {
+    return _apiService.setData<CharityModel>(
+      endpoint: await ApiEndpoint.charity(CharityEndpoint.CHARITY,),
+      data: data,
+      requiresAuthToken: true,
+      converter: (response) {
+        final responseData = response.body['data'];
+        if (responseData != null) {
+          return CharityModel.fromMap(responseData);
         } else {
           throw Exception('Profile data is null in response');
         }
