@@ -22,6 +22,9 @@ class CardModel extends HiveObject {
   @HiveField(5)
   String bank;
 
+  @HiveField(6)
+  String cvc;
+
   CardModel({
     required this.cardNumber,
     required this.name,
@@ -29,5 +32,6 @@ class CardModel extends HiveObject {
     required this.cardDesign,
     required this.nickName,
     required this.bank,
+    required this.cvc,
   });
 }

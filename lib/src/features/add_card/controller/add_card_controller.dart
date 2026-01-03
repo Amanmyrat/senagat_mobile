@@ -154,6 +154,7 @@ class AddCardController extends GetxController with StateControlMixin {
           : cardDesigns[selectedDesign],
       nickName: senagatIndex != null ? '' : r'other_bank'.tr,
       bank: selectedDropdownBank?.bankName ?? '',
+      cvc: cvcController.text,
     );
     await box.add(card);
   }

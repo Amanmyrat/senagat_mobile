@@ -93,7 +93,7 @@ class AddCardScreen extends StatelessWidget {
                                           0,
                                           AppDimensions.paddingExtraLarge.w,
                                           AppDimensions.paddingExtraLarge.w,
-                                          AppDimensions.paddingExtraLarge.h,
+                                          0,
                                         ),
                                       ),
                                       dropdownStyleData: DropdownStyleData(
@@ -648,6 +648,7 @@ class AddCardScreen extends StatelessWidget {
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Align(
                         alignment: Alignment.topLeft,
@@ -659,7 +660,7 @@ class AddCardScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(height: 72.h),
+                      // SizedBox(height: 72.h),
                       Text(
                         controller.maskedCardNumber,
                         style: TextStyle(
@@ -668,7 +669,7 @@ class AddCardScreen extends StatelessWidget {
                           color: AppColors.white,
                         ),
                       ),
-                      SizedBox(height: 41.h),
+                      // SizedBox(height: 41.h),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
