@@ -799,7 +799,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              controller.cardBox.getAt(index)?.nickName ?? '',
+                              controller.cardBox.getAt(index)?.nickName.tr ?? '',
                               style: TextStyle(
                                 color: AppColors.white,
                                 fontSize: 14,

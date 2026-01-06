@@ -33,6 +33,7 @@ class AddCardScreen extends StatelessWidget {
       onWillPop: () async{
         final controller = Get.find<AddCardController>();
         controller.deleteAddController();
+        controller.selectedDropdownBank = null;
         return true;
       },
       child: Scaffold(
@@ -81,6 +82,7 @@ class AddCardScreen extends StatelessWidget {
                                     ),
                                     DropdownButtonFormField2<BankModel>(
                                       value: controller.selectedDropdownBank,
+                                      isExpanded: true,
                                       hint: Text(
                                         r"select_bank".tr,
                                         style: TextStyle(
@@ -93,7 +95,7 @@ class AddCardScreen extends StatelessWidget {
                                           0,
                                           AppDimensions.paddingExtraLarge.w,
                                           AppDimensions.paddingExtraLarge.w,
-                                          0,
+                                          AppDimensions.paddingMedium,
                                         ),
                                       ),
                                       dropdownStyleData: DropdownStyleData(

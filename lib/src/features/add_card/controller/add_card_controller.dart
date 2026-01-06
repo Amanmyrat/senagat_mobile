@@ -41,12 +41,12 @@ class AddCardController extends GetxController with StateControlMixin {
 
   List<BankModel> bankList = [
     BankModel(
-      name: r'altyn_asyr',
-      bankName: r'altyn_asyr',
-    ),
-    BankModel(
       name: r'senagat_bank',
       bankName: r'senagat',
+    ),
+    BankModel(
+      name: r'altyn_asyr',
+      bankName: r'altyn_asyr',
     ),
     BankModel(
       name: r'rysgal_bank',
@@ -135,6 +135,7 @@ class AddCardController extends GetxController with StateControlMixin {
 
   void setDropdownBank(BankModel? value) {
     selectedDropdownBank = value;
+    cardName = value?.name ?? '';
     update();
   }
 
@@ -152,7 +153,7 @@ class AddCardController extends GetxController with StateControlMixin {
       cardDesign: senagatIndex != null
           ? cardDesigns2[senagatIndex!]
           : cardDesigns[selectedDesign],
-      nickName: senagatIndex != null ? '' : r'other_bank'.tr,
+      nickName: cardName,
       bank: selectedDropdownBank?.bankName ?? '',
       cvc: cvcController.text,
     );
@@ -196,11 +197,6 @@ class AddCardController extends GetxController with StateControlMixin {
       selectedDesign = senagatIndex!;
     }
 
-    if(cardNumberController.text.length >= 19 && senagatIndex ==null){
-      cardName = 'other_bank';
-    }else{
-      cardName = '';
-    }
     update();
   }
 
@@ -242,6 +238,15 @@ class AddCardController extends GetxController with StateControlMixin {
     nameController.clear();
     termController.clear();
     cvcController.clear();
+
+    selectedDropdownBank = null;
+    cardName = '';
+    selectedDesign = 0;
+    senagatIndex = null;
+    continueEnabled = false;
+    check = false;
+
     super.onClose();
   }
+
 }

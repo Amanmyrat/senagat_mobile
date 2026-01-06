@@ -445,88 +445,60 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                                             height: 16.h,
                                                           ),
                                                           GridView.builder(
-                                                            itemCount: controller
-                                                                .beletBalances
-                                                                .length,
+                                                            itemCount: controller.beletBalances.length + 1, // +1 for Other
                                                             shrinkWrap: true,
-                                                            physics:
-                                                                const NeverScrollableScrollPhysics(),
-                                                            gridDelegate:
-                                                                SliverGridDelegateWithFixedCrossAxisCount(
-                                                                  crossAxisCount:
-                                                                      2,
-                                                                  crossAxisSpacing:
-                                                                      10,
-                                                                  mainAxisSpacing:
-                                                                      10,
-                                                                  childAspectRatio:
-                                                                      3.5,
-                                                                ),
+                                                            physics: const NeverScrollableScrollPhysics(),
+                                                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                                              crossAxisCount: 2,
+                                                              crossAxisSpacing: 10,
+                                                              mainAxisSpacing: 10,
+                                                              childAspectRatio: 3.5,
+                                                            ),
                                                             itemBuilder: (context, index) {
-                                                              final item =
-                                                                  controller
-                                                                      .beletBalances[index];
-                                                              final isSelected =
-                                                                  controller
-                                                                      .selectedBeletIndex ==
-                                                                  index;
+                                                              final isOther = index == controller.beletBalances.length;
+                                                              final isSelected = isOther
+                                                                  ? controller.isOtherSelected
+                                                                  : controller.selectedBeletIndex == index;
 
                                                               return InkWell(
-                                                                borderRadius:
-                                                                    BorderRadius.circular(
-                                                                      AppDimensions
-                                                                          .borderRadiusMedium
-                                                                          .r,
-                                                                    ),
+                                                                borderRadius: BorderRadius.circular(
+                                                                  AppDimensions.borderRadiusMedium.r,
+                                                                ),
                                                                 onTap: () {
-                                                                  controller
-                                                                          .selectedBeletIndex =
-                                                                      index;
-                                                                  controller
-                                                                      .sumController
-                                                                      .text = item
-                                                                      .value
-                                                                      .toString();
-                                                                  controller
-                                                                      .isTextNotEmpty();
-                                                                  controller
-                                                                      .update();
+                                                                  if (isOther) {
+                                                                    controller.isOtherSelected = true;
+                                                                    controller.selectedBeletIndex = null;
+                                                                    controller.sumController.clear();
+                                                                  } else {
+                                                                    final item = controller.beletBalances[index];
+                                                                    controller.selectedBeletIndex = index;
+                                                                    controller.isOtherSelected = false;
+                                                                    controller.sumController.text = item.value.toString();
+                                                                  }
+
+                                                                  controller.isTextNotEmpty();
+                                                                  controller.update();
                                                                 },
                                                                 child: Container(
                                                                   decoration: BoxDecoration(
-                                                                    color:
-                                                                        isSelected
-                                                                        ? AppColors
-                                                                              .green
-                                                                        : AppColors
-                                                                              .inputFillBackground,
+                                                                    color: isSelected
+                                                                        ? AppColors.green
+                                                                        : AppColors.inputFillBackground,
                                                                     borderRadius: BorderRadius.circular(
-                                                                      AppDimensions
-                                                                          .borderRadiusMedium
-                                                                          .r,
+                                                                      AppDimensions.borderRadiusMedium.r,
                                                                     ),
                                                                     border: Border.all(
-                                                                      color:
-                                                                          isSelected
-                                                                          ? AppColors.green
-                                                                          : Colors.transparent,
-                                                                      width:
-                                                                          1.2,
+                                                                      color: isSelected ? AppColors.green : Colors.transparent,
+                                                                      width: 1.2,
                                                                     ),
                                                                   ),
                                                                   child: Center(
                                                                     child: Text(
-                                                                      item.title ??
-                                                                          '',
+                                                                      isOther ? r'other'.tr : controller.beletBalances[index].title ?? '',
                                                                       style: TextStyle(
-                                                                        fontSize:
-                                                                            14.sp,
-                                                                        fontWeight:
-                                                                            FontWeight.w500,
-                                                                        color:
-                                                                            isSelected
-                                                                            ? Colors.white
-                                                                            : AppColors.blackText,
+                                                                        fontSize: 14.sp,
+                                                                        fontWeight: FontWeight.w500,
+                                                                        color: isSelected ? Colors.white : AppColors.blackText,
                                                                       ),
                                                                     ),
                                                                   ),
@@ -534,93 +506,127 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                                               );
                                                             },
                                                           ),
+
                                                         ],
                                                       ),
                                                     ],
 
-                                                    SizedBox(height: 22.h),
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          r'sum'.tr,
-                                                          style: TextStyle(
-                                                            color: AppColors
-                                                                .blackText,
-                                                            fontSize: 14.sp,
+                                                    if(controller.isOtherSelected && controller.serviceName == 'Belet')...[
+                                                      SizedBox(height: 22.h),
+
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                        children: [
+                                                          Text(
+                                                            r'sum'.tr,
+                                                            style: TextStyle(
+                                                              color: AppColors
+                                                                  .blackText,
+                                                              fontSize: 14.sp,
+                                                            ),
                                                           ),
-                                                        ),
-                                                        SizedBox(height: 16.h),
-                                                        TextFormField(
-                                                          keyboardType:
-                                                              TextInputType
-                                                                  .number,
-                                                          controller: controller
-                                                              .sumController,
-                                                          onChanged: (value) {
-                                                            controller
-                                                                    .selectedBeletIndex =
-                                                                null;
-                                                            controller
-                                                                .isTextNotEmpty();
-                                                            controller.update();
-                                                          },
-                                                          style: TextStyle(
-                                                            fontSize: 14.sp,
-                                                            fontFamily: AppFonts
-                                                                .primaryFont,
-                                                            color: AppColors
-                                                                .blackText,
-                                                          ),
-                                                          decoration: InputDecoration(
-                                                            hintText:
-                                                                r'enter_sum'.tr,
-                                                            fillColor:
-                                                                AppColors.inputFillBackground,
-                                                            focusedBorder: OutlineInputBorder(
-                                                              borderRadius:
-                                                              BorderRadius.circular(
-                                                                AppDimensions
-                                                                    .borderRadiusMedium,
+                                                          SizedBox(height: 16.h),
+                                                          TextFormField(
+                                                            keyboardType: TextInputType.number,
+                                                            controller: controller.sumController,
+                                                            onChanged: (value) {
+                                                              controller.selectedBeletIndex = null;
+                                                              controller.isTextNotEmpty();
+                                                              controller.update();
+                                                            },
+                                                            decoration: InputDecoration(
+                                                              hintText: r'enter_sum'.tr,
+                                                              fillColor: AppColors.inputFillBackground,
+                                                              focusedBorder: OutlineInputBorder(
+                                                                borderRadius: BorderRadius.circular(
+                                                                  AppDimensions.borderRadiusMedium,
+                                                                ),
+                                                                borderSide: BorderSide(
+                                                                  color: AppColors.green,
+                                                                  width: 1.w,
+                                                                ),
                                                               ),
-                                                              borderSide:
-                                                              BorderSide(
-                                                                color: AppColors
-                                                                    .green,
-                                                                width: 1.w,
+                                                              enabledBorder: OutlineInputBorder(
+                                                                borderRadius: BorderRadius.circular(
+                                                                  AppDimensions.borderRadiusMedium,
+                                                                ),
+                                                                borderSide: BorderSide(
+                                                                  color: controller.isOtherSelected
+                                                                      ? AppColors.green
+                                                                      : AppColors.white,
+                                                                  width: 1.w,
+                                                                ),
+                                                              ),
+                                                              counter: const SizedBox(),
+                                                              contentPadding: EdgeInsets.symmetric(
+                                                                vertical: AppDimensions.paddingExtraLarge.h,
+                                                                horizontal: AppDimensions.paddingLarge.w,
                                                               ),
                                                             ),
-                                                            enabledBorder: OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius.circular(
-                                                                    AppDimensions
-                                                                        .borderRadiusMedium,
-                                                                  ),
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                    color: AppColors
-                                                                        .white,
-                                                                    width: 1.w,
-                                                                  ),
-                                                            ),
-                                                            counter:
-                                                                const SizedBox(),
-                                                            contentPadding: EdgeInsets.symmetric(
-                                                              vertical:
-                                                                  AppDimensions
-                                                                      .paddingExtraLarge
-                                                                      .h,
-                                                              horizontal:
-                                                                  AppDimensions
-                                                                      .paddingLarge
-                                                                      .w,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ]else if(controller.isOtherSelected == false && controller.serviceName != 'Belet')...[
+                                                      SizedBox(height: 22.h),
+
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                        children: [
+                                                          Text(
+                                                            r'sum'.tr,
+                                                            style: TextStyle(
+                                                              color: AppColors
+                                                                  .blackText,
+                                                              fontSize: 14.sp,
                                                             ),
                                                           ),
-                                                        ),
-                                                      ],
-                                                    ),
+                                                          SizedBox(height: 16.h),
+                                                          TextFormField(
+                                                            keyboardType: TextInputType.number,
+                                                            controller: controller.sumController,
+                                                            onChanged: (value) {
+                                                              controller.selectedBeletIndex = null;
+                                                              controller.isTextNotEmpty();
+                                                              controller.update();
+                                                            },
+                                                            decoration: InputDecoration(
+                                                              hintText: r'enter_sum'.tr,
+                                                              fillColor: AppColors.inputFillBackground,
+                                                              focusedBorder: OutlineInputBorder(
+                                                                borderRadius: BorderRadius.circular(
+                                                                  AppDimensions.borderRadiusMedium,
+                                                                ),
+                                                                borderSide: BorderSide(
+                                                                  color: AppColors.green,
+                                                                  width: 1.w,
+                                                                ),
+                                                              ),
+                                                              enabledBorder: OutlineInputBorder(
+                                                                borderRadius: BorderRadius.circular(
+                                                                  AppDimensions.borderRadiusMedium,
+                                                                ),
+                                                                borderSide: BorderSide(
+                                                                  color: controller.isOtherSelected
+                                                                      ? AppColors.green
+                                                                      : AppColors.white,
+                                                                  width: 1.w,
+                                                                ),
+                                                              ),
+                                                              counter: const SizedBox(),
+                                                              contentPadding: EdgeInsets.symmetric(
+                                                                vertical: AppDimensions.paddingExtraLarge.h,
+                                                                horizontal: AppDimensions.paddingLarge.w,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+
                                                   ],
                                                 ),
 
@@ -641,60 +647,79 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                                 ),
                                               ),
                                               SizedBox(height: 16.h),
-                                              GestureDetector(
-                                                onTap: () async {
-                                                  if (controller
-                                                      .cardBox
-                                                      .isNotEmpty) {
-                                                    final selected =
-                                                        await bottomSheet(
-                                                          controller,
-                                                        );
-                                                    if (selected != null) {
-                                                      setState(
-                                                        () {},
-                                                      ); // refresh UI
+
+                                              if(controller.cardBox.isNotEmpty)...[
+                                                GestureDetector(
+                                                  onTap: () async {
+                                                    if (controller
+                                                        .cardBox
+                                                        .isNotEmpty) {
+                                                      final selected =
+                                                      await bottomSheet(
+                                                        controller,
+                                                      );
+                                                      if (selected != null) {
+                                                        setState(
+                                                              () {},
+                                                        ); // refresh UI
+                                                      }
                                                     }
-                                                  }
-                                                },
-                                                child: Container(
-                                                  padding: EdgeInsets.all(20.w),
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                          10,
-                                                        ),
-                                                    color: AppColors
-                                                        .inputFillBackground,
-                                                  ),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Text(
-                                                        controller.selectedCard ==
+                                                  },
+                                                  child: Container(
+                                                    padding: EdgeInsets.all(20.w),
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                      BorderRadius.circular(
+                                                        10,
+                                                      ),
+                                                      color: AppColors
+                                                          .inputFillBackground,
+                                                    ),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                      children: [
+                                                        Expanded(
+                                                          child: Text(
+                                                            controller.selectedCard ==
                                                                 null
-                                                            ? 'select_a_card'.tr
-                                                            : '${controller.hideCardCenter(controller.selectedCard!.cardNumber)}  ${controller.selectedCard!.name}',
-                                                        style: TextStyle(
-                                                          fontSize: 14.sp,
-                                                          color:
+                                                                ? 'select_a_card'.tr
+                                                                : '${controller.hideCardCenter(controller.selectedCard!.cardNumber)}  ${controller.selectedCard!.name}',
+                                                            style: TextStyle(
+                                                              fontSize: 14.sp,
+                                                              color:
                                                               controller
-                                                                      .selectedCard ==
+                                                                  .selectedCard ==
                                                                   null
-                                                              ? AppColors.grey
-                                                              : AppColors.black,
+                                                                  ? AppColors.grey
+                                                                  : AppColors.black,
+                                                            ),
+                                                          ),
                                                         ),
-                                                      ),
-                                                      SvgPicture.asset(
-                                                        AppAssets.caretDownIcon,
-                                                        width: 18.w,
-                                                      ),
-                                                    ],
+                                                        SvgPicture.asset(
+                                                          AppAssets.caretDownIcon,
+                                                          width: 18.w,
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
+                                              ]else... [
+                                                GestureDetector(
+                                                  onTap: () => Get.toNamed(AddCardScreen.route),
+                                                  child: Container(
+                                                    width: MediaQuery.of(context).size.width,
+                                                    padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
+                                                    decoration: BoxDecoration(
+                                                      color: AppColors.inputFillBackground,
+                                                      borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
+                                                    ),
+                                                    child: SvgPicture.asset(AppAssets.plusIcon, color: AppColors.black, width: 24.w,),
+                                                  ),
+                                                ),
+                                              ],
+
                                             ],
                                           ),
                                         ),
@@ -825,30 +850,35 @@ Future<CardModel?> bottomSheet(PaymentController controller) {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Row(
-                                  children: [
-                                    Text(
-                                      card?.name ?? '',
-                                      style: TextStyle(
-                                        fontSize: 14.sp,
-                                        color: AppColors.black,
-                                        fontFamily: AppFonts.primaryFont,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: AppDimensions.paddingSmall.w,
-                                    ),
-                                    if (card?.nickName != '') ...[
+                                SizedBox(
+                                  width: 200.w,
+                                  child: Row(
+                                    children: [
                                       Text(
-                                        '(${card?.nickName})',
+                                        card?.name ?? '',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                           fontSize: 14.sp,
                                           color: AppColors.black,
                                           fontFamily: AppFonts.primaryFont,
                                         ),
                                       ),
+                                      SizedBox(
+                                        width: AppDimensions.paddingSmall.w,
+                                      ),
+                                      if (card?.nickName != '') ...[
+                                        Text(
+                                          '(${card?.nickName.tr})',
+                                          style: TextStyle(
+                                            fontSize: 14.sp,
+                                            color: AppColors.black,
+                                            fontFamily: AppFonts.primaryFont,
+                                          ),
+                                        ),
+                                      ],
                                     ],
-                                  ],
+                                  ),
                                 ),
                                 Text(
                                   controller.hideCardCenter(

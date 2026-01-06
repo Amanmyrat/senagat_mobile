@@ -76,8 +76,8 @@ const Map<String, String> tkTk = {
   r'name': r'Ady',
   r'enter_name': r'Ady giriziň',
   r'enter_lastname': r'Familiýany giriziň',
-  r'enter_sum': r'Mukdary giriziň',
-  r'sum': r'Mukdar',
+  r'enter_sum': r'Pul möçberi giriziň',
+  r'sum': r'Pul möçberi',
   r'confirmation': r'Tassyklamak',
   r'information': r'Maglumat',
   r'payment_via': r'Üsti bilen töleg',
@@ -244,6 +244,7 @@ const Map<String, String> tkTk = {
   r'rysgal_bank': r'Rysgal bank',
   r'altyn_asyr': r'Altyn asyr (beýleki banklar)',
   r'top_up_the_balance': r'Balansy doldurmak',
+  r'other': r'Başga',
 
 
 

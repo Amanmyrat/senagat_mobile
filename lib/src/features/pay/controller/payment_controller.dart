@@ -21,6 +21,7 @@ import '../../payment_verification/presentation/payment_verification_screen.dart
 class PaymentController extends GetxController with StateControlMixin {
   bool continueEnabled = false;
   bool check = false;
+  bool isOtherSelected = false;
 
   late final TextEditingController phoneController;
   late final TextEditingController sumController;
@@ -137,6 +138,7 @@ class PaymentController extends GetxController with StateControlMixin {
           .then((value) async {
             if (value == false) {
               status = Status.error;
+              continueEnabled = false;
               ShowSnack.showSnack(r'phone_number_invalid'.tr, SnackType.error);
               update();
             }

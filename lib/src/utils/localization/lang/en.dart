@@ -244,6 +244,7 @@ const Map<String, String> enUs = {
   r'rysgal_bank': r'Rysgal bank',
   r'altyn_asyr': r'Altyn asyr (other banks)',
   r'top_up_the_balance': r'Top up the balance',
+  r'other': r'Other',
 
 
   r'otp_not_match': r'OTP did not match',
