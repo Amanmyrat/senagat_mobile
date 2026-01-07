@@ -15,6 +15,7 @@ class CardSettingsController extends GetxController with StateControlMixin {
   bool continueEnabled = false;
   final cardBox = Hive.box<CardModel>('cardsBox');
   late final String cardNumber;
+  late final String nickName;
   late String maskedNumber;
   late final int index;
   final homeController = Get.find<HomeController>();
@@ -52,6 +53,7 @@ class CardSettingsController extends GetxController with StateControlMixin {
     cardNumber = cardBox.getAt(index)?.cardNumber ?? '';
     maskedNumber = hideCardCenter(cardNumber);
 
+    nickName = cardBox.getAt(index)?.nickName.tr ?? '';
     cardNumberController = TextEditingController(text: cardBox.getAt(index)?.nickName);
   }
 

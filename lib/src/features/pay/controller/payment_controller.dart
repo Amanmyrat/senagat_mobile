@@ -8,7 +8,6 @@ import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/pay/model/belet_balances_model.dart';
 import 'package:senagat_mobile/src/features/pay/model/belet_top_up_model.dart';
 import 'package:senagat_mobile/src/features/pay/model/charity_model.dart';
-import 'package:senagat_mobile/src/features/pay/model/charity_model.dart';
 import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
 import 'package:senagat_mobile/src/features/service_settings/controller/service_settings_controller.dart';
 import 'package:senagat_mobile/src/features/web_view/presentation/web_view.dart';
@@ -85,8 +84,9 @@ class PaymentController extends GetxController with StateControlMixin {
     nameController = TextEditingController();
     lastnameController = TextEditingController();
     accountController = TextEditingController(text: '100');
-
-    getBeletBalances();
+    if(serviceName == 'Belet') {
+      getBeletBalances();
+    }
     super.onInit();
   }
 

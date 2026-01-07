@@ -282,148 +282,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                                         controller,
                                                       ),
                                                     ],
-                                                    // if (controller.isFoundation) ...[
-                                                    //   Column(
-                                                    //     crossAxisAlignment:
-                                                    //         CrossAxisAlignment.start,
-                                                    //     children: [
-                                                    //       Text(
-                                                    //         r'name'.tr,
-                                                    //         style: TextStyle(
-                                                    //           color: AppColors.blackText,
-                                                    //           fontSize: 14.sp,
-                                                    //         ),
-                                                    //       ),
-                                                    //       SizedBox(
-                                                    //         height: AppDimensions
-                                                    //             .paddingMedium
-                                                    //             .h,
-                                                    //       ),
-                                                    //       TextFormField(
-                                                    //         keyboardType:
-                                                    //             TextInputType.name,
-                                                    //         controller:
-                                                    //             controller.nameController,
-                                                    //         onChanged: (value) =>
-                                                    //             controller.isTextNotEmpty(),
-                                                    //         style: TextStyle(
-                                                    //           fontSize: 14.sp,
-                                                    //           fontFamily:
-                                                    //               AppFonts.primaryFont,
-                                                    //         ),
-                                                    //         decoration: InputDecoration(
-                                                    //           hintText: r'name'.tr,
-                                                    //           border: OutlineInputBorder(),
-                                                    //           focusedBorder: OutlineInputBorder(
-                                                    //             borderRadius:
-                                                    //                 BorderRadius.circular(
-                                                    //                   AppDimensions
-                                                    //                       .borderRadiusMedium,
-                                                    //                 ),
-                                                    //             borderSide: BorderSide(
-                                                    //               color: AppColors.green,
-                                                    //               width: 1.w,
-                                                    //             ),
-                                                    //           ),
-                                                    //           enabledBorder: OutlineInputBorder(
-                                                    //             borderRadius:
-                                                    //                 BorderRadius.circular(
-                                                    //                   AppDimensions
-                                                    //                       .borderRadiusMedium,
-                                                    //                 ),
-                                                    //             borderSide: BorderSide(
-                                                    //               color: AppColors.white,
-                                                    //               width: 1.w,
-                                                    //             ),
-                                                    //           ),
-                                                    //           counter: const SizedBox(),
-                                                    //           contentPadding:
-                                                    //               EdgeInsets.symmetric(
-                                                    //                 vertical: AppDimensions
-                                                    //                     .paddingExtraLarge
-                                                    //                     .h,
-                                                    //                 horizontal:
-                                                    //                     AppDimensions
-                                                    //                         .paddingLarge
-                                                    //                         .w,
-                                                    //               ),
-                                                    //         ),
-                                                    //       ),
-                                                    //
-                                                    //       SizedBox(height: 22.h),
-                                                    //     ],
-                                                    //   ),
-                                                    //   Column(
-                                                    //     crossAxisAlignment:
-                                                    //         CrossAxisAlignment.start,
-                                                    //     children: [
-                                                    //       Text(
-                                                    //         r'last_name'.tr,
-                                                    //         style: TextStyle(
-                                                    //           color: AppColors.blackText,
-                                                    //           fontSize: 14.sp,
-                                                    //         ),
-                                                    //       ),
-                                                    //       SizedBox(
-                                                    //         height: AppDimensions
-                                                    //             .paddingMedium
-                                                    //             .h,
-                                                    //       ),
-                                                    //       TextFormField(
-                                                    //         keyboardType:
-                                                    //             TextInputType.name,
-                                                    //         controller: controller
-                                                    //             .lastnameController,
-                                                    //         onChanged: (value) =>
-                                                    //             controller.isTextNotEmpty(),
-                                                    //         style: TextStyle(
-                                                    //           fontSize: 14.sp,
-                                                    //           fontFamily:
-                                                    //               AppFonts.primaryFont,
-                                                    //         ),
-                                                    //         decoration: InputDecoration(
-                                                    //           hintText: r'last_name'.tr,
-                                                    //           border: OutlineInputBorder(),
-                                                    //           focusedBorder: OutlineInputBorder(
-                                                    //             borderRadius:
-                                                    //                 BorderRadius.circular(
-                                                    //                   AppDimensions
-                                                    //                       .borderRadiusMedium,
-                                                    //                 ),
-                                                    //             borderSide: BorderSide(
-                                                    //               color: AppColors.green,
-                                                    //               width: 1.w,
-                                                    //             ),
-                                                    //           ),
-                                                    //           enabledBorder: OutlineInputBorder(
-                                                    //             borderRadius:
-                                                    //                 BorderRadius.circular(
-                                                    //                   AppDimensions
-                                                    //                       .borderRadiusMedium,
-                                                    //                 ),
-                                                    //             borderSide: BorderSide(
-                                                    //               color: AppColors.white,
-                                                    //               width: 1.w,
-                                                    //             ),
-                                                    //           ),
-                                                    //           counter: const SizedBox(),
-                                                    //           contentPadding:
-                                                    //               EdgeInsets.symmetric(
-                                                    //                 vertical: AppDimensions
-                                                    //                     .paddingExtraLarge
-                                                    //                     .h,
-                                                    //                 horizontal:
-                                                    //                     AppDimensions
-                                                    //                         .paddingLarge
-                                                    //                         .w,
-                                                    //               ),
-                                                    //         ),
-                                                    //       ),
-                                                    //
-                                                    //       SizedBox(height: 22.h),
-                                                    //     ],
-                                                    //   ),
-                                                    // ],
                                                     if (controller
                                                             .serviceName ==
                                                         'Belet') ...[
@@ -512,7 +370,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                                     ],
 
                                                     if(controller.isOtherSelected && controller.serviceName == 'Belet')...[
-                                                      SizedBox(height: 22.h),
 
                                                       Column(
                                                         crossAxisAlignment:
@@ -569,7 +426,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                                         ],
                                                       ),
                                                     ]else if(controller.isOtherSelected == false && controller.serviceName != 'Belet')...[
-                                                      SizedBox(height: 22.h),
 
                                                       Column(
                                                         crossAxisAlignment:
@@ -820,6 +676,7 @@ Future<CardModel?> bottomSheet(PaymentController controller) {
                 ListView.builder(
                   itemCount: controller.cardBox.length,
                   shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     final card = controller.cardBox.getAt(index);
 
@@ -847,29 +704,28 @@ Future<CardModel?> bottomSheet(PaymentController controller) {
                               },
                             ),
                             SizedBox(width: AppDimensions.paddingSmall.w),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  width: 200.w,
-                                  child: Row(
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
                                     children: [
-                                      Text(
-                                        card?.name ?? '',
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                          fontSize: 14.sp,
-                                          color: AppColors.black,
-                                          fontFamily: AppFonts.primaryFont,
+                                      Expanded(
+                                        child: Text(
+                                          card?.name ?? '',
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontSize: 14.sp,
+                                            color: AppColors.black,
+                                            fontFamily: AppFonts.primaryFont,
+                                          ),
                                         ),
                                       ),
-                                      SizedBox(
-                                        width: AppDimensions.paddingSmall.w,
-                                      ),
-                                      if (card?.nickName != '') ...[
+                                      if (card?.nickName != null && card!.nickName.isNotEmpty) ...[
+                                        SizedBox(width: AppDimensions.paddingSmall.w),
                                         Text(
-                                          '(${card?.nickName.tr})',
+                                          '(${card.nickName.tr})',
                                           style: TextStyle(
                                             fontSize: 14.sp,
                                             color: AppColors.black,
@@ -879,18 +735,19 @@ Future<CardModel?> bottomSheet(PaymentController controller) {
                                       ],
                                     ],
                                   ),
-                                ),
-                                Text(
-                                  controller.hideCardCenter(
-                                    card?.cardNumber ?? '',
+
+                                  Text(
+                                    controller.hideCardCenter(
+                                      card?.cardNumber ?? '',
+                                    ),
+                                    style: TextStyle(
+                                      fontSize: 14.sp,
+                                      color: AppColors.black,
+                                      fontFamily: AppFonts.secondaryFont,
+                                    ),
                                   ),
-                                  style: TextStyle(
-                                    fontSize: 14.sp,
-                                    color: AppColors.black,
-                                    fontFamily: AppFonts.secondaryFont,
-                                  ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ],
                         ),

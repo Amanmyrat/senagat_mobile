@@ -83,7 +83,7 @@ const Map<String, String> tkTk = {
   r'payment_via': r'Üsti bilen töleg',
   r'category': r'Kategoriýa',
   r'services2': r'Hyzmatlar',
-  r'pay': r'Tölemeg geçirmek',
+  r'pay': r'Töleg geçirmek',
   r'fund_page': r'Gazna sahypasy',
   r'home_page': r'Baş sahypa',
   r'gas': r'Gaz',

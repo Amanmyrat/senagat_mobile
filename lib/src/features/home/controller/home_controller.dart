@@ -220,15 +220,11 @@ class HomeController extends GetxController with StateControlMixin {
             );
             phoneBox.put('phone', userInformationModel!.phone!);
 
-            try {
-              final profileController = Get.find<ProfileController>();
-              profileController.refreshProfile();
-            } catch (e) {
-            }
           }
 
           checkProfile();
           checkProfileStatus();
+          textStatus();
           update();
         })
         .catchError((e) {

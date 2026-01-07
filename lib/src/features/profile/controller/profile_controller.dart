@@ -13,7 +13,6 @@ class ProfileController extends GetxController with StateControlMixin, GetSingle
 
   final profileBox = Hive.box<ProfileModel>('profileBox');
   final phoneBox = Hive.box<String>('phoneBox');
-  String fullName = '';
   String appVersion = '';
   String? phone;
   final homeController = Get.find<HomeController>();
@@ -22,20 +21,16 @@ class ProfileController extends GetxController with StateControlMixin, GetSingle
   @override
   void onInit() {
     super.onInit();
-    refreshProfile();
+    _loadVersion();
+
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-    refreshProfile();
-    _loadVersion();
-  }
   Future<void> _loadVersion() async {
     final info = await PackageInfo.fromPlatform();
-    appVersion = info.version; // e.g. 1.0.3
+    appVersion = info.version;
     update();
   }
+
   Color checkProfileStatus()  {
     final savedProfile = profileBox.get('currentProfile');
 
@@ -48,13 +43,5 @@ class ProfileController extends GetxController with StateControlMixin, GetSingle
     }else{
       return AppColors.grey;
     }
-  }
-
-  void refreshProfile() {
-    final savedProfile = profileBox.get('currentProfile');
-
-    fullName = '${savedProfile?.firstName ?? r'name'.tr} ${savedProfile?.lastName ?? r'last_name'.tr}';
-
-    update();
   }
 }

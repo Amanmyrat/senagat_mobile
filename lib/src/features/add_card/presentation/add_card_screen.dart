@@ -43,8 +43,30 @@ class AddCardScreen extends StatelessWidget {
               return Stack(
                 children: [
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CustomAppBar(),
+                      GestureDetector(
+                        onTap:(){
+                          final controller = Get.find<AddCardController>();
+                          controller.deleteAddController();
+                          controller.selectedDropdownBank = null;
+                          Get.back();
+                          },
+                        child: Container(
+                          padding: EdgeInsets.all(AppDimensions.paddingMedium),
+                          margin: EdgeInsets.all(AppDimensions.paddingExtraLarge),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.r),
+                              border: Border.all(
+                                color: AppColors.greyInactive,
+                                width: 1.w,
+                                style: BorderStyle.solid,
+                              ),
+                              color: AppColors.white
+                          ),
+                          child: SvgPicture.asset(AppAssets.arrowLeftIcon, width: 20.w),
+                        ),
+                      ),
                       Expanded(
                         child: SingleChildScrollView(
                           child: Column(

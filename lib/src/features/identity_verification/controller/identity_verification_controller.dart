@@ -186,7 +186,6 @@ class IdentityVerificationController extends GetxController
       final profileController = Get.find<ProfileController>();
       final homeController = Get.find<HomeController>();
 
-      profileController.refreshProfile();
       homeController.getUserProfileInfo();
 
       dashboardController.updateCurrentIndex(NestedNavigationIds.settings);

@@ -45,9 +45,11 @@ class IdentificationController extends GetxController with StateControlMixin {
     fastOperation.clear();
     paymentBox.clear();
 
+    homeController.lastTap = HomeTapType.none;
     update();
 
     final dashboardController = Get.find<DashboardController>();
+    dashboardController.updateCurrentIndex(NestedNavigationIds.settings);
     dashboardController.updateCurrentIndex(NestedNavigationIds.home);
 
     Navigator.of(Get.context!).pushNamedAndRemoveUntil(
