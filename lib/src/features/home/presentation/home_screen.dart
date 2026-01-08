@@ -344,9 +344,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           children: [
                                             Expanded(
                                               child: Image.asset(
-                                                AppAssets.sandClock,
-                                                height: 118.h,
-                                                width: 62.w,
+                                                AppAssets.emptyPayments,
                                               ),
                                             ),
                                             SizedBox(

@@ -215,7 +215,7 @@ const Map<String, String> enUs = {
   r'pending': r'Pending',
   r'delivery_service_available': r'Yes',
   r'no_delivery_service': r'No',
-  r'no_internet_connection': r'No internet connection',
+  r'network_error': r'No internet connection',
   r'saved_successfully': r'Saved successfully',
   r'pygg_video': r'Video Surveillance of the Traffic Police Service',
   r'pygg_decision': r'Decision of the Traffic Police Service',

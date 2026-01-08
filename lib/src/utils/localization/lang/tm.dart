@@ -215,7 +215,7 @@ const Map<String, String> tkTk = {
   r'pending': r'Garaşylýar',
   r'delivery_service_available': r'Bar',
   r'no_delivery_service': r'Ýok',
-  r'no_internet_connection': r'Internet birikmesi ýok',
+  r'network_error': r'Internet birikmesi ýok',
   r'saved_successfully': r'Üstünlikli ýatda saklanyldy',
   r'pygg_video': r'PÝGG wideo gozegcilik',
   r'pygg_decision': r'PÝGG Karar',

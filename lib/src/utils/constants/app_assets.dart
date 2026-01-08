@@ -73,6 +73,7 @@ class AppAssets {
   static const policeCar = 'assets/icons/policeCar.png';
   static const wifi = 'assets/images/wifi.png';
   static const alemTv = 'assets/icons/alem.png';
+  static const emptyPayments = 'assets/images/emptyHistory.png';
 
   static const cardImage = 'assets/images/cardImage.jpg';
   static const cardImage2 = 'assets/images/cardImage2.jpg';

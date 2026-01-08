@@ -69,7 +69,7 @@ class HomeController extends GetxController with StateControlMixin {
 
   final List<String> serviceImage = [
     AppAssets.spreadsheet,
-    AppAssets.threeDCard,
+    AppAssets.paymentCardImage,
     AppAssets.threeDPercent,
   ];
 
@@ -174,6 +174,8 @@ class HomeController extends GetxController with StateControlMixin {
     }
     checkProfile();
     checkProfileStatus();
+    textStatus();
+
     super.onInit();
   }
 

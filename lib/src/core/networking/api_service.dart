@@ -53,7 +53,6 @@ class ApiService implements ApiInterface {
     List<dynamic> body;
 
     try {
-      // Entire map of response
       final data = await _dioService.get<dynamic>(
         endpoint: endpoint,
         cacheOptions: _dioService.globalCacheOptions?.copyWith(
@@ -68,20 +67,26 @@ class ApiService implements ApiInterface {
         queryParams: queryParams,
         cancelToken: cancelToken,
       );
-      // Items of table as json
+
       final responseBody = data.body;
-      if (responseBody != null && responseBody['data'] != null) {
+
+      if (responseBody is List) {
+        // ✅ ROOT LIST RESPONSE (your case)
+        body = responseBody;
+      } else if (responseBody is Map && responseBody['data'] is List) {
+        // ✅ WRAPPED LIST RESPONSE
         body = responseBody['data'];
       } else {
-        throw Exception('Response body or data field is null');
+        throw Exception('Unexpected response format');
       }
     } on Exception catch (ex) {
       throw CustomException.fromDioException(ex);
     }
 
     try {
-      // Returning the deserialized objects
-      return body.map((dataMap) => converter(dataMap)).toList();
+      return body
+          .map((item) => converter(item as Map<String, dynamic>))
+          .toList();
     } on Exception catch (ex) {
       throw CustomException.fromParsingException(ex);
     }

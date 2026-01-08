@@ -6,14 +6,13 @@ import '../utils/services/show_snack.dart';
 
 class ApiErrorHandler {
   static void handleApiError(dynamic error) {
-    if (error is CustomException) {
-      if (error.exceptionType == ExceptionType.FetchDataException ||
-          error.exceptionType == ExceptionType.SocketException ||
-          error.message.contains("network_error")) {
-        Get.to(() => const NoInternetScreen());
-        return;
-      }
-    }
+    // if (error is CustomException) {
+    //   if (error.exceptionType == ExceptionType.FetchDataException ||
+    //       error.exceptionType == ExceptionType.SocketException ||
+    //       error.message.contains("network_error")) {
+    //     return;
+    //   }
+    // }
 
     // fallback - extract error text and show snackbar
     final errorText = ErrorUtils.extractErrorText(error);

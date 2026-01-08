@@ -4,8 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/features/card_expenses/controller/card_expenses_controller.dart';
+import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import '../../../core/globals.dart';
 import '../../../utils/constants/app_assets.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
@@ -27,7 +29,9 @@ class _CardExpensesScreenState extends State<CardExpensesScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: GetBuilder<CardExpensesController>(
-            init: CardExpensesController(),
+            init: CardExpensesController(
+              PaymentRepository(apiService: ApiServices.apiService),
+            ),
             builder: (controller) {
               return Column(
                 children: [
@@ -187,53 +191,50 @@ class _CardExpensesScreenState extends State<CardExpensesScreen> {
                           color: AppColors.white,
                         ),
                         child: ListView.builder(
-                          itemCount: 3,
+                          itemCount: controller.history.length,
                           shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
+                            final item = controller.history[index];
+
                             return Padding(
                               padding: EdgeInsets.symmetric(vertical: 13.h),
                               child: Row(
                                 children: [
-                                  Container(
-                                    width: 50.w,
-                                    height: 50.h,
-                                    padding:EdgeInsets.all(AppDimensions.paddingMedium.w) ,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: AppColors.green,
-                                    ),
-                                    child: SvgPicture.asset(AppAssets.deviceMobileIcon, color: AppColors.white, width: 30.w,),
-                                  ),
+                                 SvgPicture.asset(AppAssets.alemTv),
                                   SizedBox(width: AppDimensions.paddingMedium.w),
+
+                                  /// TITLE + TARGET
                                   Expanded(
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          'Altyn Asyr',
+                                          item.type,
                                           style: TextStyle(
                                             color: AppColors.blackText,
                                             fontSize: 14.sp,
                                           ),
                                         ),
                                         Text(
-                                          '+99311111111',
+                                          item.paymentTarget.value,
                                           style: TextStyle(
-                                              color: AppColors.blackText,
-                                              fontSize: 14.sp,
-                                              fontFamily: AppFonts.secondaryFont
+                                            color: AppColors.blackText,
+                                            fontSize: 14.sp,
+                                            fontFamily: AppFonts.secondaryFont,
                                           ),
                                         ),
                                       ],
                                     ),
                                   ),
+
+                                  /// AMOUNT
                                   Text(
-                                    '-500',
+                                    '-${item.amount.toString()}',
                                     style: TextStyle(
                                       color: AppColors.blackText,
                                       fontSize: 17.sp,
+                                      fontWeight: FontWeight.w600,
                                     ),
                                   ),
                                 ],
@@ -275,5 +276,19 @@ class _CardExpensesScreenState extends State<CardExpensesScreen> {
       ],
     );
   }
+
+  String _iconByType(String type) {
+    switch (type) {
+      case 'mobile':
+        return AppAssets.deviceMobileIcon;
+      case 'charity':
+        return AppAssets.foundation;
+      case 'belet':
+        return AppAssets.beletIcon;
+      default:
+        return AppAssets.deviceMobileIcon;
+    }
+  }
+
 
 }

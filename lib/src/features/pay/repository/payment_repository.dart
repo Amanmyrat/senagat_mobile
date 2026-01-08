@@ -12,6 +12,7 @@ import '../../../core/networking/api_endpoint.dart';
 import '../../../core/networking/api_service.dart';
 import '../../../core/typedefs.dart';
 import '../../register_confirmation/models/account_model.dart';
+import '../model/paymet_history_model.dart';
 
 class PaymentRepository {
   final ApiService _apiService;
@@ -75,6 +76,20 @@ class PaymentRepository {
       },
     );
   }
+
+  Future<List<PaymentHistoryModel>> getPaymentHistory() async {
+    return await _apiService.getCollectionData(
+      endpoint: await ApiEndpoint.payment(
+        PaymentEndpoint.HISTORY,
+      ),
+      requiresAuthToken: true,
+      converter: (response) {
+        return PaymentHistoryModel.fromJson(response);
+      },
+    );
+  }
+
+
 
 
 }

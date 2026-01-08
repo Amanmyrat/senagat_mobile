@@ -49,40 +49,40 @@ class _CardScreenState extends State<CardScreen> {
                       children: [
                         HeaderWidget(),
 
-                        GestureDetector(
-                          onTap: () {
-                            Get.toNamed(CardExpensesScreen.route);
-                          },
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium),
-                              color: AppColors.black,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '200,00 ${r'manat'.tr}',
-                                      style: TextStyle(fontSize: 24.sp, color: AppColors.white),
-                                    ),
-                                    Text(
-                                      r'expenses_per_month'.tr,
-                                      style: TextStyle(fontSize: 14.sp, color: AppColors.greyInactive),
-                                    )
-                                  ],
-                                ),
-                                SvgPicture.asset(AppAssets.diagram),
-                              ],
-                            ),
-                          ),
-                        ),
+                        // GestureDetector(
+                        //   onTap: () {
+                        //     Get.toNamed(CardExpensesScreen.route);
+                        //   },
+                        //   child: Container(
+                        //     width: MediaQuery.of(context).size.width,
+                        //     padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
+                        //     decoration: BoxDecoration(
+                        //       borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium),
+                        //       color: AppColors.black,
+                        //     ),
+                        //     child: Row(
+                        //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //       children: [
+                        //         Column(
+                        //           crossAxisAlignment: CrossAxisAlignment.start,
+                        //           children: [
+                        //             Text(
+                        //               '200,00 ${r'manat'.tr}',
+                        //               style: TextStyle(fontSize: 24.sp, color: AppColors.white),
+                        //             ),
+                        //             Text(
+                        //               r'expenses_per_month'.tr,
+                        //               style: TextStyle(fontSize: 14.sp, color: AppColors.greyInactive),
+                        //             )
+                        //           ],
+                        //         ),
+                        //         SvgPicture.asset(AppAssets.diagram),
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ),
 
-                        SizedBox(height: 40.h),
+                        // SizedBox(height: 40.h),
 
                         Text(r'cards'.tr,
                             style: TextStyle(fontSize: 17.sp, color: AppColors.black)),
