@@ -12,25 +12,6 @@ class MapScreen extends StatefulWidget {
   State<MapScreen> createState() => _MapScreenState();
 }
 
-// class _MapScreenState extends State<MapScreen> {
-//   late MapboxMap _mapboxMap;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: const Text('Mapbox Map')),
-//       body: MapWidget(
-//         styleUri: "mapbox://styles/mapbox/streets-v12",
-//
-//         onMapCreated: (mapboxMap) {
-//           _mapboxMap = mapboxMap;
-//         },
-//       ),
-//     );
-//   }
-//
-// }
-
 class _MapScreenState extends State<MapScreen> {
   final Completer<GoogleMapController> _controller =
   Completer<GoogleMapController>();
@@ -71,18 +52,7 @@ class _MapScreenState extends State<MapScreen> {
           _controller.complete(controller);
         },
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _goToSecondPlace,
-        label: const Text('Go to Monument'),
-        icon: const Icon(Icons.place),
-      ),
     );
   }
 
-  Future<void> _goToSecondPlace() async {
-    final GoogleMapController controller = await _controller.future;
-    await controller.animateCamera(
-      CameraUpdate.newCameraPosition(_kPlace2),
-    );
-  }
 }

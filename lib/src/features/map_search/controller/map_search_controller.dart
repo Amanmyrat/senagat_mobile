@@ -1,61 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:flutter_map/flutter_map.dart' hide Marker, LatLngBounds;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:latlong2/latlong.dart' hide LatLng;
-import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
-import 'package:senagat_mobile/src/features/map_search/repository/location_repository.dart';
-import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
-import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
 
 import '../../../core/states/stateful_data.dart';
+import '../../../utils/api_error_handler.dart';
 import '../../../utils/theme/constants/app_colors.dart';
+import '../../../utils/theme/constants/app_fonts.dart';
 import '../../../widgets/elevated_button_with_state.dart';
 import '../model/location_model.dart';
-import '../../../utils/api_error_handler.dart';
+import '../repository/location_repository.dart';
 
-class MapSearchController extends GetxController with StateControlMixin {
-  /// ---------------------------------------
-  /// LOCATIONS
-  /// ---------------------------------------
-  final List<LocationModel> _locations = [];
-  List<LocationModel> get locations => _locations;
-
-  LocationRepository repository;
+class MapSearchController extends GetxController {
+  final LocationRepository repository;
   MapSearchController(this.repository);
+
+  /// STATE
+  Status status = Status.loading;
+
+  /// MAP
   GoogleMapController? _mapController;
-
-  /// Active tab
-  LocationType selected = LocationType.atm;
-
-  /// Search
-  final TextEditingController searchController = TextEditingController();
-  final FocusNode searchFocusNode = FocusNode();
-
-  String get searchText => searchController.text;
-  bool get hasSearchText => searchController.text.isNotEmpty;
-
-  /// Map values
-  double? lat;
-  double? lng;
-
-  final MapController mapController = MapController();
-
   bool _isMapReady = false;
   LatLng? _queuedCenter;
   double? _queuedZoom;
 
+  double? lat;
+  double? lng;
+
+  /// DATA
+  final List<LocationModel> _locations = [];
+  List<LocationModel> get locations => _locations;
+
+  LocationType selected = LocationType.atm;
+
+  /// SEARCH
+  final TextEditingController searchController = TextEditingController();
+  final FocusNode searchFocusNode = FocusNode();
+
   @override
   void onInit() {
     super.onInit();
-
-    searchController.addListener(() {
-      update();
-    });
-
     getLocations();
   }
+
+  /// MAP CREATED
   void onMapCreated(GoogleMapController controller) {
     _mapController = controller;
     _isMapReady = true;
@@ -69,6 +57,7 @@ class MapSearchController extends GetxController with StateControlMixin {
     }
   }
 
+  /// INIT MAP POSITION
   void initializeMap() {
     if (lat == null || lng == null) return;
 
@@ -86,6 +75,7 @@ class MapSearchController extends GetxController with StateControlMixin {
     );
   }
 
+  /// MARKERS
   Set<Marker> get markers {
     return visibleLocations.map((loc) {
       return Marker(
@@ -101,43 +91,34 @@ class MapSearchController extends GetxController with StateControlMixin {
     }).toSet();
   }
 
-  /// ---------------------------------------
   /// FETCH LOCATIONS
-  /// ---------------------------------------
   void getLocations() async {
     status = Status.loading;
     update();
 
-    await repository
-        .getLocations()
-        .then((value) {
-          _locations.addAll(value);
-          status = Status.completed;
+    await repository.getLocations().then((value) {
+      _locations.addAll(value);
+      status = Status.completed;
 
-          if (_locations.isNotEmpty) {
-            lat = _locations.first.lat;
-            lng = _locations.first.lng;
-          }
-          print(
-            "VISIBLE ${selected.name}: "
-            "${visibleLocations.length}",
-          );
+      if (_locations.isNotEmpty) {
+        lat = _locations.first.lat;
+        lng = _locations.first.lng;
+      }
 
-          update();
+      update();
 
-          // wait map load
-          Future.delayed(const Duration(milliseconds: 300), () {
-            initializeMap();
-            fitMarkersInView();
-          });
-        })
-        .catchError((e) {
-          status = Status.error;
-          update();
-          ApiErrorHandler.handleApiError(e);
-          debugPrint(e.toString());
-        });
+      Future.delayed(const Duration(milliseconds: 300), () {
+        initializeMap();
+        fitMarkersInView();
+      });
+    }).catchError((e) {
+      status = Status.error;
+      update();
+      ApiErrorHandler.handleApiError(e);
+    });
   }
+
+  /// FIT MARKERS
   void fitMarkersInView() {
     if (visibleLocations.isEmpty || !_isMapReady) return;
 
@@ -163,100 +144,24 @@ class MapSearchController extends GetxController with StateControlMixin {
     );
   }
 
-
-  /// ---------------------------------------
-  /// MAP READY
-  /// ---------------------------------------
-  // void onMapReady() {
-  //   _isMapReady = true;
-  //
-  //   if (_queuedCenter != null && _queuedZoom != null) {
-  //     mapController.move(_queuedCenter!, _queuedZoom!);
-  //     _queuedCenter = null;
-  //     _queuedZoom = null;
-  //   }
-  // }
-  //
-  // /// ---------------------------------------
-  // /// INIT MAP
-  // /// ---------------------------------------
-  // void initializeMap() {
-  //   if (lat == null || lng == null) return;
-  //
-  //   final center = LatLng(lat!, lng!);
-  //   const zoom = 13.0;
-  //
-  //   if (!_isMapReady) {
-  //     _queuedCenter = center;
-  //     _queuedZoom = zoom;
-  //     return;
-  //   }
-  //
-  //   mapController.move(center, zoom);
-  // }
-
-  /// ---------------------------------------
-  /// CHOOSE ATM / BRANCH TAB
-  /// ---------------------------------------
+  /// TAB SWITCH
   void choose(LocationType t) {
     if (selected == t) return;
-
     selected = t;
     update();
-
-    Future.delayed(const Duration(milliseconds: 200), () {
-      fitMarkersInView();
-    });
+    Future.delayed(const Duration(milliseconds: 200), fitMarkersInView);
   }
 
-  /// ---------------------------------------
   /// SEARCH
-  /// ---------------------------------------
-  void clearSearch() {
-    searchController.clear();
-  }
-
   void unfocusSearch() {
     searchFocusNode.unfocus();
   }
 
-  @override
-  void onClose() {
-    searchController.dispose();
-    searchFocusNode.dispose();
-    mapController.dispose();
-    super.onClose();
-  }
-
-  /// ---------------------------------------
-  /// MARKERS
-  /// ---------------------------------------
+  /// VISIBLE LOCATIONS
   List<LocationModel> get visibleLocations =>
       _locations.where((e) => e.type == selected).toList();
 
-  // List<Marker> get markers {
-  //   return visibleLocations.map((loc) {
-  //     final iconPath = (loc.type == LocationType.atm)
-  //         ? AppAssets.mapPinGreenIcon
-  //         : AppAssets.mapPinBlackIcon;
-  //
-  //     return Marker(
-  //       point: LatLng(loc.lat, loc.lng),
-  //       width: 40,
-  //       height: 40,
-  //       child: GestureDetector(
-  //         onTap: () {
-  //           showBottomSheet(loc);
-  //         },
-  //         child: Image.asset(iconPath, width: 40, height: 40),
-  //       ),
-  //     );
-  //   }).toList();
-  // }
-
-  /// ---------------------------------------
   /// BOTTOM SHEET
-  /// ---------------------------------------
   void showBottomSheet(LocationModel loc) {
     showModalBottomSheet(
       isScrollControlled: true,
@@ -363,43 +268,10 @@ class MapSearchController extends GetxController with StateControlMixin {
       },
     );
   }
-
-  /// ---------------------------------------
-  /// FIT ALL MARKERS
-  /// ---------------------------------------
-  // void fitMarkersInView() {
-  //   if (visibleLocations.isEmpty) return;
-  //
-  //   double minLat = visibleLocations.first.lat;
-  //   double maxLat = visibleLocations.first.lat;
-  //   double minLng = visibleLocations.first.lng;
-  //   double maxLng = visibleLocations.first.lng;
-  //
-  //   for (final loc in visibleLocations) {
-  //     if (loc.lat < minLat) minLat = loc.lat;
-  //     if (loc.lat > maxLat) maxLat = loc.lat;
-  //     if (loc.lng < minLng) minLng = loc.lng;
-  //     if (loc.lng > maxLng) maxLng = loc.lng;
-  //   }
-  //
-  //   final center = LatLng((minLat + maxLat) / 2, (minLng + maxLng) / 2);
-  //
-  //   final latSpan = (maxLat - minLat).abs();
-  //   final lngSpan = (maxLng - minLng).abs();
-  //   final span = latSpan > lngSpan ? latSpan : lngSpan;
-  //
-  //   final zoom = span < 0.01
-  //       ? 14.5
-  //       : span < 0.03
-  //       ? 13.0
-  //       : 12.0;
-  //
-  //   if (!_isMapReady) {
-  //     _queuedCenter = center;
-  //     _queuedZoom = zoom;
-  //     return;
-  //   }
-  //
-  //   mapController.move(center, zoom);
-  // }
+  @override
+  void onClose() {
+    searchController.dispose();
+    searchFocusNode.dispose();
+    super.onClose();
+  }
 }
