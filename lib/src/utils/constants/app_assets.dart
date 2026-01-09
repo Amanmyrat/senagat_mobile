@@ -61,7 +61,7 @@ class AppAssets {
   static const senagatIcon = 'assets/images/senagat.png';
   static const senagatIconMini = 'assets/images/senagatIconMini.png';
   static const glowingObjectIcon = 'assets/images/glowingObjectIcon.png';
-  static const spreadsheet = 'assets/images/3DSpreadsheet.png';
+  static const spreadsheet = 'assets/images/reference.png';
   static const sandClock = 'assets/images/sandClock.png';
   static const threeDCard = 'assets/images/3DCard.png';
   static const threeDPercent = 'assets/images/3DPercent.png';

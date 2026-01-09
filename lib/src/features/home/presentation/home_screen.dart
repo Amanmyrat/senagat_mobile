@@ -275,7 +275,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   controller
                                                       .serviceImage[index],
                                                   width: 200.w,
-                                                  height: 250.h,
+                                                  height: 180.h,
                                                 ),
                                               ),
                                               Padding(
@@ -319,7 +319,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         width: MediaQuery.of(
                                           context,
                                         ).size.width,
-                                        height: 200.h,
+                                        height: 250.h,
                                         padding: EdgeInsets.all(
                                           AppDimensions.paddingExtraLarge.w,
                                         ),
@@ -341,17 +341,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                           color: AppColors.white,
                                         ),
                                         child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
                                             Expanded(
                                               child: Image.asset(
-                                                AppAssets.emptyPayments,
+                                                  AppAssets.emptyPayments,
+                                                  width: 200.w,
+
                                               ),
                                             ),
-                                            SizedBox(
-                                              height: AppDimensions
-                                                  .paddingExtraLarge
-                                                  .h,
-                                            ),
+
                                             Text(
                                               r'history_is_empty'.tr,
                                               style: TextStyle(
