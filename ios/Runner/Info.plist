@@ -46,7 +46,11 @@
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-    <string>We need camera access to scan QR codes</string>
+    <string>This app needs camera access to scan QR codes.</string>
+
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>This app needs photo access.</string>
+
 
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>Need location to show nearby ATMs and offices.</string>
@@ -54,8 +58,11 @@
     <key>NSContactsUsageDescription</key>
     <string>We need access to your contacts to select a phone number</string>
 
-    <key>YandexMapKitApiKey</key>
-    <string>2f755a72-2c4e-457e-820e-cad66298463d</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>We need your location to show nearby places.</string>
+
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>We need your location to show nearby places.</string>
 
     <key>SKStoreReviewController</key>
     <true/>

@@ -709,31 +709,39 @@ Future<CardModel?> bottomSheet(PaymentController controller) {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Expanded(
-                                        child: Text(
-                                          card?.name ?? '',
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            fontSize: 14.sp,
-                                            color: AppColors.black,
-                                            fontFamily: AppFonts.primaryFont,
-                                          ),
+                                      Text(
+                                        card?.name ?? '',
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontSize: 14.sp,
+                                          color: AppColors.black,
+                                          fontFamily: AppFonts.primaryFont,
                                         ),
                                       ),
                                       if (card?.nickName != null && card!.nickName.isNotEmpty) ...[
-                                        SizedBox(width: AppDimensions.paddingSmall.w),
-                                        Text(
-                                          '(${card.nickName.tr})',
-                                          style: TextStyle(
-                                            fontSize: 14.sp,
-                                            color: AppColors.black,
-                                            fontFamily: AppFonts.primaryFont,
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              SizedBox(width: AppDimensions.paddingSmall.w),
+                                              Text(
+                                                '(${card.nickName.tr})',
+                                                style: TextStyle(
+                                                  fontSize: 14.sp,
+                                                  color: AppColors.black,
+                                                  fontFamily: AppFonts.primaryFont,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
+
                                       ],
                                     ],
+
                                   ),
 
                                   Text(

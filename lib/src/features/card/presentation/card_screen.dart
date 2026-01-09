@@ -136,7 +136,7 @@ class _CardScreenState extends State<CardScreen> {
                                     Align(
                                       alignment: Alignment.topLeft,
                                       child: Text(
-                                        controller.cardBox.getAt(index)?.nickName ?? '',
+                                        controller.cardBox.getAt(index)?.nickName.tr ?? '',
                                         style: TextStyle(
                                           color: AppColors.white,
                                           fontSize: 14,
