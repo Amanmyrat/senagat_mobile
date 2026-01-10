@@ -245,7 +245,8 @@ const Map<String, String> enUs = {
   r'altyn_asyr': r'Altyn asyr (other banks)',
   r'top_up_the_balance': r'Top up the balance',
   r'other': r'Other',
-
+  r'belet': r'Belet',
+  r'charity': r'Charitable Foundation',
 
   r'otp_not_match': r'OTP did not match',
   r'otp_code_has_expired.': r'OTP code has expired',
