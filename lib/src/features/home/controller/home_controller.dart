@@ -14,6 +14,7 @@ import 'package:senagat_mobile/src/features/home/repository/exchage_rate_reposit
 import 'package:senagat_mobile/src/features/net_and_tv/presentation/net_and_tv_screen.dart';
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/payment_screen.dart';
+import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
 import 'package:senagat_mobile/src/features/register_confirmation/models/account_model.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/constants/app_assets.dart';
@@ -23,6 +24,7 @@ import '../../check_phone_balance/presentation/check_phone_balance.dart';
 import '../../identity_verification/models/profile_model.dart';
 import '../../inquiries/presentation/inquiries_screen.dart';
 import '../../pay/model/pay_model.dart';
+import '../../pay/model/paymet_history_model.dart';
 import '../../qr_code/presentation/qr_code_screen.dart';
 import '../../service_settings/controller/service_settings_controller.dart';
 import '../../profile/controller/profile_controller.dart';
@@ -40,6 +42,7 @@ class HomeController extends GetxController with StateControlMixin {
 
   ExchangeRateRepository repository;
   AuthRepository authRepository;
+  PaymentRepository paymentRepository;
 
   late ServiceSettingsController fastServiceController;
   late AddCardController addCardController;
@@ -58,6 +61,9 @@ class HomeController extends GetxController with StateControlMixin {
   List<ExchangeRateModel> get exchange => _exchange;
   bool _isFetchingExchangeRates = false;
   bool _isFetchingUserInfo = false;
+
+  List<PaymentHistoryModel> history = [];
+
 
   UserInformationModel? userInformationModel;
 
@@ -79,7 +85,7 @@ class HomeController extends GetxController with StateControlMixin {
     GetCreditScreen.route,
   ];
 
-  HomeController(this.repository, this.authRepository);
+  HomeController(this.repository, this.authRepository, this.paymentRepository);
 
   void onQrScanTap() {
     lastTap = HomeTapType.qr;
@@ -164,6 +170,7 @@ class HomeController extends GetxController with StateControlMixin {
       if (status == AccountLoginStatus.loggedIn) {
         getUserProfileInfo();
         getExchangeRates();
+        loadHistory();
       }
     });
 
@@ -171,6 +178,7 @@ class HomeController extends GetxController with StateControlMixin {
         AccountLoginStatus.loggedIn) {
       getUserProfileInfo();
       getExchangeRates();
+      loadHistory();
     }
     checkProfile();
     checkProfileStatus();
@@ -240,6 +248,22 @@ class HomeController extends GetxController with StateControlMixin {
         });
   }
 
+  void loadHistory() async {
+    status = Status.loading;
+    update();
+
+    await paymentRepository.getPaymentHistory().then((value){
+       history = value;
+       status = Status.completed;
+       update();
+     }).catchError((e){
+       status = Status.error;
+       update();
+       ApiErrorHandler.handleApiError(e);
+       debugPrint(e.toString());
+     });
+  }
+
   checkProfile() {
     if (currentProfile == null && userInformationModel?.profileModel == null) {
       isProfileRequired = true;
@@ -278,6 +302,19 @@ class HomeController extends GetxController with StateControlMixin {
     }
 
     return buffer.toString();
+  }
+
+  String iconByType(String type) {
+    switch (type) {
+      case 'mobile':
+        return AppAssets.deviceMobileIcon;
+      case 'charity':
+        return AppAssets.foundation;
+      case 'belet':
+        return AppAssets.beletIcon;
+      default:
+        return AppAssets.deviceMobileIcon;
+    }
   }
 
   int getFastOperationsCount() {

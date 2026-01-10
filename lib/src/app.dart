@@ -30,6 +30,7 @@ import 'package:senagat_mobile/src/features/no_internet/presentation/no_internet
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
 import 'package:senagat_mobile/src/features/notifications_settings/presentation/notifications_settings_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/payment_screen.dart';
+import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
 import 'package:senagat_mobile/src/features/profile/controller/profile_controller.dart';
 import 'package:senagat_mobile/src/features/qr_code/presentation/qr_code_screen.dart';
 import 'package:senagat_mobile/src/features/register/presentation/register_screen.dart';
@@ -271,6 +272,7 @@ class DashboardBinding extends Bindings {
       HomeController(
         ExchangeRateRepository(apiService: ApiServices.apiService),
         AuthRepository(apiService: ApiServices.apiService),
+        PaymentRepository(apiService: ApiServices.apiService),
       ),
     );
     Get.put(ProfileController());

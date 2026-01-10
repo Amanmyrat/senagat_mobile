@@ -19,6 +19,7 @@ import '../../../widgets/header_widget.dart';
 import '../../auth/repository/auth_repository.dart';
 import '../../card_settings/presentation/card_settings_screen.dart';
 import '../../identity_verification/presentation/identity_verification_screen.dart';
+import '../../pay/repository/payment_repository.dart';
 import '../controller/home_controller.dart';
 import '../repository/exchage_rate_repository.dart';
 
@@ -45,6 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
               init: HomeController(
                 ExchangeRateRepository(apiService: ApiServices.apiService),
                 AuthRepository(apiService: ApiServices.apiService),
+                PaymentRepository(apiService: ApiServices.apiService),
               ),
               builder: (controller) {
                 return controller.status == Status.loading
@@ -314,7 +316,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(height: AppDimensions.padding40.h),
-                                controller.payBox.isEmpty
+                                controller.history.isEmpty
                                     ? Container(
                                         width: MediaQuery.of(
                                           context,
@@ -399,9 +401,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ListView.builder(
                                             shrinkWrap: true,
                                             itemCount:
-                                                controller.payBox.length > 3
+                                                controller.history.length > 3
                                                 ? 3
-                                                : controller.payBox.length,
+                                                : controller.history.length,
                                             physics:
                                                 NeverScrollableScrollPhysics(),
                                             itemBuilder: (context, index) {
@@ -416,7 +418,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       .w,
                                                 ),
                                                 margin: EdgeInsets.symmetric(
-                                                  vertical: 5,
+                                                  vertical: 5.h,
                                                 ),
                                                 decoration: BoxDecoration(
                                                   borderRadius:
@@ -442,32 +444,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 ),
                                                 child: Row(
                                                   children: [
-                                                    Container(
-                                                      width: 50.w,
-                                                      height: 50.h,
-                                                      padding: EdgeInsets.all(
-                                                        AppDimensions
-                                                            .paddingMedium
-                                                            .w,
-                                                      ),
-                                                      decoration: BoxDecoration(
-                                                        shape: BoxShape.circle,
-                                                        border: Border.all(
-                                                          color: AppColors
-                                                              .dividerColor,
-                                                          width: 1.w,
-                                                          style:
-                                                              BorderStyle.solid,
-                                                        ),
-                                                      ),
-                                                      child: Image.asset(
-                                                        controller.payBox
-                                                                .getAt(index)
-                                                                ?.serviceIcon ??
-                                                            AppAssets
-                                                                .deviceMobileIcon,
-                                                      ),
-                                                    ),
+
+                                                     Image.asset(
+                                                        controller.iconByType(controller.history[index].type),
+                                                       width: 50.w,
+                                                     ),
+
                                                     SizedBox(
                                                       width: AppDimensions
                                                           .paddingMedium
@@ -483,13 +465,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 .spaceBetween,
                                                         children: [
                                                           Text(
-                                                            controller.payBox
-                                                                    .getAt(
-                                                                      index,
-                                                                    )
-                                                                    ?.serviceName
-                                                                    .tr ??
-                                                                '',
+                                                            controller.history[index].type.tr,
                                                             style: TextStyle(
                                                               color: AppColors
                                                                   .blackText,
@@ -497,12 +473,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             ),
                                                           ),
                                                           Text(
-                                                            controller.payBox
-                                                                    .getAt(
-                                                                      index,
-                                                                    )
-                                                                    ?.number ??
-                                                                '',
+                                                            controller.history[index].paymentTarget.value,
                                                             style: TextStyle(
                                                               color: AppColors
                                                                   .blackText,
@@ -515,7 +486,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       ),
                                                     ),
                                                     Text(
-                                                      '-${controller.payBox.getAt(index)?.sum ?? ''}',
+                                                      '-${controller.history[index].amount}',
                                                       style: TextStyle(
                                                         color:
                                                             AppColors.blackText,

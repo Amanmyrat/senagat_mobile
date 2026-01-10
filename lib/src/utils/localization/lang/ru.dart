@@ -245,6 +245,8 @@ const Map<String, String> ruRu = {
   r'altyn_asyr': r'Алтын aсыр (остальные банки)',
   r'top_up_the_balance': r'Пополнить баланс',
   r'other': r'Другой',
+  r'belet': r'Belet',
+  r'charity': r'Благотворительный фонд',
 
 
   r'otp_not_match': r'Код не совпадает',
