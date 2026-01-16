@@ -15,7 +15,8 @@ class Configs {
   const Configs._();
 
   static const rootIpAddress = '109.207.172.16:4433';
-  static const rootIpAddress2 = '192.168.1.67:82';
+  // static const rootIpAddress2 = '192.168.1.67:82';
+  static const rootIpAddress2 = '192.168.18.104:82';
   static const baseUrl = "http://$rootIpAddress2/api/v1";
 }
 
