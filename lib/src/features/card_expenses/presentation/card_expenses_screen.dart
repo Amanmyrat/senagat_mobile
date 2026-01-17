@@ -173,77 +173,145 @@ class _CardExpensesScreenState extends State<CardExpensesScreen> {
                       children: [
                         Text(r'history'.tr, style: TextStyle(color: AppColors.black, fontSize: 24.sp),),
                       SizedBox(height: 16.h,),
-                      Container(
-                        padding: EdgeInsets.all(
-                          AppDimensions.paddingExtraLarge,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                            AppDimensions.borderRadiusMedium.r,
-                          ),
-                          border: Border.all(color: AppColors.dividerColor, width: 1.w, style: BorderStyle.solid),
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColors.dividerColor,
-                              blurRadius: 4.r,
-                            ),
-                          ],
-                          color: AppColors.white,
-                        ),
-                        child: ListView.builder(
-                          itemCount: controller.history.length,
+                        ListView.builder(
                           shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount:
+                          controller.history.length > 3
+                              ? 3
+                              : controller.history.length,
+                          physics:
+                          NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
-                            final item = controller.history[index];
-
-                            return Padding(
-                              padding: EdgeInsets.symmetric(vertical: 13.h),
-                              child: Row(
+                            return Container(
+                              width: MediaQuery.of(
+                                context,
+                              ).size.width,
+                              padding: EdgeInsets.all(
+                                AppDimensions
+                                    .paddingExtraLarge
+                                    .w,
+                              ),
+                              margin: EdgeInsets.symmetric(
+                                vertical: 5.h,
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                BorderRadius.circular(
+                                  AppDimensions
+                                      .borderRadiusMedium
+                                      .r,
+                                ),
+                                border: Border.all(
+                                  color:
+                                  AppColors.dividerColor,
+                                  width: 1.w,
+                                  style: BorderStyle.solid,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppColors
+                                        .dividerColor,
+                                    blurRadius: 4.r,
+                                  ),
+                                ],
+                                color: AppColors.white,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-
-                                  Image.asset(controller.iconByType(item.type), width: 50.w,),
-
-                                  SizedBox(width: AppDimensions.paddingMedium.w),
-
-                                  /// TITLE + TARGET
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          item.type,
-                                          style: TextStyle(
-                                            color: AppColors.blackText,
-                                            fontSize: 14.sp,
-                                          ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal:
+                                          AppDimensions.paddingMedium.w,
+                                          vertical: 4,
                                         ),
-                                        Text(
-                                          item.paymentTarget.value,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            AppDimensions.borderRadiusMedium.r,
+                                          ),
+                                          color: controller.checkPaymentsStatus(index),
+                                        ),
+                                        child: Text(
+                                          controller.history[index].status.tr,
                                           style: TextStyle(
-                                            color: AppColors.blackText,
-                                            fontSize: 14.sp,
+                                            fontSize: 14,
+                                            color: AppColors.white,
                                             fontFamily: AppFonts.secondaryFont,
                                           ),
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                      Text(
+                                        controller.history[index].createdAt,
+                                        style: TextStyle(
+                                          color:
+                                          AppColors.blackText,
+                                          fontSize: 14.sp,
+                                        ),
+                                      ),
+                                    ],
                                   ),
+                                  SizedBox(height: AppDimensions.paddingMedium.h,),
+                                  Row(
+                                    children: [
 
-                                  /// AMOUNT
-                                  Text(
-                                    '-${item.amount}',
-                                    style: TextStyle(
-                                      color: AppColors.blackText,
-                                      fontSize: 17.sp,
-                                    ),
+                                      Image.asset(
+                                        controller.iconByType(controller.history[index].type),
+                                        width: 50.w,
+                                      ),
+
+                                      SizedBox(
+                                        width: AppDimensions
+                                            .paddingMedium
+                                            .w,
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment
+                                              .start,
+                                          mainAxisAlignment:
+                                          MainAxisAlignment
+                                              .spaceBetween,
+                                          children: [
+                                            Text(
+                                              controller.history[index].type.tr,
+                                              style: TextStyle(
+                                                color: AppColors
+                                                    .blackText,
+                                                fontSize: 14.sp,
+                                              ),
+                                            ),
+                                            Text(
+                                              controller.history[index].paymentTarget.value,
+                                              style: TextStyle(
+                                                color: AppColors
+                                                    .blackText,
+                                                fontSize: 14.sp,
+                                                fontFamily: AppFonts
+                                                    .secondaryFont,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Text(
+                                        '-${controller.history[index].amount}',
+                                        style: TextStyle(
+                                          color:
+                                          AppColors.blackText,
+                                          fontSize: 17.sp,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
                             );
                           },
                         ),
-                      ),
                       ],
                     ),
                   ),

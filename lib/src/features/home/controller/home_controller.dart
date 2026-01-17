@@ -20,6 +20,7 @@ import '../../../core/states/stateful_data.dart';
 import '../../../utils/constants/app_assets.dart';
 import '../../../utils/services/show_snack.dart';
 import '../../../utils/api_error_handler.dart';
+import '../../../utils/theme/constants/app_colors.dart';
 import '../../check_phone_balance/presentation/check_phone_balance.dart';
 import '../../identity_verification/models/profile_model.dart';
 import '../../inquiries/presentation/inquiries_screen.dart';
@@ -316,7 +317,19 @@ class HomeController extends GetxController with StateControlMixin {
         return AppAssets.deviceMobileIcon;
     }
   }
-
+  Color checkPaymentsStatus(int index) {
+    if (history[index].status == 'pending') {
+      return AppColors.orange;
+    } else if (history[index].status ==
+        'rejected') {
+      return AppColors.redDark;
+    } else if (history[index].status ==
+        'approved') {
+      return AppColors.green;
+    } else {
+      return AppColors.grey;
+    }
+  }
   int getFastOperationsCount() {
     final count = fastServiceController.selected.length;
     return count <= 4 ? count + 1 : count;

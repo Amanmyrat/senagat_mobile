@@ -6,6 +6,7 @@ import 'package:senagat_mobile/src/features/pay/repository/payment_repository.da
 
 import '../../../utils/api_error_handler.dart';
 import '../../../utils/constants/app_assets.dart';
+import '../../../utils/theme/constants/app_colors.dart';
 import '../../pay/model/paymet_history_model.dart';
 
 class CardExpensesController extends GetxController
@@ -35,6 +36,20 @@ class CardExpensesController extends GetxController
       update();
       ApiErrorHandler.handleApiError(e);
       debugPrint(e.toString());
+    }
+  }
+
+  Color checkPaymentsStatus(int index) {
+    if (history[index].status == 'pending') {
+      return AppColors.orange;
+    } else if (history[index].status ==
+        'rejected') {
+      return AppColors.redDark;
+    } else if (history[index].status ==
+        'approved') {
+      return AppColors.green;
+    } else {
+      return AppColors.grey;
     }
   }
 

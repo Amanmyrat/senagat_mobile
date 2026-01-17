@@ -316,8 +316,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(height: AppDimensions.padding40.h),
-                                controller.history.isEmpty
-                                    ? Container(
+                                if (controller.history.isEmpty) Container(
                                         width: MediaQuery.of(
                                           context,
                                         ).size.width,
@@ -362,8 +361,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                           ],
                                         ),
-                                      )
-                                    : Column(
+                                      ) else Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
@@ -411,7 +409,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 width: MediaQuery.of(
                                                   context,
                                                 ).size.width,
-                                                height: 90.h,
                                                 padding: EdgeInsets.all(
                                                   AppDimensions
                                                       .paddingExtraLarge
@@ -442,56 +439,96 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   ],
                                                   color: AppColors.white,
                                                 ),
-                                                child: Row(
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
-
-                                                     Image.asset(
-                                                        controller.iconByType(controller.history[index].type),
-                                                       width: 50.w,
-                                                     ),
-
-                                                    SizedBox(
-                                                      width: AppDimensions
-                                                          .paddingMedium
-                                                          .w,
-                                                    ),
-                                                    Expanded(
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                            controller.history[index].type.tr,
+                                                    Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      children: [
+                                                        Container(
+                                                          padding: EdgeInsets.symmetric(
+                                                            horizontal:
+                                                            AppDimensions.paddingMedium.w,
+                                                            vertical: 4,
+                                                          ),
+                                                          decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.circular(
+                                                              AppDimensions.borderRadiusMedium.r,
+                                                            ),
+                                                            color: controller.checkPaymentsStatus(index),
+                                                          ),
+                                                          child: Text(
+                                                            controller.history[index].status.tr,
                                                             style: TextStyle(
-                                                              color: AppColors
-                                                                  .blackText,
-                                                              fontSize: 14.sp,
+                                                              fontSize: 14,
+                                                              color: AppColors.white,
+                                                              fontFamily: AppFonts.secondaryFont,
                                                             ),
                                                           ),
-                                                          Text(
-                                                            controller.history[index].paymentTarget.value,
-                                                            style: TextStyle(
-                                                              color: AppColors
-                                                                  .blackText,
-                                                              fontSize: 14.sp,
-                                                              fontFamily: AppFonts
-                                                                  .secondaryFont,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      '-${controller.history[index].amount}',
-                                                      style: TextStyle(
-                                                        color:
+                                                        ),
+                                                        Text(
+                                                          controller.history[index].createdAt,
+                                                          style: TextStyle(
+                                                            color:
                                                             AppColors.blackText,
-                                                        fontSize: 17.sp,
-                                                      ),
+                                                            fontSize: 14.sp,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    SizedBox(height: AppDimensions.paddingMedium.h,),
+                                                    Row(
+                                                      children: [
+
+                                                         Image.asset(
+                                                            controller.iconByType(controller.history[index].type),
+                                                           width: 50.w,
+                                                         ),
+
+                                                        SizedBox(
+                                                          width: AppDimensions
+                                                              .paddingMedium
+                                                              .w,
+                                                        ),
+                                                        Expanded(
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Text(
+                                                                controller.history[index].type.tr,
+                                                                style: TextStyle(
+                                                                  color: AppColors
+                                                                      .blackText,
+                                                                  fontSize: 14.sp,
+                                                                ),
+                                                              ),
+                                                              Text(
+                                                                controller.history[index].paymentTarget.value,
+                                                                style: TextStyle(
+                                                                  color: AppColors
+                                                                      .blackText,
+                                                                  fontSize: 14.sp,
+                                                                  fontFamily: AppFonts
+                                                                      .secondaryFont,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                            Text(
+                                                              '-${controller.history[index].amount}',
+                                                              style: TextStyle(
+                                                                color:
+                                                                    AppColors.blackText,
+                                                                fontSize: 17.sp,
+                                                              ),
+                                                            ),
+                                                      ],
                                                     ),
                                                   ],
                                                 ),
