@@ -7,3 +7,9 @@ class BankModel {
     required this.bankName,
   });
 }
+
+enum BankType {
+  SenagatBank,
+  AltynAsyrBank,
+  RysgalBank
+}

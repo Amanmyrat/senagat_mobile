@@ -331,4 +331,14 @@ const Map<String, String> enUs = {
   r'requested_amount_exceeds_credit_limit': r'Requested amount exceeds credit limit',
   r'requested_term_exceeds_credit_limit': r'Requested term exceeds credit limit',
 
+  "payment_successful": "Payment completed successfully",
+  "payment_failed": "Payment failed. Please try again.",
+  "payment_cancelled": "Payment was cancelled",
+  "incorrect_otp_try_again": "Incorrect confirmation code. Please try again.",
+  "invalid_card_details": "Invalid card details",
+  "please_enter_cvc": "Please enter card CVC",
+  "payment_already_processed": "This payment was already processed",
+  "network_error_try_again": "Network error. Please try again"
+
+
 };
