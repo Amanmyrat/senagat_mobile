@@ -247,6 +247,7 @@ const Map<String, String> ruRu = {
   r'other': r'Другой',
   r'belet': r'Belet',
   r'charity': r'Благотворительный фонд',
+  r'back': r'Назад',
 
 
   r'otp_not_match': r'Код не совпадает',
@@ -332,4 +333,12 @@ const Map<String, String> ruRu = {
   r'requested_amount_exceeds_credit_limit': r'Запрошенная сумма превышает кредитный лимит',
   r'requested_term_exceeds_credit_limit': r'Запрошенный срок превышает кредитный лимит',
 
+  "payment_successful": "Платеж успешно выполнен",
+  "payment_failed": "Платеж не выполнен. Пожалуйста, попробуйте еще раз.",
+  "payment_cancelled": "Платеж был отменен",
+  "incorrect_otp_try_again": "Неверный код подтверждения. Пожалуйста, попробуйте еще раз.",
+  "invalid_card_details": "Неверные данные карты",
+  "please_enter_cvc": "Пожалуйста, введите CVC-код карты",
+  "payment_already_processed": "Этот платеж уже был обработан",
+  "network_error_try_again": "Ошибка сети. Пожалуйста, попробуйте еще раз"
 };

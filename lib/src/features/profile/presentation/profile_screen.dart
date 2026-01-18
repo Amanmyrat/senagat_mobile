@@ -5,8 +5,6 @@ import 'package:get/get.dart';
 import 'package:senagat_mobile/src/features/about_us/presentation/about_us_screen.dart';
 import 'package:senagat_mobile/src/features/identify/presentation/identify_screen.dart';
 import 'package:senagat_mobile/src/features/lang_settings/presentation/lang_settings_screen.dart';
-import 'package:senagat_mobile/src/features/notifications_settings/presentation/notifications_settings_screen.dart';
-import 'package:senagat_mobile/src/features/accounts/presentation/accounts_screen.dart';
 import 'package:senagat_mobile/src/features/profile/controller/profile_controller.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
@@ -132,29 +130,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       child: Column(
                         children: [
-                          GestureDetector(
-                            onTap: (){
-                              Get.toNamed(AccountScreen.route);
-                            },
-                            child: Container(
-                              padding: EdgeInsets.symmetric(vertical: AppDimensions.paddingMedium.h),
-                              color: AppColors.white,
-                              child:Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      SvgPicture.asset(AppAssets.edit,width: 24.w,),
-                                      SizedBox(width: 10.w,),
-                                      Text(r'accounts'.tr, style: TextStyle(fontSize: 14.sp.sp, color: AppColors.blackText, fontFamily: AppFonts.secondaryFont),),
-                                    ],
-                                  ),
-                                  SvgPicture.asset(AppAssets.arrowRightIcon, color: AppColors.black, width: 16.w,)
-                                ],
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 26.h,),
+                          // GestureDetector(
+                          //   onTap: (){
+                          //     Get.toNamed(AccountScreen.route);
+                          //   },
+                          //   child: Container(
+                          //     padding: EdgeInsets.symmetric(vertical: AppDimensions.paddingMedium.h),
+                          //     color: AppColors.white,
+                          //     child:Row(
+                          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //       children: [
+                          //         Row(
+                          //           children: [
+                          //             SvgPicture.asset(AppAssets.edit,width: 24.w,),
+                          //             SizedBox(width: 10.w,),
+                          //             Text(r'accounts'.tr, style: TextStyle(fontSize: 14.sp.sp, color: AppColors.blackText, fontFamily: AppFonts.secondaryFont),),
+                          //           ],
+                          //         ),
+                          //         SvgPicture.asset(AppAssets.arrowRightIcon, color: AppColors.black, width: 16.w,)
+                          //       ],
+                          //     ),
+                          //   ),
+                          // ),
+                          // SizedBox(height: 26.h,),
                           GestureDetector(
                             onTap: (){
                               Get.toNamed(LangSettingsScreen.route);

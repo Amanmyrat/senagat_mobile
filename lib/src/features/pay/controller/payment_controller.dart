@@ -11,7 +11,6 @@ import 'package:senagat_mobile/src/features/pay/model/charity_model.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/service_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
 import 'package:senagat_mobile/src/features/service_settings/controller/service_settings_controller.dart';
-import 'package:senagat_mobile/src/features/web_view/presentation/web_view.dart';
 import '../../../utils/api_error_handler.dart';
 import '../../../utils/services/error_utils.dart';
 import '../../../utils/services/show_snack.dart';
@@ -195,8 +194,8 @@ class PaymentController extends GetxController with StateControlMixin {
   Future<void> onTap() async {
     if (!continueEnabled) return;
 
-    status = Status.loading;
-    update();
+    // status = Status.loading;
+    // update();
 
     String? url;
     String? orderId;
@@ -227,11 +226,30 @@ class PaymentController extends GetxController with StateControlMixin {
       status = Status.completed;
       update();
 
-      Get.to(
-        () => ServicePaymentScreen(
-          orderId: orderId!,
-          paymentUrl: url!,
-          selectedCard: selectedCard!,
+      // Get.to(
+      //   () => ServicePaymentScreen(
+      //     orderId: orderId!,
+      //     paymentUrl: url!,
+      //     selectedCard: selectedCard!,
+      //   ),
+      // );
+
+      Navigator.of(Get.context!).push(
+        PageRouteBuilder(
+          opaque: false,
+          barrierDismissible: false,
+          pageBuilder: (_, __, ___) => ServicePaymentScreen(
+            orderId: orderId!,
+            paymentUrl: url!,
+            selectedCard: selectedCard!,
+            phoneNumber: phoneController.text,
+          ),
+          transitionsBuilder: (_, animation, __, child) {
+            return FadeTransition(
+              opacity: animation,
+              child: child,
+            );
+          },
         ),
       );
 

@@ -112,26 +112,51 @@ class AddCardController extends GetxController with StateControlMixin {
 
 
   void onTextChanged(String val) {
-    continueEnabled = cardNumberController.text.length >= 19 &&
-        nameController.text.isNotEmpty &&
-        isValidExpiry(termController.text) &&
-        cvcController.text.length >=3;
-
+    // --- EXPIRY CONTROL ---
     if (termController.text.length >= 2) {
-      final month = int.tryParse(termController.text.substring(0, 2)) ?? 0;
+      int month = int.tryParse(termController.text.substring(0, 2)) ?? 0;
 
+      // Fix month > 12
       if (month > 12) {
-        termController.text = '12/${termController.text.substring(3)}';
+        month = 12;
+      }
+
+      if (termController.text.length >= 5) {
+        int year = int.tryParse(termController.text.substring(3, 5)) ?? 0;
+
+        final now = DateTime.now();
+        final currentYear = now.year % 100;
+        final currentMonth = now.month;
+
+        // ❌ Block past years
+        if (year < currentYear) {
+          year = currentYear;
+        }
+
+        // ❌ Block past months in current year
+        if (year == currentYear && month < currentMonth) {
+          month = currentMonth;
+        }
+
+        termController.text =
+        '${month.toString().padLeft(2, '0')}/${year.toString().padLeft(2, '0')}';
+
         termController.selection = TextSelection.fromPosition(
           TextPosition(offset: termController.text.length),
         );
       }
     }
 
-    updateCardDesignByPrefix();
+    continueEnabled =
+        cardNumberController.text.length >= 19 &&
+            nameController.text.isNotEmpty &&
+            isValidExpiry(termController.text) &&
+            cvcController.text.length >= 3;
 
+    updateCardDesignByPrefix();
     update();
   }
+
 
   void setDropdownBank(BankModel? value) {
     selectedDropdownBank = value;
@@ -174,18 +199,27 @@ class AddCardController extends GetxController with StateControlMixin {
   }
 
   bool isValidExpiry(String value) {
-    if (value.length != 5) return false;
-    if (!value.contains('/')) return false;
+    // Require full MM/YY
+    if (!RegExp(r'^\d{2}/\d{2}$').hasMatch(value)) {
+      return false;
+    }
 
-    final parts = value.split('/');
-    final month = int.tryParse(parts[0]) ?? 0;
-    final year  = int.tryParse(parts[1]) ?? 0;
+    final month = int.parse(value.substring(0, 2));
+    final year = int.parse(value.substring(3, 5));
 
     if (month < 1 || month > 12) return false;
-    if (year < 0 || year > 99) return false;
+
+    final now = DateTime.now();
+    final currentYear = now.year % 100;
+    final currentMonth = now.month;
+
+    if (year < currentYear) return false;
+    if (year == currentYear && month < currentMonth) return false;
 
     return true;
   }
+
+
 
 
   void updateCardDesignByPrefix() {

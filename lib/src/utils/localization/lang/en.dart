@@ -247,6 +247,7 @@ const Map<String, String> enUs = {
   r'other': r'Other',
   r'belet': r'Belet',
   r'charity': r'Charitable Foundation',
+  r'back': r'Back',
 
   r'otp_not_match': r'OTP did not match',
   r'otp_code_has_expired.': r'OTP code has expired',

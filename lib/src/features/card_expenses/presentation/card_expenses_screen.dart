@@ -1,14 +1,12 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/features/card_expenses/controller/card_expenses_controller.dart';
 import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../core/globals.dart';
-import '../../../utils/constants/app_assets.dart';
+import '../../../core/states/stateful_data.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
 import '../../../utils/theme/constants/app_fonts.dart' show AppFonts;
@@ -33,7 +31,11 @@ class _CardExpensesScreenState extends State<CardExpensesScreen> {
               PaymentRepository(apiService: ApiServices.apiService),
             ),
             builder: (controller) {
-              return Column(
+              return controller.status == Status.loading
+                  ? Center(
+                child: CircularProgressIndicator(color: AppColors.green),
+              )
+                  : Column(
                 children: [
                   CustomAppBar(),
 

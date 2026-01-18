@@ -3,8 +3,6 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/card/controller/card_controller.dart';
-import 'package:senagat_mobile/src/features/dashboard/controller/dashboard_controller.dart';
-import 'package:senagat_mobile/src/features/dashboard/utils/nested_nav_ids.dart';
 import 'package:senagat_mobile/src/features/home/controller/home_controller.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../add_card/model/card_model.dart';
@@ -16,6 +14,7 @@ class CardSettingsController extends GetxController with StateControlMixin {
   final cardBox = Hive.box<CardModel>('cardsBox');
   late final String cardNumber;
   late final String nickName;
+  late final String cardDesign;
   late String maskedNumber;
   late final int index;
   final homeController = Get.find<HomeController>();
@@ -54,6 +53,7 @@ class CardSettingsController extends GetxController with StateControlMixin {
     maskedNumber = hideCardCenter(cardNumber);
 
     nickName = cardBox.getAt(index)?.nickName.tr ?? '';
+    cardDesign = cardBox.getAt(index)?.cardDesign ?? '';
     cardNumberController = TextEditingController(text: cardBox.getAt(index)?.nickName);
   }
 

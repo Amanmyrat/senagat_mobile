@@ -50,12 +50,9 @@ class _CardSettingsScreenState extends State<CardSettingsScreen> {
                             height: 58.h,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
-                              image: DecorationImage(image: AssetImage(AppAssets.cardImage,),fit: BoxFit.fill)
+                              image: DecorationImage(image: AssetImage(controller.cardDesign,),fit: BoxFit.fill)
                             ),
-                            child: SizedBox(
 
-                              child: Image.asset(AppAssets.senagatIconMini,),
-                            ),
                           ),
                           SizedBox(width: 10.w,),
                           Column(

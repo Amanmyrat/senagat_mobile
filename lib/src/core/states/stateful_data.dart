@@ -1,4 +1,4 @@
-enum Status { loading, completed, error, none }
+enum Status { loading, completed, error, none, success }
 
 class StatefulData<T> {
   Status status;
@@ -10,6 +10,8 @@ class StatefulData<T> {
   StatefulData.completed(this.data) : status = Status.completed;
 
   StatefulData.error(this.error) : status = Status.error;
+
+  StatefulData.success() : status = Status.success;
 
   StatefulData.empty() : status = Status.none;
 

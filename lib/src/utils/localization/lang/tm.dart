@@ -247,6 +247,7 @@ const Map<String, String> tkTk = {
   r'other': r'Başga',
   r'belet': r'Belet',
   r'charity': r'Haýyr-sahawat gaznasy',
+  r'back': r'Yza',
 
 
   r'otp_not_match': r'Kod gabat gelmedi',
@@ -331,4 +332,13 @@ const Map<String, String> tkTk = {
   r'user_profile_already_exists': r'Bu profil eýýäm döredilen',
   r'requested_amount_exceeds_credit_limit': r'Talap edilen mukdar kredit çäkden ýokary',
   r'requested_term_exceeds_credit_limit': r'Talap edilen möhlet kredit çäkden ýokary',
+
+  "payment_successful": "Töleg üstünlikli ýerine ýetirildi",
+  "payment_failed": "Töleg başa barmady. Gaýtadan synanyşyň.",
+  "payment_cancelled": "Töleg ýatyryldy",
+  "incorrect_otp_try_again": "Tassyklama kody nädogry. Gaýtadan synanyşyň.",
+  "invalid_card_details": "Kartanyň maglumatlary nädogry",
+  "please_enter_cvc": "Kartanyň CVC koduny giriziň",
+  "payment_already_processed": "Bu töleg eýýäm ýerine ýetirildi",
+  "network_error_try_again": "Internet näsazlygy. Gaýtadan synanyşyň"
 };

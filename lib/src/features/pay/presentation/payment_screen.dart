@@ -281,9 +281,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                                         controller,
                                                       ),
                                                     ],
-                                                    if (controller
-                                                            .serviceName ==
-                                                        'Belet') ...[
+                                                    if (controller.serviceName == 'Belet') ...[
                                                       Column(
                                                         crossAxisAlignment:
                                                             CrossAxisAlignment
@@ -420,6 +418,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                                               );
                                                             },
                                                           ),
+                                                          SizedBox(
+                                                            height: 22.h,
+                                                          ),
+
+
                                                         ],
                                                       ),
                                                     ],
@@ -609,7 +612,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
                                               SizedBox(
                                                 height:
-                                                    AppDimensions.padding40.h,
+                                                    AppDimensions.paddingExtraLarge.h,
                                               ),
                                               Text(
                                                 r'select_a_card'.tr,

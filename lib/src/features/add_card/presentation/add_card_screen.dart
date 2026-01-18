@@ -8,7 +8,6 @@ import 'package:senagat_mobile/src/features/add_card/controller/add_card_control
 import 'package:senagat_mobile/src/features/add_card/model/bank_model.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/widgets/check_widget.dart';
-import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
@@ -91,7 +90,7 @@ class AddCardScreen extends StatelessWidget {
                                         fontSize: 24.sp,
                                       ),
                                     ),
-                                    SizedBox(height: 32.h),
+                                    SizedBox(height: 22.h),
                                     Text(
                                       r'select_bank'.tr,
                                       style: TextStyle(
@@ -239,124 +238,118 @@ class AddCardScreen extends StatelessWidget {
                                     ),
 
                                     SizedBox(height: 22.h),
-
+                                    Column(
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          r'name_on_the_card'.tr,
+                                          style: TextStyle(
+                                            color: AppColors.blackText,
+                                            fontSize: 14.sp,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: AppDimensions
+                                              .paddingMedium
+                                              .h,
+                                        ),
+                                        TextField(
+                                          keyboardType:
+                                          TextInputType.text,
+                                          controller:
+                                          controller.nameController,
+                                          onChanged: (value) =>
+                                              controller.update(),
+                                          textInputAction:
+                                          TextInputAction.next,
+                                          style: TextStyle(
+                                            fontSize: 14.sp,
+                                            fontFamily:
+                                            AppFonts.primaryFont,
+                                          ),
+                                          decoration: InputDecoration(
+                                            hintText:
+                                            r'name_on_the_card'.tr,
+                                            border: OutlineInputBorder(),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius:
+                                              BorderRadius.circular(
+                                                AppDimensions
+                                                    .borderRadiusMedium,
+                                              ),
+                                              borderSide: BorderSide(
+                                                color: AppColors.green,
+                                                width: 1.w,
+                                              ),
+                                            ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderRadius:
+                                              BorderRadius.circular(
+                                                AppDimensions
+                                                    .borderRadiusMedium,
+                                              ),
+                                              borderSide: BorderSide(
+                                                color: AppColors.white,
+                                                width: 1.w,
+                                              ),
+                                            ),
+                                            suffixIconConstraints:
+                                            BoxConstraints(
+                                              maxHeight: 40.h,
+                                              maxWidth: 40.w,
+                                            ),
+                                            suffixIcon:
+                                            controller
+                                                .nameController
+                                                .text
+                                                .isNotEmpty
+                                                ? GestureDetector(
+                                              onTap: () {
+                                                controller
+                                                    .onClearTextField(
+                                                  controller
+                                                      .nameController,
+                                                );
+                                              },
+                                              child: Padding(
+                                                padding: EdgeInsets.only(
+                                                  right: AppDimensions
+                                                      .paddingExtraLarge
+                                                      .w,
+                                                ),
+                                                child: SvgPicture.asset(
+                                                  AppAssets
+                                                      .deleteIcon,
+                                                  width: 18.w,
+                                                  color: AppColors
+                                                      .black,
+                                                ),
+                                              ),
+                                            )
+                                                : null,
+                                            counter: const SizedBox(),
+                                            contentPadding:
+                                            EdgeInsets.symmetric(
+                                              vertical: AppDimensions
+                                                  .paddingExtraLarge
+                                                  .h,
+                                              horizontal:
+                                              AppDimensions
+                                                  .paddingLarge
+                                                  .w,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: 22.h),
                                     SizedBox(
                                       width: double.infinity,
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          SizedBox(
-                                            width: 190.w,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  r'name_on_the_card'.tr,
-                                                  style: TextStyle(
-                                                    color: AppColors.blackText,
-                                                    fontSize: 14.sp,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: AppDimensions
-                                                      .paddingMedium
-                                                      .h,
-                                                ),
-                                                TextField(
-                                                  keyboardType:
-                                                      TextInputType.text,
-                                                  controller:
-                                                      controller.nameController,
-                                                  onChanged: (value) =>
-                                                      controller.update(),
-                                                  textInputAction:
-                                                      TextInputAction.next,
-                                                  style: TextStyle(
-                                                    fontSize: 14.sp,
-                                                    fontFamily:
-                                                        AppFonts.primaryFont,
-                                                  ),
-                                                  decoration: InputDecoration(
-                                                    hintText:
-                                                        r'name_on_the_card'.tr,
-                                                    border: OutlineInputBorder(),
-                                                    focusedBorder: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                            AppDimensions
-                                                                .borderRadiusMedium,
-                                                          ),
-                                                      borderSide: BorderSide(
-                                                        color: AppColors.green,
-                                                        width: 1.w,
-                                                      ),
-                                                    ),
-                                                    enabledBorder: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                            AppDimensions
-                                                                .borderRadiusMedium,
-                                                          ),
-                                                      borderSide: BorderSide(
-                                                        color: AppColors.white,
-                                                        width: 1.w,
-                                                      ),
-                                                    ),
-                                                    suffixIconConstraints:
-                                                        BoxConstraints(
-                                                          maxHeight: 40.h,
-                                                          maxWidth: 40.w,
-                                                        ),
-                                                    suffixIcon:
-                                                        controller
-                                                            .nameController
-                                                            .text
-                                                            .isNotEmpty
-                                                        ? GestureDetector(
-                                                            onTap: () {
-                                                              controller
-                                                                  .onClearTextField(
-                                                                    controller
-                                                                        .nameController,
-                                                                  );
-                                                            },
-                                                            child: Padding(
-                                                              padding: EdgeInsets.only(
-                                                                right: AppDimensions
-                                                                    .paddingExtraLarge
-                                                                    .w,
-                                                              ),
-                                                              child: SvgPicture.asset(
-                                                                AppAssets
-                                                                    .deleteIcon,
-                                                                width: 18.w,
-                                                                color: AppColors
-                                                                    .black,
-                                                              ),
-                                                            ),
-                                                          )
-                                                        : null,
-                                                    counter: const SizedBox(),
-                                                    contentPadding:
-                                                        EdgeInsets.symmetric(
-                                                          vertical: AppDimensions
-                                                              .paddingExtraLarge
-                                                              .h,
-                                                          horizontal:
-                                                              AppDimensions
-                                                                  .paddingLarge
-                                                                  .w,
-                                                        ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: AppDimensions.paddingMedium.h,
-                                          ),
                                           Flexible(
                                             child: Column(
                                               crossAxisAlignment:
@@ -382,7 +375,6 @@ class AddCardScreen extends StatelessWidget {
                                                   keyboardType:
                                                       TextInputType.phone,
                                                   maxLength: 5,
-                                                  textAlign: TextAlign.center,
                                                   inputFormatters: [
                                                     controller.termFormatter,
                                                   ],

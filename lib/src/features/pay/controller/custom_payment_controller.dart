@@ -14,6 +14,7 @@ import '../../dashboard/presentation/dashboard_screen.dart';
 class CustomPaymentController extends GetxController with StateControlMixin {
   final String orderId;
   final String paymentUrl;
+  final String phoneNumber;
   final CardModel selectedCard;
 
   String? errorMessage;
@@ -24,6 +25,7 @@ class CustomPaymentController extends GetxController with StateControlMixin {
     required this.orderId,
     required this.paymentUrl,
     required this.selectedCard,
+    required this.phoneNumber,
   });
 
   @override
@@ -136,8 +138,12 @@ class CustomPaymentController extends GetxController with StateControlMixin {
       final confirm = await bankService.step4ConfirmPayment(confirmPaymentReq);
 
       if (confirm.status == HackResponseStatus.ok) {
-        _setSuccess();
+        status = Status.success;
+        update();
+
       } else {
+        // status = Status.success;
+        // update();
         _setResult(confirm.status);
       }
     } catch (e) {
@@ -156,6 +162,7 @@ class CustomPaymentController extends GetxController with StateControlMixin {
       PaymentConfirmationScreen(
         resendCodeRequest: resendCodeRequest,
         bankService: bankService,
+        phoneNumber: phoneNumber,
       ),
       barrierDismissible: false,
     );
@@ -185,11 +192,11 @@ class CustomPaymentController extends GetxController with StateControlMixin {
     errorMessage = message;
     update();
 
-    ShowSnack.showSnack(message, SnackType.error);
-
-    Future.delayed(const Duration(milliseconds: 1200), () {
-      Get.back(result: {'success': false, 'error': message});
-    });
+    // ShowSnack.showSnack(message, SnackType.error);
+    //
+    // Future.delayed(const Duration(milliseconds: 1200), () {
+    //   Get.back(result: {'success': false, 'error': message});
+    // });
   }
 
   String _getErrorMessage(HackResponseStatus status) {
