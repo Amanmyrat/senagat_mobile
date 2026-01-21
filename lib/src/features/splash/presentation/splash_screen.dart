@@ -83,8 +83,9 @@ class OnBoard extends StatelessWidget {
     Get.put(AccountLoginStatusController());
     final accountStatus = authController.accountLoginStatus.value;
 
-    return accountStatus == AccountLoginStatus.loggedIn
-        ? const DashboardScreen()
-        : const WelcomeScreen();
+    return DashboardScreen();
+    // return accountStatus == AccountLoginStatus.loggedIn
+    //     ? const DashboardScreen()
+    //     : const WelcomeScreen();
   }
 }

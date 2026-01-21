@@ -15,8 +15,7 @@ class ProfileController extends GetxController with StateControlMixin, GetSingle
   final phoneBox = Hive.box<String>('phoneBox');
   String appVersion = '';
   String? phone;
-  final homeController = Get.find<HomeController>();
-  final dashboardController = Get.find<DashboardController>();
+
 
   @override
   void onInit() {

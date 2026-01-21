@@ -6,6 +6,7 @@ import 'package:senagat_mobile/src/features/about_us/presentation/about_us_scree
 import 'package:senagat_mobile/src/features/identify/presentation/identify_screen.dart';
 import 'package:senagat_mobile/src/features/lang_settings/presentation/lang_settings_screen.dart';
 import 'package:senagat_mobile/src/features/profile/controller/profile_controller.dart';
+import 'package:senagat_mobile/src/features/welcome/presentation/welcome_screen.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
@@ -32,7 +33,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    GestureDetector(
+                    if(controller.phoneBox.get('phone') != null)
+                      GestureDetector(
                       onTap: (){
                         Get.toNamed(IdentifyScreen.route);
                       },
@@ -153,6 +155,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           //   ),
                           // ),
                           // SizedBox(height: 26.h,),
+                          if(controller.phoneBox.get('phone') == null)...[
+                            GestureDetector(
+                              onTap: (){
+                                Get.toNamed(WelcomeScreen.route);
+                              },
+                              child: Container(
+                                padding: EdgeInsets.symmetric(vertical: AppDimensions.paddingMedium.h),
+                                color: AppColors.white,
+                                child:Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        SvgPicture.asset(AppAssets.navProfile, width: 24.w, color: AppColors.green,),
+                                        SizedBox(width: 10.w,),
+                                        Text(r'sign_in'.tr, style: TextStyle(fontSize: 14.sp.sp, color: AppColors.blackText, fontFamily: AppFonts.secondaryFont),),
+                                      ],
+                                    ),
+                                    SvgPicture.asset(AppAssets.arrowRightIcon, color: AppColors.black, width: 16.w,)
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 26.h,),
+                          ],
                           GestureDetector(
                             onTap: (){
                               Get.toNamed(LangSettingsScreen.route);

@@ -187,6 +187,8 @@ class PaymentController extends GetxController with StateControlMixin {
   Future<CharityModel> _getCharityModel() async {
     return CharityModel(
       bankName: selectedCard?.bank ?? '',
+      name: nameController.text,
+      surName: lastnameController.text,
       amount: int.parse(sumController.text),
     );
   }

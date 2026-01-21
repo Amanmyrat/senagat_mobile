@@ -28,7 +28,6 @@ import '../../pay/model/pay_model.dart';
 import '../../pay/model/paymet_history_model.dart';
 import '../../qr_code/presentation/qr_code_screen.dart';
 import '../../service_settings/controller/service_settings_controller.dart';
-import '../../profile/controller/profile_controller.dart';
 
 enum HomeTapType { none, qr, foundation, service, notification }
 
@@ -55,7 +54,7 @@ class HomeController extends GetxController with StateControlMixin {
 
   String cardKey = 'card';
 
-  bool isProfileRequired = true;
+  bool isProfileRequired = false;
   bool isServiceRequired = true;
 
   final _exchange = <ExchangeRateModel>[];
@@ -170,17 +169,12 @@ class HomeController extends GetxController with StateControlMixin {
     ) {
       if (status == AccountLoginStatus.loggedIn) {
         getUserProfileInfo();
-        getExchangeRates();
         loadHistory();
       }
     });
 
-    if (accountLoginStatusController.accountLoginStatus.value ==
-        AccountLoginStatus.loggedIn) {
-      getUserProfileInfo();
-      getExchangeRates();
-      loadHistory();
-    }
+
+    getExchangeRates();
     checkProfile();
     checkProfileStatus();
     textStatus();
@@ -266,12 +260,16 @@ class HomeController extends GetxController with StateControlMixin {
   }
 
   checkProfile() {
-    if (currentProfile == null && userInformationModel?.profileModel == null) {
-      isProfileRequired = true;
-      update();
-    } else {
-      isProfileRequired = false;
-      update();
+    if(accountLoginStatusController.accountLoginStatus.value ==
+        AccountLoginStatus.loggedIn) {
+      if (currentProfile == null &&
+          userInformationModel?.profileModel == null) {
+        isProfileRequired = true;
+        update();
+      } else {
+        isProfileRequired = false;
+        update();
+      }
     }
   }
 

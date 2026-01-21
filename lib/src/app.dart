@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -44,7 +43,6 @@ import 'package:senagat_mobile/src/features/splash/presentation/splash_screen.da
 import 'package:senagat_mobile/src/utils/localization/controller/language_controller.dart';
 import 'package:senagat_mobile/src/utils/localization/localization_service.dart';
 import 'package:senagat_mobile/src/utils/theme/app_theme.dart';
-import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
 import 'package:senagat_mobile/src/utils/theme/controller/theme_controller.dart';
 import 'features/add_card/controller/add_card_controller.dart';
 import 'features/auth/controller/auth_controller.dart';

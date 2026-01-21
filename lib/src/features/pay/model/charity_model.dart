@@ -1,11 +1,15 @@
 class CharityModel {
   final String? bankName;
+  final String? name;
+  final String? surName;
   final int? amount;
   final String? formUrl;
   final String? orderId;
 
   CharityModel({
     this.bankName,
+    this.name,
+    this.surName,
     this.amount,
     this.formUrl,
     this.orderId,
@@ -23,6 +27,8 @@ class CharityModel {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       "bank_name": bankName,
+      "name": bankName,
+      "surname": bankName,
       "amount": amount,
     };
   }

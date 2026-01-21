@@ -7,6 +7,7 @@ import '../../../core/states/stateful_data.dart';
 import '../../../utils/api_error_handler.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../add_card/model/card_model.dart';
+import '../../auth/controller/account_status_controller.dart';
 import '../../auth/repository/auth_repository.dart';
 import '../../home/models/user_information_model.dart';
 import '../../qr_code/presentation/qr_code_screen.dart';
@@ -18,14 +19,21 @@ class CardController extends GetxController with StateControlMixin {
   final cardBox = Hive.box<CardModel>('cardsBox');
   UserInformationModel? userInformationModel;
   AuthRepository authRepository;
+  late AccountLoginStatusController accountLoginStatusController;
+
 
   CardController(this.authRepository);
 
   @override
   void onInit() {
     super.onInit();
-    getUserProfileInfo();
-  }
+    accountLoginStatusController = Get.find<AccountLoginStatusController>();
+
+    if (accountLoginStatusController.accountLoginStatus.value ==
+        AccountLoginStatus.loggedIn) {
+      getUserProfileInfo();
+
+    }  }
 
 
   void onQrScanTap() {

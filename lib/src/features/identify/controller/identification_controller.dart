@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:senagat_mobile/src/features/home/controller/home_controller.dart';
 import 'package:senagat_mobile/src/features/welcome/presentation/welcome_screen.dart';
 import '../../../core/control_state_variable_mixin.dart';
@@ -49,11 +50,18 @@ class IdentificationController extends GetxController with StateControlMixin {
     update();
 
     final dashboardController = Get.find<DashboardController>();
-    dashboardController.updateCurrentIndex(NestedNavigationIds.settings);
+    dashboardController.updateCurrentIndex(NestedNavigationIds.home);
+    dashboardController.updateCurrentIndex(NestedNavigationIds.card);
     dashboardController.updateCurrentIndex(NestedNavigationIds.home);
 
+    dashboardController.refresh();
+    if (_accountLoginStatusController.accountLoginStatus.value ==
+        AccountLoginStatus.loggedIn) {
+     homeController.getUserProfileInfo();
+
+    }
     Navigator.of(Get.context!).pushNamedAndRemoveUntil(
-      WelcomeScreen.route,
+      DashboardScreen.route,
       (Route<dynamic> route) => false,
     );
   }
