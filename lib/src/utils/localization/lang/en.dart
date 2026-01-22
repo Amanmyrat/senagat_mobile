@@ -339,7 +339,8 @@ const Map<String, String> enUs = {
   "invalid_card_details": "Invalid card details",
   "please_enter_cvc": "Please enter card CVC",
   "payment_already_processed": "This payment was already processed",
-  "network_error_try_again": "Network error. Please try again"
+  "network_error_try_again": "Network error. Please try again",
+  r'please_login': r'Please sign in to use this service',
 
 
 };

@@ -340,5 +340,6 @@ const Map<String, String> tkTk = {
   "invalid_card_details": "Kartanyň maglumatlary nädogry",
   "please_enter_cvc": "Kartanyň CVC koduny giriziň",
   "payment_already_processed": "Bu töleg eýýäm ýerine ýetirildi",
-  "network_error_try_again": "Internet näsazlygy. Gaýtadan synanyşyň"
+  "network_error_try_again": "Internet näsazlygy. Gaýtadan synanyşyň",
+  r'please_login': r'Bu hyzmatdan peýdalanmak üçin ulgama giriň',
 };

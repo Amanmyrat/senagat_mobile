@@ -340,5 +340,6 @@ const Map<String, String> ruRu = {
   "invalid_card_details": "Неверные данные карты",
   "please_enter_cvc": "Пожалуйста, введите CVC-код карты",
   "payment_already_processed": "Этот платеж уже был обработан",
-  "network_error_try_again": "Ошибка сети. Пожалуйста, попробуйте еще раз"
+  "network_error_try_again": "Ошибка сети. Пожалуйста, попробуйте еще раз",
+  r'please_login': r'Пожалуйста, войдите, чтобы воспользоваться этой услугой',
 };

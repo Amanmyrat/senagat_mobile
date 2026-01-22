@@ -12,6 +12,26 @@ class DashboardController extends GetxController {
 
   String? phone;
 
+  /// Resets dashboard tab selection and clears all nested navigator stacks.
+  /// Useful after login/logout to avoid stale nested navigation state.
+  void resetToHome() {
+    // Pop all nested navigators to their first route (if mounted).
+    for (final nestedId in <int>[
+      NestedNavigationIds.home,
+      NestedNavigationIds.catalog,
+      NestedNavigationIds.card,
+      NestedNavigationIds.settings,
+    ]) {
+      final state = Get.keys[nestedId]?.currentState;
+      if (state != null) {
+        state.popUntil((r) => r.isFirst);
+      }
+    }
+
+    // Select home tab.
+    _currentIndex.value = DashboardNavigationIndex.home;
+  }
+
   void updateCurrentIndex(int currentIndex) async {
     int keyIdForPosition = _getKeyIdForPosition(_currentIndex.value);
     if (_currentIndex.value == currentIndex) {

@@ -3,9 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/features/identify/controller/identification_controller.dart';
-import 'package:senagat_mobile/src/features/identify/controller/identification_controller.dart';
 import 'package:senagat_mobile/src/features/identity_verification/presentation/identity_verification_screen.dart';
-import 'package:senagat_mobile/src/features/welcome/presentation/welcome_screen.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
 
@@ -89,12 +87,10 @@ class _IdentifyScreenState extends State<IdentifyScreen> {
                                   AppDimensions.borderRadiusMedium,
                                 ),
                               ),
-                              child: controller.phone != null
-                                  ? Text(
-                                      '+993',
-                                      style: TextStyle(fontSize: 14.sp),
-                                    )
-                                  : null,
+                              child: Text(
+                                '+993',
+                                style: TextStyle(fontSize: 14.sp),
+                              ),
                             ),
                             SizedBox(width: AppDimensions.paddingSmall.w),
                             Expanded(
@@ -113,7 +109,7 @@ class _IdentifyScreenState extends State<IdentifyScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      controller.phone ?? '',
+                                      controller.phone ?? '-',
                                       style: TextStyle(
                                         fontSize: 14.sp,
                                         color: AppColors.blackText,

@@ -38,7 +38,7 @@ class HomeController extends GetxController with StateControlMixin {
   AccountModel accountModel = AccountModel();
   final profileBox = Hive.box<ProfileModel>('profileBox');
   final phoneBox = Hive.box<String>('phoneBox');
-  late final currentProfile;
+  ProfileModel? currentProfile;
 
   ExchangeRateRepository repository;
   AuthRepository authRepository;
@@ -113,13 +113,22 @@ class HomeController extends GetxController with StateControlMixin {
   }
 
   void onServiceTap(int index) {
+    if (accountLoginStatusController.accountLoginStatus.value !=
+        AccountLoginStatus.loggedIn) {
+      ShowSnack.showSnack(r'please_login'.tr, SnackType.warning);
+      return;
+    }
     if (isServiceRequired == false) {
       lastTap = HomeTapType.service;
       lastServiceTapIndex = index;
       update();
       Get.toNamed(serviceRoute[index]);
     } else {
-      ShowSnack.showSnack(textStatus(), SnackType.warning);
+      final message = textStatus();
+      ShowSnack.showSnack(
+        message.isEmpty ? r'not_confirmed'.tr : message,
+        SnackType.warning,
+      );
     }
   }
 
@@ -224,6 +233,7 @@ class HomeController extends GetxController with StateControlMixin {
               userInformationModel!.profileModel!,
             );
             phoneBox.put('phone', userInformationModel!.phone!);
+            currentProfile = userInformationModel!.profileModel!;
 
           }
 
@@ -262,6 +272,8 @@ class HomeController extends GetxController with StateControlMixin {
   checkProfile() {
     if(accountLoginStatusController.accountLoginStatus.value ==
         AccountLoginStatus.loggedIn) {
+      // Keep in-memory state aligned with persisted state
+      currentProfile = profileBox.get('currentProfile');
       if (currentProfile == null &&
           userInformationModel?.profileModel == null) {
         isProfileRequired = true;
@@ -274,6 +286,8 @@ class HomeController extends GetxController with StateControlMixin {
   }
 
   checkProfileStatus() {
+    // Keep in-memory state aligned with persisted state
+    currentProfile = profileBox.get('currentProfile');
     if (currentProfile?.status == 'approved' && userInformationModel?.profileModel?.status == 'approved') {
       isServiceRequired = false;
       update();

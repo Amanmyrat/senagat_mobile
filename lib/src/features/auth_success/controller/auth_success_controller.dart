@@ -2,15 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
-import 'package:senagat_mobile/src/features/register_password_setup/controller/register_password_setup_controller.dart';
 
 import '../../../core/control_state_variable_mixin.dart';
 import '../../dashboard/controller/dashboard_controller.dart';
-import '../../dashboard/utils/nested_nav_ids.dart';
-import '../../home/controller/home_controller.dart';
 
-class AuthSuccessController extends GetxController with StateControlMixin{
-
+class AuthSuccessController extends GetxController with StateControlMixin {
   bool _isBankVerificationComplete = false;
   bool get isBankVerificationComplete => _isBankVerificationComplete;
 
@@ -32,19 +28,16 @@ class AuthSuccessController extends GetxController with StateControlMixin{
 
   void _navigateToNextScreen() {
     final dashboardController = Get.find<DashboardController>();
-    dashboardController.updateCurrentIndex(NestedNavigationIds.settings);
-    dashboardController.updateCurrentIndex(NestedNavigationIds.card);
-    dashboardController.updateCurrentIndex(NestedNavigationIds.home);
-    dashboardController.refresh();
-
+    dashboardController.resetToHome();
 
     try {
       Navigator.of(Get.context!).pushNamedAndRemoveUntil(
-          DashboardScreen.route, (Route<dynamic> route) => false);
+        DashboardScreen.route,
+        (Route<dynamic> route) => false,
+      );
     } catch (e) {
       status = Status.error;
       print('Error navigating to next screen: $e');
     }
   }
-
 }
