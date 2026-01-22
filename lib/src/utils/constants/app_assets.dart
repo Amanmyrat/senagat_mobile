@@ -51,6 +51,8 @@ class AppAssets {
   static const date = 'assets/icons/date.svg';
   static const foundation = 'assets/images/foundation.webp';
 
+  static const reference = 'assets/icons/ReferenceIcon.svg';
+  static const creditIcon = 'assets/icons/creditIcon.svg';
 
   static const navigationCreditCardIcon = 'assets/icons/CreditCard.svg';
   static const navigationSettingIcon = 'assets/icons/GearSix.svg';

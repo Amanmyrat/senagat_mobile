@@ -273,12 +273,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 ),
                                               ),
                                               Center(
-                                                child: Image.asset(
-                                                  controller
-                                                      .serviceImage[index],
-                                                  width: 200.w,
-                                                  height: 180.h,
-                                                ),
+                                                child:
+                                                    controller
+                                                        .serviceImage[index]
+                                                        .endsWith('.svg')
+                                                    ? SvgPicture.asset(
+                                                        controller
+                                                            .serviceImage[index],
+                                                        width: 150.w,
+                                                        height: 150.h,
+                                                      )
+                                                    : Image.asset(
+                                                        controller
+                                                            .serviceImage[index],
+                                                        width: 200.w,
+                                                        height: 180.h,
+                                                      ),
                                               ),
                                               Padding(
                                                 padding: EdgeInsets.only(
@@ -315,228 +325,209 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(height: AppDimensions.padding40.h),
-                                if (controller.history.isEmpty) Container(
-                                        width: MediaQuery.of(
-                                          context,
-                                        ).size.width,
-                                        height: 250.h,
-                                        padding: EdgeInsets.all(
-                                          AppDimensions.paddingExtraLarge.w,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                            AppDimensions.borderRadiusMedium.r,
-                                          ),
-                                          border: Border.all(
-                                            color: AppColors.dividerColor,
-                                            width: 1.w,
-                                            style: BorderStyle.solid,
-                                          ),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: AppColors.dividerColor,
-                                              blurRadius: 4.r,
-                                            ),
-                                          ],
-                                          color: AppColors.white,
-                                        ),
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Expanded(
-                                              child: Image.asset(
-                                                  AppAssets.emptyPayments,
-                                                  width: 200.w,
-
-                                              ),
-                                            ),
-
-                                            Text(
-                                              r'history_is_empty'.tr,
-                                              style: TextStyle(
-                                                color: AppColors.blackText,
-                                                fontSize: 17.sp,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ) else Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                if (controller.history.isNotEmpty)
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                r'history'.tr,
-                                                style: TextStyle(
-                                                  color: AppColors.blackText,
-                                                  fontSize: 17.sp,
-                                                ),
-                                              ),
-                                              GestureDetector(
-                                                onTap: () {
-                                                  Get.toNamed(
-                                                    CardExpensesScreen.route,
-                                                  );
-                                                },
-                                                child: Text(
-                                                  r'view_all'.tr,
-                                                  style: TextStyle(
-                                                    color: AppColors.green,
-                                                    fontSize: 14.sp,
-                                                    fontFamily:
-                                                        AppFonts.secondaryFont,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
+                                          Text(
+                                            r'history'.tr,
+                                            style: TextStyle(
+                                              color: AppColors.blackText,
+                                              fontSize: 17.sp,
+                                            ),
                                           ),
-                                          SizedBox(height: 6.h),
-
-                                          ListView.builder(
-                                            shrinkWrap: true,
-                                            itemCount:
-                                                controller.history.length > 3
-                                                ? 3
-                                                : controller.history.length,
-                                            physics:
-                                                NeverScrollableScrollPhysics(),
-                                            itemBuilder: (context, index) {
-                                              return Container(
-                                                width: MediaQuery.of(
-                                                  context,
-                                                ).size.width,
-                                                padding: EdgeInsets.all(
-                                                  AppDimensions
-                                                      .paddingExtraLarge
-                                                      .w,
-                                                ),
-                                                margin: EdgeInsets.symmetric(
-                                                  vertical: 5.h,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                        AppDimensions
-                                                            .borderRadiusMedium
-                                                            .r,
-                                                      ),
-                                                  border: Border.all(
-                                                    color:
-                                                        AppColors.dividerColor,
-                                                    width: 1.w,
-                                                    style: BorderStyle.solid,
-                                                  ),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: AppColors
-                                                          .dividerColor,
-                                                      blurRadius: 4.r,
-                                                    ),
-                                                  ],
-                                                  color: AppColors.white,
-                                                ),
-                                                child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                      children: [
-                                                        Container(
-                                                          padding: EdgeInsets.symmetric(
-                                                            horizontal:
-                                                            AppDimensions.paddingMedium.w,
-                                                            vertical: 4,
-                                                          ),
-                                                          decoration: BoxDecoration(
-                                                            borderRadius: BorderRadius.circular(
-                                                              AppDimensions.borderRadiusMedium.r,
-                                                            ),
-                                                            color: controller.checkPaymentsStatus(index),
-                                                          ),
-                                                          child: Text(
-                                                            controller.history[index].status.tr,
-                                                            style: TextStyle(
-                                                              fontSize: 14,
-                                                              color: AppColors.white,
-                                                              fontFamily: AppFonts.secondaryFont,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          controller.history[index].createdAt,
-                                                          style: TextStyle(
-                                                            color:
-                                                            AppColors.blackText,
-                                                            fontSize: 14.sp,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    SizedBox(height: AppDimensions.paddingMedium.h,),
-                                                    Row(
-                                                      children: [
-
-                                                         Image.asset(
-                                                            controller.iconByType(controller.history[index].type),
-                                                           width: 50.w,
-                                                         ),
-
-                                                        SizedBox(
-                                                          width: AppDimensions
-                                                              .paddingMedium
-                                                              .w,
-                                                        ),
-                                                        Expanded(
-                                                          child: Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              Text(
-                                                                controller.history[index].type.tr,
-                                                                style: TextStyle(
-                                                                  color: AppColors
-                                                                      .blackText,
-                                                                  fontSize: 14.sp,
-                                                                ),
-                                                              ),
-                                                              Text(
-                                                                controller.history[index].paymentTarget.value,
-                                                                style: TextStyle(
-                                                                  color: AppColors
-                                                                      .blackText,
-                                                                  fontSize: 14.sp,
-                                                                  fontFamily: AppFonts
-                                                                      .secondaryFont,
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                            Text(
-                                                              '-${controller.history[index].amount}',
-                                                              style: TextStyle(
-                                                                color:
-                                                                    AppColors.blackText,
-                                                                fontSize: 17.sp,
-                                                              ),
-                                                            ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              Get.toNamed(
+                                                CardExpensesScreen.route,
                                               );
                                             },
+                                            child: Text(
+                                              r'view_all'.tr,
+                                              style: TextStyle(
+                                                color: AppColors.green,
+                                                fontSize: 14.sp,
+                                                fontFamily:
+                                                    AppFonts.secondaryFont,
+                                              ),
+                                            ),
                                           ),
                                         ],
                                       ),
+                                      SizedBox(height: 6.h),
+
+                                      ListView.builder(
+                                        shrinkWrap: true,
+                                        itemCount: controller.history.length > 3
+                                            ? 3
+                                            : controller.history.length,
+                                        physics: NeverScrollableScrollPhysics(),
+                                        itemBuilder: (context, index) {
+                                          return Container(
+                                            width: MediaQuery.of(
+                                              context,
+                                            ).size.width,
+                                            padding: EdgeInsets.all(
+                                              AppDimensions.paddingExtraLarge.w,
+                                            ),
+                                            margin: EdgeInsets.symmetric(
+                                              vertical: 5.h,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                    AppDimensions
+                                                        .borderRadiusMedium
+                                                        .r,
+                                                  ),
+                                              border: Border.all(
+                                                color: AppColors.dividerColor,
+                                                width: 1.w,
+                                                style: BorderStyle.solid,
+                                              ),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: AppColors.dividerColor,
+                                                  blurRadius: 4.r,
+                                                ),
+                                              ],
+                                              color: AppColors.white,
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Container(
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                            horizontal:
+                                                                AppDimensions
+                                                                    .paddingMedium
+                                                                    .w,
+                                                            vertical: 4,
+                                                          ),
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                              AppDimensions
+                                                                  .borderRadiusMedium
+                                                                  .r,
+                                                            ),
+                                                        color: controller
+                                                            .checkPaymentsStatus(
+                                                              index,
+                                                            ),
+                                                      ),
+                                                      child: Text(
+                                                        controller
+                                                            .history[index]
+                                                            .status
+                                                            .tr,
+                                                        style: TextStyle(
+                                                          fontSize: 14,
+                                                          color:
+                                                              AppColors.white,
+                                                          fontFamily: AppFonts
+                                                              .secondaryFont,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      controller
+                                                          .history[index]
+                                                          .createdAt,
+                                                      style: TextStyle(
+                                                        color:
+                                                            AppColors.blackText,
+                                                        fontSize: 14.sp,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: AppDimensions
+                                                      .paddingMedium
+                                                      .h,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Image.asset(
+                                                      controller.iconByType(
+                                                        controller
+                                                            .history[index]
+                                                            .type,
+                                                      ),
+                                                      width: 50.w,
+                                                    ),
+
+                                                    SizedBox(
+                                                      width: AppDimensions
+                                                          .paddingMedium
+                                                          .w,
+                                                    ),
+                                                    Expanded(
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text(
+                                                            controller
+                                                                .history[index]
+                                                                .type
+                                                                .tr,
+                                                            style: TextStyle(
+                                                              color: AppColors
+                                                                  .blackText,
+                                                              fontSize: 14.sp,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            controller
+                                                                .history[index]
+                                                                .paymentTarget
+                                                                .value,
+                                                            style: TextStyle(
+                                                              color: AppColors
+                                                                  .blackText,
+                                                              fontSize: 14.sp,
+                                                              fontFamily: AppFonts
+                                                                  .secondaryFont,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      '-${controller.history[index].amount}',
+                                                      style: TextStyle(
+                                                        color:
+                                                            AppColors.blackText,
+                                                        fontSize: 17.sp,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
                                 SizedBox(height: AppDimensions.padding40.h),
 
                                 if (controller.exchange.isNotEmpty) ...[
@@ -804,7 +795,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              controller.cardBox.getAt(index)?.nickName.tr ?? '',
+                              controller.cardBox.getAt(index)?.nickName.tr ??
+                                  '',
                               style: TextStyle(
                                 color: AppColors.white,
                                 fontSize: 14,
@@ -813,7 +805,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           SizedBox(height: 72.h),
                           Text(
-                            controller.hideCardCenter(controller.cardBox.getAt(index)?.cardNumber ?? ''),
+                            controller.hideCardCenter(
+                              controller.cardBox.getAt(index)?.cardNumber ?? '',
+                            ),
                             style: TextStyle(
                               wordSpacing: 10.sp,
                               fontSize: 24.sp,
@@ -1097,7 +1091,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontSize: 20.sp,
                       ),
                     ),
-                
+
                     Row(
                       children: [
                         Text(

@@ -74,9 +74,9 @@ class HomeController extends GetxController with StateControlMixin {
   ];
 
   final List<String> serviceImage = [
-    AppAssets.spreadsheet,
+    AppAssets.reference,
     AppAssets.paymentCardImage,
-    AppAssets.threeDPercent,
+    AppAssets.creditIcon,
   ];
 
   final List<String> serviceRoute = [
