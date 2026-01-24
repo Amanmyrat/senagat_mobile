@@ -116,7 +116,7 @@ const Map<String, String> tkTk = {
   r'entrepreneur': r'Siz telekeçimi',
   r'manager': r'Menejer',
   r'patent_number': r'Patent belgisi',
-  r'registration_number': r'Bellik belgisi',
+  r'registration_number': r'Hasaba alyş belgisi',
   r'work_address': r'Iş salgysy',
   r'workplace': r'Iş ýeri',
   r'job_title': r'Wezipe',

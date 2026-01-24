@@ -29,11 +29,19 @@ class CardController extends GetxController with StateControlMixin {
     super.onInit();
     accountLoginStatusController = Get.find<AccountLoginStatusController>();
 
+    ever(accountLoginStatusController.accountLoginStatus, (
+      AccountLoginStatus status,
+    ) {
+      if (status == AccountLoginStatus.loggedIn) {
+        getUserProfileInfo();
+      }
+    });
+
     if (accountLoginStatusController.accountLoginStatus.value ==
         AccountLoginStatus.loggedIn) {
       getUserProfileInfo();
-
-    }  }
+    }
+  }
 
 
   void onQrScanTap() {

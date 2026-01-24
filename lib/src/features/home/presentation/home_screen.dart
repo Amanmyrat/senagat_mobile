@@ -282,6 +282,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             .serviceImage[index],
                                                         width: 150.w,
                                                         height: 150.h,
+                                                      color: isSelected ? AppColors.white : null ,
                                                       )
                                                     : Image.asset(
                                                         controller
@@ -767,6 +768,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 itemCount: controller.cardBox.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
+                  final item = controller.cardBox.getAt(index);
                   return GestureDetector(
                     onTap: () {
                       Get.toNamed(
@@ -795,8 +797,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              controller.cardBox.getAt(index)?.nickName.tr ??
-                                  '',
+                              item?.nickName ?? '',
                               style: TextStyle(
                                 color: AppColors.white,
                                 fontSize: 14,
@@ -806,7 +807,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           SizedBox(height: 72.h),
                           Text(
                             controller.hideCardCenter(
-                              controller.cardBox.getAt(index)?.cardNumber ?? '',
+                              item?.cardNumber ?? '',
                             ),
                             style: TextStyle(
                               wordSpacing: 10.sp,
@@ -819,14 +820,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                controller.cardBox.getAt(index)?.name ?? '',
+                                item?.name ?? '',
                                 style: TextStyle(
                                   fontSize: 14.sp,
                                   color: AppColors.white,
                                 ),
                               ),
                               Text(
-                                controller.cardBox.getAt(index)?.expiryDate ??
+                                item?.expiryDate ??
                                     '',
                                 style: TextStyle(
                                   fontSize: 14.sp,

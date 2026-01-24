@@ -2,6 +2,7 @@ class CharityModel {
   final String? bankName;
   final String? name;
   final String? surName;
+  final String? phoneNumber;
   final int? amount;
   final String? formUrl;
   final String? orderId;
@@ -13,6 +14,7 @@ class CharityModel {
     this.amount,
     this.formUrl,
     this.orderId,
+    this.phoneNumber,
 
   });
 
@@ -30,6 +32,7 @@ class CharityModel {
       "name": bankName,
       "surname": bankName,
       "amount": amount,
+      "phone": phoneNumber,
     };
   }
 }

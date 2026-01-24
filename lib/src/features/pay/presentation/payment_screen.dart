@@ -116,9 +116,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
                                                   children: [
-                                                    if (controller
-                                                            .isFoundation ==
-                                                        false) ...[
+                                                    if (controller.isFoundation == false) ...[
                                                       if (controller
                                                               .serviceName !=
                                                           r'Belet') ...[
@@ -126,148 +124,147 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                                           controller,
                                                         ),
                                                       ],
-                                                      Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Text(
-                                                            r'phone_number'.tr,
-                                                            style: TextStyle(
-                                                              color: AppColors
-                                                                  .blackText,
-                                                              fontSize: 14.sp,
-                                                            ),
+                                                    ],
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                      CrossAxisAlignment
+                                                          .start,
+                                                      children: [
+                                                        Text(
+                                                          r'phone_number'.tr,
+                                                          style: TextStyle(
+                                                            color: AppColors
+                                                                .blackText,
+                                                            fontSize: 14.sp,
                                                           ),
-                                                          SizedBox(
-                                                            height: 16.h,
-                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          height: 16.h,
+                                                        ),
 
-                                                          Row(
-                                                            children: [
-                                                              Container(
-                                                                padding: EdgeInsets.all(
-                                                                  AppDimensions
-                                                                      .paddingExtraLarge
-                                                                      .w,
-                                                                ),
-                                                                decoration: BoxDecoration(
-                                                                  color: AppColors
-                                                                      .inputFillBackground,
-                                                                  borderRadius:
-                                                                      BorderRadius.circular(
-                                                                        AppDimensions
-                                                                            .borderRadiusMedium,
-                                                                      ),
-                                                                ),
-                                                                child: Text(
-                                                                  '+993',
-                                                                  style: TextStyle(
-                                                                    fontSize:
-                                                                        14.sp,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              SizedBox(
-                                                                width: AppDimensions
-                                                                    .paddingSmall
+                                                        Row(
+                                                          children: [
+                                                            Container(
+                                                              padding: EdgeInsets.all(
+                                                                AppDimensions
+                                                                    .paddingExtraLarge
                                                                     .w,
                                                               ),
-                                                              Expanded(
-                                                                child: TextFormField(
-                                                                  keyboardType:
-                                                                      TextInputType
-                                                                          .phone,
-                                                                  controller:
-                                                                      controller
-                                                                          .phoneController,
-                                                                  onChanged: (v) =>
-                                                                      controller
-                                                                          .isTextNotEmpty(),
-                                                                  focusNode:
-                                                                      controller
-                                                                          .phoneFocus,
-                                                                  maxLength: 8,
-                                                                  style: TextStyle(
-                                                                    fontSize:
-                                                                        14.sp,
-                                                                    fontFamily:
-                                                                        AppFonts
-                                                                            .primaryFont,
+                                                              decoration: BoxDecoration(
+                                                                color: AppColors
+                                                                    .inputFillBackground,
+                                                                borderRadius:
+                                                                BorderRadius.circular(
+                                                                  AppDimensions
+                                                                      .borderRadiusMedium,
+                                                                ),
+                                                              ),
+                                                              child: Text(
+                                                                '+993',
+                                                                style: TextStyle(
+                                                                  fontSize:
+                                                                  14.sp,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            SizedBox(
+                                                              width: AppDimensions
+                                                                  .paddingSmall
+                                                                  .w,
+                                                            ),
+                                                            Expanded(
+                                                              child: TextFormField(
+                                                                keyboardType:
+                                                                TextInputType.number,
+                                                                controller:
+                                                                controller
+                                                                    .phoneController,
+                                                                onChanged: (v) =>
+                                                                    controller
+                                                                        .isTextNotEmpty(),
+                                                                focusNode:
+                                                                controller
+                                                                    .phoneFocus,
+                                                                maxLength: 8,
+                                                                style: TextStyle(
+                                                                  fontSize:
+                                                                  14.sp,
+                                                                  fontFamily:
+                                                                  AppFonts
+                                                                      .primaryFont,
+                                                                ),
+                                                                decoration: InputDecoration(
+                                                                  hintText:
+                                                                  r'enter_number'
+                                                                      .tr,
+                                                                  border:
+                                                                  OutlineInputBorder(),
+                                                                  focusedBorder: OutlineInputBorder(
+                                                                    borderRadius: BorderRadius.circular(
+                                                                      AppDimensions
+                                                                          .borderRadiusMedium,
+                                                                    ),
+                                                                    borderSide: BorderSide(
+                                                                      color:
+                                                                      controller.status ==
+                                                                          Status.error
+                                                                          ? AppColors.redDark
+                                                                          : AppColors.green,
+                                                                      width:
+                                                                      1.w,
+                                                                    ),
                                                                   ),
-                                                                  decoration: InputDecoration(
-                                                                    hintText:
-                                                                        r'enter_number'
-                                                                            .tr,
-                                                                    border:
-                                                                        OutlineInputBorder(),
-                                                                    focusedBorder: OutlineInputBorder(
-                                                                      borderRadius: BorderRadius.circular(
-                                                                        AppDimensions
-                                                                            .borderRadiusMedium,
-                                                                      ),
-                                                                      borderSide: BorderSide(
-                                                                        color:
-                                                                            controller.status ==
-                                                                                Status.error
-                                                                            ? AppColors.redDark
-                                                                            : AppColors.green,
-                                                                        width:
-                                                                            1.w,
-                                                                      ),
+                                                                  enabledBorder: OutlineInputBorder(
+                                                                    borderRadius: BorderRadius.circular(
+                                                                      AppDimensions
+                                                                          .borderRadiusMedium,
                                                                     ),
-                                                                    enabledBorder: OutlineInputBorder(
-                                                                      borderRadius: BorderRadius.circular(
-                                                                        AppDimensions
-                                                                            .borderRadiusMedium,
-                                                                      ),
-                                                                      borderSide: BorderSide(
-                                                                        color:
-                                                                            controller.status ==
-                                                                                Status.error
-                                                                            ? AppColors.redDark
-                                                                            : AppColors.transparent,
-                                                                        width:
-                                                                            1.w,
-                                                                      ),
+                                                                    borderSide: BorderSide(
+                                                                      color:
+                                                                      controller.status ==
+                                                                          Status.error
+                                                                          ? AppColors.redDark
+                                                                          : AppColors.transparent,
+                                                                      width:
+                                                                      1.w,
                                                                     ),
-                                                                    counter:
-                                                                        const SizedBox(),
-                                                                    contentPadding: EdgeInsets.symmetric(
-                                                                      vertical:
-                                                                          AppDimensions
-                                                                              .paddingExtraLarge
-                                                                              .h,
-                                                                      horizontal:
-                                                                          AppDimensions
-                                                                              .paddingLarge
-                                                                              .w,
+                                                                  ),
+                                                                  counter:
+                                                                  const SizedBox(),
+                                                                  contentPadding: EdgeInsets.symmetric(
+                                                                    vertical:
+                                                                    AppDimensions
+                                                                        .paddingExtraLarge
+                                                                        .h,
+                                                                    horizontal:
+                                                                    AppDimensions
+                                                                        .paddingLarge
+                                                                        .w,
+                                                                  ),
+                                                                  suffixIcon: IconButton(
+                                                                    icon: Icon(
+                                                                      Icons
+                                                                          .contacts,
+                                                                      color: AppColors
+                                                                          .green,
+                                                                      size: 20
+                                                                          .w,
                                                                     ),
-                                                                    suffixIcon: IconButton(
-                                                                      icon: Icon(
-                                                                        Icons
-                                                                            .contacts,
-                                                                        color: AppColors
-                                                                            .green,
-                                                                        size: 20
-                                                                            .w,
-                                                                      ),
-                                                                      onPressed: () async {
-                                                                        controller
-                                                                            .contactPicker();
-                                                                      },
-                                                                    ),
+                                                                    onPressed: () async {
+                                                                      controller
+                                                                          .contactPicker();
+                                                                    },
                                                                   ),
                                                                 ),
                                                               ),
-                                                            ],
-                                                          ),
-                                                          SizedBox(
-                                                            height: 22.h,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ],
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        SizedBox(
+                                                          height: 22.h,
+                                                        ),
+                                                      ],
+                                                    ),
 
                                                     if (controller
                                                             .serviceName ==

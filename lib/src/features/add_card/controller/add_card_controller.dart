@@ -160,7 +160,6 @@ class AddCardController extends GetxController with StateControlMixin {
 
   void setDropdownBank(BankModel? value) {
     selectedDropdownBank = value;
-    cardName = value?.name ?? '';
     update();
   }
 

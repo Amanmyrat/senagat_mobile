@@ -158,7 +158,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           if(controller.phoneBox.get('phone') == null)...[
                             GestureDetector(
                               onTap: (){
-                                Get.toNamed(WelcomeScreen.route);
+                                controller.onSignInTap();
                               },
                               child: Container(
                                 padding: EdgeInsets.symmetric(vertical: AppDimensions.paddingMedium.h),
