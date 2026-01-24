@@ -79,7 +79,6 @@ class PaymentController extends GetxController with StateControlMixin {
 
     pageController = PageController();
     phoneController = TextEditingController(text: number);
-    phoneController.text = '65021734';
     phoneFocus = FocusNode();
     sumController = TextEditingController();
     nameController = TextEditingController();
@@ -123,8 +122,11 @@ class PaymentController extends GetxController with StateControlMixin {
   }
 
   void isTextNotEmpty() {
-    serviceIcon.isEmpty
-        ? sumController.text.isNotEmpty && selectedCard != null
+    isFoundation
+        ? phoneController.text.length >= 8 && sumController.text.isNotEmpty &&
+                  nameController.text.isNotEmpty &&
+                  lastnameController.text.isNotEmpty &&
+                  selectedCard != null
               ? continueEnabled = true
               : continueEnabled = false
         : phoneController.text.length >= 8 &&
@@ -189,6 +191,7 @@ class PaymentController extends GetxController with StateControlMixin {
       bankName: selectedCard?.bank ?? '',
       name: nameController.text,
       surName: lastnameController.text,
+      phoneNumber: phoneController.text,
       amount: int.parse(sumController.text),
     );
   }

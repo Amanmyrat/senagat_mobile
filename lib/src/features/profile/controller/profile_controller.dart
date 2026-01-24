@@ -8,6 +8,7 @@ import 'package:senagat_mobile/src/features/dashboard/controller/dashboard_contr
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../home/controller/home_controller.dart';
 import '../../identity_verification/models/profile_model.dart';
+import '../../welcome/presentation/welcome_screen.dart';
 
 class ProfileController extends GetxController with StateControlMixin, GetSingleTickerProviderStateMixin {
 
@@ -15,6 +16,7 @@ class ProfileController extends GetxController with StateControlMixin, GetSingle
   final phoneBox = Hive.box<String>('phoneBox');
   String appVersion = '';
   String? phone;
+  final homeController = Get.find<HomeController>();
 
 
   @override
@@ -28,6 +30,13 @@ class ProfileController extends GetxController with StateControlMixin, GetSingle
     final info = await PackageInfo.fromPlatform();
     appVersion = info.version;
     update();
+  }
+
+  void onSignInTap(){
+
+    homeController.lastTap = HomeTapType.none;
+
+    Get.toNamed(WelcomeScreen.route);
   }
 
   Color checkProfileStatus()  {
