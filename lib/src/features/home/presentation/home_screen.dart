@@ -798,7 +798,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              item?.nickName ?? '',
+                              item?.nickName.tr ?? '',
                               style: TextStyle(
                                 color: AppColors.white,
                                 fontSize: 14,

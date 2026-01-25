@@ -58,7 +58,7 @@ class _CardSettingsScreenState extends State<CardSettingsScreen> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(controller.nickName, style: TextStyle(color: AppColors.greyInactive, fontSize: 14.sp),),
+                              Text(controller.nickName.tr, style: TextStyle(color: AppColors.greyInactive, fontSize: 14.sp),),
                               Text(controller.maskedNumber, style: TextStyle(color: AppColors.greyInactive, fontSize: 14.sp),),
                             ],
                           )
