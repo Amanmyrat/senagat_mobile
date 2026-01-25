@@ -6,12 +6,12 @@ import 'package:senagat_mobile/src/features/about_us/presentation/about_us_scree
 import 'package:senagat_mobile/src/features/identify/presentation/identify_screen.dart';
 import 'package:senagat_mobile/src/features/lang_settings/presentation/lang_settings_screen.dart';
 import 'package:senagat_mobile/src/features/profile/controller/profile_controller.dart';
-import 'package:senagat_mobile/src/features/welcome/presentation/welcome_screen.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
 
 import '../../../utils/theme/constants/app_colors.dart';
+import '../../auth/controller/account_status_controller.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const route = '/profile';
@@ -33,7 +33,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if(controller.phoneBox.get('phone') != null)
+                    if(controller.accountLoginStatusController.accountLoginStatus.value == AccountLoginStatus.loggedIn)
                       GestureDetector(
                       onTap: (){
                         Get.toNamed(IdentifyScreen.route);
@@ -155,7 +155,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           //   ),
                           // ),
                           // SizedBox(height: 26.h,),
-                          if(controller.phoneBox.get('phone') == null)...[
+                          if(controller.accountLoginStatusController.accountLoginStatus.value != AccountLoginStatus.loggedIn)...[
                             GestureDetector(
                               onTap: (){
                                 controller.onSignInTap();
