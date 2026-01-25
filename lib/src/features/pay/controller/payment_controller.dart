@@ -199,8 +199,8 @@ class PaymentController extends GetxController with StateControlMixin {
   Future<void> onTap() async {
     if (!continueEnabled) return;
 
-    // status = Status.loading;
-    // update();
+    status = Status.loading;
+    update();
 
     String? url;
     String? orderId;

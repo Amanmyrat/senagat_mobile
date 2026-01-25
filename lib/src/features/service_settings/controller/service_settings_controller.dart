@@ -72,6 +72,14 @@ class ServiceSettingsController extends GetxController {
     hasChanges = false;
     update();
   }
+  
+  /// Public method to reload data from Hive - useful after clearing Hive
+  void reloadFromHive() {
+    selected.clear();
+    services.clear();
+    services.addAll(List<ServiceItem>.from(allServices));
+    update();
+  }
 
   // ---------------------------------------------------------------------------
   // SAVE

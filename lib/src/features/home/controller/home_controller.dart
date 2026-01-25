@@ -182,6 +182,12 @@ class HomeController extends GetxController with StateControlMixin {
       }
     });
 
+    // If already logged in on app start, fetch user info immediately
+    if (accountLoginStatusController.accountLoginStatus.value ==
+        AccountLoginStatus.loggedIn) {
+      getUserProfileInfo();
+      loadHistory();
+    }
 
     getExchangeRates();
     checkProfile();
@@ -288,7 +294,9 @@ class HomeController extends GetxController with StateControlMixin {
   checkProfileStatus() {
     // Keep in-memory state aligned with persisted state
     currentProfile = profileBox.get('currentProfile');
-    if (currentProfile?.status == 'approved' && userInformationModel?.profileModel?.status == 'approved') {
+    // Check both sources - use userInformationModel if available, otherwise fall back to Hive
+    final profileStatus = userInformationModel?.profileModel?.status ?? currentProfile?.status;
+    if (profileStatus == 'approved') {
       isServiceRequired = false;
       update();
     } else {

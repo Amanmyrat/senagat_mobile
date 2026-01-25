@@ -793,6 +793,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Align(
                             alignment: Alignment.topLeft,
@@ -804,7 +805,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 72.h),
+                          // SizedBox(height: 72.h),
                           Text(
                             controller.hideCardCenter(
                               item?.cardNumber ?? '',
@@ -815,7 +816,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: AppColors.white,
                             ),
                           ),
-                          SizedBox(height: 41.h),
+                          // SizedBox(height: 41.h),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
