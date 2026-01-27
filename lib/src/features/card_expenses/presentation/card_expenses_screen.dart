@@ -1,15 +1,17 @@
-import 'package:fl_chart/fl_chart.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/features/card_expenses/controller/card_expenses_controller.dart';
 import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
 import '../../../core/globals.dart';
 import '../../../core/states/stateful_data.dart';
+import '../../../utils/constants/app_assets.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
-import '../../../utils/theme/constants/app_fonts.dart' show AppFonts;
+import '../../../utils/theme/constants/app_fonts.dart';
 
 class CardExpensesScreen extends StatefulWidget {
   static const route = '/card/expenses';
@@ -25,330 +27,380 @@ class _CardExpensesScreenState extends State<CardExpensesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: GetBuilder<CardExpensesController>(
-            init: CardExpensesController(
-              PaymentRepository(apiService: ApiServices.apiService),
-            ),
-            builder: (controller) {
-              return controller.status == Status.loading
-                  ? Center(
+        child: GetBuilder<CardExpensesController>(
+          init: CardExpensesController(
+            PaymentRepository(apiService: ApiServices.apiService),
+          ),
+          builder: (controller) {
+            if (controller.status == Status.loading) {
+              return Center(
                 child: CircularProgressIndicator(color: AppColors.green),
-              )
-                  : Column(
+              );
+            }
+
+            return SingleChildScrollView(
+              child: Column(
                 children: [
                   CustomAppBar(),
 
-                  // Column(
-                  //   crossAxisAlignment: CrossAxisAlignment.start,
-                  //   children: [
-                  //     Padding(
-                  //       padding:  EdgeInsets.only(left: 20.w),
-                  //       child: Text(r'spending'.tr, style: TextStyle(color: AppColors.black, fontSize: 24.sp),),
-                  //     ),
-                  //     SizedBox(height: 16.h,),
-                  //     SizedBox(
-                  //       height: 270.h,
-                  //       child: PageView.builder(
-                  //           controller: controller.pageController,
-                  //           itemCount: 4,
-                  //           scrollDirection: Axis.horizontal,
-                  //
-                  //           itemBuilder: (context, index){
-                  //             return Container(
-                  //               height: 270.h,
-                  //               padding: EdgeInsets.all(
-                  //                 AppDimensions.paddingExtraLarge,
-                  //               ),
-                  //               margin: EdgeInsets.symmetric(horizontal: AppDimensions.paddingMedium.w),
-                  //               decoration:  BoxDecoration(
-                  //                 borderRadius: BorderRadius.circular(
-                  //                   AppDimensions.borderRadiusMedium.r,
-                  //                 ),
-                  //                 border: Border.all(color: AppColors.dividerColor, width: 1.w, style: BorderStyle.solid),
-                  //                 boxShadow: [
-                  //                   BoxShadow(
-                  //                     color: AppColors.dividerColor,
-                  //                     blurRadius: 4.r,
-                  //                   ),
-                  //                 ],
-                  //                 color: AppColors.white,
-                  //               ),
-                  //               child: Column(
-                  //                 crossAxisAlignment: CrossAxisAlignment.start,
-                  //                 children: [
-                  //                   Text(
-                  //                     "Август 2025",
-                  //                     style:  TextStyle(fontSize: 14.sp, color: AppColors.greyInactive),
-                  //                   ),
-                  //                    Text(
-                  //                     "200,00",
-                  //                     style: TextStyle(fontSize: 24.sp, color: AppColors.black),
-                  //                   ),
-                  //                   SizedBox(height: 20.h),
-                  //                   SizedBox(
-                  //                     height: 145.h,
-                  //                     child: BarChart(
-                  //                       BarChartData(
-                  //                         alignment: BarChartAlignment.spaceAround,
-                  //                         barGroups: [
-                  //                           makeGroupData(0, 1, isActive: false),
-                  //                           makeGroupData(1, 2500),
-                  //                           makeGroupData(2, 5000),
-                  //                           makeGroupData(3, 7500),
-                  //                           makeGroupData(4, 10000),
-                  //                         ],
-                  //                         titlesData: FlTitlesData(
-                  //                           rightTitles: AxisTitles(
-                  //                             sideTitles: SideTitles(
-                  //                               showTitles: true,
-                  //                               reservedSize: 70,
-                  //                               interval: 2500,
-                  //                               getTitlesWidget: (value, meta) {
-                  //                                 switch (value.toInt()) {
-                  //                                   case 0:
-                  //                                     return Text("0 tmt", style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.secondaryFont));
-                  //                                   case 2500:
-                  //                                     return Text("1000 tmt", style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.secondaryFont));
-                  //                                   case 5000:
-                  //                                     return Text("2500 tmt", style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.secondaryFont));
-                  //                                   case 7500:
-                  //                                     return Text("5000 tmt", style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.secondaryFont));
-                  //                                   case 10000:
-                  //                                     return Text("10000 tmt", style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.secondaryFont));
-                  //                                 }
-                  //                                 return const SizedBox.shrink();
-                  //                               },
-                  //                             ),
-                  //                           ),
-                  //
-                  //                           bottomTitles: AxisTitles(
-                  //                             sideTitles: SideTitles(
-                  //                               showTitles: true,
-                  //                               getTitlesWidget: (value, meta) {
-                  //                                 switch (value.toInt()) {
-                  //                                   case 0: return Text("1-5", style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.secondaryFont));
-                  //                                   case 1: return Text("6-12", style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.secondaryFont));
-                  //                                   case 2: return Text("13-19", style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.secondaryFont));
-                  //                                   case 3: return Text("20-26", style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.secondaryFont));
-                  //                                   case 4: return Text("27-31", style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.secondaryFont));
-                  //                                 }
-                  //                                 return const SizedBox.shrink();
-                  //                               },
-                  //                             ),
-                  //                           ),
-                  //                           topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                  //                           leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                  //                         ),
-                  //                         borderData: FlBorderData(show: false),
-                  //                         gridData: FlGridData(show: false),
-                  //                       ),
-                  //                     ),
-                  //                   ),
-                  //                 ],
-                  //               ),
-                  //             );
-                  //           }),
-                  //     ),
-                  //     SizedBox(height: AppDimensions.paddingMedium.h,),
-                  //
-                  //     Center(
-                  //       child: SmoothPageIndicator(
-                  //         count: 4,
-                  //         controller: controller.pageController,
-                  //         effect: WormEffect(
-                  //             dotHeight: 10.h,
-                  //             dotWidth: 10.w,
-                  //             spacing: 4,
-                  //             activeDotColor: AppColors.green,
-                  //             dotColor: AppColors.green.withOpacity(0.5)
-                  //         ),
-                  //       ),
-                  //     ),
-                  //
-                  //   ],
-                  // ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: AppDimensions.paddingExtraLarge.w, vertical: AppDimensions.paddingMedium.h),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: AppDimensions.paddingExtraLarge.w,
+                      vertical: AppDimensions.paddingMedium.h,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(r'history'.tr, style: TextStyle(color: AppColors.black, fontSize: 24.sp),),
-                      SizedBox(height: 16.h,),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          itemCount:
-                          controller.history.length > 3
-                              ? 3
-                              : controller.history.length,
-                          physics:
-                          NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return Container(
-                              width: MediaQuery.of(
-                                context,
-                              ).size.width,
-                              padding: EdgeInsets.all(
-                                AppDimensions
-                                    .paddingExtraLarge
-                                    .w,
-                              ),
-                              margin: EdgeInsets.symmetric(
-                                vertical: 5.h,
-                              ),
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                BorderRadius.circular(
-                                  AppDimensions
-                                      .borderRadiusMedium
-                                      .r,
-                                ),
-                                border: Border.all(
-                                  color:
-                                  AppColors.dividerColor,
-                                  width: 1.w,
-                                  style: BorderStyle.solid,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: AppColors
-                                        .dividerColor,
-                                    blurRadius: 4.r,
-                                  ),
-                                ],
-                                color: AppColors.white,
-                              ),
+                        Text(
+                          r'history'.tr,
+                          style: TextStyle(
+                            color: AppColors.black,
+                            fontSize: 24.sp,
+                          ),
+                        ),
+                        SizedBox(height: AppDimensions.padding40.h,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal:
-                                          AppDimensions.paddingMedium.w,
-                                          vertical: 4,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                            AppDimensions.borderRadiusMedium.r,
-                                          ),
-                                          color: controller.checkPaymentsStatus(index),
-                                        ),
-                                        child: Text(
-                                          controller.history[index].status.tr,
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: AppColors.white,
-                                            fontFamily: AppFonts.secondaryFont,
-                                          ),
-                                        ),
-                                      ),
-                                      Text(
-                                        controller.history[index].createdAt,
-                                        style: TextStyle(
-                                          color:
-                                          AppColors.blackText,
-                                          fontSize: 14.sp,
-                                        ),
-                                      ),
-                                    ],
+                                  Text(
+                                    'status'.tr,
+                                    style: TextStyle(
+                                      fontSize: 14.sp,
+                                      color: AppColors.black,
+                                    ),
                                   ),
-                                  SizedBox(height: AppDimensions.paddingMedium.h,),
-                                  Row(
-                                    children: [
+                                  SizedBox(height: 10.h,),
 
-                                      Image.asset(
-                                        controller.iconByType(controller.history[index].type),
-                                        width: 50.w,
+                                  DropdownButtonFormField2<String>(
+                                    value: controller.selectedStatus.name,
+                                    isExpanded: true,
+                                    // hint: Text(
+                                    //   'status'.tr,
+                                    //   style: TextStyle(
+                                    //     fontSize: 14.sp,
+                                    //     color: AppColors.greyInactive,
+                                    //   ),
+                                    // ),
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.fromLTRB(
+                                        0,
+                                        AppDimensions.paddingExtraLarge.w,
+                                        AppDimensions.paddingExtraLarge.w,
+                                        AppDimensions.paddingMedium,
                                       ),
-
-                                      SizedBox(
-                                        width: AppDimensions
-                                            .paddingMedium
-                                            .w,
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment
-                                              .start,
-                                          mainAxisAlignment:
-                                          MainAxisAlignment
-                                              .spaceBetween,
-                                          children: [
-                                            Text(
-                                              controller.history[index].type.tr,
-                                              style: TextStyle(
-                                                color: AppColors
-                                                    .blackText,
-                                                fontSize: 14.sp,
-                                              ),
-                                            ),
-                                            Text(
-                                              controller.history[index].paymentTarget.value,
-                                              style: TextStyle(
-                                                color: AppColors
-                                                    .blackText,
-                                                fontSize: 14.sp,
-                                                fontFamily: AppFonts
-                                                    .secondaryFont,
-                                              ),
-                                            ),
-                                          ],
+                                    ),
+                                    dropdownStyleData: DropdownStyleData(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                          AppDimensions.borderRadiusMedium.r,
                                         ),
                                       ),
-                                      Text(
-                                        '-${controller.history[index].amount}',
-                                        style: TextStyle(
-                                          color:
-                                          AppColors.blackText,
-                                          fontSize: 17.sp,
-                                        ),
+                                      elevation: 2,
+                                    ),
+                                    iconStyleData: IconStyleData(
+                                      icon: SvgPicture.asset(
+                                        AppAssets.caretDownIcon,
+                                        width: 18.w,
                                       ),
-                                    ],
+                                    ),
+                                    items: controller.statuses.map(
+                                            (type) => DropdownMenuItem<String>(
+                                          value: type,
+                                          child:  Text(
+                                            type.tr,
+                                            style: TextStyle(
+                                              color: AppColors.blackText,
+                                              fontSize: 14.sp,
+                                              fontFamily: AppFonts.primaryFont,
+                                            ),
+                                          ),
+                                        ),
+                                      ).toList(),
+                                    onChanged: (value) {
+                                      if (value == null) return;
+                                      controller.setStatusFilter(
+                                        PaymentStatus.values.firstWhere((e) => e.name == value),
+                                      );
+                                    },
                                   ),
                                 ],
                               ),
-                            );
-                          },
+                            ),
+                            SizedBox(width: 16.w,),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'payments'.tr,
+                                    style: TextStyle(
+                                      fontSize: 14.sp,
+                                      color: AppColors.black,
+                                    ),
+                                  ),
+                                  SizedBox(height: 10.w,),
+                                  DropdownButtonFormField2<String>(
+                                    value: controller.selectedType,
+                                    isExpanded: true,
+                                    // hint: Text(
+                                    //   'payments'.tr,
+                                    //   style: TextStyle(
+                                    //     fontSize: 14.sp,
+                                    //     color: AppColors.greyInactive,
+                                    //   ),
+                                    // ),
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.fromLTRB(
+                                        0,
+                                        AppDimensions.paddingExtraLarge.w,
+                                        AppDimensions.paddingExtraLarge.w,
+                                        AppDimensions.paddingMedium,
+                                      ),
+                                    ),
+                                    dropdownStyleData: DropdownStyleData(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                          AppDimensions.borderRadiusMedium.r,
+                                        ),
+                                      ),
+                                      elevation: 2,
+                                    ),
+                                    iconStyleData: IconStyleData(
+                                      icon: SvgPicture.asset(
+                                        AppAssets.caretDownIcon,
+                                        width: 18.w,
+                                      ),
+                                    ),
+                                    items: [
+                                      DropdownMenuItem<String>(
+                                        value: 'all',
+                                        child: Text(
+                                          'all'.tr,
+                                          style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.primaryFont),
+                                        ),
+                                      ),
+                                      ...controller.paymentsTitle.map(
+                                            (type) => DropdownMenuItem<String>(
+                                          value: type,
+                                          child:  Row(
+                                            children: [
+                                              Container(
+                                                width: 50.w,
+                                                height: 50.h,
+                                                padding: EdgeInsets.all(AppDimensions.paddingSmall.w),
+
+                                                child: Image.asset(
+                                                  controller.iconByType(type),
+                                                  width: 30.w,),
+                                              ),
+                                              SizedBox(width: AppDimensions.paddingMedium.w,),
+                                              Expanded(
+                                                child: Text(
+                                                  type.tr,
+                                                  style: TextStyle(
+                                                    color: AppColors.blackText,
+                                                    fontSize: 14.sp,
+                                                    fontFamily: AppFonts.primaryFont,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                    onChanged: (value) {
+                                      if (value == null) return;
+                                      controller.setTypeFilter(value);
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+
+                          ],
                         ),
+
+                        SizedBox(height: 16.h),
+
+                        if (controller.filteredHistory.isEmpty)
+                          Center(child: _EmptyHistory())
+                        else
+                          ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount:  controller.filteredHistory.length,
+                            itemBuilder: (context, index) {
+                              final item = controller.filteredHistory[index];
+
+                              return Container(
+                                width: double.infinity,
+                                padding: EdgeInsets.all(
+                                  AppDimensions.paddingExtraLarge.w,
+                                ),
+                                margin: EdgeInsets.symmetric(vertical: 5.h),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(
+                                    AppDimensions.borderRadiusMedium.r,
+                                  ),
+                                  border: Border.all(
+                                    color: AppColors.dividerColor,
+                                    width: 1.w,
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: AppColors.dividerColor,
+                                      blurRadius: 4.r,
+                                    ),
+                                  ],
+                                  color: AppColors.white,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          item.createdAt,
+                                          style: TextStyle(
+                                            color: AppColors.blackText,
+                                            fontSize: 14.sp,
+                                          ),
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal:
+                                            AppDimensions.paddingMedium.w,
+                                            vertical: 4,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                              AppDimensions
+                                                  .borderRadiusMedium
+                                                  .r,
+                                            ),
+                                            color: controller
+                                                .checkPaymentsStatus(index),
+                                          ),
+                                          child: Text(
+                                            item.status == 'approved'
+                                                ? 'payment_approved'.tr
+                                                : item.status.tr,
+                                            style: TextStyle(
+                                              fontSize: 14.sp,
+                                              color: AppColors.white,
+                                              fontFamily:
+                                              AppFonts.secondaryFont,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+
+                                    SizedBox(height: 12.h),
+
+                                    /// CONTENT
+                                    Row(
+                                      children: [
+                                        Image.asset(
+                                          controller.iconByType(item.type),
+                                          width: 50.w,
+                                        ),
+                                        SizedBox(width: 12.w),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                item.type.tr,
+                                                style: TextStyle(
+                                                  color:
+                                                  AppColors.blackText,
+                                                  fontSize: 14.sp,
+                                                ),
+                                              ),
+                                              Text(
+                                                item.paymentTarget.value,
+                                                style: TextStyle(
+                                                  color:
+                                                  AppColors.blackText,
+                                                  fontSize: 14.sp,
+                                                  fontFamily:
+                                                  AppFonts.secondaryFont,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Text(
+                                          '${item.amount} TMT',
+                                          style: TextStyle(
+                                            color: AppColors.blackText,
+                                            fontSize: 17.sp,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
                       ],
                     ),
                   ),
-
                 ],
-              );
-            }
-          ),
+              ),
+            );
+          },
         ),
       ),
     );
   }
-  double findMaxY(List<double> values) {
-    final maxValue = values.reduce((a, b) => a > b ? a : b);
-    // Add some headroom so tallest bar doesn’t touch the top
-    return (maxValue * 1.2).ceilToDouble();
-  }
-  BarChartGroupData makeGroupData(int x, double y, {bool isActive = true}) {
-    return BarChartGroupData(
-      x: x,
-      barRods: [
-        BarChartRodData(
-          toY: y,
-          color: isActive ? AppColors.green : AppColors.greyInactive,
-          width: 18.w,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(6.r),
-            topRight: Radius.circular(6.r),
+}
+
+
+class _EmptyHistory extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 40.h),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.search_off,
+            size: 64.sp,
+            color: AppColors.greyInactive,
           ),
-        ),
-      ],
+          SizedBox(height: 16.h),
+          Text(
+            'not_found'.tr,
+            style: TextStyle(
+              fontSize: 18.sp,
+              fontWeight: FontWeight.w600,
+              color: AppColors.blackText,
+            ),
+          ),
+          SizedBox(height: 8.h),
+          Text(
+            'not_found_for_search'.tr,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 14.sp,
+              color: AppColors.greyInactive,
+            ),
+          ),
+        ],
+      ),
     );
   }
-
-
-
-
 }

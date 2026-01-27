@@ -221,6 +221,12 @@ class _CardScreenState extends State<CardScreen> {
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
+                                          Text(
+                                            card?.createdAt ?? '',
+                                            style: TextStyle(
+                                                color: AppColors.grey,
+                                                fontSize: 14.sp),
+                                          ),
                                           Container(
                                             padding: EdgeInsets.symmetric(
                                               horizontal:
@@ -241,12 +247,6 @@ class _CardScreenState extends State<CardScreen> {
                                                 fontFamily: AppFonts.secondaryFont,
                                               ),
                                             ),
-                                          ),
-                                          Text(
-                                            card?.createdAt ?? '',
-                                            style: TextStyle(
-                                                color: AppColors.grey,
-                                                fontSize: 14.sp),
                                           ),
                                         ],
                                       ),

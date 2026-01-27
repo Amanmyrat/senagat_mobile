@@ -248,6 +248,13 @@ const Map<String, String> enUs = {
   r'belet': r'Belet',
   r'charity': r'Charitable Foundation',
   r'back': r'Back',
+  r'notConfirmed': r'Not confirmed',
+  r'failed': r'Failed',
+  r'payment_approved': r'Confirmed',
+  r'status': r'Status',
+  r'not_found': r'Not found',
+  r'not_found_for_search': r'Nothing was found for your search.',
+
 
   r'otp_not_match': r'OTP did not match',
   r'otp_code_has_expired.': r'OTP code has expired',

@@ -81,25 +81,11 @@ class _InquiriesListState extends State<InquiriesList> {
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Container(
-                                            padding: EdgeInsets.symmetric(
-                                              horizontal:
-                                              AppDimensions.paddingMedium.w,
-                                              vertical: 4,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(
-                                                AppDimensions.borderRadiusMedium.r,
-                                              ),
-                                              color: controller.checkCertificateStatus(index),
-                                            ),
-                                            child: Text(
-                                              inquiries?.status?.tr ?? '',
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                color: AppColors.white,
-                                                fontFamily: AppFonts.secondaryFont,
-                                              ),
+                                          Text(
+                                            inquiries?.createdAt ?? '',
+                                            style: TextStyle(
+                                              color: AppColors.grey,
+                                              fontSize: 14.sp,
                                             ),
                                           ),
                                           SizedBox(height: AppDimensions.paddingMedium.h,),
@@ -112,13 +98,28 @@ class _InquiriesListState extends State<InquiriesList> {
                                                   style: TextStyle(color: AppColors.black, fontSize: 14.sp),
                                                 ),
                                               ),
-                                              Text(
-                                                inquiries?.createdAt ?? '',
-                                                style: TextStyle(
-                                                  color: AppColors.grey,
-                                                  fontSize: 14.sp,
+                                              Container(
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal:
+                                                  AppDimensions.paddingMedium.w,
+                                                  vertical: 4,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(
+                                                    AppDimensions.borderRadiusMedium.r,
+                                                  ),
+                                                  color: controller.checkCertificateStatus(index),
+                                                ),
+                                                child: Text(
+                                                  inquiries?.status?.tr ?? '',
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    color: AppColors.white,
+                                                    fontFamily: AppFonts.secondaryFont,
+                                                  ),
                                                 ),
                                               ),
+
                                             ],
                                           ),
                                           SizedBox(height: AppDimensions.paddingExtraLarge.h),
@@ -138,7 +139,7 @@ class _InquiriesListState extends State<InquiriesList> {
                                                     ),
                                                     SizedBox(height: 4.h),
                                                     Text(
-                                                      '${inquiries?.certificatePrice} ${r'manat'.tr}',
+                                                      '${inquiries?.certificatePrice} ${r'TMT'.tr}',
                                                       style: TextStyle(
                                                         color: AppColors.black,
                                                         fontSize: 14.sp,

@@ -248,7 +248,12 @@ const Map<String, String> tkTk = {
   r'belet': r'Belet',
   r'charity': r'Haýyr-sahawat gaznasy',
   r'back': r'Yza',
-
+  r'notConfirmed': r'Tassyklanmadyk',
+  r'failed': r'Geçmedi',
+  r'payment_approved': r'Geçdi',
+  r'status': r'Status',
+  r'not_found': r'Hiç zat tapylmady',
+  r'not_found_for_search': r'По вашему запросу ничего не найдено.',
 
   r'otp_not_match': r'Kod gabat gelmedi',
   r'otp_code_has_expired.': r'Kod möhleti gutardy',

@@ -248,7 +248,12 @@ const Map<String, String> ruRu = {
   r'belet': r'Belet',
   r'charity': r'Благотворительный фонд',
   r'back': r'Назад',
-
+  r'notConfirmed': r'Не подтверждено',
+  r'failed': r'Не прошла',
+  r'payment_approved': r'Прошла',
+  r'status': r'Статус',
+  r'not_found': r'Ничего не найдено',
+  r'not_found_for_search': r'Nothing was found for your search.',
 
   r'otp_not_match': r'Код не совпадает',
   r'otp_code_has_expired.': r'Срок действия кода истёк',

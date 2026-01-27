@@ -225,7 +225,7 @@ class _SenagatAppState extends State<SenagatApp> {
               ),
               GetPage(
                 name: CardExpensesScreen.route,
-                page: () => const CardExpensesScreen(),
+                page: () =>  CardExpensesScreen(),
               ),
               GetPage(
                 name: CategoryScreen.route,

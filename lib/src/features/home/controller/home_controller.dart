@@ -341,7 +341,7 @@ class HomeController extends GetxController with StateControlMixin {
     if (history[index].status == 'pending') {
       return AppColors.orange;
     } else if (history[index].status ==
-        'rejected') {
+        'failed') {
       return AppColors.redDark;
     } else if (history[index].status ==
         'approved') {

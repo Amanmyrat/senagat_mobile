@@ -83,25 +83,11 @@ class _CreditListState extends State<CreditList> {
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Container(
-                                              padding: EdgeInsets.symmetric(
-                                                horizontal:
-                                                AppDimensions.paddingMedium.w,
-                                                vertical: 4,
-                                              ),
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(
-                                                  AppDimensions.borderRadiusMedium.r,
-                                                ),
-                                                color: controller.checkCreditStatus(index),
-                                              ),
-                                              child: Text(
-                                                loan?.status?.tr ?? '',
-                                                style: TextStyle(
-                                                  fontSize: 14.sp,
-                                                  color: AppColors.white,
-                                                  fontFamily: AppFonts.secondaryFont,
-                                                ),
+                                            Text(
+                                              loan?.createdAt ?? '',
+                                              style: TextStyle(
+                                                color: AppColors.grey,
+                                                fontSize: 14.sp,
                                               ),
                                             ),
                                             SizedBox(height: 10.h,),
@@ -112,13 +98,29 @@ class _CreditListState extends State<CreditList> {
                                                   loan?.creditName?.tr ?? '',
                                                   style: TextStyle(color: AppColors.black, fontSize: 14.sp),
                                                 ),
-                                                Text(
-                                                  loan?.createdAt ?? '',
-                                                  style: TextStyle(
-                                                    color: AppColors.grey,
-                                                    fontSize: 14.sp,
+                                                Container(
+                                                  padding: EdgeInsets.symmetric(
+                                                    horizontal:
+                                                    AppDimensions.paddingMedium.w,
+                                                    vertical: 4,
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(
+                                                      AppDimensions.borderRadiusMedium.r,
+                                                    ),
+                                                    color: controller.checkCreditStatus(index),
+                                                  ),
+                                                  child: Text(
+                                                    loan?.status?.tr ?? '',
+                                                    style: TextStyle(
+                                                      fontSize: 14.sp,
+                                                      color: AppColors.white,
+                                                      fontFamily: AppFonts.secondaryFont,
+                                                    ),
                                                   ),
                                                 ),
+
+
                                               ],
                                             ),
                                             SizedBox(height: AppDimensions.paddingExtraLarge.h),
@@ -138,8 +140,7 @@ class _CreditListState extends State<CreditList> {
                                                       ),
                                                       SizedBox(height: 4.h),
                                                       Text(
-                                                        loan?.amount.toString() ??
-                                                        '',
+                                                        '${loan?.amount.toString()} TMT',
                                                         style: TextStyle(
                                                           color: AppColors.black,
                                                           fontSize: 14.sp,
@@ -173,8 +174,7 @@ class _CreditListState extends State<CreditList> {
                                                       ),
                                                       SizedBox(height: 4.h),
                                                       Text(
-                                                        loan?.monthlyPayment.toString() ??
-                                                        '',
+                                                        '${loan?.monthlyPayment.toString()} TMT',
                                                         style: TextStyle(
                                                           color: AppColors.black,
                                                           fontSize: 14.sp,
