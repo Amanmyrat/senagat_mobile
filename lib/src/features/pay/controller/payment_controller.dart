@@ -135,7 +135,7 @@ class PaymentController extends GetxController with StateControlMixin {
         ? continueEnabled = true
         : continueEnabled = false;
 
-    if (serviceName == 'Belet' && phoneController.text.length >= 8) {
+    if (serviceName == 'belet' && phoneController.text.length >= 8) {
       repository
           .checkPhone(
             data: <String, dynamic>{"phone": '993${phoneController.text}'},
@@ -206,7 +206,7 @@ class PaymentController extends GetxController with StateControlMixin {
     String? orderId;
 
     try {
-      if (serviceName == 'Belet') {
+      if (serviceName == 'belet') {
         final requestModel = await _getBeletTopUpModel();
         final result = await repository.beletTopUp(data: requestModel.toMap());
         beletTopUpModel = result;
