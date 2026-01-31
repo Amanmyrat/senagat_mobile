@@ -9,10 +9,10 @@ import '../../../utils/constants/app_assets.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../pay/model/paymet_history_model.dart';
 
-enum PaymentStatus { all, pending, failed, approved }
+enum PaymentStatus { all, failed, approved }
 
 class CardExpensesController extends GetxController
-    with StateControlMixin {
+    with StateControlMixin, GetSingleTickerProviderStateMixin {
   final PaymentRepository repository;
 
   CardExpensesController(this.repository);
@@ -20,6 +20,11 @@ class CardExpensesController extends GetxController
   /// DATA
   List<PaymentHistoryModel> history = [];
   List<PaymentHistoryModel> filteredHistory = [];
+
+  late TabController tabController;
+  int selectedTabIndex = 0;
+  Set<String> selectedTypes = {};
+
 
   /// FILTER STATE
   PaymentStatus selectedStatus = PaymentStatus.all;
@@ -53,19 +58,42 @@ class CardExpensesController extends GetxController
   ];
 
 
-  final List<String> statuses = [
-    'all',
-    'pending',
-    'failed',
-    'payment_approved',
-    'notConfirmed',
+  final List<MapEntry<String, PaymentStatus>> statusTabs = [
+    MapEntry('all', PaymentStatus.all),
+    MapEntry('failed', PaymentStatus.failed),
+    MapEntry('payment_approved', PaymentStatus.approved),
   ];
-
 
   @override
   void onInit() {
     _loadHistory();
+    tabController = TabController(
+      length: statusTabs.length,
+      vsync: this,
+    );
+
+    tabController.addListener(() {
+      if (!tabController.indexIsChanging) {
+        final status =
+            statusTabs[tabController.index].value;
+        setStatusFilter(status);
+      }
+    });
+
     super.onInit();
+  }
+
+  void toggleType(String type) {
+    if (selectedTypes.contains(type)) {
+      selectedTypes.remove(type);
+    } else {
+      selectedTypes.add(type);
+    }
+    update();
+  }
+  void clearTypes() {
+    selectedTypes.clear();
+    applyFilters();
   }
 
   /// LOAD DATA
@@ -92,9 +120,9 @@ class CardExpensesController extends GetxController
           ? true
           : item.status == selectedStatus.name;
 
-      final typeMatch = selectedType == 'all'
+      final typeMatch = selectedTypes.isEmpty
           ? true
-          : item.type == selectedType;
+          : selectedTypes.contains(item.type);
 
       return statusMatch && typeMatch;
     }).toList();

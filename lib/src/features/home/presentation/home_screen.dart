@@ -270,16 +270,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     : null,
                                               ),
                                             )
-                                            : Positioned(
-                                                right: 50,
-                                                bottom: 10,
-                                                child: Image.asset(
-                                                  controller
-                                                      .serviceImage[index],
-                                                  width: 150.w,
-                                                  height: 150.h,
-                                                ),
-                                              ),
+                                            : Image.asset(
+                                              controller
+                                                  .serviceImage[index],
+                                              width: 150.w,
+                                              height: 150.h,
+                                            ),
                                         Align(
                                           alignment: Alignment.bottomRight,
                                           child: SvgPicture.asset(
