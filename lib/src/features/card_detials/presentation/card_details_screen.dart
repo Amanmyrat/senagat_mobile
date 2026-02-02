@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/features/card_detials/controller/card_details_controller.dart';
@@ -16,6 +17,20 @@ class CardDetailsScreen extends StatefulWidget {
 }
 
 class _CardDetailsScreenState extends State<CardDetailsScreen> {
+  static const _channel = MethodChannel('secure_screen');
+
+  @override
+  void initState() {
+    super.initState();
+    _channel.invokeMethod('enable');
+  }
+
+  @override
+  void dispose() {
+    _channel.invokeMethod('disable');
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -42,7 +57,7 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                                 borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium.r),
                                 color: AppColors.inputFillBackground
                               ),
-                              child: Text(controller.cardNumber, style: TextStyle(color: AppColors.black, fontSize: 14.sp),),
+                              child: Text(controller.maskedNumber, style: TextStyle(color: AppColors.black, fontSize: 14.sp),),
                             ),
                             SizedBox(height: 22.h,),
                             Row(

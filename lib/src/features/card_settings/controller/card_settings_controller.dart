@@ -9,7 +9,7 @@ import '../../add_card/model/card_model.dart';
 
 
 class CardSettingsController extends GetxController with StateControlMixin {
-  late final TextEditingController cardNumberController;
+  late final TextEditingController cardNickNameController;
   bool continueEnabled = false;
   final cardBox = Hive.box<CardModel>('cardsBox');
   late final String cardNumber;
@@ -24,23 +24,23 @@ class CardSettingsController extends GetxController with StateControlMixin {
   void onChangeNickName() {
     final card = cardBox.getAt(index);
     if (card != null) {
-      card.nickName = cardNumberController.text;
+      card.nickName = cardNickNameController.text;
       card.save();
     }
-    if(cardNumberController.text.isEmpty){
-      cardNumberController.text = r'Senagat Bank';
+    if(cardNickNameController.text.isEmpty){
+      cardNickNameController.text = r'Senagat Bank';
     }
     cardController.refresh();
     homeController.refresh();
 
     status = Status.completed;
-    cardNumberController.clear();
+    cardNickNameController.clear();
     update();
     Get.back();
   }
 
   void onClearText(){
-    cardNumberController.clear();
+    cardNickNameController.clear();
     update();
   }
 
@@ -54,7 +54,7 @@ class CardSettingsController extends GetxController with StateControlMixin {
 
     nickName = cardBox.getAt(index)?.nickName.tr ?? '';
     cardDesign = cardBox.getAt(index)?.cardDesign ?? '';
-    cardNumberController = TextEditingController(text: cardBox.getAt(index)?.nickName);
+    cardNickNameController = TextEditingController(text: nickName);
   }
 
   String hideCardCenter(String number) {

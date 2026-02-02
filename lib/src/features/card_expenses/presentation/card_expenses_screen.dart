@@ -439,6 +439,7 @@ void _showFilterBottomSheet(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(height: 10.h),
                 Text(
                   'payments'.tr,
                   style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w600),
@@ -517,7 +518,7 @@ void _showFilterBottomSheet(
                   },
                 ),
 
-                SizedBox(height: 12.h),
+                SizedBox(height: 20.h),
 
                 SizedBox(
                   width: MediaQuery.of(context).size.width,

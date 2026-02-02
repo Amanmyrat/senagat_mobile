@@ -132,7 +132,7 @@ class _CardSettingsScreenState extends State<CardSettingsScreen> {
                                                     TextField(
                                                       keyboardType: TextInputType.name,
                                                       textInputAction: TextInputAction.done,
-                                                      controller: controller.cardNumberController,
+                                                      controller: controller.cardNickNameController,
                                                       style: TextStyle(
                                                         fontSize: 14.sp,
                                                         fontFamily: AppFonts.primaryFont,
@@ -162,7 +162,7 @@ class _CardSettingsScreenState extends State<CardSettingsScreen> {
                                                           maxHeight: 40.h,
                                                           maxWidth: 40.w,
                                                         ),
-                                                        suffixIcon:  controller.cardNumberController.text.isNotEmpty ?
+                                                        suffixIcon:  controller.cardNickNameController.text.isNotEmpty ?
                                                         GestureDetector(
                                                           onTap: (){
                                                             controller.onClearText();

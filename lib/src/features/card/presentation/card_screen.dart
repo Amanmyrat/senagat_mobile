@@ -289,7 +289,7 @@ class _CardScreenState extends State<CardScreen> {
                                                           color: AppColors.grey,
                                                           fontSize: 14.sp)),
                                                   SizedBox(height: 4.h),
-                                                  Text(card?.cardPrice.toString() ?? '',
+                                                  Text('${card?.cardPrice.toString()} TMT',
                                                       style: TextStyle(
                                                           color: AppColors.black,
                                                           fontSize: 14.sp)),
