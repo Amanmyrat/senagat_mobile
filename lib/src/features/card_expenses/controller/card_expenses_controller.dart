@@ -157,7 +157,7 @@ class CardExpensesController extends GetxController
     final status = filteredHistory[index].status;
 
     switch (status) {
-      case 'approved':
+      case 'confirmed':
         return AppColors.green;
       case 'pending':
         return AppColors.orange;
@@ -170,10 +170,16 @@ class CardExpensesController extends GetxController
 
 
   String iconByType(String type) {
-    if (paymentsTitle.contains(type)) {
-      return paymentsIcons[paymentsTitle.indexOf(type)];
+    switch (type) {
+      case 'mobile':
+        return AppAssets.deviceMobileIcon;
+      case 'charity':
+        return AppAssets.foundation;
+      case 'belet':
+        return AppAssets.beletIcon;
+      default:
+        return AppAssets.deviceMobileIcon;
     }
-    return AppAssets.deviceMobileIcon;
   }
 }
 

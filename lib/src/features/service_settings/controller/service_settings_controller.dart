@@ -32,7 +32,7 @@ class ServiceSettingsController extends GetxController {
     ServiceItem(r'home_phone', AppAssets.astu),
     ServiceItem(r'astu_internet', AppAssets.astu),
     ServiceItem(r'telecom_internet', AppAssets.telecom),
-    ServiceItem(r'belet', AppAssets.beletIcon),
+    ServiceItem(r'Belet', AppAssets.beletIcon),
     ServiceItem(r'state_traffic_safety_inspectorate', AppAssets.policeCar),
     ServiceItem(r'ÄlemTv', AppAssets.alemTv),
   ];

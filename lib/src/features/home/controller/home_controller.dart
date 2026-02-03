@@ -163,6 +163,7 @@ class HomeController extends GetxController with StateControlMixin {
           'selectedServiceIcon': item.icon,
         },
       );
+      print(item.title);
     }
   }
 
@@ -344,7 +345,7 @@ class HomeController extends GetxController with StateControlMixin {
         'failed') {
       return AppColors.redDark;
     } else if (history[index].status ==
-        'approved') {
+        'confirmed') {
       return AppColors.green;
     } else {
       return AppColors.grey;

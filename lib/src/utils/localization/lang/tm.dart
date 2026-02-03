@@ -245,7 +245,7 @@ const Map<String, String> tkTk = {
   r'altyn_asyr': r'Altyn asyr (beýleki banklar)',
   r'top_up_the_balance': r'Balansy doldurmak',
   r'other': r'Başga',
-  r'belet': r'Belet',
+  // r'belet': r'Belet',
   r'charity': r'Haýyr-sahawat gaznasy',
   r'back': r'Yza',
   r'notConfirmed': r'Tassyklanmadyk',

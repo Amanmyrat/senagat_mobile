@@ -343,7 +343,7 @@ class _CardExpensesScreenState extends State<CardExpensesScreen> {
                                                 .checkPaymentsStatus(index),
                                           ),
                                           child: Text(
-                                            item.status == 'approved'
+                                            item.status == 'confirmed'
                                                 ? 'payment_approved'.tr
                                                 : item.status.tr,
                                             style: TextStyle(

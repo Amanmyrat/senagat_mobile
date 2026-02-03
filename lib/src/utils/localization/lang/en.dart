@@ -245,7 +245,7 @@ const Map<String, String> enUs = {
   r'altyn_asyr': r'Altyn asyr (other banks)',
   r'top_up_the_balance': r'Top up the balance',
   r'other': r'Other',
-  r'belet': r'Belet',
+  // r'belet': r'Belet',
   r'charity': r'Charitable Foundation',
   r'back': r'Back',
   r'notConfirmed': r'Not confirmed',

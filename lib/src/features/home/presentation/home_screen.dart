@@ -429,8 +429,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           controller
                                                                       .history[index]
                                                                       .status ==
-                                                                  'approved'
-                                                              ? 'payment_approved'
+                                                                  'confirmed'
+                                                              ? 'payment_approved'.tr
                                                               : controller
                                                                     .history[index]
                                                                     .status
