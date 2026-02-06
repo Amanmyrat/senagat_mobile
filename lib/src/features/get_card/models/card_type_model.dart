@@ -6,6 +6,8 @@ class CardTypeModel {
   final String? image;
   final List<AdvantageModel>? advantages;
 
+  static const String _baseUrl = "https://your-domain.com/"; // <-- set here
+
   CardTypeModel({
     this.id,
     this.title,
@@ -14,6 +16,14 @@ class CardTypeModel {
     this.image,
     this.advantages,
   });
+
+  String? get imageUrl {
+    if (image == null || image!.isEmpty) return null;
+
+    if (image!.startsWith('http')) return image;
+
+    return _baseUrl + image!;
+  }
 
   factory CardTypeModel.fromJson(Map<String, dynamic> json) {
     return CardTypeModel(
