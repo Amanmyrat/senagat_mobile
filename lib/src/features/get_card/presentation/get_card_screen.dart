@@ -114,7 +114,7 @@ class _GetCardScreenState extends State<GetCardScreen> {
                                       children: [
                                         CachedNetworkImage(
                                           imageUrl:
-                                              item.image ??
+                                              item.imageUrl ??
                                               AppAssets.cardImage,
                                           fit: BoxFit.cover,
                                         ),
