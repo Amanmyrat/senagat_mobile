@@ -1,34 +1,31 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:senagat_mobile/src/features/card_expenses/controller/card_expenses_controller.dart';
 import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
 import '../../../core/globals.dart';
 import '../../../core/states/stateful_data.dart';
-import '../../../utils/constants/app_assets.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
 import '../../../utils/theme/constants/app_fonts.dart';
+import '../controller/payment_history_controller.dart';
 
-class CardExpensesScreen extends StatefulWidget {
-  static const route = '/card/expenses';
-  const CardExpensesScreen({super.key});
+class PaymentHistoryScreen extends StatefulWidget {
+  static const route = '/payment/history';
+  const PaymentHistoryScreen({super.key});
 
   @override
-  State<CardExpensesScreen> createState() => _CardExpensesScreenState();
+  State<PaymentHistoryScreen> createState() => _PaymentHistoryScreenState();
 }
 
-class _CardExpensesScreenState extends State<CardExpensesScreen> {
+class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: GetBuilder<CardExpensesController>(
-          init: CardExpensesController(
+        child: GetBuilder<PaymentHistoryController>(
+          init: PaymentHistoryController(
             PaymentRepository(apiService: ApiServices.apiService),
           ),
           builder: (controller) {
@@ -85,67 +82,6 @@ class _CardExpensesScreenState extends State<CardExpensesScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  // Text(
-                                  //   'status'.tr,
-                                  //   style: TextStyle(
-                                  //     fontSize: 14.sp,
-                                  //     color: AppColors.black,
-                                  //   ),
-                                  // ),
-                                  // SizedBox(height: 10.h,),
-
-                                  // DropdownButtonFormField2<String>(
-                                  //   value: controller.selectedStatus.name,
-                                  //   isExpanded: true,
-                                  //   // hint: Text(
-                                  //   //   'status'.tr,
-                                  //   //   style: TextStyle(
-                                  //   //     fontSize: 14.sp,
-                                  //   //     color: AppColors.greyInactive,
-                                  //   //   ),
-                                  //   // ),
-                                  //   decoration: InputDecoration(
-                                  //     contentPadding: EdgeInsets.fromLTRB(
-                                  //       0,
-                                  //       AppDimensions.paddingExtraLarge.w,
-                                  //       AppDimensions.paddingExtraLarge.w,
-                                  //       AppDimensions.paddingMedium,
-                                  //     ),
-                                  //   ),
-                                  //   dropdownStyleData: DropdownStyleData(
-                                  //     decoration: BoxDecoration(
-                                  //       borderRadius: BorderRadius.circular(
-                                  //         AppDimensions.borderRadiusMedium.r,
-                                  //       ),
-                                  //     ),
-                                  //     elevation: 2,
-                                  //   ),
-                                  //   iconStyleData: IconStyleData(
-                                  //     icon: SvgPicture.asset(
-                                  //       AppAssets.caretDownIcon,
-                                  //       width: 18.w,
-                                  //     ),
-                                  //   ),
-                                  //   items: controller.statuses.map(
-                                  //           (type) => DropdownMenuItem<String>(
-                                  //         value: type,
-                                  //         child:  Text(
-                                  //           type.tr,
-                                  //           style: TextStyle(
-                                  //             color: AppColors.blackText,
-                                  //             fontSize: 14.sp,
-                                  //             fontFamily: AppFonts.primaryFont,
-                                  //           ),
-                                  //         ),
-                                  //       ),
-                                  //     ).toList(),
-                                  //   onChanged: (value) {
-                                  //     if (value == null) return;
-                                  //     controller.setStatusFilter(
-                                  //       PaymentStatus.values.firstWhere((e) => e.name == value),
-                                  //     );
-                                  //   },
-                                  // ),
                                   Container(
                                     height: 44.h,
                                     // width: MediaQuery.of(context).size.width,
@@ -182,106 +118,16 @@ class _CardExpensesScreenState extends State<CardExpensesScreen> {
                                 ],
                               ),
                             ),
-                            // SizedBox(width: 16.w,),
-                            // SizedBox(
-                            //   width: MediaQuery.of(context).size.width /4,
-                            //   child: Column(
-                            //     crossAxisAlignment: CrossAxisAlignment.start,
-                            //     children: [
-                            //       // Text(
-                            //       //   'payments'.tr,
-                            //       //   style: TextStyle(
-                            //       //     fontSize: 14.sp,
-                            //       //     color: AppColors.black,
-                            //       //   ),
-                            //       // ),
-                            //       // SizedBox(height: 10.w,),
-                            //       DropdownButtonFormField2<String>(
-                            //         value: controller.selectedType,
-                            //         isExpanded: true,
-                            //         // hint: Text(
-                            //         //   'payments'.tr,
-                            //         //   style: TextStyle(
-                            //         //     fontSize: 14.sp,
-                            //         //     color: AppColors.greyInactive,
-                            //         //   ),
-                            //         // ),
-                            //         decoration: InputDecoration(
-                            //           contentPadding: EdgeInsets.fromLTRB(
-                            //             0,
-                            //             AppDimensions.paddingExtraLarge.w,
-                            //             AppDimensions.paddingExtraLarge.w,
-                            //             AppDimensions.paddingMedium,
-                            //           ),
-                            //         ),
-                            //         dropdownStyleData: DropdownStyleData(
-                            //           decoration: BoxDecoration(
-                            //             borderRadius: BorderRadius.circular(
-                            //               AppDimensions.borderRadiusMedium.r,
-                            //             ),
-                            //           ),
-                            //           elevation: 2,
-                            //         ),
-                            //         iconStyleData: IconStyleData(
-                            //           icon: SvgPicture.asset(
-                            //             AppAssets.caretDownIcon,
-                            //             width: 18.w,
-                            //           ),
-                            //         ),
-                            //         items: [
-                            //           DropdownMenuItem<String>(
-                            //             value: 'all',
-                            //             child: Text(
-                            //               'all'.tr,
-                            //               style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.primaryFont),
-                            //             ),
-                            //           ),
-                            //           ...controller.paymentsTitle.map(
-                            //                 (type) => DropdownMenuItem<String>(
-                            //               value: type,
-                            //               child:  Row(
-                            //                 children: [
-                            //                   Container(
-                            //                     width: 50.w,
-                            //                     height: 50.h,
-                            //                     padding: EdgeInsets.all(AppDimensions.paddingSmall.w),
-                            //
-                            //                     child: Image.asset(
-                            //                       controller.iconByType(type),
-                            //                       width: 30.w,),
-                            //                   ),
-                            //                   SizedBox(width: AppDimensions.paddingMedium.w,),
-                            //                   Expanded(
-                            //                     child: Text(
-                            //                       type.tr,
-                            //                       style: TextStyle(
-                            //                         color: AppColors.blackText,
-                            //                         fontSize: 14.sp,
-                            //                         fontFamily: AppFonts.primaryFont,
-                            //                       ),
-                            //                     ),
-                            //                   ),
-                            //                 ],
-                            //               ),
-                            //             ),
-                            //           ),
-                            //         ],
-                            //         onChanged: (value) {
-                            //           if (value == null) return;
-                            //           controller.setTypeFilter(value);
-                            //         },
-                            //       ),
-                            //     ],
-                            //   ),
-                            // ),
-
                           ],
                         ),
 
                         SizedBox(height: 16.h),
 
                         if (controller.filteredHistory.isEmpty)
-                          Center(child: _EmptyHistory())
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.5,
+                            child: Center(child: _EmptyHistory()),
+                          )
                         else
                           ListView.builder(
                             shrinkWrap: true,
@@ -421,7 +267,7 @@ class _CardExpensesScreenState extends State<CardExpensesScreen> {
 }
 void _showFilterBottomSheet(
     BuildContext context,
-    CardExpensesController controller,
+    PaymentHistoryController controller,
     ) {
   showModalBottomSheet(
     context: context,
@@ -431,7 +277,7 @@ void _showFilterBottomSheet(
     ),
     backgroundColor: AppColors.white,
     builder: (_) {
-      return GetBuilder<CardExpensesController>(
+      return GetBuilder<PaymentHistoryController>(
         builder: (controller) {
           return Padding(
             padding: EdgeInsets.all(20.w),
@@ -442,7 +288,7 @@ void _showFilterBottomSheet(
                 SizedBox(height: 10.h),
                 Text(
                   'payments'.tr,
-                  style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w600),
+                  style: TextStyle(fontSize: 17.sp,),
                 ),
                 SizedBox(height: 12.h),
                 

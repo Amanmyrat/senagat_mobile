@@ -5,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/globals.dart';
 import 'package:senagat_mobile/src/features/add_card/presentation/add_card_screen.dart';
-import 'package:senagat_mobile/src/features/card_expenses/presentation/card_expenses_screen.dart';
+import 'package:senagat_mobile/src/features/payment_history/presentation/payment_history_screen.dart';
 import 'package:senagat_mobile/src/features/credit_list/presentation/credit_list.dart';
 import 'package:senagat_mobile/src/features/inquiries_list/presentation/inquiries_list.dart';
 import 'package:senagat_mobile/src/features/service_settings/presentation/service_settings_screen.dart';
@@ -61,6 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Padding(
                             padding: EdgeInsets.symmetric(
                               horizontal: AppDimensions.paddingExtraLarge.w,
+                              vertical: AppDimensions.paddingMedium.h
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -198,12 +199,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
 
                           SizedBox(
-                            height: 232.h,
+                            height: 282.h,
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,
-                              padding: EdgeInsets.symmetric(
-                                horizontal: AppDimensions.paddingExtraLarge,
+                              padding: EdgeInsets.only(
+                                bottom: 50.h,
+                                left: AppDimensions.paddingExtraLarge,
+                                right: AppDimensions.paddingExtraLarge,
                               ),
+                              clipBehavior: Clip.none,
                               itemCount: controller.serviceTitles.length,
                               shrinkWrap: true,
                               itemBuilder: (context, index) {
@@ -230,12 +234,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                         width: 1.w,
                                         style: BorderStyle.solid,
                                       ),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: AppColors.dividerColor,
-                                          blurRadius: 4.r,
-                                        ),
-                                      ],
+                                      boxShadow: softCardShadow,
+
                                       color: isSelected
                                           ? AppColors.green
                                           : AppColors.white,
@@ -295,8 +295,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
 
                           if (controller.history.isNotEmpty) ...[
-                            SizedBox(height: AppDimensions.padding40.h),
-
                             Padding(
                               padding: EdgeInsets.symmetric(
                                 horizontal: AppDimensions.paddingExtraLarge.w,
@@ -322,7 +320,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           GestureDetector(
                                             onTap: () {
                                               Get.toNamed(
-                                                CardExpensesScreen.route,
+                                                PaymentHistoryScreen.route,
                                               );
                                             },
                                             child: Text(
@@ -349,7 +347,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           return GestureDetector(
                                             onTap: () {
                                               Get.toNamed(
-                                                CardExpensesScreen.route,
+                                                PaymentHistoryScreen.route,
                                               );
                                             },
                                             child: Container(
@@ -376,13 +374,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   width: 1.w,
                                                   style: BorderStyle.solid,
                                                 ),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color:
-                                                        AppColors.dividerColor,
-                                                    blurRadius: 4.r,
-                                                  ),
-                                                ],
+                                                boxShadow: softCardShadow,
                                                 color: AppColors.white,
                                               ),
                                               child: Column(
@@ -546,12 +538,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           width: 1.w,
                                           style: BorderStyle.solid,
                                         ),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: AppColors.dividerColor,
-                                            blurRadius: 4.r,
-                                          ),
-                                        ],
+                                        boxShadow: softCardShadow,
                                         color: AppColors.white,
                                       ),
                                       child: Column(
@@ -895,98 +882,57 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget fastOperationsWidget(HomeController controller) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 40.h),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(bottom: 16.h),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  r'fast_operations'.tr,
-                  style: TextStyle(color: AppColors.blackText, fontSize: 17.sp),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.only(bottom: 16.h),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                r'fast_operations'.tr,
+                style: TextStyle(color: AppColors.blackText, fontSize: 17.sp),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Get.toNamed(ServiceSettingsScreen.route);
+                },
+                child: Text(
+                  r'tune'.tr,
+                  style: TextStyle(
+                    color: AppColors.green,
+                    fontSize: 14.sp,
+                    fontFamily: AppFonts.secondaryFont,
+                  ),
                 ),
-                GestureDetector(
+              ),
+            ],
+          ),
+        ),
+
+        SizedBox(
+          height: 150.h,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            padding: EdgeInsets.only(bottom: 50.h),
+            clipBehavior: Clip.none,
+            itemCount: controller.getFastOperationsCount(),
+            itemBuilder: (context, index) {
+              final fastCtrl = controller.fastServiceController;
+              final selected = fastCtrl.selected;
+
+              /// ADD BUTTON — appears only when selected.length < 4
+              if (selected.length <= 4 && index == selected.length) {
+                return GestureDetector(
                   onTap: () {
                     Get.toNamed(ServiceSettingsScreen.route);
                   },
-                  child: Text(
-                    r'tune'.tr,
-                    style: TextStyle(
-                      color: AppColors.green,
-                      fontSize: 14.sp,
-                      fontFamily: AppFonts.secondaryFont,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          SizedBox(
-            height: 100.h,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: controller.getFastOperationsCount(),
-              itemBuilder: (context, index) {
-                final fastCtrl = controller.fastServiceController;
-                final selected = fastCtrl.selected;
-
-                /// ADD BUTTON — appears only when selected.length < 4
-                if (selected.length <= 4 && index == selected.length) {
-                  return GestureDetector(
-                    onTap: () {
-                      Get.toNamed(ServiceSettingsScreen.route);
-                    },
-                    child: Container(
-                      width: 90.w,
-                      height: 78.h,
-                      margin: EdgeInsets.only(
-                        right: AppDimensions.marginMedium.w,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                          AppDimensions.borderRadiusMedium.r,
-                        ),
-                        border: Border.all(
-                          color: AppColors.dividerColor,
-                          width: 1.w,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.dividerColor,
-                            blurRadius: 4.r,
-                          ),
-                        ],
-                        color: AppColors.green,
-                      ),
-                      child: Center(
-                        child: SvgPicture.asset(
-                          AppAssets.plusIcon,
-                          width: 30.w,
-                          color: AppColors.white,
-                        ),
-                      ),
-                    ),
-                  );
-                }
-
-                /// FAST SERVICE ITEM
-                final item = selected[index];
-
-                return GestureDetector(
-                  onTap: () => controller.onFastServiceTap(index),
                   child: Container(
                     width: 90.w,
                     height: 78.h,
-                    padding: EdgeInsets.symmetric(
-                      vertical: AppDimensions.paddingMedium.h,
-                    ),
                     margin: EdgeInsets.only(
                       right: AppDimensions.marginMedium.w,
                     ),
@@ -998,49 +944,79 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: AppColors.dividerColor,
                         width: 1.w,
                       ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColors.dividerColor,
-                          blurRadius: 4.r,
-                        ),
-                      ],
-                      color: AppColors.white,
+                      boxShadow: softCardShadow,
+                      color: AppColors.green,
                     ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Container(
-                          width: 50.w,
-                          height: 50.h,
-                          padding: EdgeInsets.all(AppDimensions.paddingSmall.w),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: AppColors.dividerColor,
-                              width: 1.w,
-                            ),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Image.asset(item.icon, width: 70.w),
-                        ),
-                        Text(
-                          item.title.tr,
-                          maxLines: 1,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AppColors.blackText,
-                            fontSize: 14.sp,
-                            fontFamily: AppFonts.secondaryFont,
-                          ),
-                        ),
-                      ],
+                    child: Center(
+                      child: SvgPicture.asset(
+                        AppAssets.plusIcon,
+                        width: 30.w,
+                        color: AppColors.white,
+                      ),
                     ),
                   ),
                 );
-              },
-            ),
+              }
+
+              /// FAST SERVICE ITEM
+              final item = selected[index];
+
+              return GestureDetector(
+                onTap: () => controller.onFastServiceTap(index),
+                child: Container(
+                  width: 90.w,
+                  height: 78.h,
+                  padding: EdgeInsets.symmetric(
+                    vertical: AppDimensions.paddingMedium.h,
+                  ),
+                  margin: EdgeInsets.only(
+                    right: AppDimensions.marginMedium.w,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(
+                      AppDimensions.borderRadiusMedium.r,
+                    ),
+                    border: Border.all(
+                      color: AppColors.dividerColor,
+                      width: 1.w,
+                    ),
+                    boxShadow: softCardShadow,
+                    color: AppColors.white,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        width: 50.w,
+                        height: 50.h,
+                        padding: EdgeInsets.all(AppDimensions.paddingSmall.w),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: AppColors.dividerColor,
+                            width: 1.w,
+                          ),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Image.asset(item.icon, width: 70.w),
+                      ),
+                      Text(
+                        item.title.tr,
+                        maxLines: 1,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: AppColors.blackText,
+                          fontSize: 14.sp,
+                          fontFamily: AppFonts.secondaryFont,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -1065,8 +1041,38 @@ class _HomeScreenState extends State<HomeScreen> {
               style: BorderStyle.solid,
             ),
             boxShadow: [
-              BoxShadow(color: AppColors.dividerColor, blurRadius: 4.r),
+              BoxShadow(
+                offset: Offset(0, 2),
+                spreadRadius: 0,
+                color: AppColors.dividerColor.withAlpha(39),
+                blurRadius: 4.r,
+              ),
+              BoxShadow(
+                offset: Offset(0, 7),
+                spreadRadius: 0,
+                color: AppColors.dividerColor.withAlpha(34),
+                blurRadius: 7.r,
+              ),
+              BoxShadow(
+                offset: Offset(0, 16),
+                spreadRadius: 0,
+                color: AppColors.dividerColor.withAlpha(20),
+                blurRadius: 10.r,
+              ),
+              BoxShadow(
+                offset: Offset(0, 29),
+                spreadRadius: 0,
+                color: AppColors.dividerColor.withAlpha(6),
+                blurRadius: 12.r,
+              ),
+              BoxShadow(
+                offset: Offset(0, 45),
+                spreadRadius: 0,
+                color: AppColors.dividerColor.withAlpha(150),
+                blurRadius: 13.r,
+              ),
             ],
+
             color: controller.lastTap == HomeTapType.foundation
                 ? AppColors.green
                 : AppColors.white,
@@ -1251,7 +1257,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           SizedBox(height: 4.h),
                           Text(
-                            loan?.amount.toString() ?? '',
+                            '${loan?.amount.toString()} TMT',
                             style: TextStyle(
                               color: AppColors.white,
                               fontSize: 17.sp,
@@ -1285,7 +1291,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           SizedBox(height: 4.h),
                           Text(
-                            loan?.monthlyPayment.toString() ?? '',
+                            '${loan?.monthlyPayment.toString()} TMT',
                             style: TextStyle(
                               color: AppColors.white,
                               fontSize: 17.sp,
@@ -1323,4 +1329,13 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     ).then((value) => value ?? false);
   }
+
+  List<BoxShadow> softCardShadow = [
+    BoxShadow(offset: Offset(0, 2), blurRadius: 4, color: Color(0xFFD5D9D3).withOpacity(0.39)),
+    BoxShadow(offset: Offset(0, 7), blurRadius: 7, color: Color(0xFFD5D9D3).withOpacity(0.34)),
+    BoxShadow(offset: Offset(0, 16), blurRadius: 10, color: Color(0xFFD5D9D3).withOpacity(0.20)),
+    BoxShadow(offset: Offset(0, 29), blurRadius: 12, color: Color(0xFFD5D9D3).withOpacity(0.06)),
+    BoxShadow(offset: Offset(0, 45), blurRadius: 13, color: Color(0xFFD5D9D3).withOpacity(0.01)),
+  ];
+
 }

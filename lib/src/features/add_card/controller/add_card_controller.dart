@@ -192,6 +192,8 @@ class AddCardController extends GetxController with StateControlMixin {
       nameController.clear();
       termController.clear();
       cvcController.clear();
+      selectedDropdownBank = null;
+
       continueEnabled = false;
     } catch (e) {
       status = Status.error;

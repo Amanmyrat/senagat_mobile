@@ -70,12 +70,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                     AppDimensions.borderRadiusMedium.r,
                                   ),
                                   border: Border.all(color: AppColors.dividerColor, width: 1.w, style: BorderStyle.solid),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: AppColors.dividerColor,
-                                      blurRadius: 4.r,
-                                    ),
-                                  ],
+                                  boxShadow: softCardShadow,
                                   color: AppColors.white,
                                 ),
                                 child: Row(
@@ -139,12 +134,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                     AppDimensions.borderRadiusMedium.r,
                                   ),
                                   border: Border.all(color: AppColors.dividerColor, width: 1.w, style: BorderStyle.solid),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: AppColors.dividerColor,
-                                      blurRadius: 4.r,
-                                    ),
-                                  ],
+                                  boxShadow: softCardShadow,
                                   color: AppColors.white,
                                 ),
                                 child: Row(
@@ -185,83 +175,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
       ),
     );
   }
+  List<BoxShadow> softCardShadow = [
+    BoxShadow(offset: Offset(0, 2), blurRadius: 4, color: Color(0xFFD5D9D3).withOpacity(0.39)),
+    BoxShadow(offset: Offset(0, 7), blurRadius: 7, color: Color(0xFFD5D9D3).withOpacity(0.34)),
+    BoxShadow(offset: Offset(0, 16), blurRadius: 10, color: Color(0xFFD5D9D3).withOpacity(0.20)),
+    BoxShadow(offset: Offset(0, 29), blurRadius: 12, color: Color(0xFFD5D9D3).withOpacity(0.06)),
+    BoxShadow(offset: Offset(0, 45), blurRadius: 13, color: Color(0xFFD5D9D3).withOpacity(0.01)),
+  ];
 }
-Widget charityFoundationWidget(CategoryController controller) {
-  return Padding(
-    padding: EdgeInsets.only(bottom: 40.h),
-    child: GestureDetector(
-      onTap: () {
-        controller.onFoundationTap();
-      },
-      child: Container(
-        padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
-        width: double.infinity,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(
-            AppDimensions.borderRadiusMedium.r,
-          ),
-          border: Border.all(
-            color: AppColors.dividerColor,
-            width: 1.w,
-            style: BorderStyle.solid,
-          ),
-          boxShadow: [
-            BoxShadow(color: AppColors.dividerColor, blurRadius: 4.r),
-          ],
-          color: AppColors.white,
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    r'charitable_foundation'.tr,
-                    style: TextStyle(
-                      color: AppColors.blackText,
-                      fontSize: 17.sp,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: AppDimensions.paddingMedium.h,
-                    ),
-                    child: Text(
-                      r'donations_of_any_amount'.tr,
-                      style: TextStyle(
-                        color: AppColors.blackText,
-                        fontSize: 14.sp,
-                        fontFamily: AppFonts.secondaryFont,
-                      ),
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        r'donate'.tr,
-                        style: TextStyle(
-                          color:  AppColors.green,
-                          fontSize: 14.sp,
-                        ),
-                      ),
-                      SvgPicture.asset(
-                        AppAssets.arrowRightIcon,
-                        color: AppColors.green,
-                        width: 14.w,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 10.h),
-              child: Image.asset(AppAssets.foundation, width: 125.w),
-            ),
-          ],
-        ),
-      ),
-    ),
-  );
-}
+

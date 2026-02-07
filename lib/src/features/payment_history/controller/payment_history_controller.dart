@@ -11,11 +11,11 @@ import '../../pay/model/paymet_history_model.dart';
 
 enum PaymentStatus { all, failed, approved }
 
-class CardExpensesController extends GetxController
+class PaymentHistoryController extends GetxController
     with StateControlMixin, GetSingleTickerProviderStateMixin {
   final PaymentRepository repository;
 
-  CardExpensesController(this.repository);
+  PaymentHistoryController(this.repository);
 
   /// DATA
   List<PaymentHistoryModel> history = [];
@@ -41,6 +41,7 @@ class CardExpensesController extends GetxController
     AppAssets.beletIcon,
     AppAssets.policeCar,
     AppAssets.alemTv,
+    AppAssets.foundation
   ];
 
 
@@ -55,6 +56,7 @@ class CardExpensesController extends GetxController
     'belet',
     'state_traffic_safety_inspectorate',
     'ÄlemTv',
+    'charity'
   ];
 
 

@@ -6,7 +6,6 @@ import 'package:senagat_mobile/src/core/globals.dart';
 import 'package:senagat_mobile/src/features/add_card/presentation/add_card_screen.dart';
 import 'package:senagat_mobile/src/features/auth/repository/auth_repository.dart';
 import 'package:senagat_mobile/src/features/card/controller/card_controller.dart';
-import 'package:senagat_mobile/src/features/card_expenses/presentation/card_expenses_screen.dart';
 import 'package:senagat_mobile/src/features/card_settings/presentation/card_settings_screen.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
@@ -205,16 +204,6 @@ class _CardScreenState extends State<CardScreen> {
                                     borderRadius: BorderRadius.circular(
                                         AppDimensions.borderRadiusMedium.r
                                     ),
-                                    border: Border.all(
-                                      color: AppColors.dividerColor,
-                                      width: 1.w,
-                                    ),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: AppColors.dividerColor,
-                                          blurRadius: 4.r
-                                      ),
-                                    ],
                                   ),
                                   child: Column(
                                     children: [

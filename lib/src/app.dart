@@ -10,7 +10,6 @@ import 'package:senagat_mobile/src/features/about_us/presentation/about_us_scree
 import 'package:senagat_mobile/src/features/add_card/presentation/add_card_screen.dart';
 import 'package:senagat_mobile/src/features/auth_success/presentation/auth_success_screen.dart';
 import 'package:senagat_mobile/src/features/card_detials/presentation/card_details_screen.dart';
-import 'package:senagat_mobile/src/features/card_expenses/presentation/card_expenses_screen.dart';
 import 'package:senagat_mobile/src/features/card_settings/presentation/card_settings_screen.dart';
 import 'package:senagat_mobile/src/features/delete_card/presentation/delete_card_screen.dart';
 import 'package:senagat_mobile/src/features/category/presentation/category_screen.dart';
@@ -55,6 +54,7 @@ import 'features/dashboard/presentation/dashboard_screen.dart';
 import 'features/get_card/presentation/get_card_screen.dart';
 import 'features/inquiries/presentation/inquiries_screen.dart';
 import 'features/no_internet/controller/internet_checker.dart';
+import 'features/payment_history/presentation/payment_history_screen.dart';
 import 'features/payment_verification/presentation/payment_verification_screen.dart';
 import 'features/map_search/presentation/map_search_screen.dart';
 import 'features/web_view/presentation/web_view.dart';
@@ -224,8 +224,8 @@ class _SenagatAppState extends State<SenagatApp> {
                 page: () => const CardDetailsScreen(),
               ),
               GetPage(
-                name: CardExpensesScreen.route,
-                page: () =>  CardExpensesScreen(),
+                name: PaymentHistoryScreen.route,
+                page: () =>  PaymentHistoryScreen(),
               ),
               GetPage(
                 name: CategoryScreen.route,

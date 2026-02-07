@@ -49,35 +49,42 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 border: Border.all(color: AppColors.dividerColor, width: 1.w, style: BorderStyle.solid),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: AppColors.dividerColor,
-                                    blurRadius: 4.r,
-                                  ),
-                                ],
+                                boxShadow: softCardShadow,
                                 color: AppColors.white,
                               ),
                               child: Image.asset(AppAssets.senagatIcon),
                             ),
                           ),
                           SizedBox(height: 10.h,),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                          Stack(
+                            alignment: Alignment.center,
                             children: [
-                              Expanded(
-                                child: Text('${controller.profileBox
-                                    .get('currentProfile')
-                                    ?.firstName ?? r'name'.tr}  ${controller
-                                    .profileBox
-                                    .get('currentProfile')
-                                    ?.lastName ?? r'last_name'.tr}',
-                                  maxLines: 1 ,
+                              Center(
+                                child: Text(
+                                  '${controller.profileBox
+                                      .get('currentProfile')
+                                      ?.firstName ?? r'name'.tr} '
+                                      '${controller.profileBox
+                                      .get('currentProfile')
+                                      ?.lastName ?? r'last_name'.tr}',
+                                  maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(fontSize: 24.sp, color: AppColors.black),),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 24.sp, color: AppColors.black),
+                                ),
                               ),
-                              SvgPicture.asset(AppAssets.arrowRightIcon, color: AppColors.black, width: 18.w,)
+                              Positioned(
+                                right: 10,
+                                child: SvgPicture.asset(
+                                  AppAssets.arrowRightIcon,
+                                  color: AppColors.black,
+                                  width: 18.w,
+                                ),
+                              ),
                             ],
                           ),
+
                           Column(
                             children: [
 
@@ -124,12 +131,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           AppDimensions.borderRadiusMedium.r,
                         ),
                         border: Border.all(color: AppColors.dividerColor, width: 1.w, style: BorderStyle.solid),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.dividerColor,
-                            blurRadius: 4.r,
-                          ),
-                        ],
+                        boxShadow: softCardShadow,
                         color: AppColors.white,
                       ),
                       child: Column(
@@ -240,4 +242,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
+  List<BoxShadow> softCardShadow = [
+    BoxShadow(offset: Offset(0, 2), blurRadius: 4, color: Color(0xFFD5D9D3).withOpacity(0.39)),
+    BoxShadow(offset: Offset(0, 7), blurRadius: 7, color: Color(0xFFD5D9D3).withOpacity(0.34)),
+    BoxShadow(offset: Offset(0, 16), blurRadius: 10, color: Color(0xFFD5D9D3).withOpacity(0.20)),
+    BoxShadow(offset: Offset(0, 29), blurRadius: 12, color: Color(0xFFD5D9D3).withOpacity(0.06)),
+    BoxShadow(offset: Offset(0, 45), blurRadius: 13, color: Color(0xFFD5D9D3).withOpacity(0.01)),
+  ];
 }

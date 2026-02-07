@@ -180,6 +180,8 @@ class HomeController extends GetxController with StateControlMixin {
       if (status == AccountLoginStatus.loggedIn) {
         getUserProfileInfo();
         loadHistory();
+        getExchangeRates();
+
       }
     });
 
@@ -188,6 +190,8 @@ class HomeController extends GetxController with StateControlMixin {
         AccountLoginStatus.loggedIn) {
       getUserProfileInfo();
       loadHistory();
+      getExchangeRates();
+
     }
 
     getExchangeRates();
@@ -201,7 +205,7 @@ class HomeController extends GetxController with StateControlMixin {
   void getExchangeRates() async {
     if (_isFetchingExchangeRates) return;
 
-    _isFetchingExchangeRates = true;
+    // _isFetchingExchangeRates = true;
     status = Status.loading;
     update();
 
@@ -212,6 +216,7 @@ class HomeController extends GetxController with StateControlMixin {
       _exchange.addAll(value);
 
       status = Status.completed;
+      update();
     } catch (e) {
       status = Status.error;
       debugPrint("ERROR => $e");
