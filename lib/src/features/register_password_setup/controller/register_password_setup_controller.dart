@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:senagat_mobile/src/core/globals.dart';
 import 'package:senagat_mobile/src/features/auth_success/presentation/auth_success_screen.dart';
 import 'package:senagat_mobile/src/features/register/presentation/register_screen.dart';
 import 'package:senagat_mobile/src/features/register_confirmation/controller/register_confirmation_controller.dart';
@@ -20,7 +21,7 @@ class RegisterPasswordSetupController extends GetxController
 
   final AuthRepository repository;
 
-  late final String otpToken;
+  late final String? otpToken;
   late final String login;
 
   bool isPasswordVisible = false;
@@ -37,8 +38,14 @@ class RegisterPasswordSetupController extends GetxController
 
   @override
   void onInit() {
-    otpToken = Get.arguments['otpToken'];
-    login = Get.arguments['login'];
+    try {
+      final args = Get.arguments;
+      otpToken = args?['otpToken'];
+      login = args?['login'] ?? '';
+    } catch (e) {
+      otpToken = null;
+      login = '';
+    }
     passwordController = TextEditingController();
     passwordFocus = FocusNode();
     super.onInit();
@@ -54,14 +61,18 @@ class RegisterPasswordSetupController extends GetxController
     update();
   }
 
-  Future<RegisterModel> _getRegisterModel() async {
-    return RegisterModel(otpToken: otpToken, password: passwordController.text);
+  Future<RegisterModelForEnabledOTP> _getRegisterModel() async {
+    return RegisterModelForEnabledOTP(otpToken: otpToken ?? '', password: passwordController.text);
+  }
+
+  Future<RegisterModel> _getRegisterModel2() async {
+    return RegisterModel(phone: phoneBox.get('phone') ?? '', password: passwordController.text);
   }
 
   Future<NewPasswordModel> _getNewPasswordModel() async {
     return NewPasswordModel(
       phone: phoneBox.get('phone') ?? '',
-      otpToken: otpToken,
+      otpToken: otpToken ?? '',
       password: passwordController.text,
     );
   }
@@ -73,8 +84,9 @@ class RegisterPasswordSetupController extends GetxController
       update();
 
       final registerModel = await _getRegisterModel();
+      final registerModel2 = await _getRegisterModel2();
       await repository
-          .register(data: registerModel.toMap())
+          .register(data: Configs.OTPEnabled == false ? registerModel2.toMap() : registerModel.toMap())
           .then((value) {
             status = Status.completed;
             update();

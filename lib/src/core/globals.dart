@@ -18,7 +18,10 @@ class Configs {
   static const rootIpAddress2 = '192.168.1.11:82';
   static const rootIpAddress3 = '192.168.18.104:82';
   static const rootIpAddress4 = '216.250.11.195';
-  static const baseUrl = "http://$rootIpAddress3/api/v1";
+  static const baseUrl = "http://$rootIpAddress2/api/v1";
+
+  static const bool OTPEnabled = true;
+
 }
 
 class ApiServices {

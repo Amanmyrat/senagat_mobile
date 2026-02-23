@@ -1,8 +1,4 @@
 import 'package:senagat_mobile/src/features/home/models/user_information_model.dart';
-import 'package:senagat_mobile/src/features/register_password_setup/models/new_password_model.dart';
-import 'package:senagat_mobile/src/features/register_password_setup/models/new_password_model.dart';
-import 'package:senagat_mobile/src/features/register_password_setup/models/new_password_model.dart';
-
 import '../../../core/networking/api_endpoint.dart';
 import '../../../core/networking/api_service.dart';
 import '../../../core/typedefs.dart';
@@ -40,6 +36,26 @@ class AuthRepository {
       data: data,
       converter: (response) {
         return response.body['success'];
+      },
+    );
+  }
+
+  Future<void> resetRequest({required JSON data}) async {
+    return _apiService.setData<void>(
+      endpoint: ApiEndpoint.auth(AuthEndpoint.RESET_REQUEST),
+      data: data,
+      converter: (response) {
+        return;
+      },
+    );
+  }
+
+  Future<String> resetConfirm({required JSON data}) async {
+    return _apiService.setData<String>(
+      endpoint: ApiEndpoint.auth(AuthEndpoint.RESET_CONFIRM),
+      data: data,
+      converter: (response) {
+        return response.body['token'];
       },
     );
   }
@@ -89,7 +105,7 @@ class AuthRepository {
       endpoint: ApiEndpoint.auth(AuthEndpoint.RESET_PASSWORD),
       data: data,
       converter: (response) {
-        return ;
+        return;
       },
     );
   }

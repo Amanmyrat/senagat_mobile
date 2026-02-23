@@ -56,35 +56,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                           ),
                           SizedBox(height: 10.h,),
-                          Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Center(
-                                child: Text(
-                                  '${controller.profileBox
-                                      .get('currentProfile')
-                                      ?.firstName ?? r'name'.tr} '
-                                      '${controller.profileBox
-                                      .get('currentProfile')
-                                      ?.lastName ?? r'last_name'.tr}',
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: 24.sp, color: AppColors.black),
+                          Center(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                    '${controller.profileBox.get('currentProfile')?.firstName ?? r'name'.tr} '
+                                        '${controller.profileBox.get('currentProfile')?.lastName ?? r'last_name'.tr}',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: 24.sp,
+                                      color: AppColors.black,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              Positioned(
-                                right: 10,
-                                child: SvgPicture.asset(
+                                SizedBox(width: 10.w), // ← 10 padding after text
+                                SvgPicture.asset(
                                   AppAssets.arrowRightIcon,
                                   color: AppColors.black,
                                   width: 18.w,
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-
                           Column(
                             children: [
 

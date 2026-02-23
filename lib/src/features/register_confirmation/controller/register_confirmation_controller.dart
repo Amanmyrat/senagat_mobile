@@ -77,19 +77,36 @@ class RegisterConfirmationController extends GetxController
     status = Status.loading;
     update();
 
-    final requestModel = await _getRequestModel();
-    await repository
-        .requestOTP(data: requestModel.toMap())
-        .then((value) {
-          status = Status.completed;
-          startTimer();
-          update();
-        })
-        .catchError((e) {
-          status = Status.error;
-          update();
-          ApiErrorHandler.handleApiError(e);
-        });
+    if (login == 'reset_password') {
+      await repository
+          .resetRequest(
+        data: <String, dynamic>{
+          'phone': phoneNumber,
+        },
+      )
+          .then((value) {
+        status = Status.completed;
+        startTimer();
+        update();
+      }).catchError((e) {
+        status = Status.error;
+        update();
+        ApiErrorHandler.handleApiError(e);
+      });
+    } else {
+      final requestModel = await _getRequestModel();
+      await repository
+          .requestOTP(data: requestModel.toMap())
+          .then((value) {
+        status = Status.completed;
+        startTimer();
+        update();
+      }).catchError((e) {
+        status = Status.error;
+        update();
+        ApiErrorHandler.handleApiError(e);
+      });
+    }
   }
 
   void _onOtpChanged() {
@@ -151,25 +168,48 @@ class RegisterConfirmationController extends GetxController
       formKey.currentState!.save();
       update();
 
-      final verifyOtpModel = await _getVerifyOtpModel();
-      await repository
-          .verifyOTP(data: verifyOtpModel.toMap())
-          .then((value) {
-            status = Status.completed;
-            update();
-            print(value);
+      if (login == 'reset_password') {
+        await repository
+            .resetConfirm(
+          data: <String, dynamic>{
+            'phone': phoneNumber,
+            'code': otpController.text,
+          },
+        )
+            .then((value) {
+          status = Status.completed;
+          update();
 
-            Get.toNamed(
-              RegisterPasswordSetupScreen.route,
-              arguments: {'otpToken': value, 'login': login},
-            );
-          })
-          .catchError((e) {
-            status = Status.error;
-            update();
-            ApiErrorHandler.handleApiError(e);
-            debugPrint(e.toString());
-          });
+          Get.toNamed(
+            RegisterPasswordSetupScreen.route,
+            arguments: {'otpToken': value, 'login': login},
+          );
+        }).catchError((e) {
+          status = Status.error;
+          update();
+          ApiErrorHandler.handleApiError(e);
+          debugPrint(e.toString());
+        });
+      } else {
+        final verifyOtpModel = await _getVerifyOtpModel();
+        await repository
+            .verifyOTP(data: verifyOtpModel.toMap())
+            .then((value) {
+          status = Status.completed;
+          update();
+          print(value);
+
+          Get.toNamed(
+            RegisterPasswordSetupScreen.route,
+            arguments: {'otpToken': value, 'login': login},
+          );
+        }).catchError((e) {
+          status = Status.error;
+          update();
+          ApiErrorHandler.handleApiError(e);
+          debugPrint(e.toString());
+        });
+      }
     }
   }
 
