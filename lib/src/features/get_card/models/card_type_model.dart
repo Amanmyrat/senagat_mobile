@@ -8,7 +8,7 @@ class CardTypeModel {
   final String? image;
   final List<AdvantageModel>? advantages;
 
-  static const String _baseUrl = Configs.baseUrl;
+  static const String _baseUrl = Configs.baseImageUrl;
 
   CardTypeModel({
     this.id,

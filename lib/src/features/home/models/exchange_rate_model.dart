@@ -9,7 +9,7 @@ class ExchangeRateModel {
 
   ExchangeRateModel({this.id, this.currency, this.purchase, this.sale, this.flag});
 
-  static const String _baseUrl = Configs.baseUrl;
+  static const String _baseUrl = Configs.baseImageUrl;
 
   String? get imageUrl {
     if (flag == null || flag!.isEmpty) return null;
