@@ -60,8 +60,7 @@ class HomeController extends GetxController with StateControlMixin {
   bool isProfileRequired = false;
   bool isServiceRequired = true;
 
-  final _exchange = <ExchangeRateModel>[];
-  List<ExchangeRateModel> get exchange => _exchange;
+  List<ExchangeRateModel> exchange = [];
   bool _isFetchingExchangeRates = false;
   bool _isFetchingUserInfo = false;
 
@@ -222,8 +221,8 @@ class HomeController extends GetxController with StateControlMixin {
     try {
       final value = await repository.getExchangeRateTypes();
 
-      _exchange.clear();
-      _exchange.addAll(value);
+      exchange.clear();
+      exchange.addAll(value);
 
       status = Status.completed;
       update();

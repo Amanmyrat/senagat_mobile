@@ -4,18 +4,24 @@ import GoogleMaps
 
 @main
 @objc class AppDelegate: FlutterAppDelegate {
+
+  private var secureView: UIView?
+
   override func application(
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
-      GMSServices.provideAPIKey("AIzaSyCSlYpD9YBJEhb1chpIyIYnzhKflt3jsE8")
 
-NotificationCenter.default.addObserver(
+    GMSServices.provideAPIKey("YOUR_GOOGLE_MAPS_KEY")
+
+    NotificationCenter.default.addObserver(
       self,
       selector: #selector(screenCaptureChanged),
       name: UIScreen.capturedDidChangeNotification,
       object: nil
     )
+
+    GeneratedPluginRegistrant.register(with: self)
 
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
@@ -45,16 +51,11 @@ NotificationCenter.default.addObserver(
     secureView = nil
   }
 
-    GeneratedPluginRegistrant.register(with: self)
-    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+  override func applicationWillResignActive(_ application: UIApplication) {
+    enableSecureOverlay()
   }
 
-override func applicationWillResignActive(_ application: UIApplication) {
-  enableSecureOverlay()
-}
-
-override func applicationDidBecomeActive(_ application: UIApplication) {
-  disableSecureOverlay()
-}
-
+  override func applicationDidBecomeActive(_ application: UIApplication) {
+    disableSecureOverlay()
+  }
 }
