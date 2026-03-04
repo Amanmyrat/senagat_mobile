@@ -3,7 +3,9 @@ import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/check_phone_balance/presentation/check_phone_balance.dart';
 import 'package:senagat_mobile/src/features/net_and_tv/presentation/net_and_tv_screen.dart';
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
-import 'package:senagat_mobile/src/features/pay/presentation/payment_screen.dart';
+import 'package:senagat_mobile/src/features/pay/presentation/astu_payment_screen.dart';
+import 'package:senagat_mobile/src/features/pay/presentation/belet_payment_screen.dart';
+import 'package:senagat_mobile/src/features/pay/presentation/tmcell_payment_screen.dart';
 import '../../../utils/constants/app_assets.dart';
 import '../../foundation/presentation/foundation_screen.dart';
 import '../../qr_code/presentation/qr_code_screen.dart';
@@ -69,7 +71,11 @@ class CategoryController extends GetxController with StateControlMixin {
         'selectedServiceTitle': serviceTitle[index],
       });
     } else {
-      Get.toNamed(PaymentScreen.route, arguments: {
+      final route = serviceTitle[index] == 'Belet'
+          ? BeletPaymentScreen.route
+          : AstuPaymentScreen.route;
+
+      Get.toNamed(route, arguments: {
         'selectedServiceTitle': serviceTitle[index],
         'selectedServiceIcon': serviceIcons[index],
       });
@@ -91,13 +97,18 @@ class CategoryController extends GetxController with StateControlMixin {
       Get.toNamed(NetAndTvScreen.route, arguments: {
         'selectedServiceTitle': paymentsTitle[index],
       });
-    }else if(paymentsIcons[index] == AppAssets.astu){
+    } else if (paymentsTitle[index] == 'TM CELL') {
+      Get.toNamed(TmcellPaymentScreen.route, arguments: {
+        'selectedServiceTitle': paymentsTitle[index],
+        'selectedServiceIcon': paymentsIcons[index],
+      });
+    } else if(paymentsIcons[index] == AppAssets.astu){
       Get.toNamed(CheckPhoneBalanceScreen.route, arguments: {
         'selectedServiceTitle': paymentsTitle[index],
         'selectedServiceIcon': paymentsIcons[index],
       });
     } else {
-      Get.toNamed(PaymentScreen.route, arguments: {
+      Get.toNamed(AstuPaymentScreen.route, arguments: {
         'selectedServiceTitle': paymentsTitle[index],
         'selectedServiceIcon': paymentsIcons[index],
       });

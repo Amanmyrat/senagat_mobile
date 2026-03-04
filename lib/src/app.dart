@@ -28,6 +28,11 @@ import 'package:senagat_mobile/src/features/no_internet/presentation/no_internet
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
 import 'package:senagat_mobile/src/features/notifications_settings/presentation/notifications_settings_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/payment_screen.dart';
+import 'package:senagat_mobile/src/features/pay/presentation/astu_payment_screen.dart';
+import 'package:senagat_mobile/src/features/pay/presentation/belet_payment_screen.dart';
+import 'package:senagat_mobile/src/features/pay/presentation/foundation_payment_screen.dart';
+import 'package:senagat_mobile/src/features/pay/presentation/pygg_payment_screen.dart';
+import 'package:senagat_mobile/src/features/pay/presentation/tmcell_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
 import 'package:senagat_mobile/src/features/profile/controller/profile_controller.dart';
 import 'package:senagat_mobile/src/features/qr_code/presentation/qr_code_screen.dart';
@@ -150,6 +155,26 @@ class _SenagatAppState extends State<SenagatApp> {
               GetPage(
                 name: PaymentScreen.route,
                 page: () => const PaymentScreen(),
+              ),
+              GetPage(
+                name: AstuPaymentScreen.route,
+                page: () => const AstuPaymentScreen(),
+              ),
+              GetPage(
+                name: BeletPaymentScreen.route,
+                page: () => const BeletPaymentScreen(),
+              ),
+              GetPage(
+                name: TmcellPaymentScreen.route,
+                page: () => const TmcellPaymentScreen(),
+              ),
+              GetPage(
+                name: PyggPaymentScreen.route,
+                page: () => const PyggPaymentScreen(),
+              ),
+              GetPage(
+                name: FoundationPaymentScreen.route,
+                page: () => const FoundationPaymentScreen(),
               ),
               GetPage(
                 name: PaymentVerificationScreen.route,

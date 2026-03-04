@@ -605,7 +605,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         Image.network(
                                                           controller
                                                                   .exchange[index]
-                                                                  .flag ??
+                                                              .imageUrl ??
                                                               '',
                                                           width: 28.w,
                                                           height: 20.h,

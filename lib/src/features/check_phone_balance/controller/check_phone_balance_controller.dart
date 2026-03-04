@@ -4,7 +4,7 @@ import 'package:flutter_native_contact_picker/model/contact.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
-import '../../pay/presentation/payment_screen.dart';
+import '../../pay/presentation/astu_payment_screen.dart';
 
 class CheckPhoneBalanceController extends GetxController with StateControlMixin {
   bool continueEnabled = false;
@@ -44,7 +44,7 @@ class CheckPhoneBalanceController extends GetxController with StateControlMixin 
     status = Status.completed;
 
     update();
-    Get.toNamed(PaymentScreen.route,
+    Get.toNamed(AstuPaymentScreen.route,
         arguments:
         {'selectedServiceTitle': serviceName,
           'selectedServiceIcon': serviceIcon,

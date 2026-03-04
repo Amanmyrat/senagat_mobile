@@ -13,7 +13,10 @@ import 'package:senagat_mobile/src/features/home/models/user_information_model.d
 import 'package:senagat_mobile/src/features/home/repository/exchage_rate_repository.dart';
 import 'package:senagat_mobile/src/features/net_and_tv/presentation/net_and_tv_screen.dart';
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
-import 'package:senagat_mobile/src/features/pay/presentation/payment_screen.dart';
+import 'package:senagat_mobile/src/features/pay/presentation/astu_payment_screen.dart';
+import 'package:senagat_mobile/src/features/pay/presentation/belet_payment_screen.dart';
+import 'package:senagat_mobile/src/features/pay/presentation/foundation_payment_screen.dart';
+import 'package:senagat_mobile/src/features/pay/presentation/tmcell_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
 import 'package:senagat_mobile/src/features/register_confirmation/models/account_model.dart';
 import '../../../core/states/stateful_data.dart';
@@ -103,7 +106,7 @@ class HomeController extends GetxController with StateControlMixin {
     lastTap = HomeTapType.foundation;
     update();
     Get.toNamed(
-      PaymentScreen.route,
+      FoundationPaymentScreen.route,
       arguments: {
         'selectedServiceTitle': r'charitable_foundation'.tr,
         'isInquiries': false,
@@ -156,8 +159,15 @@ class HomeController extends GetxController with StateControlMixin {
         'selectedServiceIcon': item.icon,
       });
     } else {
+      final title = item.title;
+      final route = title == 'Belet'
+          ? BeletPaymentScreen.route
+          : title == 'TM CELL'
+              ? TmcellPaymentScreen.route
+              : AstuPaymentScreen.route;
+
       Get.toNamed(
-        PaymentScreen.route,
+        route,
         arguments: {
           'selectedServiceTitle': item.title,
           'selectedServiceIcon': item.icon,

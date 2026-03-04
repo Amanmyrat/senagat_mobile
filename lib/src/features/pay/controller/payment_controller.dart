@@ -334,6 +334,9 @@ class PaymentController extends GetxController with StateControlMixin {
 
     sumController.dispose();
     nameController.dispose();
+    lastnameController.dispose();
+    accountController.dispose();
+    pageController.dispose();
 
     super.dispose();
   }

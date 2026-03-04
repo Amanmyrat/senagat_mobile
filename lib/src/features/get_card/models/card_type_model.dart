@@ -1,3 +1,5 @@
+import 'package:senagat_mobile/src/core/globals.dart';
+
 class CardTypeModel {
   final int? id;
   final String? title;
@@ -6,7 +8,7 @@ class CardTypeModel {
   final String? image;
   final List<AdvantageModel>? advantages;
 
-  static const String _baseUrl = "http://109.207.172.16:4433/"; // <-- set here
+  static const String _baseUrl = Configs.baseUrl;
 
   CardTypeModel({
     this.id,
