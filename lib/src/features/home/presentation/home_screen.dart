@@ -294,7 +294,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
 
-                          if (controller.history.isNotEmpty) ...[
                             Padding(
                               padding: EdgeInsets.symmetric(
                                 horizontal: AppDimensions.paddingExtraLarge.w,
@@ -302,6 +301,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  if (controller.history.isNotEmpty) ...[
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -514,6 +514,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ],
                                   ),
                                   SizedBox(height: AppDimensions.padding40.h),
+                                  ],
 
                                   if (controller.exchange.isNotEmpty) ...[
                                     Text(
@@ -684,7 +685,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ],
                               ),
                             ),
-                          ],
                         ],
                       );
               },
