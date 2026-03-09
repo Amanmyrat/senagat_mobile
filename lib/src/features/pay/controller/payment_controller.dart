@@ -5,15 +5,9 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
-import 'package:senagat_mobile/src/features/pay/model/belet_balances_model.dart';
-import 'package:senagat_mobile/src/features/pay/model/belet_top_up_model.dart';
-import 'package:senagat_mobile/src/features/pay/model/charity_model.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/service_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
 import 'package:senagat_mobile/src/features/service_settings/controller/service_settings_controller.dart';
-import '../../../utils/api_error_handler.dart';
-import '../../../utils/services/error_utils.dart';
-import '../../../utils/services/show_snack.dart';
 import '../../add_card/model/card_model.dart';
 import '../../payment_verification/presentation/payment_verification_screen.dart';
 
@@ -33,18 +27,13 @@ class PaymentController extends GetxController with StateControlMixin {
   final cardBox = Hive.box<CardModel>('cardsBox');
 
   final PaymentRepository repository;
-  final _beletBalances = <BeletBalanceModel>[];
-
-  List<BeletBalanceModel> get beletBalances => _beletBalances;
-
-  late var beletTopUpModel = BeletTopUpModel();
-  late var charityModel = CharityModel();
 
   PaymentController(this.repository);
 
   String serviceName = '';
   String serviceIcon = '';
   String number = '';
+  String formattedBalance = '';
   bool isInquiries = false;
   bool isFoundation = false;
   late String cardNumber = '';
@@ -66,6 +55,9 @@ class PaymentController extends GetxController with StateControlMixin {
       number = args['number'] as String? ?? '';
       isInquiries = args['isInquiries'] as bool? ?? false;
       isFoundation = args['isFoundation'] as bool? ?? false;
+
+      double balance = double.tryParse(args['balance'].toString()) ?? 0.0;
+      formattedBalance = balance.toStringAsFixed(1);
     } else {
       debugPrint('No or invalid arguments passed to this page');
     }
@@ -84,9 +76,6 @@ class PaymentController extends GetxController with StateControlMixin {
     nameController = TextEditingController();
     lastnameController = TextEditingController();
     accountController = TextEditingController(text: '100');
-    if (serviceName == 'Belet') {
-      getBeletBalances();
-    }
     super.onInit();
   }
 
@@ -122,152 +111,40 @@ class PaymentController extends GetxController with StateControlMixin {
   }
 
   void isTextNotEmpty() {
-    isFoundation
-        ? phoneController.text.length >= 8 && sumController.text.isNotEmpty &&
-                  nameController.text.isNotEmpty &&
-                  lastnameController.text.isNotEmpty &&
-                  selectedCard != null
-              ? continueEnabled = true
-              : continueEnabled = false
-        : phoneController.text.length >= 8 &&
-              sumController.text.isNotEmpty &&
-              selectedCard != null
-        ? continueEnabled = true
-        : continueEnabled = false;
-
-    if (serviceName == 'Belet' && phoneController.text.length >= 8) {
-      repository
-          .checkPhone(
-            data: <String, dynamic>{"phone": '993${phoneController.text}'},
-          )
-          .then((value) async {
-            if (value == false) {
-              status = Status.error;
-              continueEnabled = false;
-              ShowSnack.showSnack(r'phone_number_invalid'.tr, SnackType.error);
-              update();
-            }
-          })
-          .catchError((e) {
-            status = Status.error;
-            update();
-            final errorText = ErrorUtils.extractErrorText(e);
-            ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
-          });
-    }
+    continueEnabled = phoneController.text.length >= 8 &&
+        sumController.text.isNotEmpty &&
+        selectedCard != null;
     update();
-  }
-
-  void getBeletBalances() async {
-    status = Status.loading;
-    update();
-
-    try {
-      final value = await repository.getBalance();
-
-      _beletBalances.clear();
-      _beletBalances.addAll(value);
-
-      status = Status.completed;
-    } catch (e) {
-      status = Status.error;
-      debugPrint("ERROR => $e");
-      ApiErrorHandler.handleApiError(e);
-    } finally {
-      update();
-    }
-  }
-
-  Future<BeletTopUpModel> _getBeletTopUpModel() async {
-    return BeletTopUpModel(
-      bankName: selectedCard?.bank ?? '',
-      amount: int.parse(sumController.text),
-      phone: '993${phoneController.text}',
-    );
-  }
-
-  Future<CharityModel> _getCharityModel() async {
-    return CharityModel(
-      bankName: selectedCard?.bank ?? '',
-      name: nameController.text,
-      surName: lastnameController.text,
-      phoneNumber: phoneController.text,
-      amount: int.parse(sumController.text),
-    );
   }
 
   Future<void> onTap() async {
-    if (!continueEnabled) return;
+    // Default behavior: simple verification flow; override in specific controllers
+     onPayTap();
+  }
 
-    status = Status.loading;
+  @protected
+  Future<void> openBankPayment(String url, String orderId) async {
+    status = Status.completed;
     update();
 
-    String? url;
-    String? orderId;
-
-    try {
-      if (serviceName == 'Belet') {
-        final requestModel = await _getBeletTopUpModel();
-        final result = await repository.beletTopUp(data: requestModel.toMap());
-        beletTopUpModel = result;
-        url = beletTopUpModel.formUrl;
-        orderId = beletTopUpModel.orderId;
-      } else if (isFoundation) {
-        final requestModel = await _getCharityModel();
-        final result = await repository.charity(data: requestModel.toMap());
-        charityModel = result;
-        url = charityModel.formUrl;
-        orderId = charityModel.orderId;
-      }
-
-      if (url == null || url.isEmpty) {
-        throw Exception('Payment URL is empty');
-      }
-
-      if (orderId == null || orderId.isEmpty) {
-        throw Exception('Payment orderId is empty');
-      }
-
-      status = Status.completed;
-      update();
-
-      // Get.to(
-      //   () => ServicePaymentScreen(
-      //     orderId: orderId!,
-      //     paymentUrl: url!,
-      //     selectedCard: selectedCard!,
-      //   ),
-      // );
-
-      Navigator.of(Get.context!).push(
-        PageRouteBuilder(
-          opaque: false,
-          barrierDismissible: false,
-          pageBuilder: (_, __, ___) => ServicePaymentScreen(
-            orderId: orderId!,
-            paymentUrl: url!,
-            selectedCard: selectedCard!,
-            phoneNumber: phoneController.text,
-          ),
-          transitionsBuilder: (_, animation, __, child) {
-            return FadeTransition(
-              opacity: animation,
-              child: child,
-            );
-          },
+    Navigator.of(Get.context!).push(
+      PageRouteBuilder(
+        opaque: false,
+        barrierDismissible: false,
+        pageBuilder: (_, __, ___) => ServicePaymentScreen(
+          orderId: orderId,
+          paymentUrl: url,
+          selectedCard: selectedCard!,
+          phoneNumber: phoneController.text,
         ),
-      );
-
-      // Get.toNamed(
-      //   ServicePaymentScreen.route,
-      //   arguments: {'url': url},
-      // );
-    } catch (e) {
-      status = Status.error;
-      update();
-      ApiErrorHandler.handleApiError(e);
-      debugPrint(e.toString());
-    }
+        transitionsBuilder: (_, animation, __, child) {
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        },
+      ),
+    );
   }
 
   String hideCardCenter(String number) {

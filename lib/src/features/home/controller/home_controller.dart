@@ -17,6 +17,7 @@ import 'package:senagat_mobile/src/features/pay/presentation/astu_payment_screen
 import 'package:senagat_mobile/src/features/pay/presentation/belet_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/foundation_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/tmcell_payment_screen.dart';
+import 'package:senagat_mobile/src/features/pay/presentation/telecom_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
 import 'package:senagat_mobile/src/features/register_confirmation/models/account_model.dart';
 import '../../../core/states/stateful_data.dart';
@@ -164,7 +165,9 @@ class HomeController extends GetxController with StateControlMixin {
           ? BeletPaymentScreen.route
           : title == 'TM CELL'
               ? TmcellPaymentScreen.route
-              : AstuPaymentScreen.route;
+              : title == 'telecom_internet'
+                  ? TelecomPaymentScreen.route
+                  : AstuPaymentScreen.route;
 
       Get.toNamed(
         route,

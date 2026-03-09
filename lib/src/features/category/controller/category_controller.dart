@@ -6,6 +6,7 @@ import 'package:senagat_mobile/src/features/notifications/presentation/notificat
 import 'package:senagat_mobile/src/features/pay/presentation/astu_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/belet_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/tmcell_payment_screen.dart';
+import 'package:senagat_mobile/src/features/pay/presentation/telecom_payment_screen.dart';
 import '../../../utils/constants/app_assets.dart';
 import '../../foundation/presentation/foundation_screen.dart';
 import '../../qr_code/presentation/qr_code_screen.dart';
@@ -99,6 +100,11 @@ class CategoryController extends GetxController with StateControlMixin {
       });
     } else if (paymentsTitle[index] == 'TM CELL') {
       Get.toNamed(TmcellPaymentScreen.route, arguments: {
+        'selectedServiceTitle': paymentsTitle[index],
+        'selectedServiceIcon': paymentsIcons[index],
+      });
+    } else if (paymentsTitle[index] == 'telecom_internet') {
+      Get.toNamed(CheckPhoneBalanceScreen.route, arguments: {
         'selectedServiceTitle': paymentsTitle[index],
         'selectedServiceIcon': paymentsIcons[index],
       });

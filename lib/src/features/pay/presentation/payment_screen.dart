@@ -4,6 +4,7 @@ import 'package:senagat_mobile/src/features/pay/presentation/astu_payment_screen
 import 'package:senagat_mobile/src/features/pay/presentation/belet_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/foundation_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/pygg_payment_screen.dart';
+import 'package:senagat_mobile/src/features/pay/presentation/telecom_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/tmcell_payment_screen.dart';
 
 class PaymentScreen extends StatelessWidget {
@@ -25,6 +26,7 @@ class PaymentScreen extends StatelessWidget {
     if (isFoundation) return const FoundationPaymentScreen();
     if (serviceTitle == 'Belet') return const BeletPaymentScreen();
     if (serviceTitle == 'TM CELL') return const TmcellPaymentScreen();
+    if (serviceTitle == 'telecom_internet') return const TelecomPaymentScreen();
     if (serviceTitle == 'pygg_decision' || serviceTitle == 'pygg_video') {
       return const PyggPaymentScreen();
     }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/globals.dart';
-import 'package:senagat_mobile/src/features/pay/controller/payment_controller.dart';
+import 'package:senagat_mobile/src/features/pay/controller/astu_payment_controller.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/payment_form_scaffold.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/payment_form_widgets.dart';
 import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
@@ -13,8 +13,8 @@ class AstuPaymentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<PaymentController>(
-      init: PaymentController(
+    return GetBuilder<AstuPaymentController>(
+      init: AstuPaymentController(
         PaymentRepository(apiService: ApiServices.apiService),
       ),
       builder: (controller) {

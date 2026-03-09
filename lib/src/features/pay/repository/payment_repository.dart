@@ -13,6 +13,7 @@ import '../../../core/networking/api_service.dart';
 import '../../../core/typedefs.dart';
 import '../../register_confirmation/models/account_model.dart';
 import '../model/paymet_history_model.dart';
+import '../model/telecom_top_up_model.dart';
 
 class PaymentRepository {
   final ApiService _apiService;
@@ -85,6 +86,33 @@ class PaymentRepository {
       requiresAuthToken: true,
       converter: (response) {
         return PaymentHistoryModel.fromJson(response);
+      },
+    );
+  }
+
+  Future<String> telecomBalance({required JSON data}) async {
+    return _apiService.setData<String>(
+      endpoint: await ApiEndpoint.payment(PaymentEndpoint.TELECOM_BALANCE),
+      data: data,
+      requiresAuthToken: true,
+      converter: (response) {
+        return response.body['data']['balance'];
+      },
+    );
+  }
+
+  Future<TelecomTopUpModel> telecomPay({required JSON data}) async {
+    return _apiService.setData<TelecomTopUpModel>(
+      endpoint: await ApiEndpoint.payment(PaymentEndpoint.TELECOM_PAY),
+      data: data,
+      requiresAuthToken: true,
+      converter: (response) {
+        final responseData = response.body['data'];
+        if (responseData != null) {
+          return TelecomTopUpModel.fromMap(responseData);
+        } else {
+          throw Exception('Payment data is null in response');
+        }
       },
     );
   }

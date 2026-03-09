@@ -4,6 +4,10 @@ import 'package:flutter_native_contact_picker/model/contact.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
+import 'package:senagat_mobile/src/features/pay/presentation/payment_screen.dart';
+import 'package:senagat_mobile/src/features/pay/presentation/telecom_payment_screen.dart';
+import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
+import '../../../utils/api_error_handler.dart';
 import '../../pay/presentation/astu_payment_screen.dart';
 
 class CheckPhoneBalanceController extends GetxController with StateControlMixin {
@@ -16,6 +20,11 @@ class CheckPhoneBalanceController extends GetxController with StateControlMixin 
 
   final FlutterNativeContactPicker _contactPicker = FlutterNativeContactPicker();
   late final FocusNode phoneFocus;
+
+  PaymentRepository repository;
+
+  CheckPhoneBalanceController(this.repository);
+
 
   @override
   void onInit() {
@@ -39,17 +48,37 @@ class CheckPhoneBalanceController extends GetxController with StateControlMixin 
   void onTap() async {
     status = Status.loading;
     update();
-    await Future.delayed( Duration(seconds: 2), (){
-    });
-    status = Status.completed;
 
-    update();
-    Get.toNamed(AstuPaymentScreen.route,
-        arguments:
-        {'selectedServiceTitle': serviceName,
-          'selectedServiceIcon': serviceIcon,
+    if(serviceName == 'telecom_internet'){
+      try {
+
+        final result =
+        await repository.telecomBalance(data: <String, dynamic>{'phone': phoneController.text});
+
+        status = Status.completed;
+        update;
+
+        Get.toNamed(TelecomPaymentScreen.route, arguments: {
+          'balance': result,
+          'selectedServiceTitle': serviceName,
           'number': phoneController.text,
         });
+
+      } catch (e) {
+        status = Status.error;
+        update();
+        ApiErrorHandler.handleApiError(e);
+        debugPrint(e.toString());
+      }
+    }else {
+      update();
+      Get.toNamed(AstuPaymentScreen.route,
+          arguments:
+          {'selectedServiceTitle': serviceName,
+            'selectedServiceIcon': serviceIcon,
+            'number': phoneController.text,
+          });
+    }
 
   }
 

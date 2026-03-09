@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:senagat_mobile/src/features/pay/controller/payment_controller.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
+import '../../../core/globals.dart';
+import '../../../core/networking/api_service.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
@@ -14,6 +16,7 @@ import '../../../widgets/elevated_button_with_state.dart';
 import '../../add_card/model/card_model.dart';
 import '../../add_card/presentation/add_card_screen.dart';
 import '../../dashboard/presentation/dashboard_screen.dart';
+import '../../pay/repository/payment_repository.dart';
 import '../controller/check_phone_balance_controller.dart';
 
 class CheckPhoneBalanceScreen extends StatefulWidget {
@@ -31,7 +34,8 @@ class _CheckPhoneBalanceScreenState extends State<CheckPhoneBalanceScreen> {
     return Scaffold(
       body: SafeArea(
         child: GetBuilder<CheckPhoneBalanceController>(
-          init: CheckPhoneBalanceController(),
+          init: CheckPhoneBalanceController(        PaymentRepository(apiService: ApiServices.apiService),
+          ),
           builder: (controller) {
             return Column(
               children: [

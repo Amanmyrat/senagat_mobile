@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/globals.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
-import 'package:senagat_mobile/src/features/pay/controller/payment_controller.dart';
+import 'package:senagat_mobile/src/features/pay/controller/belet_payment_controller.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/payment_form_scaffold.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/payment_form_widgets.dart';
 import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
@@ -17,8 +17,8 @@ class BeletPaymentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<PaymentController>(
-      init: PaymentController(
+    return GetBuilder<BeletPaymentController>(
+      init: BeletPaymentController(
         PaymentRepository(apiService: ApiServices.apiService),
       ),
       builder: (controller) {
@@ -39,7 +39,7 @@ class BeletPaymentScreen extends StatelessWidget {
     );
   }
 
-  Widget _beletTopUpGrid(PaymentController controller) {
+  Widget _beletTopUpGrid(BeletPaymentController controller) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

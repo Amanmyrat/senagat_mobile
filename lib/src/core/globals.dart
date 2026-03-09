@@ -19,9 +19,9 @@ class Configs {
   static const rootIpAddress6 = '192.168.1.143:82';
   static const rootIpAddress3 = '192.168.18.104:82';
   static const rootIpAddress4 = '216.250.11.195';
-  static const rootIpAddress5 = 'senagatbank.com';
-  static const baseUrl = "http://$rootIpAddress/api/v1";
-  static const baseImageUrl = "http://$rootIpAddress/";
+  static const rootIpAddress5 = 'senagatbank.com.tm';
+  static const baseUrl = "https://$rootIpAddress5/api/v1";
+  static const baseImageUrl = "https://$rootIpAddress5/";
 
   static const bool OTPEnabled = true;
 

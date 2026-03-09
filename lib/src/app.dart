@@ -33,6 +33,7 @@ import 'package:senagat_mobile/src/features/pay/presentation/belet_payment_scree
 import 'package:senagat_mobile/src/features/pay/presentation/foundation_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/pygg_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/tmcell_payment_screen.dart';
+import 'package:senagat_mobile/src/features/pay/presentation/telecom_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
 import 'package:senagat_mobile/src/features/profile/controller/profile_controller.dart';
 import 'package:senagat_mobile/src/features/qr_code/presentation/qr_code_screen.dart';
@@ -175,6 +176,10 @@ class _SenagatAppState extends State<SenagatApp> {
               GetPage(
                 name: FoundationPaymentScreen.route,
                 page: () => const FoundationPaymentScreen(),
+              ),
+              GetPage(
+                name: TelecomPaymentScreen.route,
+                page: () => const TelecomPaymentScreen(),
               ),
               GetPage(
                 name: PaymentVerificationScreen.route,

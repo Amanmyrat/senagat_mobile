@@ -197,7 +197,7 @@ Widget paymentAccountWidget(PaymentController controller) {
                     ),
                   ),
                   Text(
-                    '40 ${r'manat'.tr}',
+                    '${controller.formattedBalance} ${r'manat'.tr}',
                     style: TextStyle(color: AppColors.green, fontSize: 17.sp),
                   ),
                 ],
