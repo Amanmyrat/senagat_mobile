@@ -8,6 +8,7 @@ import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/service_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
 import 'package:senagat_mobile/src/features/service_settings/controller/service_settings_controller.dart';
+import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import '../../add_card/model/card_model.dart';
 import '../../payment_verification/presentation/payment_verification_screen.dart';
 
@@ -56,7 +57,7 @@ class PaymentController extends GetxController with StateControlMixin {
       isInquiries = args['isInquiries'] as bool? ?? false;
       isFoundation = args['isFoundation'] as bool? ?? false;
 
-      double balance = double.tryParse(args['balance'].toString()) ?? 0.0;
+      double balance = double.tryParse(args['balance'].toString()) ?? 1.0;
       formattedBalance = balance.toStringAsFixed(1);
     } else {
       debugPrint('No or invalid arguments passed to this page');
@@ -111,10 +112,17 @@ class PaymentController extends GetxController with StateControlMixin {
   }
 
   void isTextNotEmpty() {
-    continueEnabled = phoneController.text.length >= 8 &&
-        sumController.text.isNotEmpty &&
-        selectedCard != null;
-    update();
+    if(serviceIcon == AppAssets.astu){
+      continueEnabled = phoneController.text.length >= 6 &&
+          sumController.text.isNotEmpty &&
+          selectedCard != null;
+      update();
+    }else {
+      continueEnabled = phoneController.text.length >= 8 &&
+          sumController.text.isNotEmpty &&
+          selectedCard != null;
+      update();
+    }
   }
 
   Future<void> onTap() async {

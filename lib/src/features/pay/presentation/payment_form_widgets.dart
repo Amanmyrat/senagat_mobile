@@ -18,6 +18,11 @@ Future<CardModel?> showPaymentCardBottomSheet(PaymentController controller) {
     context: Get.context!,
     backgroundColor: AppColors.white,
     builder: (_) {
+      List<CardModel?> cards = controller.cardBox.values.toList();
+
+      if (controller.isFoundation == false) {
+        cards = cards.where((c) => c?.bank != 'rysgal').toList();
+      }
       return Padding(
         padding: EdgeInsets.only(
           bottom: MediaQuery.of(Get.context!).viewInsets.bottom,
@@ -39,12 +44,13 @@ Future<CardModel?> showPaymentCardBottomSheet(PaymentController controller) {
                   ),
                 ),
                 SizedBox(height: 22.h),
+
                 ListView.builder(
-                  itemCount: controller.cardBox.length,
+                  itemCount: cards.length,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
-                    final card = controller.cardBox.getAt(index);
+                    final card = cards[index];
 
                     return GestureDetector(
                       onTap: () {
@@ -249,7 +255,7 @@ Widget paymentPhoneField(PaymentController controller) {
               controller: controller.phoneController,
               onChanged: (_) => controller.isTextNotEmpty(),
               focusNode: controller.phoneFocus,
-              maxLength: 8,
+              maxLength: controller.serviceIcon == AppAssets.astu ? 6 : 8,
               style: TextStyle(
                 fontSize: 14.sp,
                 fontFamily: AppFonts.primaryFont,

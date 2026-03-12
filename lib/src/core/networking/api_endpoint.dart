@@ -128,6 +128,10 @@ class ApiEndpoint {
         return '$path/telecom/balance';
       case PaymentEndpoint.TELECOM_PAY:
         return '$path/telecom/pay';
+        case PaymentEndpoint.ASTU_BALANCE:
+        return '$path/astu/balance';
+      case PaymentEndpoint.ASTU_PAY:
+        return '$path/astu/pay';
     }
   }
   static Future<String> charity(
@@ -168,6 +172,6 @@ enum LocationEndpoint { LOCATION, LOCATION_BRANCHES }
 
 enum ExchangeRateEndpoint { EXCHANGE_RALE }
 
-enum PaymentEndpoint { CHECK_PHONE, BALANCE, TOP_UP, HISTORY, TELECOM_BALANCE, TELECOM_PAY}
+enum PaymentEndpoint { CHECK_PHONE, BALANCE, TOP_UP, HISTORY, TELECOM_BALANCE, TELECOM_PAY,ASTU_BALANCE, ASTU_PAY,}
 
 enum CharityEndpoint { CHARITY }

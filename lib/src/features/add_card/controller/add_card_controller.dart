@@ -187,13 +187,13 @@ class AddCardController extends GetxController with StateControlMixin {
 
   void _navigateToNextScreen() {
     try {
-      Get.toNamed(DashboardScreen.route);
+      deleteAddController();
+      selectedDropdownBank = null;
       cardNumberController.clear();
       nameController.clear();
       termController.clear();
       cvcController.clear();
-      selectedDropdownBank = null;
-
+      Get.back();
       continueEnabled = false;
     } catch (e) {
       status = Status.error;

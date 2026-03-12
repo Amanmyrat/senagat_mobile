@@ -254,6 +254,8 @@ const Map<String, String> tkTk = {
   r'status': r'Status',
   r'not_found': r'Hiç zat tapylmady',
   r'not_found_for_search': r'По вашему запросу ничего не найдено.',
+  r'phone_not_valid': r'Telfon belgisi nädogry',
+  r'agreement_not_found': r'Telfon belgisi nädogry',
 
   r'otp_not_match': r'Kod gabat gelmedi',
   r'otp_code_has_expired.': r'Kod möhleti gutardy',

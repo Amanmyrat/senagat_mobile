@@ -99,6 +99,12 @@ class _CheckPhoneBalanceScreenState extends State<CheckPhoneBalanceScreen> {
                                                 AppDimensions
                                                     .borderRadiusMedium,
                                               ),
+                                              border: Border.all(
+                                                color: controller.status == Status.error
+                                                    ? AppColors.redDark
+                                                    : AppColors.transparent,
+                                                width: 1,
+                                              ),
                                             ),
                                             child: Text(
                                               '+993',
@@ -123,7 +129,7 @@ class _CheckPhoneBalanceScreenState extends State<CheckPhoneBalanceScreen> {
                                                       .isTextNotEmpty(),
                                               focusNode:
                                               controller.phoneFocus,
-                                              maxLength: 8,
+                                              maxLength: controller.serviceName == 'telecom_internet'? 8 : 6,
                                               style: TextStyle(
                                                 fontSize: 14.sp,
                                                 fontFamily: AppFonts
@@ -140,11 +146,11 @@ class _CheckPhoneBalanceScreenState extends State<CheckPhoneBalanceScreen> {
                                                     AppDimensions
                                                         .borderRadiusMedium,
                                                   ),
-                                                  borderSide:
-                                                  BorderSide(
-                                                    color: AppColors
-                                                        .green,
-                                                    width: 1.w,
+                                                  borderSide: BorderSide(
+                                                    color: controller.status == Status.error
+                                                        ? AppColors.redDark
+                                                        : AppColors.green,
+                                                    width: 1,
                                                   ),
                                                 ),
                                                 enabledBorder: OutlineInputBorder(
@@ -153,11 +159,11 @@ class _CheckPhoneBalanceScreenState extends State<CheckPhoneBalanceScreen> {
                                                     AppDimensions
                                                         .borderRadiusMedium,
                                                   ),
-                                                  borderSide:
-                                                  BorderSide(
-                                                    color: AppColors
-                                                        .white,
-                                                    width: 1.w,
+                                                  borderSide: BorderSide(
+                                                    color: controller.status == Status.error
+                                                        ? AppColors.redDark
+                                                        : AppColors.white,
+                                                    width: 1,
                                                   ),
                                                 ),
                                                 counter:

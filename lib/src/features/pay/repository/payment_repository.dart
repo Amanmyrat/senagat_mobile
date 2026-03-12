@@ -1,4 +1,9 @@
+import 'package:senagat_mobile/src/features/check_phone_balance/model/check_balance_model.dart';
+import 'package:senagat_mobile/src/features/check_phone_balance/model/check_balance_model.dart';
 import 'package:senagat_mobile/src/features/home/models/user_information_model.dart';
+import 'package:senagat_mobile/src/features/pay/model/astu_top_up_model.dart';
+import 'package:senagat_mobile/src/features/pay/model/astu_top_up_model.dart';
+import 'package:senagat_mobile/src/features/pay/model/astu_top_up_model.dart';
 import 'package:senagat_mobile/src/features/pay/model/belet_balances_model.dart';
 import 'package:senagat_mobile/src/features/pay/model/belet_top_up_model.dart';
 import 'package:senagat_mobile/src/features/pay/model/belet_top_up_model.dart';
@@ -90,13 +95,15 @@ class PaymentRepository {
     );
   }
 
-  Future<String> telecomBalance({required JSON data}) async {
-    return _apiService.setData<String>(
+  Future<CheckBalanceModel> telecomBalance({required JSON data}) async {
+    return _apiService.setData<CheckBalanceModel>(
       endpoint: await ApiEndpoint.payment(PaymentEndpoint.TELECOM_BALANCE),
       data: data,
       requiresAuthToken: true,
       converter: (response) {
-        return response.body['data']['balance'];
+        final responseData = response.body['data'];
+        return CheckBalanceModel.fromMap(responseData);
+
       },
     );
   }
@@ -110,6 +117,34 @@ class PaymentRepository {
         final responseData = response.body['data'];
         if (responseData != null) {
           return TelecomTopUpModel.fromMap(responseData);
+        } else {
+          throw Exception('Payment data is null in response');
+        }
+      },
+    );
+  }
+
+  Future<CheckBalanceModel> astuBalance({required JSON data}) async {
+    return _apiService.setData<CheckBalanceModel>(
+      endpoint: await ApiEndpoint.payment(PaymentEndpoint.ASTU_BALANCE),
+      data: data,
+      requiresAuthToken: true,
+      converter: (response) {
+        final responseData = response.body;
+        return CheckBalanceModel.fromMap(responseData);
+      },
+    );
+  }
+
+  Future<AstuTopUpModel> astuPay({required JSON data}) async {
+    return _apiService.setData<AstuTopUpModel>(
+      endpoint: await ApiEndpoint.payment(PaymentEndpoint.ASTU_PAY),
+      data: data,
+      requiresAuthToken: true,
+      converter: (response) {
+        final responseData = response.body['data'];
+        if (responseData != null) {
+          return AstuTopUpModel.fromMap(responseData);
         } else {
           throw Exception('Payment data is null in response');
         }

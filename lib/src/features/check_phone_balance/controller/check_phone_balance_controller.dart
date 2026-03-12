@@ -4,7 +4,7 @@ import 'package:flutter_native_contact_picker/model/contact.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
-import 'package:senagat_mobile/src/features/pay/presentation/payment_screen.dart';
+import 'package:senagat_mobile/src/features/check_phone_balance/model/check_balance_model.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/telecom_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
 import '../../../utils/api_error_handler.dart';
@@ -17,6 +17,9 @@ class CheckPhoneBalanceController extends GetxController with StateControlMixin 
 
   String serviceName = '2';
   String serviceIcon = '';
+  String type = '';
+
+  late var checkBalanceModel = CheckBalanceModel();
 
   final FlutterNativeContactPicker _contactPicker = FlutterNativeContactPicker();
   late final FocusNode phoneFocus;
@@ -39,10 +42,33 @@ class CheckPhoneBalanceController extends GetxController with StateControlMixin 
     }
 
 
+    if(serviceName == 'IP TV'){
+      type = 'iptv';
+    }else if(serviceName == 'home_phone'){
+      type = 'phone';
+    }else if(serviceName == 'astu_internet'){
+      type = 'internet';
+    }else if(serviceName == 'CDMA'){
+      type = 'cdma';
+    }
+
+
     phoneController = TextEditingController();
     phoneFocus = FocusNode();
 
     super.onInit();
+  }
+
+  Future<CheckBalanceModel> _getTelecomBalanceModel() async {
+    return CheckBalanceModel(
+      phone: phoneController.text,
+    );
+  }
+  Future<CheckBalanceModel> _getAstuBalanceModel() async {
+    return CheckBalanceModel(
+      phone: phoneController.text,
+      type: type,
+    );
   }
 
   void onTap() async {
@@ -50,43 +76,85 @@ class CheckPhoneBalanceController extends GetxController with StateControlMixin 
     update();
 
     if(serviceName == 'telecom_internet'){
-      try {
+        final requestModel = await _getTelecomBalanceModel();
+        await repository.telecomBalance(data: requestModel.toMap()).then((value){
+          checkBalanceModel = value;
+          if (checkBalanceModel.success == true) {
+            status = Status.completed;
+            update();
 
-        final result =
-        await repository.telecomBalance(data: <String, dynamic>{'phone': phoneController.text});
+            Get.toNamed(TelecomPaymentScreen.route, arguments: {
+              'balance': checkBalanceModel.balance,
+              'selectedServiceTitle': serviceName,
+              'number': phoneController.text,
+            });
 
-        status = Status.completed;
-        update;
+          } else {
 
-        Get.toNamed(TelecomPaymentScreen.route, arguments: {
-          'balance': result,
-          'selectedServiceTitle': serviceName,
-          'number': phoneController.text,
+            status = Status.error;
+            update();
+
+            ApiErrorHandler.handleApiError(checkBalanceModel.error?.message);
+          }
+        }).catchError((e){
+          status = Status.error;
+          update();
+          ApiErrorHandler.handleApiError(e);
+          debugPrint(e.toString());
         });
 
-      } catch (e) {
-        status = Status.error;
-        update();
-        ApiErrorHandler.handleApiError(e);
-        debugPrint(e.toString());
-      }
     }else {
-      update();
-      Get.toNamed(AstuPaymentScreen.route,
-          arguments:
-          {'selectedServiceTitle': serviceName,
-            'selectedServiceIcon': serviceIcon,
-            'number': phoneController.text,
-          });
+        final requestModel = await _getAstuBalanceModel();
+
+        await repository.astuBalance(data: requestModel.toMap()).then((value) {
+          checkBalanceModel = value;
+
+          if (checkBalanceModel.success == true) {
+
+            status = Status.completed;
+            update();
+
+            Get.toNamed(AstuPaymentScreen.route, arguments: {
+              'selectedServiceTitle': serviceName,
+              'selectedServiceIcon': serviceIcon,
+              'number': phoneController.text,
+              'balance': checkBalanceModel.balance,
+            });
+
+          } else {
+
+            status = Status.error;
+            update();
+
+            ApiErrorHandler.handleApiError(checkBalanceModel.error?.message);
+          }
+
+        }).catchError((e) {
+
+          status = Status.error;
+          update();
+
+          ApiErrorHandler.handleApiError(e);
+          debugPrint(e.toString());
+
+        });
+
+
     }
 
   }
 
 
   void isTextNotEmpty(){
-
-    phoneController.text.length >= 8 ? continueEnabled = true : continueEnabled = false;
-    update();
+    if(serviceName == 'telecom_internet'){
+      phoneController.text.length >= 8 ? continueEnabled = true : continueEnabled = false;
+      update();
+    }else {
+      phoneController.text.length >= 6
+          ? continueEnabled = true
+          : continueEnabled = false;
+      update();
+    }
   }
 
 

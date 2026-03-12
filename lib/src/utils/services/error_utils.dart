@@ -14,6 +14,11 @@ class ErrorUtils {
         final data = e.response?.data;
 
         if (data is Map<String, dynamic>) {
+
+          if (data['error'] != null && data['error'] is Map) {
+            return data['error']['message']?.toString().tr;
+          }
+
           if (data['message'] != null) {
             return data['message'].toString().tr;
           }

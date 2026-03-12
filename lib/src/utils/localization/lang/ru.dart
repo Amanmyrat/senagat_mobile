@@ -254,6 +254,8 @@ const Map<String, String> ruRu = {
   r'status': r'Статус',
   r'not_found': r'Ничего не найдено',
   r'not_found_for_search': r'Nothing was found for your search.',
+  r'phone_not_valid': r'Неверный телефон',
+  r'agreement_not_found': r'Неверный телефон',
 
   r'otp_not_match': r'Код не совпадает',
   r'otp_code_has_expired.': r'Срок действия кода истёк',

@@ -254,6 +254,8 @@ const Map<String, String> enUs = {
   r'status': r'Status',
   r'not_found': r'Not found',
   r'not_found_for_search': r'Nothing was found for your search.',
+  r'phone_not_valid': r'Phone not valid',
+  r'agreement_not_found': r'Phone not valid',
 
 
   r'otp_not_match': r'OTP did not match',
