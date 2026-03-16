@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
 import 'package:flutter_native_contact_picker/model/contact.dart';
 import 'package:get/get.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/check_phone_balance/model/check_balance_model.dart';
@@ -15,7 +16,7 @@ class CheckPhoneBalanceController extends GetxController with StateControlMixin 
 
   late final TextEditingController phoneController;
 
-  String serviceName = '2';
+  String serviceName = '';
   String serviceIcon = '';
   String type = '';
 
@@ -28,6 +29,24 @@ class CheckPhoneBalanceController extends GetxController with StateControlMixin 
 
   CheckPhoneBalanceController(this.repository);
 
+  late MaskTextInputFormatter currentMask = telecomMaskOther;
+
+  final telecomMask12 = MaskTextInputFormatter(
+    mask: '## ######',
+    filter: {"#": RegExp(r'[0-9]')},
+  );
+
+  final telecomMaskOther = MaskTextInputFormatter(
+    mask: '### ######',
+    filter: {"#": RegExp(r'[0-9]')},
+  );
+
+  final defaultMask = MaskTextInputFormatter(
+    mask: '12 ######',
+    filter: { "#": RegExp(r'[0-9]') },
+    initialText: "12 ",
+
+  );
 
   @override
   void onInit() {
@@ -55,18 +74,24 @@ class CheckPhoneBalanceController extends GetxController with StateControlMixin 
 
     phoneController = TextEditingController();
     phoneFocus = FocusNode();
-
     super.onInit();
   }
 
+  String _cleanSpaces(String phoneNumber) {
+    return phoneNumber.replaceAll(' ', '');
+  }
+  String _clean12(String phoneNumber) {
+    return phoneNumber.replaceAll('12 ', '').replaceAll(' ', '');
+  }
   Future<CheckBalanceModel> _getTelecomBalanceModel() async {
     return CheckBalanceModel(
-      phone: phoneController.text,
+      phone: _cleanSpaces(phoneController.text),
     );
   }
+
   Future<CheckBalanceModel> _getAstuBalanceModel() async {
     return CheckBalanceModel(
-      phone: phoneController.text,
+      phone: _clean12(phoneController.text),
       type: type,
     );
   }
@@ -94,7 +119,7 @@ class CheckPhoneBalanceController extends GetxController with StateControlMixin 
             status = Status.error;
             update();
 
-            ApiErrorHandler.handleApiError(checkBalanceModel.error?.message);
+            ApiErrorHandler.handleApiError(checkBalanceModel.message);
           }
         }).catchError((e){
           status = Status.error;
@@ -126,7 +151,7 @@ class CheckPhoneBalanceController extends GetxController with StateControlMixin 
             status = Status.error;
             update();
 
-            ApiErrorHandler.handleApiError(checkBalanceModel.error?.message);
+            ApiErrorHandler.handleApiError(checkBalanceModel.message);
           }
 
         }).catchError((e) {
@@ -146,15 +171,12 @@ class CheckPhoneBalanceController extends GetxController with StateControlMixin 
 
 
   void isTextNotEmpty(){
-    if(serviceName == 'telecom_internet'){
-      phoneController.text.length >= 8 ? continueEnabled = true : continueEnabled = false;
-      update();
-    }else {
-      phoneController.text.length >= 6
+
+      phoneController.text.length >= 9
           ? continueEnabled = true
           : continueEnabled = false;
       update();
-    }
+
   }
 
 

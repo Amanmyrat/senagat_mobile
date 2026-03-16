@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/features/foundation/presentation/foundation_screen.dart';
+import '../features/card/controller/card_controller.dart';
 import '../features/dashboard/controller/dashboard_controller.dart';
 import '../features/dashboard/presentation/dashboard_screen.dart';
 import '../features/dashboard/utils/nested_nav_ids.dart';
@@ -102,9 +103,10 @@ class CheckWidget extends StatelessWidget {
                             width: MediaQuery.of(context).size.width,
                             child: ElevatedButtonWithState(
                               onPressed: () {
-                                final homeController =
-                                    Get.find<HomeController>();
+                                final homeController = Get.find<HomeController>();
+                                final cardController = Get.find<CardController>();
                                 homeController.getUserProfileInfo();
+                                cardController.getUserProfileInfo();
 
                                 Get.offAllNamed(DashboardScreen.route);
                               },

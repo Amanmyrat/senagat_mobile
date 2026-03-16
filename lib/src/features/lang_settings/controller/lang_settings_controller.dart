@@ -7,12 +7,14 @@ import 'package:senagat_mobile/src/utils/localization/localization_service.dart'
 
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/localization/controller/language_controller.dart';
+import '../../auth/controller/account_status_controller.dart';
 
 
 class LangSettingsController extends GetxController with StateControlMixin {
 
   final LanguageController languageController = Get.find<LanguageController>();
   final HomeController homeController = Get.find<HomeController>();
+  late AccountLoginStatusController accountLoginStatusController;
 
   final langCodes = LocalizationService.langs;
 
@@ -23,7 +25,16 @@ class LangSettingsController extends GetxController with StateControlMixin {
       if (langCodes.contains(languageCode)) {
         languageController.updateLanguage(languageCode);
         currentLang = languageCode;
-        homeController.getUserProfileInfo();
+        accountLoginStatusController = Get.find<AccountLoginStatusController>();
+
+        ever(accountLoginStatusController.accountLoginStatus, (
+            AccountLoginStatus status,
+            ) {
+          if (status == AccountLoginStatus.loggedIn) {
+            homeController.getUserProfileInfo();
+
+          }
+        });
         update();
       }
     } catch (e) {

@@ -27,8 +27,6 @@ class AuthSuccessController extends GetxController with StateControlMixin {
   }
 
   void _navigateToNextScreen() {
-    final dashboardController = Get.find<DashboardController>();
-    dashboardController.resetToHome();
 
     try {
       Navigator.of(Get.context!).pushNamedAndRemoveUntil(

@@ -71,7 +71,7 @@ class _PaymentConfirmationScreenState
                   SizedBox(height: 8.h),
 
                   Text(
-                    '${r'code_was_sent_to'.tr} ${widget.phoneNumber}',
+                    r'code_was_sent_to'.tr,
                     style: TextStyle(
                       fontSize: 14.sp,
                       color: AppColors.greyInactive,

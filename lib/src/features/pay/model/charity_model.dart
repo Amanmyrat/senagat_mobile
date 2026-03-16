@@ -20,8 +20,8 @@ class CharityModel {
 
   factory CharityModel.fromMap(Map<String, dynamic> json) {
     return CharityModel(
-      formUrl: json['form_url'] ?? '',
-      orderId: json['order_id'] ?? '',
+      formUrl: json['formUrl'] ?? '',
+      orderId: json['orderId'] ?? '',
 
     );
   }

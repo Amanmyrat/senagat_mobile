@@ -12,6 +12,7 @@ import '../../../utils/services/bank_service/bank_services.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
 import '../../../widgets/elevated_button_with_state.dart';
 import '../../add_card/model/card_model.dart';
+import '../../home/controller/home_controller.dart';
 
 class ServicePaymentScreen extends StatelessWidget {
   const ServicePaymentScreen({
@@ -90,6 +91,10 @@ class ServicePaymentScreen extends StatelessWidget {
                         width: MediaQuery.of(context).size.width,
                         child: ElevatedButtonWithState(
                           onPressed: () {
+                            final homeController =
+                            Get.find<HomeController>();
+                            homeController.getUserProfileInfo();
+
                             Get.offAllNamed(DashboardScreen.route);
                           },
 

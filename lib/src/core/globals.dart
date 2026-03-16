@@ -23,7 +23,7 @@ class Configs {
   static const baseUrl = "https://$rootIpAddress5/api/v1";
   static const baseImageUrl = "https://$rootIpAddress5/";
 
-  static const bool OTPEnabled = true;
+  static const bool OTPEnabled = false;
 
 }
 

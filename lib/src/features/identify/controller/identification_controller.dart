@@ -47,6 +47,8 @@ class IdentificationController extends GetxController with StateControlMixin {
     cardsBox.clear();
     fastOperation.clear();
     paymentBox.clear();
+    homeController.history.clear();
+    homeController.exchange.clear();
 
     // Reset ServiceSettingsController FIRST to reload from empty Hive
     // This must happen before HomeController update so fast operations are cleared

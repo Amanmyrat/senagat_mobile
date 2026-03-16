@@ -284,11 +284,10 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                                 ),
                                             color: AppColors.blackText,
                                           ),
-                                          tabs: [
-                                            Tab(text: r'1_year'.tr,),
-                                            Tab(text: r'2_years'.tr),
-                                            Tab(text: r'3_years'.tr),
-                                          ],
+                                          tabs: List.generate(
+                                            controller.term,
+                                                (i) => Tab(text: '${i + 1} ${'years'.tr}'),
+                                          ),
                                         ),
                                       ),
                                       SizedBox(

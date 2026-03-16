@@ -29,7 +29,7 @@ class ServiceSettingsController extends GetxController {
     ServiceItem(r'TM CELL', AppAssets.tmCell),
     ServiceItem(r'CDMA', AppAssets.astu),
     ServiceItem(r'IP TV', AppAssets.astu),
-    ServiceItem(r'home_phone', AppAssets.astu),
+    ServiceItem(r'phone', AppAssets.astu),
     ServiceItem(r'astu_internet', AppAssets.astu),
     ServiceItem(r'telecom_internet', AppAssets.telecom),
     ServiceItem(r'Belet', AppAssets.beletIcon),

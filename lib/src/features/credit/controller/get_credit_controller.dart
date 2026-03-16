@@ -11,7 +11,7 @@ import '../../../utils/api_error_handler.dart';
 import '../../loan/presentation/loan_screen.dart';
 
 class GetCreditController extends GetxController
-    with StateControlMixin, GetSingleTickerProviderStateMixin {
+    with StateControlMixin, GetTickerProviderStateMixin {
   late MoneyMaskedTextController sumController;
 
   late TextEditingController bidController;
@@ -28,7 +28,7 @@ class GetCreditController extends GetxController
   late int interest;
 
   late int creditId;
-  late int term;
+  int term = 1;
   late double monthlyPayment;
 
   late int month;
@@ -72,8 +72,8 @@ class GetCreditController extends GetxController
   }
 
   void onTabTap() {
-    term = tabBarController.index + 1;
-    month = (term * 12);
+    tabBarController.index;
+    month = ((tabBarController.index + 1) * 12);
     updateText(currentValue);
   }
 
@@ -122,9 +122,8 @@ class GetCreditController extends GetxController
     bidController = TextEditingController();
 
     paymentController = TextEditingController();
-    tabBarController = TabController(length: 3, vsync: this);
-    term = tabBarController.index + 1;
-    month = (term * 12);
+    tabBarController = TabController(length: term, vsync: this);
+    month = ((tabBarController.index + 1) * 12);
     super.onInit();
   }
 
@@ -147,6 +146,17 @@ class GetCreditController extends GetxController
       minAmountStr = formatMoney(selectedCredit.minAmount ?? 0);
       maxAmountStr = formatMoney(selectedCredit.maxAmount ?? 0);
 
+      term = selectedCredit.term!;
+
+      tabBarController.dispose();
+
+      tabBarController = TabController(
+        length: term,
+        vsync: this,
+        initialIndex: 0,
+      );
+
+      month = ((tabBarController.index + 1) * 12);
       formatBid(interest);
 
       calculate();
@@ -156,14 +166,19 @@ class GetCreditController extends GetxController
   }
 
   void calculate() {
-    double totalWithInterest = currentValue + (currentValue * interest / 100);
-    monthlyPayment = totalWithInterest / month;
+    month = ((tabBarController.index + 1) * 12);
+
+    double totalWithInterest = (currentValue * interest / 100);
+    monthlyPayment = totalWithInterest / 12;
+    print(month);
+    double a = currentValue / month;
+    double result = monthlyPayment + a;
 
     String formatted;
-    if (monthlyPayment % 1 == 0) {
-      formatted = monthlyPayment.toInt().toString();
+    if (result % 1 == 0) {
+      formatted = result.toInt().toString();
     } else {
-      formatted = monthlyPayment.toStringAsFixed(2);
+      formatted = result.toStringAsFixed(2);
     }
 
     formatted = formatted.replaceAll('.', ',');

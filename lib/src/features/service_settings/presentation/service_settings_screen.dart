@@ -79,7 +79,7 @@ class _ServiceSettingsScreenState extends State<ServiceSettingsScreen> {
                           children: [
                             /// Title
                             Text(
-                              r'quick_navigation_buttons'.tr,
+                              r'pay'.tr,
                               style: TextStyle(
                                 fontSize: 24.sp,
                                 color: AppColors.blackText,
