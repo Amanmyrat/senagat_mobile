@@ -306,8 +306,8 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
                       ),
                       if(controller.check == true)
                         CheckWidget(isLoading: controller.status == Status.loading,
-                          isTitle: false, route: controller.isInquiries ? FoundationScreen.route : DashboardScreen.route,
-                          buttonTitle: controller.isFoundation ? r'fund_page'.tr : r'home_page'.tr, successTitle: 'application_send',
+                          isTitle: false, route: DashboardScreen.route,
+                          buttonTitle: r'home_page'.tr, successTitle: 'application_send',
                         ),
                     ],
                   ),

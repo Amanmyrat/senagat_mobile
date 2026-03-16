@@ -38,9 +38,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        HeaderWidget(),
+                        // HeaderWidget(),
                         // charityFoundationWidget(controller),
-                        Text(r'payments'.tr, style: TextStyle(color: AppColors.blackText, fontSize: 17.sp),),
+                        SizedBox(height: AppDimensions.paddingExtraLarge,),
+                        Text(r'payments'.tr, style: TextStyle(color: AppColors.blackText, fontSize: 20.sp),),
                         SizedBox(height: 16.h),
                         GridView.builder(
                           scrollDirection: Axis.vertical,
@@ -93,63 +94,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                     Expanded(
                                       child: Text(
                                         controller.paymentsTitle[index].tr,
-                                        style: TextStyle(
-                                          color: AppColors.blackText,
-                                          fontSize: 14.sp,
-                                          fontFamily: AppFonts.secondaryFont,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          }, gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 3, mainAxisSpacing: 10),
-                        ),
-                        SizedBox(height: AppDimensions.padding40,),
-                        Text(r'services'.tr, style: TextStyle(color: AppColors.blackText, fontSize: 17.sp),),
-                        SizedBox(height: 16.h),
-                        GridView.builder(
-                          scrollDirection: Axis.vertical,
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: controller.serviceTitle.length,
-                          itemBuilder: (context, index) {
-
-                            return GestureDetector(
-                              onTap: () {
-                                controller.onServiceTap(index);
-                              },
-                              child: Container(
-                                width: 190.w,
-                                height: 70.h,
-                                padding: EdgeInsets.all(
-                                  AppDimensions.paddingMedium.h,
-                                ),
-                                margin: EdgeInsets.only(
-                                  right: AppDimensions.marginMedium.w,
-                                ),
-                                decoration:  BoxDecoration(
-                                  borderRadius: BorderRadius.circular(
-                                    AppDimensions.borderRadiusMedium.r,
-                                  ),
-                                  border: Border.all(color: AppColors.dividerColor, width: 1.w, style: BorderStyle.solid),
-                                  boxShadow: softCardShadow,
-                                  color: AppColors.white,
-                                ),
-                                child: Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 50.w,
-                                      height: 50.h,
-
-                                      child: Image.asset(
-                                        controller.serviceIcons[index], width: 50.w,),
-                                    ),
-                                    SizedBox(width: AppDimensions.paddingMedium.w,),
-                                    Expanded(
-                                      child: Text(
-                                        controller.serviceTitle[index].tr,
                                         style: TextStyle(
                                           color: AppColors.blackText,
                                           fontSize: 14.sp,

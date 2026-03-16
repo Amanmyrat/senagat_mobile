@@ -101,7 +101,7 @@ class PaymentRepository {
       data: data,
       requiresAuthToken: true,
       converter: (response) {
-        final responseData = response.body['data'];
+        final responseData = response.body;
         return CheckBalanceModel.fromMap(responseData);
 
       },

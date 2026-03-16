@@ -31,11 +31,15 @@ class AstuPaymentController extends PaymentController {
       type = 'cdma';
     }
 
+    String _clean12(String phoneNumber) {
+      return phoneNumber.replaceAll('12 ', '').replaceAll(' ', '');
+    }
+
     try {
       final requestModel = AstuTopUpModel(
         bankName: selectedCard?.bank ?? '',
         amount: int.parse(sumController.text),
-        phone: phoneController.text,
+        phone: _clean12(phoneController.text),
         type: type,
       );
 

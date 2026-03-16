@@ -282,7 +282,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   ? controller.onRegisterTap
                                   : null,
                               child: Text(
-                                r'send_code'.tr,
+                                controller.otpEnabled == true?
+                                r'send_code'.tr :
+                                r'sign_in'.tr,
                                 style: TextStyle(
                                   fontSize: 14.sp,
                                   color: AppColors.white,

@@ -19,10 +19,6 @@ class ProfileController extends GetxController with StateControlMixin, GetSingle
   final phoneBox = Hive.box<String>('phoneBox');
   String appVersion = '';
   String? phone;
-  final homeController = Get.find<HomeController>();
-  final cardsBox = Hive.box<CardModel>('cardsBox');
-  final fastOperation = Hive.box('fastOperations');
-  final paymentBox = Hive.box<PayModel>('payBox');
   late AccountLoginStatusController accountLoginStatusController;
 
   @override
@@ -52,26 +48,7 @@ class ProfileController extends GetxController with StateControlMixin, GetSingle
   }
 
   void onSignInTap(){
-
-    cardsBox.clear();
-    fastOperation.clear(); // Clear all fast operations on login
-    paymentBox.clear();
-
-    homeController.lastTap = HomeTapType.none;
-    homeController.userInformationModel = null;
-    homeController.currentProfile = null;
-    homeController.isProfileRequired = false;
-    homeController.isServiceRequired = true;
     
-    // Reset ServiceSettingsController to reload from empty Hive
-    try {
-      final serviceSettingsController = Get.find<ServiceSettingsController>();
-      serviceSettingsController.reloadFromHive(); // Reload from Hive (which is now empty)
-    } catch (e) {
-      // ServiceSettingsController might not be initialized yet, ignore
-    }
-    
-    update();
     Get.toNamed(WelcomeScreen.route);
   }
 

@@ -255,7 +255,8 @@ Widget paymentPhoneField(PaymentController controller) {
               controller: controller.phoneController,
               onChanged: (_) => controller.isTextNotEmpty(),
               focusNode: controller.phoneFocus,
-              maxLength: controller.serviceIcon == AppAssets.astu ? 6 : 8,
+              maxLength: 8,
+              readOnly: controller.serviceIcon == AppAssets.astu || controller.serviceName == 'telecom_internet' ? true : false,
               style: TextStyle(
                 fontSize: 14.sp,
                 fontFamily: AppFonts.primaryFont,

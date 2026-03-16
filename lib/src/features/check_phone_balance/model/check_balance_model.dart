@@ -3,22 +3,21 @@ class CheckBalanceModel {
   final String? type;
   final String? balance;
   final bool? success;
-  ApiError? error;
-
+  final String? message;
 
   CheckBalanceModel({
     this.phone,
     this.type,
     this.balance,
     this.success,
-    this.error
+    this.message
   });
 
   factory CheckBalanceModel.fromMap(Map<String, dynamic> json) {
     return CheckBalanceModel(
       balance: json['data']?['balance'],
       success: json['success'] ?? '',
-      error: json['error'] != null ? ApiError.fromMap(json['error']) : null,
+      message: json['message'],
     );
   }
 

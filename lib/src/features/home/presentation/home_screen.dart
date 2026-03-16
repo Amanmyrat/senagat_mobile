@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                HeaderWidget(),
+                                // HeaderWidget(),
 
                                 if (controller.isProfileRequired == true) ...[
                                   profileIsRequiredWidget(controller),
@@ -891,7 +891,7 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                r'fast_operations'.tr,
+                r'selected_services'.tr,
                 style: TextStyle(color: AppColors.blackText, fontSize: 17.sp),
               ),
               GestureDetector(

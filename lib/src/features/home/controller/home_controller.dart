@@ -153,7 +153,7 @@ class HomeController extends GetxController with StateControlMixin {
         NetAndTvScreen.route,
         arguments: {'selectedServiceTitle': item.title},
       );
-    }else if(item.icon == AppAssets.astu){
+    }else if(item.icon == AppAssets.astu || item.title == 'telecom_internet'){
       Get.toNamed(CheckPhoneBalanceScreen.route, arguments: {
         'selectedServiceTitle': item.title,
         'selectedServiceIcon': item.icon,
@@ -164,8 +164,6 @@ class HomeController extends GetxController with StateControlMixin {
           ? BeletPaymentScreen.route
           : title == 'TM CELL'
               ? TmcellPaymentScreen.route
-              : title == 'telecom_internet'
-                  ? TelecomPaymentScreen.route
                   : AstuPaymentScreen.route;
 
       Get.toNamed(
@@ -197,17 +195,10 @@ class HomeController extends GetxController with StateControlMixin {
       }
     });
 
-    // If already logged in on app start, fetch user info immediately
-    if (accountLoginStatusController.accountLoginStatus.value ==
-        AccountLoginStatus.loggedIn) {
-      getUserProfileInfo();
-      loadHistory();
-      getExchangeRates();
-
-    }
 
     getExchangeRates();
     checkProfile();
+    loadHistory();
     checkProfileStatus();
     textStatus();
 

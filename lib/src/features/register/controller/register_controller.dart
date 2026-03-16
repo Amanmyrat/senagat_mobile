@@ -28,7 +28,7 @@ class RegisterController extends GetxController with StateControlMixin {
   late final TextEditingController passwordController;
   late final FocusNode passwordFocus;
   late AccountModel accountModel;
-
+  final bool otpEnabled = Configs.OTPEnabled;
   final authController = Get.find<AuthController>();
 
 
@@ -46,7 +46,6 @@ class RegisterController extends GetxController with StateControlMixin {
     phoneFocus = FocusNode();
     passwordController = TextEditingController();
     passwordFocus = FocusNode();
-    print(login);
     super.onInit();
   }
 
@@ -88,7 +87,7 @@ class RegisterController extends GetxController with StateControlMixin {
           ApiErrorHandler.handleApiError(e);
         });
       }
-    } else if (Configs.OTPEnabled == false) {
+    } else if (otpEnabled == false) {
       Get.toNamed(RegisterPasswordSetupScreen.route);
       phoneBox.put('phone', phoneController.text);
       update();
@@ -173,6 +172,8 @@ class RegisterController extends GetxController with StateControlMixin {
         authController.onAccountUpdate(value);
         authController.onTokenUpdate(value);
 
+        phoneBox.put('phone', phoneController.text);
+        update();
         accountModel = value;
         Get.toNamed(
           login == 'login'

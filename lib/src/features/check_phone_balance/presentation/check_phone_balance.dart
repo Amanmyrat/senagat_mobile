@@ -118,18 +118,30 @@ class _CheckPhoneBalanceScreenState extends State<CheckPhoneBalanceScreen> {
                                                 .paddingSmall
                                                 .w,
                                           ),
+
                                           Expanded(
                                             child: TextFormField(
                                               keyboardType:
                                               TextInputType.phone,
                                               controller: controller
                                                   .phoneController,
-                                              onChanged: (v) =>
-                                                  controller
-                                                      .isTextNotEmpty(),
+                                              inputFormatters: [
+                                                controller.serviceName == 'telecom_internet'
+                                                    ? controller.currentMask
+                                                    : controller.defaultMask
+                                              ],
+                                              onChanged: (v) {
+                                                final digits = v.replaceAll(' ', '');
+
+                                                controller.currentMask.updateMask(
+                                                  mask: digits.startsWith('12') ? '## ######' : '### ######',
+                                                );
+                                                controller
+                                                    .isTextNotEmpty();
+                                              },
                                               focusNode:
                                               controller.phoneFocus,
-                                              maxLength: controller.serviceName == 'telecom_internet'? 8 : 6,
+                                              maxLength: 9,
                                               style: TextStyle(
                                                 fontSize: 14.sp,
                                                 fontFamily: AppFonts
@@ -137,7 +149,7 @@ class _CheckPhoneBalanceScreenState extends State<CheckPhoneBalanceScreen> {
                                               ),
                                               decoration: InputDecoration(
                                                 hintText:
-                                                r'enter_number'.tr,
+                                                controller.serviceName == 'telecom_internet' ? '12 xxxxxx / xxx xxxxxx' : '12 xxxxxx',
                                                 border:
                                                 OutlineInputBorder(),
                                                 focusedBorder: OutlineInputBorder(
@@ -194,8 +206,30 @@ class _CheckPhoneBalanceScreenState extends State<CheckPhoneBalanceScreen> {
                                               ),
                                             ),
                                           ),
+
                                         ],
                                       ),
+
+                                    if(controller.serviceName == 'telecom_internet')...[
+                                      SizedBox(
+                                        height: AppDimensions
+                                            .paddingMedium
+                                            .h,
+                                      ),
+                                      Align(
+                                        alignment: Alignment.centerRight,
+                                        child: Text(
+                                          r'asgabat_number_or_region'.tr,
+                                          style: TextStyle(
+                                            color: AppColors.blackText,
+                                            fontSize: 14.sp,
+                                            fontFamily: AppFonts.secondaryFont,
+                                          ),
+                                        ),
+                                      ),
+
+                                    ],
+
                                   ],
                                 ),
                               ),

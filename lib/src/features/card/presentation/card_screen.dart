@@ -46,7 +46,7 @@ class _CardScreenState extends State<CardScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        HeaderWidget(),
+                        // HeaderWidget(),
 
                         // GestureDetector(
                         //   onTap: () {
@@ -82,9 +82,10 @@ class _CardScreenState extends State<CardScreen> {
                         // ),
 
                         // SizedBox(height: 40.h),
+                        SizedBox(height: AppDimensions.paddingExtraLarge,),
 
                         Text(r'cards'.tr,
-                            style: TextStyle(fontSize: 17.sp, color: AppColors.black)),
+                            style: TextStyle(fontSize: 20.sp, color: AppColors.black)),
                         SizedBox(height: 16.h),
 
                         controller.cardBox.length == 0

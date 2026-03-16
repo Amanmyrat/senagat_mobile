@@ -12,6 +12,10 @@ class TelecomPaymentController extends PaymentController {
 
   late var telecomTopUpModel = TelecomTopUpModel();
 
+  String _cleanSpaces(String phoneNumber) {
+    return phoneNumber.replaceAll(' ', '');
+  }
+
   @override
   Future<void> onTap() async {
     if (!continueEnabled) return;
@@ -26,7 +30,7 @@ class TelecomPaymentController extends PaymentController {
       final requestModel = TelecomTopUpModel(
         bankName: selectedCard?.bank ?? '',
         amount: int.parse(sumController.text),
-        phone: phoneController.text,
+        phone: _cleanSpaces(phoneController.text),
       );
 
       final result =
