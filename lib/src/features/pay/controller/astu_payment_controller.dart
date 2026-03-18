@@ -23,13 +23,14 @@ class AstuPaymentController extends PaymentController {
 
     if(serviceName == 'IP TV'){
       type = 'iptv';
-    }else if(serviceName == 'home_phone'){
+    }else if(serviceName == 'astu_phone'){
       type = 'phone';
     }else if(serviceName == 'astu_internet'){
       type = 'internet';
     }else if(serviceName == 'CDMA'){
       type = 'cdma';
     }
+
 
     String _clean12(String phoneNumber) {
       return phoneNumber.replaceAll('12 ', '').replaceAll(' ', '');

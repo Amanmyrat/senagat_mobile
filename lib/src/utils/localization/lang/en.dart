@@ -244,7 +244,7 @@ const Map<String, String> enUs = {
   r'altyn_asyr': r'Altyn asyr (other banks)',
   r'top_up_the_balance': r'Top up the balance',
   r'other': r'Other',
-  // r'belet': r'Belet',
+  r'belet': r'Belet',
   r'charity': r'Charitable Foundation',
   r'back': r'Back',
   r'notConfirmed': r'Not confirmed',
@@ -259,6 +259,8 @@ const Map<String, String> enUs = {
   r'payment_temporarily_unavailable':'This payment is temporarily unavailable',
   r'astu_phone': r'AŞTU telefon',
   r'selected_services':'Selected services',
+  r'selected2':'Selected',
+  r'add_services':'Add services for management and payment',
 
 
   r'otp_not_match': r'OTP did not match',

@@ -5,6 +5,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:senagat_mobile/src/app.dart';
 import 'package:senagat_mobile/src/core/local/key_value_storage_base.dart';
 import 'package:senagat_mobile/src/features/add_card/model/card_model.dart';
+import 'package:senagat_mobile/src/features/category/model/fast_service_model.dart';
 import 'package:senagat_mobile/src/features/identity_verification/models/profile_model.dart';
 import 'package:senagat_mobile/src/features/pay/model/pay_model.dart';
 import 'package:senagat_mobile/src/utils/path_provider_service.dart';
@@ -26,6 +27,7 @@ void main() async {
   Hive.registerAdapter(CardModelAdapter());
   Hive.registerAdapter(PayModelAdapter());
   Hive.registerAdapter(ProfileModelAdapter());
+  Hive.registerAdapter(FastServiceItemAdapter());
 
   await Hive.openBox<ProfileModel>('profileBox');
   await Hive.openBox('fastOperations');
@@ -34,6 +36,8 @@ void main() async {
   await Hive.openBox<PayModel>('payBox');
   await Hive.openBox<PayModel>('payFoundationBox');
   await Hive.openBox('accountsBox');
+  await Hive.openBox<FastServiceItem>('fastServices');
+
 
   runApp(const SenagatApp());
 }

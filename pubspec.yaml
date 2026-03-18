@@ -57,6 +57,7 @@ dependencies:
   package_info_plus: ^8.0.0
   webview_flutter: ^4.7.0
   secure_application: ^4.0.0
+  dotted_border: ^2.1.0
 
   flutter_map: ^7.0.2
   latlong2: ^0.9.1

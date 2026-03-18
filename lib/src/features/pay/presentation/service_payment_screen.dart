@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
+import 'package:senagat_mobile/src/features/dashboard/utils/nested_nav_ids.dart';
 import 'package:senagat_mobile/src/features/pay/controller/custom_payment_controller.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
@@ -12,6 +13,7 @@ import '../../../utils/services/bank_service/bank_services.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
 import '../../../widgets/elevated_button_with_state.dart';
 import '../../add_card/model/card_model.dart';
+import '../../dashboard/controller/dashboard_controller.dart';
 import '../../home/controller/home_controller.dart';
 
 class ServicePaymentScreen extends StatelessWidget {
@@ -91,9 +93,11 @@ class ServicePaymentScreen extends StatelessWidget {
                         width: MediaQuery.of(context).size.width,
                         child: ElevatedButtonWithState(
                           onPressed: () {
-                            final homeController =
-                            Get.find<HomeController>();
+                            final homeController = Get.find<HomeController>();
+                            final dashboardController = Get.find<DashboardController>();
                             homeController.getUserProfileInfo();
+                            homeController.loadHistory();
+                            dashboardController.updateCurrentIndex(NestedNavigationIds.home);
 
                             Get.offAllNamed(DashboardScreen.route);
                           },
@@ -139,8 +143,14 @@ class ServicePaymentScreen extends StatelessWidget {
                         width: MediaQuery.of(context).size.width,
                         child: ElevatedButtonWithState(
                           onPressed: () {
-                            Get.back();
-                          },
+                            final homeController = Get.find<HomeController>();
+                            final dashboardController = Get.find<DashboardController>();
+                            homeController.getUserProfileInfo();
+                            homeController.loadHistory();
+                            dashboardController.updateCurrentIndex(NestedNavigationIds.home);
+
+                            Get.offAllNamed(DashboardScreen.route);
+                            },
 
                           isError: false,
                           isLoading: false,

@@ -469,10 +469,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   .spaceBetween,
                                                           children: [
                                                             Text(
-                                                              controller
-                                                                  .history[index]
-                                                                  .type
-                                                                  .tr,
+                                                              controller.historyTitleByType(controller.history[index].type),
                                                               style: TextStyle(
                                                                 color: AppColors
                                                                     .blackText,
@@ -891,7 +888,7 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                r'selected_services'.tr,
+                r'selected2'.tr,
                 style: TextStyle(color: AppColors.blackText, fontSize: 17.sp),
               ),
               GestureDetector(

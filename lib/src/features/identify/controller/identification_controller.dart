@@ -23,6 +23,7 @@ class IdentificationController extends GetxController with StateControlMixin {
   final phoneBox = Hive.box<String>('phoneBox');
   final cardsBox = Hive.box<CardModel>('cardsBox');
   final fastOperation = Hive.box('fastOperations');
+  final fastService = Hive.box('fastServices');
   final paymentBox = Hive.box<PayModel>('payBox');
 
   final _keyValueStorageService = KeyValueStorageService();
@@ -46,9 +47,10 @@ class IdentificationController extends GetxController with StateControlMixin {
     phoneBox.clear();
     cardsBox.clear();
     fastOperation.clear();
+    fastService.clear();
     paymentBox.clear();
     homeController.history.clear();
-    homeController.exchange.clear();
+    homeController.history.clear();
 
     // Reset ServiceSettingsController FIRST to reload from empty Hive
     // This must happen before HomeController update so fast operations are cleared

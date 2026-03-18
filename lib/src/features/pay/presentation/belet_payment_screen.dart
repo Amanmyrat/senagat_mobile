@@ -26,6 +26,7 @@ class BeletPaymentScreen extends StatelessWidget {
           controller: controller,
           title: controller.serviceName.tr,
           formChildren: [
+            paymentAccountWidget(controller),
             paymentPhoneField(controller),
             if (controller.status != Status.loading) ...[
               _beletTopUpGrid(controller),

@@ -219,7 +219,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
                                             CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                item.type.tr,
+                                                controller.historyTitleByType(item.type),
                                                 style: TextStyle(
                                                   color:
                                                   AppColors.blackText,
@@ -343,6 +343,8 @@ void _showFilterBottomSheet(
                             Expanded(
                               child: Text(
                                 type.tr,
+                                overflow: TextOverflow.clip,
+                                maxLines: 2,
                                 style: TextStyle(
                                   fontSize: 14.sp,
                                   fontFamily: AppFonts.secondaryFont,

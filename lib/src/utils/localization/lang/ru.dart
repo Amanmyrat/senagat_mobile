@@ -244,7 +244,7 @@ const Map<String, String> ruRu = {
   r'altyn_asyr': r'Алтын aсыр (остальные банки)',
   r'top_up_the_balance': r'Пополнить баланс',
   r'other': r'Другой',
-  // r'belet': r'Belet',
+  r'belet': r'Belet',
   r'charity': r'Благотворительный фонд',
   r'back': r'Назад',
   r'notConfirmed': r'Не подтверждено',
@@ -259,6 +259,8 @@ const Map<String, String> ruRu = {
   r'payment_temporarily_unavailable':'Это оплата временно не работает',
   r'astu_phone': r'АГТС телефон',
   r'selected_services': r'Выбранные сервисы',
+  r'selected2': r'Выбранные',
+  r'add_services':'Добавить сервисы для управления и оплаты',
 
 
   r'otp_not_match': r'Код не совпадает',

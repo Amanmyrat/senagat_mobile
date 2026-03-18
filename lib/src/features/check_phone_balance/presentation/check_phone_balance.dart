@@ -126,9 +126,15 @@ class _CheckPhoneBalanceScreenState extends State<CheckPhoneBalanceScreen> {
                                               controller: controller
                                                   .phoneController,
                                               inputFormatters: [
-                                                controller.serviceName == 'telecom_internet'
-                                                    ? controller.currentMask
-                                                    : controller.defaultMask
+                                                if(controller.serviceName == 'telecom_internet')...[
+                                                    controller.currentMask
+                                                ]else if(controller.serviceName == 'Belet')...[
+                                                    controller.beletMask
+                                                ]else if(controller.serviceName == 'TM CELL')...[
+                                                    controller.beletMask
+                                                ]else...[
+                                                  controller.defaultMask
+                                                ]
                                               ],
                                               onChanged: (v) {
                                                 final digits = v.replaceAll(' ', '');
@@ -148,8 +154,7 @@ class _CheckPhoneBalanceScreenState extends State<CheckPhoneBalanceScreen> {
                                                     .primaryFont,
                                               ),
                                               decoration: InputDecoration(
-                                                hintText:
-                                                controller.serviceName == 'telecom_internet' ? '12 xxxxxx / xxx xxxxxx' : '12 xxxxxx',
+                                                hintText: controller.hintText(),
                                                 border:
                                                 OutlineInputBorder(),
                                                 focusedBorder: OutlineInputBorder(

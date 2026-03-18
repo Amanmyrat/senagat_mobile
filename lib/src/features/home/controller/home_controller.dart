@@ -17,7 +17,6 @@ import 'package:senagat_mobile/src/features/pay/presentation/astu_payment_screen
 import 'package:senagat_mobile/src/features/pay/presentation/belet_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/foundation_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/tmcell_payment_screen.dart';
-import 'package:senagat_mobile/src/features/pay/presentation/telecom_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
 import 'package:senagat_mobile/src/features/register_confirmation/models/account_model.dart';
 import '../../../core/states/stateful_data.dart';
@@ -269,6 +268,7 @@ class HomeController extends GetxController with StateControlMixin {
   }
 
   void loadHistory() async {
+    history.clear();
     status = Status.loading;
     update();
 
@@ -336,12 +336,45 @@ class HomeController extends GetxController with StateControlMixin {
 
   String iconByType(String type) {
     switch (type) {
-      case 'mobile':
-        return AppAssets.deviceMobileIcon;
+      case 'tmcell':
+        return AppAssets.tmCell;
       case 'charity':
         return AppAssets.foundation;
       case 'belet':
         return AppAssets.beletIcon;
+      case 'astu iptv':
+        return AppAssets.astu;
+      case 'astu phone':
+        return AppAssets.astu;
+      case 'astu cdma':
+        return AppAssets.astu;
+      case 'astu internet':
+        return AppAssets.astu;
+      case 'telecom':
+        return AppAssets.telecom;
+      default:
+        return AppAssets.deviceMobileIcon;
+    }
+  }
+
+  String historyTitleByType(String type) {
+    switch (type) {
+      case 'tmcell':
+        return 'TM CELL';
+      case 'charity':
+        return 'charity'.tr;
+      case 'belet':
+        return 'belet'.tr;
+      case 'astu iptv':
+        return 'IP TV';
+      case 'astu phone':
+        return 'astu_phone'.tr;
+      case 'astu cdma':
+        return 'CDMA';
+      case 'astu internet':
+        return 'astu_internet'.tr;
+      case 'telecom':
+        return 'telecom_internet'.tr;
       default:
         return AppAssets.deviceMobileIcon;
     }

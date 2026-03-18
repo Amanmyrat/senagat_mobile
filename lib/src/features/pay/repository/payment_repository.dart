@@ -1,22 +1,12 @@
 import 'package:senagat_mobile/src/features/check_phone_balance/model/check_balance_model.dart';
-import 'package:senagat_mobile/src/features/check_phone_balance/model/check_balance_model.dart';
-import 'package:senagat_mobile/src/features/home/models/user_information_model.dart';
-import 'package:senagat_mobile/src/features/pay/model/astu_top_up_model.dart';
-import 'package:senagat_mobile/src/features/pay/model/astu_top_up_model.dart';
 import 'package:senagat_mobile/src/features/pay/model/astu_top_up_model.dart';
 import 'package:senagat_mobile/src/features/pay/model/belet_balances_model.dart';
 import 'package:senagat_mobile/src/features/pay/model/belet_top_up_model.dart';
-import 'package:senagat_mobile/src/features/pay/model/belet_top_up_model.dart';
-import 'package:senagat_mobile/src/features/pay/model/belet_top_up_model.dart';
 import 'package:senagat_mobile/src/features/pay/model/charity_model.dart';
-import 'package:senagat_mobile/src/features/register_password_setup/models/new_password_model.dart';
-import 'package:senagat_mobile/src/features/register_password_setup/models/new_password_model.dart';
-import 'package:senagat_mobile/src/features/register_password_setup/models/new_password_model.dart';
 
 import '../../../core/networking/api_endpoint.dart';
 import '../../../core/networking/api_service.dart';
 import '../../../core/typedefs.dart';
-import '../../register_confirmation/models/account_model.dart';
 import '../model/paymet_history_model.dart';
 import '../model/telecom_top_up_model.dart';
 
@@ -63,6 +53,19 @@ class PaymentRepository {
         } else {
           throw Exception('Profile data is null in response');
         }
+      },
+    );
+  }
+
+  Future<CheckBalanceModel> beletBalance({required JSON data}) async {
+    return _apiService.setData<CheckBalanceModel>(
+      endpoint: await ApiEndpoint.payment(PaymentEndpoint.BELET_BALANCE),
+      data: data,
+      requiresAuthToken: true,
+      converter: (response) {
+        final responseData = response.body;
+        return CheckBalanceModel.fromMap(responseData);
+
       },
     );
   }
@@ -139,6 +142,34 @@ class PaymentRepository {
   Future<AstuTopUpModel> astuPay({required JSON data}) async {
     return _apiService.setData<AstuTopUpModel>(
       endpoint: await ApiEndpoint.payment(PaymentEndpoint.ASTU_PAY),
+      data: data,
+      requiresAuthToken: true,
+      converter: (response) {
+        final responseData = response.body['data'];
+        if (responseData != null) {
+          return AstuTopUpModel.fromMap(responseData);
+        } else {
+          throw Exception('Payment data is null in response');
+        }
+      },
+    );
+  }
+
+  Future<CheckBalanceModel> tmcellBalance({required JSON data}) async {
+    return _apiService.setData<CheckBalanceModel>(
+      endpoint: await ApiEndpoint.payment(PaymentEndpoint.TMCELL_BALANCE),
+      data: data,
+      requiresAuthToken: true,
+      converter: (response) {
+        final responseData = response.body;
+        return CheckBalanceModel.fromMap(responseData);
+      },
+    );
+  }
+
+  Future<AstuTopUpModel> tmcellPay({required JSON data}) async {
+    return _apiService.setData<AstuTopUpModel>(
+      endpoint: await ApiEndpoint.payment(PaymentEndpoint.TMCELL_PAY),
       data: data,
       requiresAuthToken: true,
       converter: (response) {
