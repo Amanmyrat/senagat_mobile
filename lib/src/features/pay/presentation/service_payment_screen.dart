@@ -95,8 +95,7 @@ class ServicePaymentScreen extends StatelessWidget {
                           onPressed: () {
                             final homeController = Get.find<HomeController>();
                             final dashboardController = Get.find<DashboardController>();
-                            homeController.getUserProfileInfo();
-                            homeController.loadHistory();
+                            homeController.getProfile();
                             dashboardController.updateCurrentIndex(NestedNavigationIds.home);
 
                             Get.offAllNamed(DashboardScreen.route);
@@ -127,7 +126,7 @@ class ServicePaymentScreen extends StatelessWidget {
                     Image.asset(AppAssets.senagatIcon),
                     SizedBox(height: 22.h),
                     Text(
-                      controller.errorMessage ?? 'error_occurred'.tr,
+                      controller.errorMessage ?? '',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 14.sp,
@@ -145,8 +144,7 @@ class ServicePaymentScreen extends StatelessWidget {
                           onPressed: () {
                             final homeController = Get.find<HomeController>();
                             final dashboardController = Get.find<DashboardController>();
-                            homeController.getUserProfileInfo();
-                            homeController.loadHistory();
+                            homeController.getProfile();
                             dashboardController.updateCurrentIndex(NestedNavigationIds.home);
 
                             Get.offAllNamed(DashboardScreen.route);

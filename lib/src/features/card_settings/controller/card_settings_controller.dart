@@ -22,12 +22,13 @@ class CardSettingsController extends GetxController with StateControlMixin {
 
 
   void onChangeNickName() {
-    final card = cardBox.getAt(index);
-    if (card != null) {
-      card.nickName = cardNickNameController.text;
-      card.save();
-    }
-    if(cardNickNameController.text.isEmpty){
+    if(continueEnabled) {
+      final card = cardBox.getAt(index);
+      if (card != null) {
+        card.nickName = cardNickNameController.text;
+        card.save();
+      }
+    } else if(cardNickNameController.text.isEmpty){
       cardNickNameController.text = r'Senagat Bank';
     }
     cardController.refresh();
@@ -37,6 +38,16 @@ class CardSettingsController extends GetxController with StateControlMixin {
     cardNickNameController.clear();
     update();
     Get.back();
+  }
+
+  void isTextEmpty(){
+    if(cardNickNameController.text.isNotEmpty){
+      continueEnabled = true;
+      update();
+    }else{
+      continueEnabled = false;
+      update();
+    }
   }
 
   void onClearText(){

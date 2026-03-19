@@ -1,18 +1,21 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
 import 'package:flutter_native_contact_picker/model/contact.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/check_phone_balance/presentation/check_phone_balance.dart';
-import 'package:senagat_mobile/src/features/net_and_tv/presentation/net_and_tv_screen.dart';
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/astu_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/belet_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/tmcell_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/telecom_payment_screen.dart';
 import 'package:senagat_mobile/src/utils/services/show_snack.dart';
+import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
+import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/api_error_handler.dart';
 import '../../../utils/constants/app_assets.dart';
@@ -27,8 +30,6 @@ enum CategoryTapType { none, qr, service, fastOperation, notification, foundatio
 
 class CategoryController extends GetxController with StateControlMixin {
   CategoryTapType lastTap = CategoryTapType.none;
-  int? lastFastServiceTapIndex;
-  int? lastServiceTapIndex;
   late ServiceSettingsController fastServiceController;
   late TextEditingController phoneController;
   late var checkBalanceModel = CheckBalanceModel();
@@ -39,6 +40,8 @@ class CategoryController extends GetxController with StateControlMixin {
   String type = '';
   List<FastServiceItem> selected = [];
   late Box<FastServiceItem> fastBox;
+
+  late bool check = false;
 
   CategoryController(this.repository);
 
@@ -131,21 +134,19 @@ class CategoryController extends GetxController with StateControlMixin {
     update();
   }
 
-  void isTextNotEmpty(int index) {
-    if(paymentsIcons[index] == AppAssets.astu){
-      continueEnabled = phoneController.text.length >= 6;
-
+  void isTextNotEmpty(int index){
+    if(paymentsTitle[index] == 'Belet' || paymentsTitle[index] == 'TM CELL'){
+      phoneController.text.length >= 8 ? continueEnabled = true : continueEnabled = false;
       update();
     }else {
-      continueEnabled = phoneController.text.length >= 8;
+      phoneController.text.length >= 9
+          ? continueEnabled = true
+          : continueEnabled = false;
       update();
     }
   }
 
   void onServiceTap(int index) {
-    lastTap = CategoryTapType.fastOperation;
-    lastFastServiceTapIndex = index;
-    update();
 
     if (paymentsTitle[index] == r'state_traffic_safety_inspectorate') {
       ShowSnack.showSnack('payment_temporarily_unavailable'.tr, SnackType.warning);
@@ -191,9 +192,6 @@ class CategoryController extends GetxController with StateControlMixin {
   }
 
   void onFastServiceTap(int index) {
-    lastTap = CategoryTapType.fastOperation;
-    lastFastServiceTapIndex = index;
-    update();
 
     if (selected[index].title == r'state_traffic_safety_inspectorate') {
       ShowSnack.showSnack('payment_temporarily_unavailable'.tr, SnackType.warning);
@@ -209,12 +207,14 @@ class CategoryController extends GetxController with StateControlMixin {
         'balance': selected[index].balance,
       });
     }else if (selected[index].title == 'TM CELL') {
-      ShowSnack.showSnack('payment_temporarily_unavailable'.tr, SnackType.warning);
+      // ShowSnack.showSnack('payment_temporarily_unavailable'.tr, SnackType.warning);
 
-      // Get.toNamed(TmcellPaymentScreen.route, arguments: {
-      //   'selectedServiceTitle': paymentsTitle[index],
-      //   'selectedServiceIcon': paymentsIcons[index],
-      // });
+      Get.toNamed(TmcellPaymentScreen.route, arguments: {
+        'selectedServiceTitle': selected[index].title,
+        'selectedServiceIcon': selected[index].icon,
+        'number': selected[index].phone,
+        'balance': selected[index].balance,
+      });
     } else if (selected[index].title == 'ÄlemTv') {
       ShowSnack.showSnack('payment_temporarily_unavailable'.tr, SnackType.warning);
 
@@ -311,18 +311,56 @@ class CategoryController extends GetxController with StateControlMixin {
         debugPrint(e.toString());
       });
 
-    }else if(paymentsTitle[index] == 'Belet'){
+    }else if(paymentsTitle[index] == 'Belet') {
       status = Status.loading;
       update();
 
       final requestModel = await _getBeletBalanceModel();
-      await repository.beletBalance(data: requestModel.toMap()).then((value){
+      await repository.beletBalance(data: requestModel.toMap()).then((value) {
         checkBalanceModel = value;
         if (checkBalanceModel.success == true) {
           status = Status.completed;
 
           final item = FastServiceItem(
-            type: 'belet',
+            type: 'Belet',
+            phone: phoneController.text,
+            title: paymentsTitle[index],
+            icon: paymentsIcons[index],
+            balance: checkBalanceModel.balance,
+          );
+          saveFastService(item);
+
+          selected.removeWhere((e) =>
+          e.phone == item.phone && e.type == item.type);
+
+          selected.add(item);
+
+          update();
+        } else {
+          status = Status.error;
+          update();
+
+          ApiErrorHandler.handleApiError(checkBalanceModel.message);
+        }
+      }).catchError((e) {
+        status = Status.error;
+        update();
+        ApiErrorHandler.handleApiError(e);
+        debugPrint(e.toString());
+      });
+    }
+    else if(paymentsTitle[index] == 'TM CELL'){
+      status = Status.loading;
+      update();
+
+      final requestModel = await _getTelecomBalanceModel();
+      await repository.tmcellBalance(data: requestModel.toMap()).then((value){
+        checkBalanceModel = value;
+        if (checkBalanceModel.success == true) {
+          status = Status.completed;
+
+          final item = FastServiceItem(
+            type: 'TM CELL',
             phone: phoneController.text,
             title: paymentsTitle[index],
             icon: paymentsIcons[index],
@@ -409,10 +447,31 @@ class CategoryController extends GetxController with StateControlMixin {
 
     phoneController.clear();
   }
-  void removeFastService(int index) {
-    fastBox.deleteAt(index);
-    selected = fastBox.values.toList();
-    update();
+
+  void removeFastServiceWithConfirm(int index, BuildContext context) {
+    showCupertinoDialog<bool>(
+      context: context,
+      builder: (context) => CupertinoAlertDialog(
+        title: Text("remove_service".tr),
+        actions: [
+          CupertinoDialogAction(
+            isDestructiveAction: true,
+
+            child: Text("no".tr),
+            onPressed: () => Navigator.of(context).pop(true),
+          ),
+          CupertinoDialogAction(
+            child: Text("yes".tr),
+            onPressed: () { fastBox.deleteAt(index);
+            selected = fastBox.values.toList();
+            update();
+
+            Get.back(); // close dialog
+              },
+          ),
+        ],
+      ),
+    );
   }
 
   Future<void> _refreshBalances() async {
@@ -427,7 +486,7 @@ class CategoryController extends GetxController with StateControlMixin {
     }
   }
 
-  Future<void> contactPicker() async {
+  Future<void> contactPicker(int index) async {
     try {
       final Contact? contact = await _contactPicker.selectContact();
       if (contact == null) {
@@ -456,6 +515,7 @@ class CategoryController extends GetxController with StateControlMixin {
 
       print('Phone after formatting: $phone');
       phoneController.text = phone;
+      isTextNotEmpty(index);
       update();
     } catch (e) {
       print('Contact picker cancelled or failed: $e');
@@ -465,7 +525,7 @@ class CategoryController extends GetxController with StateControlMixin {
   String hintText(int index){
     if( paymentsTitle[index] == 'telecom_internet'){
       return '12 xxxxxx / xxx xxxxxx';
-    }else if(paymentsTitle[index] == 'Belet'){
+    }else if(paymentsTitle[index] == 'Belet' || paymentsTitle[index] == 'TM CELL'){
       return 'xxxxxxxx';
     }else{
       return '12 xxxxxx';

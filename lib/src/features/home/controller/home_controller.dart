@@ -148,31 +148,45 @@ class HomeController extends GetxController with StateControlMixin {
     final item = fastServiceController.selected[index];
 
     if (item.title == r'state_traffic_safety_inspectorate') {
-      Get.toNamed(
-        NetAndTvScreen.route,
-        arguments: {'selectedServiceTitle': item.title},
-      );
-    }else if(item.icon == AppAssets.astu || item.title == 'telecom_internet'){
+      ShowSnack.showSnack('payment_temporarily_unavailable'.tr, SnackType.warning);
+
+      // Get.toNamed(NetAndTvScreen.route, arguments: {
+      //   'selectedServiceTitle': item.title,
+      // });
+    } else if (item.title == 'Belet') {
+      Get.toNamed(CheckPhoneBalanceScreen.route, arguments: {
+        'selectedServiceTitle': item.title,
+        'selectedServiceIcon': item.icon,
+      });
+    }else if (item.title == 'TM CELL') {
+      // ShowSnack.showSnack('payment_temporarily_unavailable'.tr, SnackType.warning);
+
+      Get.toNamed(CheckPhoneBalanceScreen.route, arguments: {
+        'selectedServiceTitle': item.title,
+        'selectedServiceIcon': item.icon,
+      });
+    } else if (item.title == 'ÄlemTv') {
+      ShowSnack.showSnack('payment_temporarily_unavailable'.tr, SnackType.warning);
+
+      // Get.toNamed(TmcellPaymentScreen.route, arguments: {
+      //   'selectedServiceTitle': item.title,
+      //   'selectedServiceIcon': item.icon,
+      // });
+    } else if (item.title == 'telecom_internet') {
+      Get.toNamed(CheckPhoneBalanceScreen.route, arguments: {
+        'selectedServiceTitle': item.title,
+        'selectedServiceIcon': item.icon,
+      });
+    } else if(item.icon == AppAssets.astu){
       Get.toNamed(CheckPhoneBalanceScreen.route, arguments: {
         'selectedServiceTitle': item.title,
         'selectedServiceIcon': item.icon,
       });
     } else {
-      final title = item.title;
-      final route = title == 'Belet'
-          ? BeletPaymentScreen.route
-          : title == 'TM CELL'
-              ? TmcellPaymentScreen.route
-                  : AstuPaymentScreen.route;
-
-      Get.toNamed(
-        route,
-        arguments: {
-          'selectedServiceTitle': item.title,
-          'selectedServiceIcon': item.icon,
-        },
-      );
-      print(item.title);
+      Get.toNamed(AstuPaymentScreen.route, arguments: {
+        'selectedServiceTitle': item.title,
+        'selectedServiceIcon': item.icon,
+      });
     }
   }
 
@@ -193,15 +207,25 @@ class HomeController extends GetxController with StateControlMixin {
 
       }
     });
+    getProfile();
 
 
-    getExchangeRates();
     checkProfile();
-    loadHistory();
     checkProfileStatus();
     textStatus();
 
     super.onInit();
+  }
+
+  void getProfile(){
+    // If already logged in on app start, fetch user info immediately
+    if (accountLoginStatusController.accountLoginStatus.value ==
+        AccountLoginStatus.loggedIn) {
+      getUserProfileInfo();
+      loadHistory();
+      getExchangeRates();
+
+    }
   }
 
   void getExchangeRates() async {

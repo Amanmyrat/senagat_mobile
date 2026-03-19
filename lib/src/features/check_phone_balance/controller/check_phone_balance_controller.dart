@@ -272,8 +272,13 @@ class CheckPhoneBalanceController extends GetxController with StateControlMixin 
         phone = phone.substring(1);
       }
 
+      if(phone.length >= 6){
+       phone = '12 $phone';
+      }
+
       print('Phone after formatting: $phone');
       phoneController.text = phone;
+      isTextNotEmpty();
       update();
     } catch (e) {
       print('Contact picker cancelled or failed: $e');

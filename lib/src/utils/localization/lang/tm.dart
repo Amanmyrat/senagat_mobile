@@ -261,6 +261,7 @@ const Map<String, String> tkTk = {
   r'payment_temporarily_unavailable':r'Bu töleg wagtlaýyn elýeterli däl',
   r'selected_services':r'Saýlanan hyzmatlar',
   r'add_services':r'Dolandyrmak we tölemek üçin hyzmatlary goşuň',
+  r'remove_service':'Hyzmaty pozmak?',
 
 
   r'otp_not_match': r'Kod gabat gelmedi',

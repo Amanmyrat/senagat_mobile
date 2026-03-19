@@ -261,6 +261,7 @@ const Map<String, String> ruRu = {
   r'selected_services': r'Выбранные сервисы',
   r'selected2': r'Выбранные',
   r'add_services':'Добавить сервисы для управления и оплаты',
+  r'remove_service':'Удалить сервис?',
 
 
   r'otp_not_match': r'Код не совпадает',

@@ -37,10 +37,8 @@ class CardController extends GetxController with StateControlMixin {
       }
     });
 
-    if (accountLoginStatusController.accountLoginStatus.value ==
-        AccountLoginStatus.loggedIn) {
       getUserProfileInfo();
-    }
+
   }
 
 
@@ -57,23 +55,26 @@ class CardController extends GetxController with StateControlMixin {
   }
 
   void getUserProfileInfo() async {
-    status = Status.loading;
-    update();
+    if (accountLoginStatusController.accountLoginStatus.value ==
+        AccountLoginStatus.loggedIn) {
+      status = Status.loading;
+      update();
 
-    await authRepository
-        .getUserInformation()
-        .then((value) {
-          userInformationModel = value;
-          status = Status.completed;
+      await authRepository
+          .getUserInformation()
+          .then((value) {
+        userInformationModel = value;
+        status = Status.completed;
 
-          update();
-        })
-        .catchError((e) {
-          status = Status.error;
-          update();
-          ApiErrorHandler.handleApiError(e);
-          debugPrint(e.toString());
-        });
+        update();
+      })
+          .catchError((e) {
+        status = Status.error;
+        update();
+        ApiErrorHandler.handleApiError(e);
+        debugPrint(e.toString());
+      });
+    }
   }
 
   Color checkCardStatus(int index) {

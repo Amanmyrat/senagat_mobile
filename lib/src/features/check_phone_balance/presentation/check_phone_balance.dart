@@ -34,7 +34,8 @@ class _CheckPhoneBalanceScreenState extends State<CheckPhoneBalanceScreen> {
     return Scaffold(
       body: SafeArea(
         child: GetBuilder<CheckPhoneBalanceController>(
-          init: CheckPhoneBalanceController(        PaymentRepository(apiService: ApiServices.apiService),
+          init: CheckPhoneBalanceController(
+            PaymentRepository(apiService: ApiServices.apiService),
           ),
           builder: (controller) {
             return Column(

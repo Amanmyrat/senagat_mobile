@@ -105,7 +105,7 @@ class CheckWidget extends StatelessWidget {
                               onPressed: () {
                                 final homeController = Get.find<HomeController>();
                                 final cardController = Get.find<CardController>();
-                                homeController.getUserProfileInfo();
+                                homeController.getProfile();
                                 cardController.getUserProfileInfo();
 
                                 Get.offAllNamed(DashboardScreen.route);

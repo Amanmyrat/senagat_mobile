@@ -20,7 +20,7 @@ class DeleteCardController extends GetxController with StateControlMixin {
    check = true;
    status = Status.loading;
    update();
-   Future.delayed(Duration(seconds: 3),(){
+   Future.delayed(Duration(seconds: 1),(){
      cardBox.deleteAt(index);
      status = Status.completed;
      update();

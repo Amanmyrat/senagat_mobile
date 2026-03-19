@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/features/pay/controller/payment_controller.dart';
 import 'package:senagat_mobile/src/features/pay/model/belet_balances_model.dart';
 import 'package:senagat_mobile/src/features/pay/model/belet_top_up_model.dart';
 import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
 import 'package:senagat_mobile/src/utils/api_error_handler.dart';
-import 'package:senagat_mobile/src/utils/services/error_utils.dart';
-import 'package:senagat_mobile/src/utils/services/show_snack.dart';
 
 class BeletPaymentController extends PaymentController {
   BeletPaymentController(PaymentRepository repository) : super(repository);
@@ -27,30 +24,10 @@ class BeletPaymentController extends PaymentController {
 
   @override
   void isTextNotEmpty() {
-    // Same logic as original, scoped to Belet
     continueEnabled = phoneController.text.length >= 8 &&
         sumController.text.isNotEmpty &&
         selectedCard != null;
 
-    if (phoneController.text.length >= 8) {
-      repository
-          .checkPhone(
-        data: <String, dynamic>{"phone": '993${phoneController.text}'},
-      )
-          .then((value) async {
-        if (value == false) {
-          status = Status.error;
-          continueEnabled = false;
-          ShowSnack.showSnack(r'phone_number_invalid'.tr, SnackType.error);
-          update();
-        }
-      }).catchError((e) {
-        status = Status.error;
-        update();
-        final errorText = ErrorUtils.extractErrorText(e);
-        ShowSnack.showSnack(errorText ?? r'error'.tr, SnackType.error);
-      });
-    }
     update();
   }
 

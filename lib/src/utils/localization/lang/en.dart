@@ -261,6 +261,7 @@ const Map<String, String> enUs = {
   r'selected_services':'Selected services',
   r'selected2':'Selected',
   r'add_services':'Add services for management and payment',
+  r'remove_service':'Remove service?',
 
 
   r'otp_not_match': r'OTP did not match',

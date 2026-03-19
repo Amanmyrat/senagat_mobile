@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:senagat_mobile/src/features/category/model/fast_service_model.dart';
 import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:senagat_mobile/src/features/home/controller/home_controller.dart';
 import '../../../core/control_state_variable_mixin.dart';
@@ -23,7 +24,7 @@ class IdentificationController extends GetxController with StateControlMixin {
   final phoneBox = Hive.box<String>('phoneBox');
   final cardsBox = Hive.box<CardModel>('cardsBox');
   final fastOperation = Hive.box('fastOperations');
-  final fastService = Hive.box('fastServices');
+  final fastService = Hive.box<FastServiceItem>('fastServices');
   final paymentBox = Hive.box<PayModel>('payBox');
 
   final _keyValueStorageService = KeyValueStorageService();
@@ -50,7 +51,7 @@ class IdentificationController extends GetxController with StateControlMixin {
     fastService.clear();
     paymentBox.clear();
     homeController.history.clear();
-    homeController.history.clear();
+    homeController.exchange.clear();
 
     // Reset ServiceSettingsController FIRST to reload from empty Hive
     // This must happen before HomeController update so fast operations are cleared

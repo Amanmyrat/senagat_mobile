@@ -62,7 +62,7 @@ class GetCardController extends GetxController
       GetCardDetailsScreen.route,
       arguments: {
         'selectedCardTitle': currentTabText,
-        'selectedCardImage': cards[selectedTabIndex].image,
+        'selectedCardImage': cards[selectedTabIndex].imageUrl,
         'selectedCardId': selectedTabIndex + 1,
         'sum': cards[selectedTabIndex].price.toString(),
       },
