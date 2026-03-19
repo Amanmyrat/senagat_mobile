@@ -58,7 +58,7 @@ class PaymentController extends GetxController with StateControlMixin {
       isFoundation = args['isFoundation'] as bool? ?? false;
 
       double balance = double.tryParse(args['balance'].toString()) ?? 1.0;
-      formattedBalance = balance.toStringAsFixed(1);
+      formattedBalance = balance.toString();
     } else {
       debugPrint('No or invalid arguments passed to this page');
     }

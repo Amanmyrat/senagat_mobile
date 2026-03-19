@@ -30,7 +30,7 @@ class TmcellPaymentController extends PaymentController {
       );
 
       final result =
-      await repository.telecomPay(data: requestModel.toMap());
+      await repository.tmcellPay(data: requestModel.toMap());
       telecomTopUpModel = result;
       url = telecomTopUpModel.formUrl;
       orderId = telecomTopUpModel.orderId;

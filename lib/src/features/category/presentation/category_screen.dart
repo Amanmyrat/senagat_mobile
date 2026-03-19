@@ -50,6 +50,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         children: [
                           SizedBox(height: AppDimensions.paddingExtraLarge),
                           fastOperationsWidget(controller),
+                          SizedBox(height: 16.h),
+
                           Text(
                             r'payments'.tr,
                             style: TextStyle(
@@ -170,7 +172,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                r'selected_services'.tr,
+                r'selected2'.tr,
                 style: TextStyle(color: AppColors.blackText, fontSize: 17.sp),
               ),
             ],
@@ -317,7 +319,14 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         children: [
                           Row(
                             children: [
-                              if (item.phone.startsWith('12')) ...[
+
+                              if (item.title == 'astu_internet' || item.title == 'telecom_internet') ...[
+                                Image.asset(
+                                  AppAssets.router,
+                                  width: 20.w,
+                                  color: AppColors.green,
+                                ),
+                              ] else  if (item.phone.startsWith('12')) ...[
                                 SvgPicture.asset(
                                   AppAssets.oldPhoneIcon,
                                   width: 20.w,
@@ -477,9 +486,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
     int index,
   ) {
     showModalBottomSheet(
-      isScrollControlled: true,
+      isScrollControlled: false,
       context: context,
-      useRootNavigator: true,
+      useRootNavigator: false,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
       ),
@@ -494,7 +503,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   left: 20.w,
                   right: 20.w,
                   top: 40.h,
-                  bottom: 40.h,
+                  bottom: 0.h, // or 0
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
