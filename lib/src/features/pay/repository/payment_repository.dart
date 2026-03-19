@@ -167,15 +167,15 @@ class PaymentRepository {
     );
   }
 
-  Future<AstuTopUpModel> tmcellPay({required JSON data}) async {
-    return _apiService.setData<AstuTopUpModel>(
+  Future<TelecomTopUpModel> tmcellPay({required JSON data}) async {
+    return _apiService.setData<TelecomTopUpModel>(
       endpoint: await ApiEndpoint.payment(PaymentEndpoint.TMCELL_PAY),
       data: data,
       requiresAuthToken: true,
       converter: (response) {
         final responseData = response.body['data'];
         if (responseData != null) {
-          return AstuTopUpModel.fromMap(responseData);
+          return TelecomTopUpModel.fromMap(responseData);
         } else {
           throw Exception('Payment data is null in response');
         }

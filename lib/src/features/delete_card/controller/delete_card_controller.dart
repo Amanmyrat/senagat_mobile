@@ -37,12 +37,34 @@ class DeleteCardController extends GetxController with StateControlMixin {
    Get.offNamed(DashboardScreen.route);
  }
 
+ String hideCardCenter(String number) {
+   if (number.length < 8) return number;
+
+   final start = number.substring(0, 4);
+   final end = number.substring(number.length - 4);
+   final hiddenCount = number.length - 11;
+
+   final hidden = '*' * hiddenCount;
+
+   final masked = '$start$hidden$end';
+
+   final buffer = StringBuffer();
+   for (int i = 0; i < masked.length; i++) {
+     buffer.write(masked[i]);
+     if ((i + 1) % 4 == 0 && i != masked.length - 1) {
+       buffer.write(' ');
+     }
+   }
+
+   return buffer.toString();
+ }
+
  @override
   void onInit() {
    index = Get.arguments['index'];
 
    cardNumber = cardBox.getAt(index)?.cardNumber ?? '';
-   cardName = cardBox.getAt(index)?.name ?? '';
+   cardName = hideCardCenter(cardBox.getAt(index)?.name ?? '');
    cardTerm = cardBox.getAt(index)?.expiryDate ?? '';
    cardDesign = cardBox.getAt(index)?.cardDesign ?? '';
    super.onInit();
