@@ -3,11 +3,13 @@ import 'package:senagat_mobile/src/features/pay/controller/payment_controller.da
 import 'package:senagat_mobile/src/features/pay/model/astu_top_up_model.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/api_error_handler.dart';
+import '../model/telecom_top_up_model.dart';
 
 class AstuPaymentController extends PaymentController {
   AstuPaymentController(super.repository);
 
   late var astuTopUpModel = AstuTopUpModel();
+  late var telecomTopUpModel = TelecomTopUpModel();
 
   @override
   Future<void> onTap() async {
@@ -21,14 +23,48 @@ class AstuPaymentController extends PaymentController {
 
     String type = '';
 
-    if(serviceName == 'IP TV'){
+    if (serviceName == 'IP TV') {
       type = 'iptv';
-    }else if(serviceName == 'astu_phone'){
+    } else if (serviceName == 'astu_phone') {
       type = 'phone';
-    }else if(serviceName == 'astu_internet'){
+    } else if (serviceName == 'astu_internet') {
       type = 'internet';
-    }else if(serviceName == 'CDMA'){
+    } else if (serviceName == 'CDMA') {
       type = 'cdma';
+    }
+
+    if (type == 'cdma') {
+      status = Status.loading;
+      update();
+
+      try {
+        final requestModel = TelecomTopUpModel(
+          bankName: selectedCard?.bank ?? '',
+          amount: int.parse(sumController.text),
+          phone: phoneController.text,
+        );
+
+        final result =
+        await repository.cdmaPay(data: requestModel.toMap());
+        telecomTopUpModel = result;
+        url = telecomTopUpModel.formUrl;
+        orderId = telecomTopUpModel.orderId;
+
+        if (url == null || url.isEmpty) {
+          throw Exception('Payment URL is empty');
+        }
+
+        if (orderId == null || orderId.isEmpty) {
+          throw Exception('Payment orderId is empty');
+        }
+
+        await openBankPayment(url, orderId);
+      } catch (e) {
+        status = Status.error;
+        update();
+        ApiErrorHandler.handleApiError(e);
+        debugPrint(e.toString());
+      }
     }
 
 

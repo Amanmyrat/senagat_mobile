@@ -188,6 +188,31 @@ class CheckPhoneBalanceController extends GetxController with StateControlMixin 
         ApiErrorHandler.handleApiError(e);
         debugPrint(e.toString());
       });
+    }else if (serviceName == 'CDMA') {
+      final requestModel = await _getTelecomBalanceModel();
+      await repository.cdmaBalance(data: requestModel.toMap()).then((value) {
+        checkBalanceModel = value;
+        if (checkBalanceModel.success == true) {
+          status = Status.completed;
+          update();
+
+          Get.toNamed(AstuPaymentScreen.route, arguments: {
+            'balance': checkBalanceModel.balance,
+            'selectedServiceTitle': serviceName,
+            'number': phoneController.text,
+          });
+        } else {
+          status = Status.error;
+          update();
+
+          ApiErrorHandler.handleApiError(checkBalanceModel.message);
+        }
+      }).catchError((e) {
+        status = Status.error;
+        update();
+        ApiErrorHandler.handleApiError(e);
+        debugPrint(e.toString());
+      });
     }
     else {
       final requestModel = await _getAstuBalanceModel();

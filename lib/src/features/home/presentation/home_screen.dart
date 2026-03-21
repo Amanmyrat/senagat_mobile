@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                // HeaderWidget(),
+                                HeaderWidget(),
 
                                 if (controller.isProfileRequired == true) ...[
                                   profileIsRequiredWidget(controller),

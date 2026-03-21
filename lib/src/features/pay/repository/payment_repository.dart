@@ -182,6 +182,33 @@ class PaymentRepository {
       },
     );
   }
+  Future<CheckBalanceModel> cdmaBalance({required JSON data}) async {
+    return _apiService.setData<CheckBalanceModel>(
+      endpoint: await ApiEndpoint.payment(PaymentEndpoint.CDMA_BALANCE),
+      data: data,
+      requiresAuthToken: true,
+      converter: (response) {
+        final responseData = response.body;
+        return CheckBalanceModel.fromMap(responseData);
+      },
+    );
+  }
+
+  Future<TelecomTopUpModel> cdmaPay({required JSON data}) async {
+    return _apiService.setData<TelecomTopUpModel>(
+      endpoint: await ApiEndpoint.payment(PaymentEndpoint.CDMA_PAY),
+      data: data,
+      requiresAuthToken: true,
+      converter: (response) {
+        final responseData = response.body['data'];
+        if (responseData != null) {
+          return TelecomTopUpModel.fromMap(responseData);
+        } else {
+          throw Exception('Payment data is null in response');
+        }
+      },
+    );
+  }
 
 
 
