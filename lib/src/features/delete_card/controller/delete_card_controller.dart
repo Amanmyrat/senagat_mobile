@@ -63,8 +63,8 @@ class DeleteCardController extends GetxController with StateControlMixin {
   void onInit() {
    index = Get.arguments['index'];
 
-   cardNumber = cardBox.getAt(index)?.cardNumber ?? '';
-   cardName = hideCardCenter(cardBox.getAt(index)?.name ?? '');
+   cardNumber = hideCardCenter(cardBox.getAt(index)?.cardNumber ?? '');
+   cardName = cardBox.getAt(index)?.name ?? '';
    cardTerm = cardBox.getAt(index)?.expiryDate ?? '';
    cardDesign = cardBox.getAt(index)?.cardDesign ?? '';
    super.onInit();

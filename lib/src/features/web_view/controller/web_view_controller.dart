@@ -9,16 +9,9 @@ class WebViewScreenController extends GetxController {
   void onInit() {
     super.onInit();
 
-    final rawUrl = Get.arguments?['url']?.toString() ?? '';
 
-    if (rawUrl.isEmpty) {
-      Get.back();
-      throw Exception('WebView URL is empty');
-    }
 
-    final url = rawUrl.startsWith('http')
-        ? rawUrl
-        : 'https://$rawUrl';
+    final url = 'https://senagatbank.com.tm/branches-mobile';
 
     webController = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)

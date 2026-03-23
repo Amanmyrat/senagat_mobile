@@ -6,6 +6,7 @@ import 'package:senagat_mobile/src/core/globals.dart';
 import 'package:senagat_mobile/src/features/auth/repository/auth_repository.dart';
 import 'package:senagat_mobile/src/features/home/repository/exchage_rate_repository.dart';
 import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
+import 'package:senagat_mobile/src/features/web_view/presentation/web_view.dart';
 import '../features/home/controller/home_controller.dart';
 import '../features/map.dart';
 import '../features/map_search/presentation/map_search_screen.dart';
@@ -39,7 +40,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
               Expanded(
                 child: TextFormField(
                   onTap: () {
-                    Get.toNamed(MapSearchScreen.route);
+                    Get.toNamed(WebViewScreen.route);
                     // Get.toNamed(MapSearchScreen.route);
                   },
                   readOnly: true,
