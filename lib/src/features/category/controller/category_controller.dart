@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
@@ -40,6 +42,8 @@ class CategoryController extends GetxController with StateControlMixin {
   String type = '';
   List<FastServiceItem> selected = [];
   late Box<FastServiceItem> fastBox;
+  Timer? _balanceTimer;
+  final phoneBox = Hive.box<String>('phoneBox');
 
   late bool check = false;
 
@@ -96,6 +100,11 @@ class CategoryController extends GetxController with StateControlMixin {
 
     selected = fastBox.values.toList();
     _refreshBalances();
+    _balanceTimer?.cancel(); // на всякий случай
+
+    _balanceTimer = Timer.periodic(Duration(seconds: 60), (timer) {
+      _refreshBalances();
+    });
     super.onInit();
   }
 

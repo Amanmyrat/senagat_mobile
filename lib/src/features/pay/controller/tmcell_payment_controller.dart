@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/features/pay/controller/payment_controller.dart';
 import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
 
@@ -10,6 +11,8 @@ class TmcellPaymentController extends PaymentController {
   TmcellPaymentController(PaymentRepository repository) : super(repository);
 
   late var telecomTopUpModel = TelecomTopUpModel();
+
+  final phoneBox = Hive.box<String>('phoneBox');
 
 
   @override

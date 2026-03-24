@@ -39,6 +39,11 @@ class CheckPhoneBalanceController extends GetxController with StateControlMixin 
     filter: {"#": RegExp(r'[0-9]')},
   );
 
+  final cdmaMask = MaskTextInputFormatter(
+    mask: '60 ######',
+    filter: {"#": RegExp(r'[0-9]')},
+  );
+
   final telecomMaskOther = MaskTextInputFormatter(
     mask: '### ######',
     filter: {"#": RegExp(r'[0-9]')},
@@ -264,6 +269,8 @@ class CheckPhoneBalanceController extends GetxController with StateControlMixin 
       return '12 xxxxxx / xxx xxxxxx';
     }else if(serviceName == 'Belet' || serviceName == 'TM CELL'){
      return 'xxxxxxxx';
+     }else if( serviceName == 'CDMA'){
+      return '60 xxxxxx';
     }else{
       return '12 xxxxxx';
     }

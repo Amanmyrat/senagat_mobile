@@ -21,7 +21,7 @@ const Map<String, String> tkTk = {
   r'send_sms': r'Size tassyklama kody bilen SMS ibereris.',
   r'send_code': r'Tassyklama kody ugrat',
   r'OTP': r'Kod',
-  r'code_was_sent_to': r'Tassyklama kod şu belga ugradyldy: ',
+  r'code_was_sent_to': r'Tassyklama kody siziň belgiňize ugradyldy ',
   r'incorrectly_entered_OTP': r'Kod nädogry girizildi',
   r'apply': r'Ulan',
   r'send_code_again': r'Tassyklama kody gaýtadan ugratmak',

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -11,12 +12,9 @@ import 'package:senagat_mobile/src/features/get_card/presentation/get_card_scree
 import 'package:senagat_mobile/src/features/home/models/exchange_rate_model.dart';
 import 'package:senagat_mobile/src/features/home/models/user_information_model.dart';
 import 'package:senagat_mobile/src/features/home/repository/exchage_rate_repository.dart';
-import 'package:senagat_mobile/src/features/net_and_tv/presentation/net_and_tv_screen.dart';
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/astu_payment_screen.dart';
-import 'package:senagat_mobile/src/features/pay/presentation/belet_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/foundation_payment_screen.dart';
-import 'package:senagat_mobile/src/features/pay/presentation/tmcell_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
 import 'package:senagat_mobile/src/features/register_confirmation/models/account_model.dart';
 import '../../../core/states/stateful_data.dart';
@@ -63,9 +61,11 @@ class HomeController extends GetxController with StateControlMixin {
   List<ExchangeRateModel> exchange = [];
   bool _isFetchingExchangeRates = false;
   bool _isFetchingUserInfo = false;
+  bool historyIsLoading = false;
 
   List<PaymentHistoryModel> history = [];
 
+  Timer? _historyTimer;
 
   UserInformationModel? userInformationModel;
 
@@ -202,9 +202,14 @@ class HomeController extends GetxController with StateControlMixin {
     ) {
       if (status == AccountLoginStatus.loggedIn) {
         getUserProfileInfo();
-        loadHistory();
         getExchangeRates();
 
+        loadHistory(); // первый вызов сразу
+
+        _historyTimer?.cancel(); // на всякий случай
+        _historyTimer = Timer.periodic(Duration(seconds: 5), (timer) {
+          loadHistory();
+        });
       }
     });
     getProfile();
@@ -292,13 +297,13 @@ class HomeController extends GetxController with StateControlMixin {
   }
 
   void loadHistory() async {
-    history.clear();
-    status = Status.loading;
+    // history.clear();
+    historyIsLoading = true;
     update();
 
     await paymentRepository.getPaymentHistory().then((value){
        history = value;
-       status = Status.completed;
+       historyIsLoading = false;
        update();
      }).catchError((e){
        status = Status.error;
@@ -399,6 +404,29 @@ class HomeController extends GetxController with StateControlMixin {
         return 'astu_internet'.tr;
       case 'telecom':
         return 'telecom_internet'.tr;
+      default:
+        return AppAssets.deviceMobileIcon;
+    }
+  }
+
+  String historyPhoneByType(String type, String phone) {
+    switch (type) {
+      case 'tmcell':
+        return '+993$phone';
+      case 'charity':
+        return '+993$phone';
+      case 'belet':
+        return '+$phone';
+      case 'astu iptv':
+        return '12$phone';
+      case 'astu phone':
+        return '12$phone';
+      case 'astu cdma':
+        return '60$phone';
+      case 'astu internet':
+        return '12$phone';
+      case 'telecom':
+        return phone;
       default:
         return AppAssets.deviceMobileIcon;
     }

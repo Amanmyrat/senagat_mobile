@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/features/pay/controller/payment_controller.dart';
 import 'package:senagat_mobile/src/features/pay/model/belet_balances_model.dart';
@@ -13,6 +14,8 @@ class BeletPaymentController extends PaymentController {
   List<BeletBalanceModel> get beletBalances => _beletBalances;
 
   late var beletTopUpModel = BeletTopUpModel();
+
+  final phoneBox = Hive.box<String>('phoneBox');
 
   @override
   void onInit() {

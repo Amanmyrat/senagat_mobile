@@ -310,12 +310,27 @@ class _HomeScreenState extends State<HomeScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text(
-                                            r'history'.tr,
-                                            style: TextStyle(
-                                              color: AppColors.blackText,
-                                              fontSize: 17.sp,
-                                            ),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                r'history'.tr,
+                                                style: TextStyle(
+                                                  color: AppColors.blackText,
+                                                  fontSize: 17.sp,
+                                                ),
+                                              ),
+                                              SizedBox(width: AppDimensions.paddingMedium.w,),
+
+                                              if(controller.historyIsLoading)...[
+                                                SizedBox(
+                                                  width: 15.w,
+                                                  height: 15.h,
+                                                  child: CircularProgressIndicator(
+                                                    color: AppColors.green,
+                                                  ),
+                                                ),
+                                              ],
+                                            ],
                                           ),
                                           GestureDetector(
                                             onTap: () {

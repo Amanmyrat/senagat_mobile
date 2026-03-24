@@ -314,6 +314,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           ),
                         ],
                       ),
+                      SizedBox(height: AppDimensions.paddingMedium.h,),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -355,16 +356,21 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               ),
                             ],
                           ),
-                          Text(
-                            '${item.balance} TMT',
-                            maxLines: 1,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: AppColors.blackText,
-                              fontSize: 17.sp,
-                              fontFamily: AppFonts.primaryFont,
-                            ),
-                          ),
+                          if(item.title == 'TM CELL' || item.title == 'Belet' || item.title == 'CDMA')...[
+                            if(item.phone == controller.phoneBox.get('phone'))...[
+                              Text(
+                                '${item.balance} TMT',
+                                maxLines: 1,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: AppColors.blackText,
+                                  fontSize: 17.sp,
+                                  fontFamily: AppFonts.primaryFont,
+                                ),
+                              ),
+                            ],
+                          ],
+
                         ],
                       ),
                     ],

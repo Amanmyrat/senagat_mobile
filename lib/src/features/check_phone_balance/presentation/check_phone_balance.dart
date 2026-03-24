@@ -133,6 +133,8 @@ class _CheckPhoneBalanceScreenState extends State<CheckPhoneBalanceScreen> {
                                                     controller.beletMask
                                                 ]else if(controller.serviceName == 'TM CELL')...[
                                                     controller.beletMask
+                                                ]else if(controller.serviceName == 'CDMA')...[
+                                                    controller.cdmaMask
                                                 ]else...[
                                                   controller.defaultMask
                                                 ]

@@ -22,7 +22,9 @@ class TmcellPaymentScreen extends StatelessWidget {
           controller: controller,
           title: controller.serviceName.tr,
           formChildren: [
-            paymentAccountWidget(controller),
+            if(controller.phoneController.text == controller.phoneBox.get('phone'))...[
+              paymentAccountWidget(controller),
+            ],
             paymentPhoneField(controller),
             paymentSumField(controller),
           ],
