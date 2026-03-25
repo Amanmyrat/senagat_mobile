@@ -48,7 +48,7 @@ const Map<String, String> enUs = {
   r'fund_balance': r'Fund balance',
   r'fund_text': r'Childhood cancer is treatable. We work to ensure that any child in Turkmenistan can receive all the necessary treatment.',
   r'find_an_ATM': r'Find an ATM',
-  r'find_an_branch': r'Find an branch',
+  r'find_a_branch': r'Find an branch',
   r'atm': r'ATMs',
   r'branch': r'Branchs',
   r'add_a_card': r'Add a card',

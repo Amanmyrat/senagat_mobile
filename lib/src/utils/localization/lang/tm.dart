@@ -49,7 +49,7 @@ const Map<String, String> tkTk = {
   r'fund_balance': r'Gaznanyň balansy',
   r'fund_text': r'Çagalyk rak keselini bejermek bolýar. Biz Türkmenistanda her bir çaga zerur bejergini alyp bilsin diýip işleýäris.',
   r'find_an_ATM': r'Bankomatlar',
-  r'find_an_branch': r'Şahamçalar',
+  r'find_a_branch': r'Şahamçalar',
   r'atm': r'Bankomatlar',
   r'branch': r'Şahamçalar',
   r'add_a_card': r'Kart goşmak',

@@ -91,12 +91,23 @@ class CheckPhoneBalanceController extends GetxController with StateControlMixin 
   String _cleanSpaces(String phoneNumber) {
     return phoneNumber.replaceAll(' ', '');
   }
+
   String _clean12(String phoneNumber) {
     return phoneNumber.replaceAll('12 ', '').replaceAll(' ', '');
+  }
+
+  String _clean60(String phoneNumber) {
+    return phoneNumber.replaceAll('60 ', '').replaceAll(' ', '');
   }
   Future<CheckBalanceModel> _getTelecomBalanceModel() async {
     return CheckBalanceModel(
       phone: _cleanSpaces(phoneController.text),
+    );
+  }
+
+  Future<CheckBalanceModel> _getCDMABalanceModel() async {
+    return CheckBalanceModel(
+      phone: _clean60(phoneController.text),
     );
   }
 
@@ -117,140 +128,66 @@ class CheckPhoneBalanceController extends GetxController with StateControlMixin 
     status = Status.loading;
     update();
 
+    try {
+      CheckBalanceModel requestModel;
+      CheckBalanceModel response;
+
+      if (serviceName == 'telecom_internet') {
+        requestModel = await _getTelecomBalanceModel();
+        response = await repository.telecomBalance(data: requestModel.toMap());
+      }
+      else if (serviceName == 'Belet') {
+        requestModel = await _getBeletBalanceModel();
+        response = await repository.beletBalance(data: requestModel.toMap());
+      }
+      else if (serviceName == 'TM CELL') {
+        requestModel = await _getTelecomBalanceModel();
+        response = await repository.tmcellBalance(data: requestModel.toMap());
+      }
+      else if (serviceName == 'CDMA') {
+        requestModel = await _getCDMABalanceModel();
+        response = await repository.cdmaBalance(data: requestModel.toMap());
+      }
+      else {
+        requestModel = await _getAstuBalanceModel();
+        response = await repository.astuBalance(data: requestModel.toMap());
+      }
+
+      checkBalanceModel = response;
+
+      if (response.success == true) {
+        status = Status.completed;
+        update();
+
+        _navigateToNext(response);
+      } else {
+        throw response.message ?? 'Unknown error';
+      }
+
+    } catch (e) {
+      status = Status.error;
+      update();
+
+      ApiErrorHandler.handleApiError(e);
+      debugPrint(e.toString());
+    }
+  }  void _navigateToNext(CheckBalanceModel model) {
+    final args = {
+      'balance': model.balance,
+      'selectedServiceTitle': serviceName,
+      'number': phoneController.text,
+    };
+
     if (serviceName == 'telecom_internet') {
-      final requestModel = await _getTelecomBalanceModel();
-      await repository.telecomBalance(data: requestModel.toMap()).then((value) {
-        checkBalanceModel = value;
-        if (checkBalanceModel.success == true) {
-          status = Status.completed;
-          update();
-
-          Get.toNamed(TelecomPaymentScreen.route, arguments: {
-            'balance': checkBalanceModel.balance,
-            'selectedServiceTitle': serviceName,
-            'number': phoneController.text,
-          });
-        } else {
-          status = Status.error;
-          update();
-
-          ApiErrorHandler.handleApiError(checkBalanceModel.message);
-        }
-      }).catchError((e) {
-        status = Status.error;
-        update();
-        ApiErrorHandler.handleApiError(e);
-        debugPrint(e.toString());
-      });
-    }
-    else if (serviceName == 'Belet') {
-      final requestModel = await _getBeletBalanceModel();
-      await repository.beletBalance(data: requestModel.toMap()).then((value) {
-        checkBalanceModel = value;
-        if (checkBalanceModel.success == true) {
-          status = Status.completed;
-          update();
-
-          Get.toNamed(BeletPaymentScreen.route, arguments: {
-            'balance': checkBalanceModel.balance,
-            'selectedServiceTitle': serviceName,
-            'number': phoneController.text,
-          });
-        } else {
-          status = Status.error;
-          update();
-
-          ApiErrorHandler.handleApiError(checkBalanceModel.message);
-        }
-      }).catchError((e) {
-        status = Status.error;
-        update();
-        ApiErrorHandler.handleApiError(e);
-        debugPrint(e.toString());
-      });
-    }else if (serviceName == 'TM CELL') {
-      final requestModel = await _getTelecomBalanceModel();
-      await repository.tmcellBalance(data: requestModel.toMap()).then((value) {
-        checkBalanceModel = value;
-        if (checkBalanceModel.success == true) {
-          status = Status.completed;
-          update();
-
-          Get.toNamed(TmcellPaymentScreen.route, arguments: {
-            'balance': checkBalanceModel.balance,
-            'selectedServiceTitle': serviceName,
-            'number': phoneController.text,
-          });
-        } else {
-          status = Status.error;
-          update();
-
-          ApiErrorHandler.handleApiError(checkBalanceModel.message);
-        }
-      }).catchError((e) {
-        status = Status.error;
-        update();
-        ApiErrorHandler.handleApiError(e);
-        debugPrint(e.toString());
-      });
-    }else if (serviceName == 'CDMA') {
-      final requestModel = await _getTelecomBalanceModel();
-      await repository.cdmaBalance(data: requestModel.toMap()).then((value) {
-        checkBalanceModel = value;
-        if (checkBalanceModel.success == true) {
-          status = Status.completed;
-          update();
-
-          Get.toNamed(AstuPaymentScreen.route, arguments: {
-            'balance': checkBalanceModel.balance,
-            'selectedServiceTitle': serviceName,
-            'number': phoneController.text,
-          });
-        } else {
-          status = Status.error;
-          update();
-
-          ApiErrorHandler.handleApiError(checkBalanceModel.message);
-        }
-      }).catchError((e) {
-        status = Status.error;
-        update();
-        ApiErrorHandler.handleApiError(e);
-        debugPrint(e.toString());
-      });
-    }
-    else {
-      final requestModel = await _getAstuBalanceModel();
-
-      await repository.astuBalance(data: requestModel.toMap()).then((value) {
-        checkBalanceModel = value;
-
-        if (checkBalanceModel.success == true) {
-          status = Status.completed;
-          update();
-
-          Get.toNamed(AstuPaymentScreen.route, arguments: {
-            'selectedServiceTitle': serviceName,
-            'selectedServiceIcon': serviceIcon,
-            'number': phoneController.text,
-            'balance': checkBalanceModel.balance,
-          });
-        } else {
-          status = Status.error;
-          update();
-
-          ApiErrorHandler.handleApiError(checkBalanceModel.message);
-        }
-      }).catchError((e) {
-        status = Status.error;
-        update();
-
-        ApiErrorHandler.handleApiError(e);
-        debugPrint(e.toString());
-      });
+      Get.toNamed(TelecomPaymentScreen.route, arguments: args);
+    } else if (serviceName == 'Belet') {
+      Get.toNamed(BeletPaymentScreen.route, arguments: args);
+    } else if (serviceName == 'TM CELL') {
+      Get.toNamed(TmcellPaymentScreen.route, arguments: args);
+    } else {
+      Get.toNamed(AstuPaymentScreen.route, arguments: args);
     }
   }
-
 
   void isTextNotEmpty(){
     if(serviceName == 'Belet' || serviceName == 'TM CELL'){

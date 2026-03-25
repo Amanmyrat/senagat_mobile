@@ -34,55 +34,54 @@ class _HeaderWidgetState extends State<HeaderWidget> {
       ),
       builder: (controller) {
         return Padding(
-          padding: EdgeInsets.only(bottom: 0.h),
+          padding: EdgeInsets.only(bottom: 22.h),
           child: Row(
             children: [
-              // Expanded(
-              //   child: TextFormField(
-              //     onTap: () {
-              //       Get.toNamed(WebViewScreen.route);
-              //       // Get.toNamed(MapSearchScreen.route);
-              //     },
-              //     readOnly: true,
-              //     keyboardType: TextInputType.text,
-              //     maxLength: 8,
-              //     style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.primaryFont),
-              //     decoration: InputDecoration(
-              //       hintText: r'find_an_ATM'.tr,
-              //       border: OutlineInputBorder(),
-              //       focusedBorder: OutlineInputBorder(
-              //         borderRadius: BorderRadius.circular(
-              //           AppDimensions.borderRadiusMedium,
-              //         ),
-              //         borderSide: BorderSide(color: AppColors.white, width: 1.w),
-              //       ),
-              //       suffixIconConstraints: BoxConstraints(
-              //         minWidth: 20.w,
-              //         minHeight: 20.h,
-              //       ),
-              //       suffixIcon: Padding(
-              //         padding: EdgeInsets.only(
-              //           left: AppDimensions.paddingMedium.w,
-              //           right: AppDimensions.paddingExtraLarge.w,
-              //         ),
-              //         child: SvgPicture.asset(AppAssets.buildingApartmentIcon, width: 20.w),
-              //       ),
-              //       enabledBorder: OutlineInputBorder(
-              //         borderRadius: BorderRadius.circular(
-              //           AppDimensions.borderRadiusMedium,
-              //         ),
-              //         borderSide: BorderSide(color: AppColors.white, width: 1.w),
-              //       ),
-              //
-              //       counter: const SizedBox(),
-              //       contentPadding: EdgeInsets.symmetric(
-              //         vertical: 16.h,
-              //         horizontal: AppDimensions.paddingLarge.w,
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              Expanded(child: AnimatedHintField()),
+              Expanded(
+                child: TextFormField(
+                  onTap: () {
+                    Get.toNamed(WebViewScreen.route);
+                    // Get.toNamed(MapSearchScreen.route);
+                  },
+                  readOnly: true,
+                  keyboardType: TextInputType.text,
+                  maxLength: 8,
+                  style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.primaryFont),
+                  decoration: InputDecoration(
+                    hintText: '${r'find_an_ATM'.tr}/${r'find_a_branch'.tr}',
+                    border: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(
+                        AppDimensions.borderRadiusMedium,
+                      ),
+                      borderSide: BorderSide(color: AppColors.white, width: 1.w),
+                    ),
+                    suffixIconConstraints: BoxConstraints(
+                      minWidth: 20.w,
+                      minHeight: 20.h,
+                    ),
+                    suffixIcon: Padding(
+                      padding: EdgeInsets.only(
+                        left: AppDimensions.paddingMedium.w,
+                        right: AppDimensions.paddingExtraLarge.w,
+                      ),
+                      child: SvgPicture.asset(AppAssets.buildingApartmentIcon, width: 20.w),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(
+                        AppDimensions.borderRadiusMedium,
+                      ),
+                      borderSide: BorderSide(color: AppColors.white, width: 1.w),
+                    ),
+
+                    counter: const SizedBox(),
+                    contentPadding: EdgeInsets.symmetric(
+                      vertical: 16.h,
+                      horizontal: AppDimensions.paddingLarge.w,
+                    ),
+                  ),
+                ),
+              ),
               // SizedBox(width: 4.w),
               // GestureDetector(
               //   onTap: () {

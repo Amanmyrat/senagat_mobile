@@ -356,6 +356,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               ),
                             ],
                           ),
+                          SizedBox(height: AppDimensions.paddingMedium.h,),
+
                           if(item.title == 'TM CELL' || item.title == 'Belet' || item.title == 'CDMA')...[
                             if(item.phone == controller.phoneBox.get('phone'))...[
                               Text(
@@ -369,6 +371,17 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 ),
                               ),
                             ],
+                          ]else...[
+                            Text(
+                              '${item.balance} TMT',
+                              maxLines: 1,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: AppColors.blackText,
+                                fontSize: 17.sp,
+                                fontFamily: AppFonts.primaryFont,
+                              ),
+                            ),
                           ],
 
                         ],
@@ -549,6 +562,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               ] else if (controller.paymentsTitle[index] ==
                                   'TM CELL') ...[
                                 controller.beletMask,
+                              ] else if (controller.paymentsTitle[index] ==
+                                  'CDMA') ...[
+                                controller.cdmaMask,
                               ] else ...[
                                 controller.defaultMask,
                               ],

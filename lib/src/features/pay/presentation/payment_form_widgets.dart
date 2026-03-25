@@ -256,7 +256,7 @@ Widget paymentPhoneField(PaymentController controller) {
               onChanged: (_) => controller.isTextNotEmpty(),
               focusNode: controller.phoneFocus,
               maxLength: 8,
-              readOnly: true,
+              readOnly: controller.serviceName != 'charitable_foundation' ? true : false,
               style: TextStyle(
                 fontSize: 14.sp,
                 fontFamily: AppFonts.primaryFont,
@@ -291,7 +291,7 @@ Widget paymentPhoneField(PaymentController controller) {
                   vertical: AppDimensions.paddingExtraLarge.h,
                   horizontal: AppDimensions.paddingLarge.w,
                 ),
-                suffixIcon: IconButton(
+                suffixIcon: controller.serviceName == 'charitable_foundation' ? IconButton(
                   icon: Icon(
                     Icons.contacts,
                     color: AppColors.green,
@@ -300,7 +300,7 @@ Widget paymentPhoneField(PaymentController controller) {
                   onPressed: () async {
                     controller.contactPicker();
                   },
-                ),
+                ): null,
               ),
             ),
           ),

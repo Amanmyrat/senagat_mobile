@@ -107,7 +107,7 @@ class HomeController extends GetxController with StateControlMixin {
     Get.toNamed(
       FoundationPaymentScreen.route,
       arguments: {
-        'selectedServiceTitle': r'charitable_foundation'.tr,
+        'selectedServiceTitle': r'charitable_foundation',
         'isInquiries': false,
         'isFoundation': true,
       },
@@ -229,7 +229,10 @@ class HomeController extends GetxController with StateControlMixin {
       getUserProfileInfo();
       loadHistory();
       getExchangeRates();
-
+      _historyTimer?.cancel(); // на всякий случай
+      _historyTimer = Timer.periodic(Duration(seconds: 5), (timer) {
+        loadHistory();
+      });
     }
   }
 

@@ -10,23 +10,24 @@ class CheckBalanceModel {
     this.type,
     this.balance,
     this.success,
-    this.message
+    this.message,
   });
 
   factory CheckBalanceModel.fromMap(Map<String, dynamic> json) {
+    final data = json['data'];
+    final error = json['error'];
+
     return CheckBalanceModel(
-      balance: json['data']?['balance'],
-      success: json['success'] ?? '',
-      message: json['message'],
+      balance: data != null ? data['balance'] : null,
+      success: json['success'] ?? false,
+      message: error != null ? error['message'] : null,
     );
   }
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      "phone": phone,
-      "type": type,
-    };
-  }
+  Map<String, dynamic> toMap() => {
+    "phone": phone,
+    if (type != null && type!.isNotEmpty) "type": type,
+  };
 }
 
 class ApiError {

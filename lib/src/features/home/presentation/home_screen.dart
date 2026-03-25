@@ -492,10 +492,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               ),
                                                             ),
                                                             Text(
-                                                              controller
-                                                                  .history[index]
-                                                                  .paymentTarget
-                                                                  .value,
+                                                             controller.historyPhoneByType(controller.history[index].type, controller.history[index].paymentTarget.value),
                                                               style: TextStyle(
                                                                 color: AppColors
                                                                     .blackText,

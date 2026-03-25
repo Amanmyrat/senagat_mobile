@@ -48,7 +48,7 @@ const Map<String, String> ruRu = {
   r'fund_balance': r'Баланс фонда',
   r'fund_text': r'Рак детства излечим. Мы работаем, чтобы каждый ребёнок в Туркменистане мог получить всё необходимое лечение.',
   r'find_an_ATM': r'Найти банкомат',
-  r'find_an_branch': r'Найти Филиал',
+  r'find_a_branch': r'Найти Филиал',
   r'atm': r'Банкоматы',
   r'branch': r'Филиалы',
   r'add_a_card': r'Добавить карту',

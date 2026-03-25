@@ -227,7 +227,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
                                                 ),
                                               ),
                                               Text(
-                                                item.paymentTarget.value,
+                                                controller.historyPhoneByType(item.type, item.paymentTarget.value),
                                                 style: TextStyle(
                                                   color:
                                                   AppColors.blackText,
@@ -317,9 +317,7 @@ void _showFilterBottomSheet(
                             AppDimensions.borderRadiusMedium.r,
                           ),
                           border: Border.all(
-                            color: isSelected
-                                ? AppColors.green
-                                : AppColors.dividerColor,
+                            color: AppColors.dividerColor,
                             width: 1.w,
                           ),
                           boxShadow: [
@@ -342,7 +340,7 @@ void _showFilterBottomSheet(
                             SizedBox(width: 8.w),
                             Expanded(
                               child: Text(
-                                type.tr,
+                                controller.historyTitleByType(type),
                                 overflow: TextOverflow.clip,
                                 maxLines: 2,
                                 style: TextStyle(
@@ -350,14 +348,6 @@ void _showFilterBottomSheet(
                                   fontFamily: AppFonts.secondaryFont,
                                 ),
                               ),
-                            ),
-                            Icon(
-                              isSelected
-                                  ? Icons.check_box
-                                  : Icons.check_box_outline_blank,
-                              color: isSelected
-                                  ? AppColors.green
-                                  : AppColors.greyInactive,
                             ),
                           ],
                         ),
@@ -368,16 +358,6 @@ void _showFilterBottomSheet(
 
                 SizedBox(height: 20.h),
 
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      controller.applyFilters();
-                      Get.back();
-                    },
-                    child: Text('apply'.tr),
-                  ),
-                ),
               ],
             ),
           );

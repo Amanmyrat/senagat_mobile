@@ -48,12 +48,12 @@ class PaymentHistoryController extends GetxController
 
   final List<String> paymentsTitle = [
     'charity',
-    'TM CELL',
-    'CDMA',
-    'IP TV',
-    'astu_phone',
-    'astu_internet',
-    'telecom_internet',
+    'tmcell',
+    'astu cdma',
+    'astu iptv',
+    'astu phone',
+    'astu internet',
+    'telecom',
     'belet',
     'state_traffic_safety_inspectorate',
     'ÄlemTv',
@@ -170,7 +170,28 @@ class PaymentHistoryController extends GetxController
     }
   }
 
-
+  String historyPhoneByType(String type, String phone) {
+    switch (type) {
+      case 'tmcell':
+        return '+993$phone';
+      case 'charity':
+        return '+993$phone';
+      case 'belet':
+        return '+$phone';
+      case 'astu iptv':
+        return '12$phone';
+      case 'astu phone':
+        return '12$phone';
+      case 'astu cdma':
+        return '60$phone';
+      case 'astu internet':
+        return '12$phone';
+      case 'telecom':
+        return phone;
+      default:
+        return AppAssets.deviceMobileIcon;
+    }
+  }
   String iconByType(String type) {
     switch (type) {
       case 'tmcell':

@@ -86,6 +86,11 @@ class CategoryController extends GetxController with StateControlMixin {
     filter: {"#": RegExp(r'[0-9]')},
   );
 
+  final cdmaMask = MaskTextInputFormatter(
+    mask: '60 ######',
+    filter: {"#": RegExp(r'[0-9]')},
+  );
+
   final defaultMask = MaskTextInputFormatter(
     mask: '12 ######',
     filter: { "#": RegExp(r'[0-9]') },
@@ -259,12 +264,19 @@ class CategoryController extends GetxController with StateControlMixin {
   String _clean12(String phoneNumber) {
     return phoneNumber.replaceAll('12 ', '').replaceAll(' ', '');
   }
+  String _clean60(String phoneNumber) {
+    return phoneNumber.replaceAll('60 ', '').replaceAll(' ', '');
+  }
   Future<CheckBalanceModel> _getTelecomBalanceModel() async {
     return CheckBalanceModel(
       phone: _cleanSpaces(phoneController.text),
     );
   }
-
+  Future<CheckBalanceModel> _getCDMABalanceModel() async {
+    return CheckBalanceModel(
+      phone: _clean60(phoneController.text),
+    );
+  }
   Future<CheckBalanceModel> _getAstuBalanceModel() async {
     return CheckBalanceModel(
       phone: _clean12(phoneController.text),
@@ -279,184 +291,87 @@ class CategoryController extends GetxController with StateControlMixin {
   }
 
   Future<void> checkBalance(int index) async {
+    status = Status.loading;
+    update();
 
-    if(paymentsTitle[index] == 'telecom_internet'){
-      status = Status.loading;
-      update();
+    try {
+      final title = paymentsTitle[index];
 
-      final requestModel = await _getTelecomBalanceModel();
-      await repository.telecomBalance(data: requestModel.toMap()).then((value){
-        checkBalanceModel = value;
-        if (checkBalanceModel.success == true) {
-          status = Status.completed;
+      CheckBalanceModel requestModel;
+      CheckBalanceModel response;
+      String currentType = title;
 
-          final item = FastServiceItem(
-            type: 'telecom_internet',
-            phone: phoneController.text,
-            title: paymentsTitle[index],
-            icon: paymentsIcons[index],
-            balance: checkBalanceModel.balance,
-          );
-          saveFastService(item);
-
-          selected.removeWhere((e) =>
-          e.phone == item.phone && e.type == item.type);
-
-          selected.add(item);
-
-          update();
-
-        } else {
-
-          status = Status.error;
-          update();
-
-          ApiErrorHandler.handleApiError(checkBalanceModel.message);
-        }
-      }).catchError((e){
-        status = Status.error;
-        update();
-        ApiErrorHandler.handleApiError(e);
-        debugPrint(e.toString());
-      });
-
-    }else if(paymentsTitle[index] == 'Belet') {
-      status = Status.loading;
-      update();
-
-      final requestModel = await _getBeletBalanceModel();
-      await repository.beletBalance(data: requestModel.toMap()).then((value) {
-        checkBalanceModel = value;
-        if (checkBalanceModel.success == true) {
-          status = Status.completed;
-
-          final item = FastServiceItem(
-            type: 'Belet',
-            phone: phoneController.text,
-            title: paymentsTitle[index],
-            icon: paymentsIcons[index],
-            balance: checkBalanceModel.balance,
-          );
-          saveFastService(item);
-
-          selected.removeWhere((e) =>
-          e.phone == item.phone && e.type == item.type);
-
-          selected.add(item);
-
-          update();
-        } else {
-          status = Status.error;
-          update();
-
-          ApiErrorHandler.handleApiError(checkBalanceModel.message);
-        }
-      }).catchError((e) {
-        status = Status.error;
-        update();
-        ApiErrorHandler.handleApiError(e);
-        debugPrint(e.toString());
-      });
-    }
-    else if(paymentsTitle[index] == 'TM CELL'){
-      status = Status.loading;
-      update();
-
-      final requestModel = await _getTelecomBalanceModel();
-      await repository.tmcellBalance(data: requestModel.toMap()).then((value){
-        checkBalanceModel = value;
-        if (checkBalanceModel.success == true) {
-          status = Status.completed;
-
-          final item = FastServiceItem(
-            type: 'TM CELL',
-            phone: phoneController.text,
-            title: paymentsTitle[index],
-            icon: paymentsIcons[index],
-            balance: checkBalanceModel.balance,
-          );
-          saveFastService(item);
-
-          selected.removeWhere((e) =>
-          e.phone == item.phone && e.type == item.type);
-
-          selected.add(item);
-
-          update();
-
-        } else {
-
-          status = Status.error;
-          update();
-
-          ApiErrorHandler.handleApiError(checkBalanceModel.message);
-        }
-      }).catchError((e){
-        status = Status.error;
-        update();
-        ApiErrorHandler.handleApiError(e);
-        debugPrint(e.toString());
-      });
-
-    }else{
-      status = Status.loading;
-      update();
-
-      if(paymentsTitle[index] == 'IP TV'){
-        type = 'iptv';
-      }else if(paymentsTitle[index] == 'astu_phone'){
-        type = 'phone';
-      }else if(paymentsTitle[index] == 'astu_internet'){
-        type = 'internet';
-      }else if(paymentsTitle[index] == 'CDMA'){
-        type = 'cdma';
+      /// 🧠 определяем тип и запрос
+      if (title == 'telecom_internet') {
+        requestModel = await _getTelecomBalanceModel();
+        response = await repository.telecomBalance(data: requestModel.toMap());
       }
-      final requestModel = await _getAstuBalanceModel();
-
-      await repository.astuBalance(data: requestModel.toMap()).then((value) {
-        checkBalanceModel = value;
-
-        if (checkBalanceModel.success == true) {
-          status = Status.completed;
-
-          final item = FastServiceItem(
-            type: type,
-            phone: phoneController.text,
-            title: paymentsTitle[index],
-            icon: paymentsIcons[index],
-            balance: checkBalanceModel.balance,
-          );
-          saveFastService(item);
-          selected.removeWhere((e) =>
-          e.phone == item.phone && e.type == item.type);
-
-          selected.add(item);
-
-          update();
-
-        } else {
-
-          status = Status.error;
-          update();
-
-          ApiErrorHandler.handleApiError(checkBalanceModel.message);
+      else if (title == 'Belet') {
+        requestModel = await _getBeletBalanceModel();
+        response = await repository.beletBalance(data: requestModel.toMap());
+      }
+      else if (title == 'TM CELL') {
+        requestModel = await _getTelecomBalanceModel();
+        response = await repository.tmcellBalance(data: requestModel.toMap());
+      }
+      else if (title == 'CDMA') {
+        requestModel = await _getCDMABalanceModel();
+        response = await repository.cdmaBalance(data: requestModel.toMap());
+      }
+      else {
+        /// ASTU logic
+        if (title == 'IP TV') {
+          type = 'iptv';
+        } else if (title == 'astu_phone') {
+          type = 'phone';
+        } else if (title == 'astu_internet') {
+          type = 'internet';
         }
 
-      }).catchError((e) {
+        currentType = type ?? title;
 
-        status = Status.error;
-        update();
+        requestModel = await _getAstuBalanceModel();
+        response = await repository.astuBalance(data: requestModel.toMap());
+      }
 
-        ApiErrorHandler.handleApiError(e);
-        debugPrint(e.toString());
+      checkBalanceModel = response;
 
-      });
+      /// ❗ единая проверка
+      if (response.success != true) {
+        throw response.message ?? 'Unknown error';
+      }
 
+      /// ✅ успех
+      status = Status.completed;
+
+      final item = FastServiceItem(
+        type: currentType,
+        phone: phoneController.text,
+        title: title,
+        icon: paymentsIcons[index],
+        balance: response.balance,
+      );
+
+      saveFastService(item);
+
+      selected.removeWhere(
+            (e) => e.phone == item.phone && e.type == item.type,
+      );
+
+      selected.add(item);
+
+      update();
+
+    } catch (e) {
+      status = Status.error;
+      update();
+
+      ApiErrorHandler.handleApiError(e);
+      debugPrint(e.toString());
+    } finally {
+      phoneController.clear();
     }
-
-    phoneController.clear();
   }
-
   void removeFastServiceWithConfirm(int index, BuildContext context) {
     showCupertinoDialog<bool>(
       context: context,
@@ -536,6 +451,8 @@ class CategoryController extends GetxController with StateControlMixin {
       return '12 xxxxxx / xxx xxxxxx';
     }else if(paymentsTitle[index] == 'Belet' || paymentsTitle[index] == 'TM CELL'){
       return 'xxxxxxxx';
+    }else if( paymentsTitle[index] == 'CDMA'){
+      return '60 xxxxxx';
     }else{
       return '12 xxxxxx';
     }
