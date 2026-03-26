@@ -96,9 +96,6 @@ class CheckPhoneBalanceController extends GetxController with StateControlMixin 
     return phoneNumber.replaceAll('12 ', '').replaceAll(' ', '');
   }
 
-  String _clean60(String phoneNumber) {
-    return phoneNumber.replaceAll('60 ', '').replaceAll(' ', '');
-  }
   Future<CheckBalanceModel> _getTelecomBalanceModel() async {
     return CheckBalanceModel(
       phone: _cleanSpaces(phoneController.text),
@@ -107,7 +104,7 @@ class CheckPhoneBalanceController extends GetxController with StateControlMixin 
 
   Future<CheckBalanceModel> _getCDMABalanceModel() async {
     return CheckBalanceModel(
-      phone: _clean60(phoneController.text),
+      phone: _cleanSpaces(phoneController.text),
     );
   }
 
@@ -171,7 +168,9 @@ class CheckPhoneBalanceController extends GetxController with StateControlMixin 
       ApiErrorHandler.handleApiError(e);
       debugPrint(e.toString());
     }
-  }  void _navigateToNext(CheckBalanceModel model) {
+  }
+
+  void _navigateToNext(CheckBalanceModel model) {
     final args = {
       'balance': model.balance,
       'selectedServiceTitle': serviceName,

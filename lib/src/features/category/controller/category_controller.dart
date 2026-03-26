@@ -264,9 +264,6 @@ class CategoryController extends GetxController with StateControlMixin {
   String _clean12(String phoneNumber) {
     return phoneNumber.replaceAll('12 ', '').replaceAll(' ', '');
   }
-  String _clean60(String phoneNumber) {
-    return phoneNumber.replaceAll('60 ', '').replaceAll(' ', '');
-  }
   Future<CheckBalanceModel> _getTelecomBalanceModel() async {
     return CheckBalanceModel(
       phone: _cleanSpaces(phoneController.text),
@@ -274,7 +271,7 @@ class CategoryController extends GetxController with StateControlMixin {
   }
   Future<CheckBalanceModel> _getCDMABalanceModel() async {
     return CheckBalanceModel(
-      phone: _clean60(phoneController.text),
+      phone: _cleanSpaces(phoneController.text),
     );
   }
   Future<CheckBalanceModel> _getAstuBalanceModel() async {

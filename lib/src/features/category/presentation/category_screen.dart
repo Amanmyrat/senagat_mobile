@@ -358,7 +358,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           ),
                           SizedBox(height: AppDimensions.paddingMedium.h,),
 
-                          if(item.title == 'TM CELL' || item.title == 'Belet' || item.title == 'CDMA')...[
+                          if(item.title == 'TM CELL' || item.title == 'Belet')...[
                             if(item.phone == controller.phoneBox.get('phone'))...[
                               Text(
                                 '${item.balance} TMT',

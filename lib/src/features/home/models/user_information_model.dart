@@ -52,7 +52,7 @@ class LoanModel {
     return LoanModel(
       creditName: json['credit_name'],
       amount: json['amount'],
-      monthlyPayment: json['monthly_payment'],
+      monthlyPayment: (json['monthly_payment']as num?)?.toDouble(),
       status: json['status'],
       bankBranch: json['bank_branch'],
       createdAt: json['created_at'],

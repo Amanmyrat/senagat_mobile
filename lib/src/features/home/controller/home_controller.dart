@@ -62,10 +62,12 @@ class HomeController extends GetxController with StateControlMixin {
   bool _isFetchingExchangeRates = false;
   bool _isFetchingUserInfo = false;
   bool historyIsLoading = false;
+  bool paymentTimer = false;
 
   List<PaymentHistoryModel> history = [];
 
   Timer? _historyTimer;
+  Timer? _stopTimer;
 
   UserInformationModel? userInformationModel;
 
@@ -159,8 +161,6 @@ class HomeController extends GetxController with StateControlMixin {
         'selectedServiceIcon': item.icon,
       });
     }else if (item.title == 'TM CELL') {
-      // ShowSnack.showSnack('payment_temporarily_unavailable'.tr, SnackType.warning);
-
       Get.toNamed(CheckPhoneBalanceScreen.route, arguments: {
         'selectedServiceTitle': item.title,
         'selectedServiceIcon': item.icon,
@@ -204,12 +204,8 @@ class HomeController extends GetxController with StateControlMixin {
         getUserProfileInfo();
         getExchangeRates();
 
-        loadHistory(); // первый вызов сразу
+        loadHistory();
 
-        _historyTimer?.cancel(); // на всякий случай
-        _historyTimer = Timer.periodic(Duration(seconds: 5), (timer) {
-          loadHistory();
-        });
       }
     });
     getProfile();
@@ -222,17 +218,30 @@ class HomeController extends GetxController with StateControlMixin {
     super.onInit();
   }
 
+  void checkHistory() {
+    if(paymentTimer) {
+      _historyTimer?.cancel();
+      _stopTimer?.cancel();
+
+      _historyTimer = Timer.periodic(const Duration(seconds: 5), (timer) {
+        loadHistory();
+      });
+
+      _stopTimer = Timer(const Duration(minutes: 5), () {
+        _historyTimer?.cancel();
+        _historyTimer = null;
+      });
+      paymentTimer = false;
+    }
+  }
+
   void getProfile(){
-    // If already logged in on app start, fetch user info immediately
     if (accountLoginStatusController.accountLoginStatus.value ==
         AccountLoginStatus.loggedIn) {
       getUserProfileInfo();
-      loadHistory();
       getExchangeRates();
-      _historyTimer?.cancel(); // на всякий случай
-      _historyTimer = Timer.periodic(Duration(seconds: 5), (timer) {
-        loadHistory();
-      });
+      loadHistory();
+       checkHistory();
     }
   }
 
@@ -311,7 +320,6 @@ class HomeController extends GetxController with StateControlMixin {
      }).catchError((e){
        status = Status.error;
        update();
-       ApiErrorHandler.handleApiError(e);
        debugPrint(e.toString());
      });
   }
@@ -378,7 +386,7 @@ class HomeController extends GetxController with StateControlMixin {
         return AppAssets.astu;
       case 'astu phone':
         return AppAssets.astu;
-      case 'astu cdma':
+      case 'cdma':
         return AppAssets.astu;
       case 'astu internet':
         return AppAssets.astu;
@@ -401,7 +409,7 @@ class HomeController extends GetxController with StateControlMixin {
         return 'IP TV';
       case 'astu phone':
         return 'astu_phone'.tr;
-      case 'astu cdma':
+      case 'cdma':
         return 'CDMA';
       case 'astu internet':
         return 'astu_internet'.tr;
@@ -424,8 +432,8 @@ class HomeController extends GetxController with StateControlMixin {
         return '12$phone';
       case 'astu phone':
         return '12$phone';
-      case 'astu cdma':
-        return '60$phone';
+      case 'cdma':
+        return '$phone';
       case 'astu internet':
         return '12$phone';
       case 'telecom':

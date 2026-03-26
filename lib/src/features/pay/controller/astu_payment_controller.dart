@@ -32,7 +32,10 @@ class AstuPaymentController extends PaymentController {
     } else if (serviceName == 'CDMA') {
       type = 'cdma';
     }
-
+    print(type);
+    String cleanSpaces(String phoneNumber) {
+      return phoneNumber.replaceAll(' ', '');
+    }
     if (type == 'cdma') {
       status = Status.loading;
       update();
@@ -41,7 +44,7 @@ class AstuPaymentController extends PaymentController {
         final requestModel = TelecomTopUpModel(
           bankName: selectedCard?.bank ?? '',
           amount: int.parse(sumController.text),
-          phone: phoneController.text,
+          phone: cleanSpaces(phoneController.text),
         );
 
         final result =
@@ -65,42 +68,41 @@ class AstuPaymentController extends PaymentController {
         ApiErrorHandler.handleApiError(e);
         debugPrint(e.toString());
       }
-    }
-
-
-    String _clean12(String phoneNumber) {
-      return phoneNumber.replaceAll('12 ', '').replaceAll(' ', '');
-    }
-
-    try {
-      final requestModel = AstuTopUpModel(
-        bankName: selectedCard?.bank ?? '',
-        amount: int.parse(sumController.text),
-        phone: _clean12(phoneController.text),
-        type: type,
-      );
-
-      final result =
-      await repository.astuPay(data: requestModel.toMap());
-      astuTopUpModel = result;
-      url = astuTopUpModel.formUrl;
-      orderId = astuTopUpModel.orderId;
-
-      if (url == null || url.isEmpty) {
-        throw Exception('Payment URL is empty');
+    }else{
+      String clean12(String phoneNumber) {
+        return phoneNumber.replaceAll('12 ', '').replaceAll(' ', '');
       }
 
-      if (orderId == null || orderId.isEmpty) {
-        throw Exception('Payment orderId is empty');
-      }
+      try {
+        final requestModel = AstuTopUpModel(
+          bankName: selectedCard?.bank ?? '',
+          amount: int.parse(sumController.text),
+          phone: clean12(phoneController.text),
+          type: type,
+        );
 
-      await openBankPayment(url, orderId);
-    } catch (e) {
-      status = Status.error;
-      update();
-      ApiErrorHandler.handleApiError(e);
-      debugPrint(e.toString());
+        final result =
+        await repository.astuPay(data: requestModel.toMap());
+        astuTopUpModel = result;
+        url = astuTopUpModel.formUrl;
+        orderId = astuTopUpModel.orderId;
+
+        if (url == null || url.isEmpty) {
+          throw Exception('Payment URL is empty');
+        }
+
+        if (orderId == null || orderId.isEmpty) {
+          throw Exception('Payment orderId is empty');
+        }
+
+        await openBankPayment(url, orderId);
+      } catch (e) {
+        status = Status.error;
+        update();
+        ApiErrorHandler.handleApiError(e);
+        debugPrint(e.toString());
+      }
     }
-  }
+    }
 }
 

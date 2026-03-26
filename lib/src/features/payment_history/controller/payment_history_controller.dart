@@ -182,8 +182,8 @@ class PaymentHistoryController extends GetxController
         return '12$phone';
       case 'astu phone':
         return '12$phone';
-      case 'astu cdma':
-        return '60$phone';
+      case 'cdma':
+        return '$phone';
       case 'astu internet':
         return '12$phone';
       case 'telecom':
@@ -204,7 +204,7 @@ class PaymentHistoryController extends GetxController
         return AppAssets.astu;
       case 'astu phone':
         return AppAssets.astu;
-      case 'astu cdma':
+      case 'cdma':
         return AppAssets.astu;
       case 'astu internet':
         return AppAssets.astu;
@@ -227,7 +227,7 @@ class PaymentHistoryController extends GetxController
         return 'IP TV';
       case 'astu phone':
         return 'astu_phone'.tr;
-      case 'astu cdma':
+      case 'cdma':
         return 'CDMA';
       case 'astu internet':
         return 'astu_internet'.tr;
