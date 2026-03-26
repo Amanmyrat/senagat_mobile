@@ -40,7 +40,7 @@ class CreditOrderModel {
       creditId: json['credit_id'],
       term: json['term'],
       amount: json['amount'],
-      monthlyPayment: json['monthly_payment'],
+      monthlyPayment: (json['monthly_payment']as num?)?.toDouble(),
       country: json['country'],
       bankId: json['bank_branch_id'],
       role: json['role'],

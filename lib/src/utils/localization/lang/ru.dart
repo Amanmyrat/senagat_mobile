@@ -21,7 +21,7 @@ const Map<String, String> ruRu = {
   r'send_sms': r'Мы отправим вам SMS с кодом подтверждения.',
   r'send_code': r'Отправить код',
   r'OTP': r'Код',
-  r'code_was_sent_to': r'Код был отправлен на ',
+  r'code_was_sent_to': r'Код был отправлен на ваш номер ',
   r'incorrectly_entered_OTP': r'Неверно введённый код',
   r'apply': r'Применить',
   r'send_code_again': r'Отправить код ещё раз',
@@ -263,7 +263,9 @@ const Map<String, String> ruRu = {
   r'selected2': r'Выбранные',
   r'add_services':'Добавить сервисы для управления и оплаты',
   r'remove_service':'Удалить сервис?',
-
+  r'phone_number_not_found_or_invalid':'Пользователь не найден',
+  r'clear':'Очистить',
+  r'monthly_payment_min':'Сумма кредита не должна превышать 50% от вашей заработной платы',
 
   r'otp_not_match': r'Код не совпадает',
   r'otp_code_has_expired.': r'Срок действия кода истёк',

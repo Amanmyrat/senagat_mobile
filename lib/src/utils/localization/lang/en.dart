@@ -21,7 +21,7 @@ const Map<String, String> enUs = {
   r'send_sms': r'We will send you an SMS with a confirmation code.',
   r'send_code': r'Send code',
   r'OTP': r'OTP',
-  r'code_was_sent_to': r'The code was sent to ',
+  r'code_was_sent_to': r'The code was sent to your phone number',
   r'incorrectly_entered_OTP': r'Incorrectly entered OTP',
   r'apply': r'Apply',
   r'send_code_again': r'Send code again',
@@ -263,6 +263,9 @@ const Map<String, String> enUs = {
   r'selected2':'Selected',
   r'add_services':'Add services for management and payment',
   r'remove_service':'Remove service?',
+  r'phone_number_not_found_or_invalid':'User not found',
+  r'clear_filter':'Clear',
+  r'monthly_payment_min':'The loan amount should not exceed 50% of your salary',
 
 
   r'otp_not_match': r'OTP did not match',

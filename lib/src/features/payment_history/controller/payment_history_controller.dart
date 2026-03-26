@@ -9,7 +9,7 @@ import '../../../utils/constants/app_assets.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../pay/model/paymet_history_model.dart';
 
-enum PaymentStatus { all, failed, approved }
+enum PaymentStatus { all, failed, confirmed }
 
 class PaymentHistoryController extends GetxController
     with StateControlMixin, GetSingleTickerProviderStateMixin {
@@ -40,29 +40,30 @@ class PaymentHistoryController extends GetxController
     AppAssets.astu,
     AppAssets.telecom,
     AppAssets.beletIcon,
-    AppAssets.policeCar,
-    AppAssets.alemTv,
+    // AppAssets.policeCar,
+    // AppAssets.alemTv,
   ];
 
 
 
   final List<String> paymentsTitle = [
+    'all',
     'charity',
     'tmcell',
-    'astu cdma',
+    'cdma',
     'astu iptv',
     'astu phone',
     'astu internet',
     'telecom',
     'belet',
-    'state_traffic_safety_inspectorate',
-    'ÄlemTv',
+    // 'state_traffic_safety_inspectorate',
+    // 'ÄlemTv',
   ];
 
 
   final List<MapEntry<String, PaymentStatus>> statusTabs = [
     MapEntry('all', PaymentStatus.all),
-    MapEntry('payment_approved', PaymentStatus.approved),
+    MapEntry('payment_approved', PaymentStatus.confirmed),
     MapEntry('failed', PaymentStatus.failed),
   ];
 
@@ -85,20 +86,18 @@ class PaymentHistoryController extends GetxController
     super.onInit();
   }
 
-  void toggleType(String type) {
-    if (selectedTypes.contains(type)) {
-      selectedTypes.remove(type);
-    } else {
-      selectedTypes.add(type);
-    }
+  void selectSingleType(String type) {
+    selectedTypes.clear();
+    selectedTypes.add(type);
     update();
   }
+
   void clearTypes() {
     selectedTypes.clear();
     applyFilters();
+    Get.back();
   }
 
-  /// LOAD DATA
   Future<void> _loadHistory() async {
     status = Status.loading;
     update();

@@ -20,7 +20,7 @@ class CheckBalanceModel {
     return CheckBalanceModel(
       balance: data != null ? data['balance'] : null,
       success: json['success'] ?? false,
-      message: error != null ? error['message'] : null,
+      message: json['message']?? '',
     );
   }
 

@@ -170,7 +170,6 @@ class GetCreditController extends GetxController
 
     double totalWithInterest = (currentValue * interest / 100);
     monthlyPayment = totalWithInterest / 12;
-    print(month);
     double a = currentValue / month;
     double result = monthlyPayment + a;
 

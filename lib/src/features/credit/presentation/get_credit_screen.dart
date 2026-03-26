@@ -455,6 +455,28 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                           ),
                                         ],
                                       ),
+                                      SizedBox(
+                                        height:
+                                        AppDimensions.paddingExtraLarge.h,
+                                      ),
+                                      Row(
+                                        children: [
+                                          SvgPicture.asset(AppAssets.infoIcon),
+                                          SizedBox(
+                                            width:
+                                            AppDimensions.paddingMedium.h,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              'monthly_payment_min'.tr,
+                                              style: TextStyle(
+                                                fontSize: 14.sp,
+                                                color: AppColors.blackText,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ],
                                   ),
                                 ),

@@ -158,7 +158,7 @@ class CheckPhoneBalanceController extends GetxController with StateControlMixin 
 
         _navigateToNext(response);
       } else {
-        throw response.message ?? 'Unknown error';
+        throw response.message?.tr ?? 'Unknown error';
       }
 
     } catch (e) {

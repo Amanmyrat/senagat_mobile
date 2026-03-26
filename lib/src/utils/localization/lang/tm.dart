@@ -263,6 +263,9 @@ const Map<String, String> tkTk = {
   r'selected_services':r'Saýlanan hyzmatlar',
   r'add_services':r'Dolandyrmak we tölemek üçin hyzmatlary goşuň',
   r'remove_service':'Hyzmaty pozmak?',
+  r'phone_number_not_found_or_invalid':'Ulanyjy tapylmady',
+  r'clear':'Arassalamak',
+  r'monthly_payment_min':'Hasaplanan karz mukdary aýlyk hakynyň ýarysyndan köp bolmaly däl',
 
 
   r'otp_not_match': r'Kod gabat gelmedi',

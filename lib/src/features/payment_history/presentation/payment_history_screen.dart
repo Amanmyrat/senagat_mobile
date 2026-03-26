@@ -286,9 +286,24 @@ void _showFilterBottomSheet(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 10.h),
-                Text(
-                  'payments'.tr,
-                  style: TextStyle(fontSize: 17.sp,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'payments'.tr,
+                      style: TextStyle(fontSize: 17.sp,),
+                    ),
+                    if(controller.selectedTypes.isNotEmpty)...[
+                      GestureDetector(
+                        onTap: () => controller.clearTypes(),
+                        child: Text(
+                          'clear'.tr,
+                          style: TextStyle(fontSize: 14.sp, color: AppColors.green, fontFamily: AppFonts.secondaryFont),
+                        ),
+                      ),
+                    ],
+
+                  ],
                 ),
                 SizedBox(height: 12.h),
                 
@@ -307,7 +322,11 @@ void _showFilterBottomSheet(
                     controller.selectedTypes.contains(type);
 
                     return GestureDetector(
-                      onTap: () => controller.toggleType(type),
+                      onTap: () {
+                        controller.selectSingleType(type);
+                        controller.applyFilters();
+                        Get.back();
+                      },
                       child: Container(
                         width: 190.w,
                         height: 70.h,
