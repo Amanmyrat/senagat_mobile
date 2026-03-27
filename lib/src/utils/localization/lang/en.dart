@@ -120,7 +120,7 @@ const Map<String, String> enUs = {
   r'workplace': r'Workplace',
   r'job_title': r'Job title',
   r'wages': r'Wages',
-  r'bank_branch_for_application': r'Bank branch for application',
+  r'select_bank_branch': r'Select bank branch',
   r'city': r'City',
   r'select_city': r'Select city',
   r'select_bank': r'Select bank',
@@ -265,7 +265,7 @@ const Map<String, String> enUs = {
   r'remove_service':'Remove service?',
   r'phone_number_not_found_or_invalid':'User not found',
   r'clear_filter':'Clear',
-  r'monthly_payment_min':'The loan amount should not exceed 50% of your salary',
+  r'monthly_payment_min':'To receive the calculated loan amount, your monthly income must exceed @sum manat',
 
 
   r'otp_not_match': r'OTP did not match',

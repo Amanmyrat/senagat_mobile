@@ -95,6 +95,8 @@ class ServicePaymentScreen extends StatelessWidget {
                           onPressed: () {
                             final homeController = Get.find<HomeController>();
                             final dashboardController = Get.find<DashboardController>();
+                            homeController.paymentTimer = true;
+                            homeController.update();
                             homeController.getProfile();
                             dashboardController.updateCurrentIndex(NestedNavigationIds.home);
 
@@ -144,6 +146,8 @@ class ServicePaymentScreen extends StatelessWidget {
                           onPressed: () {
                             final homeController = Get.find<HomeController>();
                             final dashboardController = Get.find<DashboardController>();
+                            homeController.paymentTimer = true;
+                            homeController.update();
                             homeController.getProfile();
                             dashboardController.updateCurrentIndex(NestedNavigationIds.home);
 

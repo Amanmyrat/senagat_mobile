@@ -384,7 +384,7 @@ class AddCardScreen extends StatelessWidget {
                                                         AppFonts.primaryFont,
                                                   ),
                                                   decoration: InputDecoration(
-                                                    hintText: r'term'.tr,
+                                                    hintText: r'**/**',
                                                     border: OutlineInputBorder(),
                                                     focusedBorder: OutlineInputBorder(
                                                       borderRadius:

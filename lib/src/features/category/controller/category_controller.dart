@@ -104,6 +104,7 @@ class CategoryController extends GetxController with StateControlMixin {
     fastBox = Hive.box<FastServiceItem>('fastServices');
 
     selected = fastBox.values.toList();
+
     _refreshBalances();
     _balanceTimer?.cancel(); // на всякий случай
 
@@ -369,6 +370,7 @@ class CategoryController extends GetxController with StateControlMixin {
       phoneController.clear();
     }
   }
+
   void removeFastServiceWithConfirm(int index, BuildContext context) {
     showCupertinoDialog<bool>(
       context: context,

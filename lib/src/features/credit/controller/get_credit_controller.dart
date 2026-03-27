@@ -30,6 +30,7 @@ class GetCreditController extends GetxController
   late int creditId;
   int term = 1;
   late double monthlyPayment;
+  late String minMonthlyPayment;
 
   late int month;
 
@@ -173,16 +174,30 @@ class GetCreditController extends GetxController
     double a = currentValue / month;
     double result = monthlyPayment + a;
 
+    double result2 = result * 2;
+
     String formatted;
     if (result % 1 == 0) {
       formatted = result.toInt().toString();
     } else {
       formatted = result.toStringAsFixed(2);
     }
-
     formatted = formatted.replaceAll('.', ',');
 
     paymentController.text = formatted;
+
+
+    String formatted2;
+    if (result2 % 1 == 0) {
+      formatted2 = result2.toInt().toString();
+    } else {
+      formatted2 = result2.toStringAsFixed(2);
+    }
+    formatted2 = formatted2.replaceAll('.', ',');
+
+    minMonthlyPayment = formatted2;
+
+
     update();
   }
 

@@ -461,17 +461,17 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                       ),
                                       Row(
                                         children: [
-                                          SvgPicture.asset(AppAssets.infoIcon),
+                                          SvgPicture.asset(AppAssets.infoIcon, color: AppColors.redDark,),
                                           SizedBox(
                                             width:
                                             AppDimensions.paddingMedium.h,
                                           ),
                                           Expanded(
                                             child: Text(
-                                              'monthly_payment_min'.tr,
+                                              'monthly_payment_min'.trParams({'sum': controller.minMonthlyPayment}),
                                               style: TextStyle(
                                                 fontSize: 14.sp,
-                                                color: AppColors.blackText,
+                                                color: AppColors.redDark,
                                               ),
                                             ),
                                           ),

@@ -122,7 +122,7 @@ const Map<String, String> tkTk = {
   r'workplace': r'Iş ýeri',
   r'job_title': r'Wezipe',
   r'wages': r'Zähmet haky',
-  r'bank_branch_for_application': r'Arza üçin bank şahamçasy',
+  r'select_bank_branch': r'Bank şahamçasyny saýlaň',
   r'city': r'Şäher',
   r'select_city': r'Şäher saýlaň',
   r'select_bank': r'Bank saýlaň',
@@ -265,7 +265,7 @@ const Map<String, String> tkTk = {
   r'remove_service':'Hyzmaty pozmak?',
   r'phone_number_not_found_or_invalid':'Ulanyjy tapylmady',
   r'clear':'Arassalamak',
-  r'monthly_payment_min':'Hasaplanan karz mukdary aýlyk hakynyň ýarysyndan köp bolmaly däl',
+  r'monthly_payment_min':'Hasaplanan karz mukdary almak üçin siziň aýlyk girdeýjiňiz @sum manatdan ýokary bolmaly',
 
 
   r'otp_not_match': r'Kod gabat gelmedi',

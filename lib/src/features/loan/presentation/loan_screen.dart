@@ -493,7 +493,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            r'bank_branch_for_application'.tr,
+                                            r'select_bank_branch'.tr,
                                             style: TextStyle(
                                               fontSize: 24.sp,
                                               color: AppColors.blackText,

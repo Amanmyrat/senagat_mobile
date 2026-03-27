@@ -120,7 +120,7 @@ const Map<String, String> ruRu = {
   r'workplace': r'Место работы',
   r'job_title': r'Должность',
   r'wages': r'Зарплата',
-  r'bank_branch_for_application': r'Филиал банка для заявки',
+  r'select_bank_branch': r'Выберите филиал банка',
   r'city': r'Город',
   r'select_city': r'Выберите город',
   r'select_bank': r'Выберите банк',
@@ -265,7 +265,7 @@ const Map<String, String> ruRu = {
   r'remove_service':'Удалить сервис?',
   r'phone_number_not_found_or_invalid':'Пользователь не найден',
   r'clear':'Очистить',
-  r'monthly_payment_min':'Сумма кредита не должна превышать 50% от вашей заработной платы',
+  r'monthly_payment_min':'Для получения рассчитанной суммы кредита ваш ежемесячный доход должен превышать @sum manat',
 
   r'otp_not_match': r'Код не совпадает',
   r'otp_code_has_expired.': r'Срок действия кода истёк',
