@@ -266,6 +266,10 @@ const Map<String, String> ruRu = {
   r'phone_number_not_found_or_invalid':'Пользователь не найден',
   r'clear':'Очистить',
   r'monthly_payment_min':'Для получения рассчитанной суммы кредита ваш ежемесячный доход должен превышать @sum manat',
+  r'salary_document':'Документ о зарплате',
+  r'profit_document':'Документ о прибыли',
+  r'file_size_limit':'Размер файла должен быть меньше 2 МБ',
+
 
   r'otp_not_match': r'Код не совпадает',
   r'otp_code_has_expired.': r'Срок действия кода истёк',

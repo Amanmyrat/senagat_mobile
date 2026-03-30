@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:senagat_mobile/src/features/loan/models/credit_order_model.dart';
 import '../../../core/networking/api_endpoint.dart';
 import '../../../core/networking/api_service.dart';
@@ -10,7 +11,7 @@ class CreditRepository {
   const CreditRepository({required ApiService apiService})
     : _apiService = apiService;
 
-  Future<CreditOrderModel> creditOrder({required JSON data}) async {
+  Future<CreditOrderModel> creditOrder(FormData data) async {
     return _apiService.setData<CreditOrderModel>(
       endpoint: await ApiEndpoint.credit(CreditEndpoint.CREDIT_ORDER),
       data: data,
@@ -21,7 +22,6 @@ class CreditRepository {
       },
     );
   }
-
 
   Future<List<CreditTypeModel>> getCreditTypes() async {
     return await _apiService.getCollectionData(

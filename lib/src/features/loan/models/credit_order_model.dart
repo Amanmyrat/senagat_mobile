@@ -1,3 +1,6 @@
+import 'package:get/get_connect/http/src/multipart/multipart_file.dart';
+import 'package:get/get_connect/http/src/multipart/multipart_file.dart' as dio;
+
 class CreditOrderModel {
   final int? creditId;
   final int? term;
@@ -17,6 +20,8 @@ class CreditOrderModel {
   final int? salary;
   final String? createdAt;
 
+
+
   CreditOrderModel({
     this.creditId,
     this.term,
@@ -33,6 +38,8 @@ class CreditOrderModel {
     this.managerWorkAddress,
     this.salary,
     this.createdAt,
+
+
   });
 
   factory CreditOrderModel.fromJson(Map<String, dynamic> json) {
@@ -83,6 +90,7 @@ class CreditOrderModel {
       'position': position,
       'manager_work_address': managerWorkAddress,
       'salary': salary,
+
     };
   }
 }

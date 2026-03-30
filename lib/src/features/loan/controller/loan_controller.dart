@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart' as dio;
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
@@ -5,6 +9,7 @@ import 'package:senagat_mobile/src/features/credit/repository/credit_repository.
 import 'package:senagat_mobile/src/features/loan/models/credit_order_model.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/api_error_handler.dart';
+import '../../../utils/services/show_snack.dart';
 import '../../map_search/model/location_model.dart';
 import '../../map_search/repository/location_repository.dart';
 
@@ -41,6 +46,10 @@ class LoanController extends GetxController
 
   late List<TextEditingController> controllers;
 
+  File? salaryDocument;
+  File? profitDocument;
+
+
   LoanController(this.repository, this.locRepository);
 
   @override
@@ -59,7 +68,9 @@ class LoanController extends GetxController
     tabController = TabController(length: 2, vsync: this);
     tabController.addListener(() {
       selectedTabIndex = tabController.index;
+      onInformationNotEmpty('v');
       update();
+
     });
     getBranches();
 
@@ -74,7 +85,9 @@ class LoanController extends GetxController
       if (workplaceController.text.isNotEmpty &&
           positionAtWorkController.text.isNotEmpty &&
           managerWorkAddressController.text.isNotEmpty &&
-          wagesController.text.isNotEmpty) {
+          wagesController.text.isNotEmpty &&
+          salaryDocument != null&&
+          profitDocument != null) {
         continueEnabled = true;
         update();
       } else {
@@ -84,7 +97,9 @@ class LoanController extends GetxController
     } else if (selectedTabIndex == 0) {
       if (patentNumController.text.isNotEmpty &&
           registerNumController.text.isNotEmpty &&
-          workAddressController.text.isNotEmpty) {
+          workAddressController.text.isNotEmpty
+          && salaryDocument !=null
+      ) {
         continueEnabled = true;
         update();
       } else {
@@ -136,7 +151,20 @@ class LoanController extends GetxController
   }
 
   Future<CreditOrderModel> _getCreditWorkInfoModelForManager() async {
+    if (salaryDocument == null) {
+      throw Exception('Salary document is required');
+    }
+
+    if (wagesController.text.isEmpty) {
+      throw Exception('Salary is empty');
+    }
+    if (profitDocument == null) {
+      throw Exception('Profit document is required');
+    }
     final int salary = int.parse(wagesController.text);
+    // final salaryFile = await _parseImage(salaryDocument!);
+    // final profitFile = await _parseImage(profitDocument!);
+
     return CreditOrderModel(
       creditId: creditId,
       term: term,
@@ -148,10 +176,17 @@ class LoanController extends GetxController
       position: positionAtWorkController.text,
       salary: salary,
       bankId: selectedDropdownBank,
+      // salaryDocument: salaryFile,
+      // profitDocument: profitFile,
+
     );
   }
 
   Future<CreditOrderModel> _getCreditWorkInfoModelForEntrepreneur() async {
+    if (salaryDocument == null) {
+      throw Exception('Salary document is required');
+    }
+
     return CreditOrderModel(
       creditId: creditId,
       term: term,
@@ -165,33 +200,137 @@ class LoanController extends GetxController
     );
   }
 
+  // Future<void> startBankVerification() async {
+  //   check = true;
+  //   status = Status.loading;
+  //   update();
+  //
+  //   try {
+  //     final creditWorkInfoModel = selectedTabIndex == 0
+  //         ? await _getCreditWorkInfoModelForEntrepreneur()
+  //         : await _getCreditWorkInfoModelForManager();
+  //
+  //     final data = selectedTabIndex == 0
+  //         ? creditWorkInfoModel.toMap()
+  //         : creditWorkInfoModel.toMap2();
+  //
+  //     final formData = FormData(data);
+  //
+  //     await repository.creditOrder(data: formData);
+  //
+  //     status = Status.completed;
+  //   } catch (e) {
+  //     status = Status.error;
+  //     ApiErrorHandler.handleApiError(e);
+  //     debugPrint(e.toString());
+  //   }
+  //
+  //   update();
+  // }
+
   Future<void> startBankVerification() async {
     check = true;
     status = Status.loading;
     update();
 
-    final creditWorkInfoModel = selectedTabIndex == 0
-        ? await _getCreditWorkInfoModelForEntrepreneur()
-        : await _getCreditWorkInfoModelForManager();
+    try {
+      final model = selectedTabIndex == 0
+          ? await _getCreditWorkInfoModelForEntrepreneur()
+          : await _getCreditWorkInfoModelForManager();
 
-    await repository
-        .creditOrder(
-          data: selectedTabIndex == 0
-              ? creditWorkInfoModel.toMap()
-              : creditWorkInfoModel.toMap2(),
-        )
-        .then((value) {
-          status = Status.completed;
-          update();
-        })
-        .catchError((e) {
-          status = Status.error;
-          update();
-          ApiErrorHandler.handleApiError(e);
-          debugPrint(e.toString());
-        });
+      final map = selectedTabIndex == 0
+          ? model.toMap()
+          : model.toMap2();
+
+      final formData = dio.FormData.fromMap({
+        ...map,
+
+        if (salaryDocument != null)
+          'salary_document': await dio.MultipartFile.fromFile(
+            salaryDocument!.path,
+            filename: salaryDocument!.path.split('/').last,
+          ),
+
+        if (profitDocument != null)
+          'profit_document': await dio.MultipartFile.fromFile(
+            profitDocument!.path,
+            filename: profitDocument!.path.split('/').last,
+          ),
+      });
+
+      await repository.creditOrder(formData);
+
+      status = Status.completed;
+    } catch (e) {
+      status = Status.error;
+      ApiErrorHandler.handleApiError(e);
+      debugPrint(e.toString());
+    }
 
     update();
+  }
+  // Future<void> pickPdf(bool isSalary) async {
+  //   FilePickerResult? result = await FilePicker.platform.pickFiles(
+  //     type: FileType.custom,
+  //     allowedExtensions: ['pdf'],
+  //   );
+  //
+  //   if (result != null &&
+  //       result.files.isNotEmpty &&
+  //       result.files.single.path != null) {
+  //
+  //     final file = File(result.files.single.path!);
+  //
+  //     if (isSalary) {
+  //       salaryDocument = file;
+  //     } else {
+  //       profitDocument = file;
+  //     }
+  //     onInformationNotEmpty(null);
+  //     update();
+  //   }
+  // }
+  //
+  // Future<MultipartFile> _parseImage(File file) async {
+  //   final bytes = await file.readAsBytes();
+  //   final fileName = file.path.split('/').last;
+  //
+  //   return MultipartFile(
+  //     bytes,
+  //     filename: fileName,
+  //   );
+  // }
+
+  Future<void> pickPdf(bool isSalary) async {
+    const int maxSizeInBytes = 2 * 1024 * 1024;
+
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf'],
+    );
+
+    if (result != null &&
+        result.files.isNotEmpty &&
+        result.files.single.path != null) {
+
+      final file = File(result.files.single.path!);
+      final fileSize = await file.length();
+
+      if (fileSize > maxSizeInBytes) {
+        ShowSnack.showSnack(r'file_size_limit'.tr, SnackType.error);
+        return;
+      }
+
+      // ✅ Save file if valid
+      if (isSalary) {
+        salaryDocument = file;
+      } else {
+        profitDocument = file;
+      }
+
+      onInformationNotEmpty(null);
+      update();
+    }
   }
 
   void setDropdownBank(int? value) {

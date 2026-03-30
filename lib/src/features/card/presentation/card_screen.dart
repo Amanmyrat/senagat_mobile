@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -217,27 +218,80 @@ class _CardScreenState extends State<CardScreen> {
                                                 color: AppColors.grey,
                                                 fontSize: 14.sp),
                                           ),
-                                          Container(
-                                            padding: EdgeInsets.symmetric(
-                                              horizontal:
-                                              AppDimensions.paddingMedium.w,
-                                              vertical: 4,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(
-                                                AppDimensions.borderRadiusMedium.r,
+                                          Row(
+                                            children: [
+                                              Container(
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal:
+                                                  AppDimensions.paddingMedium.w,
+                                                  vertical: 4,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(
+                                                    AppDimensions.borderRadiusMedium.r,
+                                                  ),
+                                                  color: controller.checkCardStatus(index),
+                                                ),
+                                                child: Text(
+                                                  card?.status?.tr ?? '',
+                                                  style: TextStyle(
+                                                    fontSize: 14.sp,
+                                                    color: AppColors.white,
+                                                    fontFamily: AppFonts.secondaryFont,
+                                                  ),
+                                                ),
                                               ),
-                                              color: controller.checkCardStatus(index),
-                                            ),
-                                            child: Text(
-                                              card?.status?.tr ?? '',
-                                              style: TextStyle(
-                                                fontSize: 14.sp,
-                                                color: AppColors.white,
-                                                fontFamily: AppFonts.secondaryFont,
-                                              ),
-                                            ),
+                                              if(card?.status == 'rejected')...[
+                                                SizedBox(width: AppDimensions.paddingMedium.w,),
+
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    final rejectedList =
+                                                        card?.rejectedText ?? [];
+
+                                                    showCupertinoDialog(
+                                                      context: context,
+                                                      builder: (context) => CupertinoAlertDialog(
+                                                        content: rejectedList.isEmpty
+                                                            ? Text("No rejection reason")
+                                                            : Column(
+                                                          mainAxisSize: MainAxisSize.min,
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: rejectedList
+                                                              .map<Widget>((e) => Padding(
+                                                            padding: EdgeInsets.only(bottom: 6),
+                                                            child: Row(
+                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                              children: [
+                                                                Text("• ",
+                                                                    style: TextStyle(color: AppColors.redDark)),
+                                                                Expanded(child: Text(e)),
+                                                              ],
+                                                            ),
+                                                          ))
+                                                              .toList(),
+                                                        ),
+                                                        actions: [
+                                                          CupertinoDialogAction(
+                                                            isDestructiveAction: true,
+                                                            child: Text("back".tr),
+                                                            onPressed: () => Navigator.of(context).pop(),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    );
+                                                  },
+                                                  child: SvgPicture.asset(
+                                                    AppAssets.infoIcon,
+                                                    width: 24.w,
+                                                    color: AppColors.redDark,
+                                                  ),
+                                                ),
+                                              ],
+
+                                            ],
                                           ),
+
                                         ],
                                       ),
 

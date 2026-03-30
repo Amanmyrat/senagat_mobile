@@ -334,12 +334,10 @@ class CategoryController extends GetxController with StateControlMixin {
 
       checkBalanceModel = response;
 
-      /// ❗ единая проверка
       if (response.success != true) {
         throw response.message ?? 'Unknown error';
       }
 
-      /// ✅ успех
       status = Status.completed;
 
       final item = FastServiceItem(

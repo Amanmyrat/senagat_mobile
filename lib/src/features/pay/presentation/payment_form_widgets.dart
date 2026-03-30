@@ -230,82 +230,82 @@ Widget paymentPhoneField(PaymentController controller) {
       ),
       SizedBox(height: 16.h),
       Row(
-        children: [
-          Container(
-            padding: EdgeInsets.all(
-              AppDimensions.paddingExtraLarge.w,
-            ),
-            decoration: BoxDecoration(
-              color: AppColors.inputFillBackground,
-              borderRadius: BorderRadius.circular(
-                AppDimensions.borderRadiusMedium,
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(
+               horizontal:  AppDimensions.paddingExtraLarge.w,
               ),
-            ),
-            child: Text(
-              '+993',
-              style: TextStyle(
-                fontSize: 14.sp,
-              ),
-            ),
-          ),
-          SizedBox(width: AppDimensions.paddingSmall.w),
-          Expanded(
-            child: TextFormField(
-              keyboardType: TextInputType.number,
-              controller: controller.phoneController,
-              onChanged: (_) => controller.isTextNotEmpty(),
-              focusNode: controller.phoneFocus,
-              maxLength: 8,
-              readOnly: controller.serviceName != 'charitable_foundation' ? true : false,
-              style: TextStyle(
-                fontSize: 14.sp,
-                fontFamily: AppFonts.primaryFont,
-              ),
-              decoration: InputDecoration(
-                hintText: r'enter_number'.tr,
-                border: const OutlineInputBorder(),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(
-                    AppDimensions.borderRadiusMedium,
-                  ),
-                  borderSide: BorderSide(
-                    color: controller.status == Status.error
-                        ? AppColors.redDark
-                        : AppColors.green,
-                    width: 1.w,
-                  ),
+              decoration: BoxDecoration(
+                color: AppColors.inputFillBackground,
+                borderRadius: BorderRadius.circular(
+                  AppDimensions.borderRadiusMedium,
                 ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(
-                    AppDimensions.borderRadiusMedium,
-                  ),
-                  borderSide: BorderSide(
-                    color: controller.status == Status.error
-                        ? AppColors.redDark
-                        : AppColors.transparent,
-                    width: 1.w,
-                  ),
+              ),
+              child: Text(
+                '+993',
+                style: TextStyle(
+                  fontSize: 14.sp,
                 ),
-                counter: const SizedBox(),
-                contentPadding: EdgeInsets.symmetric(
-                  vertical: AppDimensions.paddingExtraLarge.h,
-                  horizontal: AppDimensions.paddingLarge.w,
-                ),
-                suffixIcon: controller.serviceName == 'charitable_foundation' ? IconButton(
-                  icon: Icon(
-                    Icons.contacts,
-                    color: AppColors.green,
-                    size: 20.w,
-                  ),
-                  onPressed: () async {
-                    controller.contactPicker();
-                  },
-                ): null,
               ),
             ),
-          ),
-        ],
-      ),
+            SizedBox(width: AppDimensions.paddingSmall.w),
+            Expanded(
+              child: TextFormField(
+                keyboardType: TextInputType.number,
+                controller: controller.phoneController,
+                onChanged: (_) => controller.isTextNotEmpty(),
+                focusNode: controller.phoneFocus,
+                maxLength: 8,
+                readOnly: controller.serviceName != 'charitable_foundation' ? true : false,
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  fontFamily: AppFonts.primaryFont,
+                ),
+                decoration: InputDecoration(
+                  hintText: r'enter_number'.tr,
+                  border: const OutlineInputBorder(),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(
+                      AppDimensions.borderRadiusMedium,
+                    ),
+                    borderSide: BorderSide(
+                      color: controller.status == Status.error
+                          ? AppColors.redDark
+                          : AppColors.green,
+                      width: 1.w,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(
+                      AppDimensions.borderRadiusMedium,
+                    ),
+                    borderSide: BorderSide(
+                      color: controller.status == Status.error
+                          ? AppColors.redDark
+                          : AppColors.transparent,
+                      width: 1.w,
+                    ),
+                  ),
+                  counter: const SizedBox(),
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: AppDimensions.paddingExtraLarge.h,
+                    horizontal: AppDimensions.paddingLarge.w,
+                  ),
+                  suffixIcon: controller.serviceName == 'charitable_foundation' ? IconButton(
+                    icon: Icon(
+                      Icons.contacts,
+                      color: AppColors.green,
+                      size: 20.w,
+                    ),
+                    onPressed: () async {
+                      controller.contactPicker();
+                    },
+                  ): null,
+                ),
+              ),
+            ),
+          ],
+        ),
       SizedBox(height: 22.h),
     ],
   );

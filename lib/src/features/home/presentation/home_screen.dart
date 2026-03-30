@@ -270,11 +270,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     : null,
                                               ),
                                             )
-                                            : Image.asset(
-                                              controller
-                                                  .serviceImage[index],
-                                              width: 150.w,
-                                              height: 150.h,
+                                            : Expanded(
+                                              child: Padding(
+                                                padding: EdgeInsets.symmetric(horizontal: AppDimensions.paddingSmall.w),
+                                                child: Image.asset(
+                                                  controller
+                                                      .serviceImage[index],
+                                                  width: 150.w,
+                                                  height: 150.h,
+                                                ),
+                                              ),
                                             ),
                                         Align(
                                           alignment: Alignment.bottomRight,
@@ -443,7 +448,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     .status
                                                                     .tr,
                                                           style: TextStyle(
-                                                            fontSize: 14,
+                                                            fontSize: 14.sp,
                                                             color:
                                                                 AppColors.white,
                                                             fontFamily: AppFonts
@@ -1092,13 +1097,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      r'charitable_foundation'.tr,
-                      style: TextStyle(
-                        color: controller.lastTap == HomeTapType.foundation
-                            ? AppColors.white
-                            : AppColors.blackText,
-                        fontSize: 20.sp,
+                    Expanded(
+                      child: Text(
+                        r'charitable_foundation'.tr,
+                        overflow: TextOverflow.clip,
+                        style: TextStyle(
+                          color: controller.lastTap == HomeTapType.foundation
+                              ? AppColors.white
+                              : AppColors.blackText,
+                          fontSize: 20.sp,
+                        ),
                       ),
                     ),
 

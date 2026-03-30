@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -87,28 +88,79 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               Text('+993 ${controller.phoneBox.get('phone')}', style: TextStyle(fontSize: 17.sp, color: AppColors.black,),),
                               SizedBox(height: 5.h,),
 
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal:
-                                  AppDimensions.paddingMedium.w,
-                                  vertical: 4,
-                                ),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(
-                                    AppDimensions.borderRadiusMedium.r,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal:
+                                      AppDimensions.paddingMedium.w,
+                                      vertical: 4,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(
+                                        AppDimensions.borderRadiusMedium.r,
+                                      ),
+                                      color: controller.checkProfileStatus(),
+                                    ),
+                                    child: Text(
+                                      controller.profileBox.get('currentProfile')?.status?.tr ?? 'not_confirmed'.tr,
+                                      style: TextStyle(
+                                        fontSize: 14.sp,
+                                        color: AppColors.white,
+                                        fontFamily: AppFonts.secondaryFont,
+                                      ),
+                                    ),
                                   ),
-                                  color: controller.checkProfileStatus(),
-                                ),
-                                child: Text(
-                                  controller.profileBox.get('currentProfile')?.status?.tr ?? 'not_confirmed'.tr,
-                                  style: TextStyle(
-                                    fontSize: 14.sp,
-                                    color: AppColors.white,
-                                    fontFamily: AppFonts.secondaryFont,
-                                  ),
-                                ),
-                              ),
+                                  if(controller.profileBox.get('currentProfile')?.status == 'rejected')...[
+                                    SizedBox(width: AppDimensions.paddingMedium.w,),
 
+                                    GestureDetector(
+                                      onTap: () {
+                                        final rejectedList =
+                                            controller.profileBox.get('currentProfile')?.rejectedText ?? [];
+
+                                        showCupertinoDialog(
+                                          context: context,
+                                          builder: (context) => CupertinoAlertDialog(
+                                            content: rejectedList.isEmpty
+                                                ? Text("No rejection reason")
+                                                : Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: rejectedList
+                                                  .map<Widget>((e) => Padding(
+                                                padding: EdgeInsets.only(bottom: 6),
+                                                child: Row(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text("• ",
+                                                        style: TextStyle(color: AppColors.redDark)),
+                                                    Expanded(child: Text(e)),
+                                                  ],
+                                                ),
+                                              ))
+                                                  .toList(),
+                                            ),
+                                            actions: [
+                                              CupertinoDialogAction(
+                                                isDestructiveAction: true,
+                                                child: Text("back".tr),
+                                                onPressed: () => Navigator.of(context).pop(),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                      child: SvgPicture.asset(
+                                        AppAssets.infoIcon,
+                                        width: 24.w,
+                                        color: AppColors.redDark,
+                                      ),
+                                    ),
+                                  ],
+                                ],
+                              ),
 
                             ],
                           ),
@@ -170,7 +222,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       children: [
                                         SvgPicture.asset(AppAssets.navProfile, width: 24.w, color: AppColors.green,),
                                         SizedBox(width: 10.w,),
-                                        Text(r'sign_in'.tr, style: TextStyle(fontSize: 14.sp.sp, color: AppColors.blackText, fontFamily: AppFonts.secondaryFont),),
+                                        Text(r'sign_in'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.blackText, fontFamily: AppFonts.secondaryFont),),
                                       ],
                                     ),
                                     SvgPicture.asset(AppAssets.arrowRightIcon, color: AppColors.black, width: 16.w,)
@@ -216,7 +268,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 children: [
                                   Row(
                                     children: [
-                                      SvgPicture.asset(AppAssets.filledInfo),
+                                      SvgPicture.asset(AppAssets.filledInfo, width: 24.w,),
                                       SizedBox(width: 10.w,),
                                       Text(r'about_Us_v1.0'.trParams({'version': controller.appVersion}).tr, style: TextStyle(fontSize: 14.sp, color: AppColors.blackText, fontFamily: AppFonts.secondaryFont),),
                                     ],

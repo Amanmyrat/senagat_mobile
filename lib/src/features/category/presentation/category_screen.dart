@@ -73,8 +73,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 child: Container(
                                   width: 190.w,
                                   height: 70.h,
-                                  padding: EdgeInsets.all(
-                                    AppDimensions.paddingMedium.h,
+                                  padding: EdgeInsets.symmetric(
+                                   vertical: AppDimensions.paddingMedium.h,
+                                   horizontal: AppDimensions.paddingMedium.w,
                                   ),
                                   margin: EdgeInsets.only(
                                     right: AppDimensions.marginMedium.w,
@@ -93,25 +94,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                   ),
                                   child: Row(
                                     children: [
-                                      Container(
-                                        width: 50.w,
-                                        height: 50.h,
-                                        padding: EdgeInsets.all(
-                                          AppDimensions.paddingSmall.w,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: AppColors.dividerColor,
-                                            width: 1.w,
-                                          ),
-                                          shape: BoxShape.circle,
-                                          // color: isSelected ? AppColors.white : AppColors.green
-                                        ),
-                                        child: Image.asset(
-                                          controller.paymentsIcons[index],
-                                          // color: isSelected ? AppColors.green : AppColors.white,
-                                          width: 30.w,
-                                        ),
+                                      Image.asset(
+                                        controller.paymentsIcons[index],
+                                        // color: isSelected ? AppColors.green : AppColors.white,
+                                        width: 30.w,
                                       ),
                                       SizedBox(
                                         width: AppDimensions.paddingMedium.w,

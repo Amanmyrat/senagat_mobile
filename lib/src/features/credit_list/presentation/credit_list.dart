@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -83,12 +84,65 @@ class _CreditListState extends State<CreditList> {
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              loan?.createdAt ?? '',
-                                              style: TextStyle(
-                                                color: AppColors.grey,
-                                                fontSize: 14.sp,
-                                              ),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(
+                                                  loan?.createdAt ?? '',
+                                                  style: TextStyle(
+                                                    color: AppColors.grey,
+                                                    fontSize: 14.sp,
+                                                  ),
+                                                ),
+                                                if(loan?.status == 'rejected')...[
+                                                  SizedBox(width: AppDimensions.paddingMedium.w,),
+
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      final rejectedList =
+                                                          loan?.rejectedText ?? [];
+
+                                                      showCupertinoDialog(
+                                                        context: context,
+                                                        builder: (context) => CupertinoAlertDialog(
+                                                          content: rejectedList.isEmpty
+                                                              ? Text("No rejection reason")
+                                                              : Column(
+                                                            mainAxisSize: MainAxisSize.min,
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: rejectedList
+                                                                .map<Widget>((e) => Padding(
+                                                              padding: EdgeInsets.only(bottom: 6),
+                                                              child: Row(
+                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                children: [
+                                                                  Text("• ",
+                                                                      style: TextStyle(color: AppColors.redDark)),
+                                                                  Expanded(child: Text(e)),
+                                                                ],
+                                                              ),
+                                                            ))
+                                                                .toList(),
+                                                          ),
+                                                          actions: [
+                                                            CupertinoDialogAction(
+                                                              isDestructiveAction: true,
+                                                              child: Text("back".tr),
+                                                              onPressed: () => Navigator.of(context).pop(),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      );
+                                                    },
+                                                    child: SvgPicture.asset(
+                                                      AppAssets.infoIcon,
+                                                      width: 24.w,
+                                                      color: AppColors.redDark,
+                                                    ),
+                                                  ),
+                                                ],
+
+                                              ],
                                             ),
                                             SizedBox(height: 10.h,),
                                             Row(

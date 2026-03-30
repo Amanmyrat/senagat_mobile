@@ -44,19 +44,31 @@ class LoanModel {
   final String? status;
   final String? bankBranch;
   final String? createdAt;
+  final List<String>? rejectedText; // 👈 ДОБАВИЛИ
 
-
-  LoanModel({this.creditName, this.amount, this.monthlyPayment, this.status, this.bankBranch, this.createdAt});
+  LoanModel({
+    this.creditName,
+    this.amount,
+    this.monthlyPayment,
+    this.status,
+    this.bankBranch,
+    this.createdAt,
+    this.rejectedText,
+  });
 
   factory LoanModel.fromJson(Map<String, dynamic> json) {
     return LoanModel(
       creditName: json['credit_name'],
       amount: json['amount'],
-      monthlyPayment: (json['monthly_payment']as num?)?.toDouble(),
+      monthlyPayment: (json['monthly_payment'] as num?)?.toDouble(),
       status: json['status'],
       bankBranch: json['bank_branch'],
       createdAt: json['created_at'],
-
+      rejectedText: json['rejected_text'] == null
+          ? []
+          : List<String>.from(
+        (json['rejected_text'] as List).map((e) => e.toString()),
+      ),
     );
   }
 }
@@ -68,19 +80,31 @@ class CertificateModel {
   final String? status;
   final String? bankBranch;
   final String? createdAt;
+  final List<String>? rejectedText; // 👈 ДОБАВИЛИ
 
-
-  CertificateModel({this.certificateName, this.bankBranchId, this.status, this.certificatePrice, this.bankBranch, this.createdAt});
+  CertificateModel({
+    this.certificateName,
+    this.bankBranchId,
+    this.status,
+    this.certificatePrice,
+    this.bankBranch,
+    this.createdAt,
+    this.rejectedText,
+  });
 
   factory CertificateModel.fromJson(Map<String, dynamic> json) {
     return CertificateModel(
       certificateName: json['certificate_name'],
       bankBranchId: json['bank_branch_id'],
-      certificatePrice: (json['certificate_price']as num?)?.toDouble(),
+      certificatePrice: (json['certificate_price'] as num?)?.toDouble(),
       status: json['status'],
       bankBranch: json['bank_branch'],
       createdAt: json['created_at'],
-
+      rejectedText: json['rejected_text'] == null
+          ? []
+          : List<String>.from(
+        (json['rejected_text'] as List).map((e) => e.toString()),
+      ),
     );
   }
 }
@@ -92,18 +116,31 @@ class CardsModel {
   final String? status;
   final String? bankBranch;
   final String? createdAt;
+  final List<String>? rejectedText; // 👈 ДОБАВИЛИ
 
-  CardsModel({this.cardTitle, this.cardPrice, this.delivery, this.status, this.bankBranch, this.createdAt});
+  CardsModel({
+    this.cardTitle,
+    this.cardPrice,
+    this.delivery,
+    this.status,
+    this.bankBranch,
+    this.createdAt,
+    this.rejectedText,
+  });
 
   factory CardsModel.fromJson(Map<String, dynamic> json) {
     return CardsModel(
       cardTitle: json['card_title'],
       status: json['status'],
-      cardPrice: (json['card_price']as num?)?.toDouble(),
+      cardPrice: (json['card_price'] as num?)?.toDouble(),
       delivery: json['delivery'],
       bankBranch: json['bank_branch'],
       createdAt: json['created_at'],
-
+      rejectedText: json['rejected_text'] == null
+          ? []
+          : List<String>.from(
+        (json['rejected_text'] as List).map((e) => e.toString()),
+      ),
     );
   }
 }

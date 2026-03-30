@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -284,7 +286,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                                                     SizedBox(height: 22.h,),
                                                                   ],
                                                                 ),
-                    
+                                                                _pdfUpload(controller, controller.salaryDocument, 'salary_document', true),
                                                               ],
                                                             ),
                                                           ),
@@ -471,6 +473,8 @@ class _LoanScreenState extends State<LoanScreen> {
                                                                     SizedBox(height: 22.h,),
                                                                   ],
                                                                 ),
+                                                                _pdfUpload(controller, controller.salaryDocument, 'salary_document', true),
+                                                                _pdfUpload(controller, controller.profitDocument, 'profit_document', false),
                                                               ],
                                                             ),
                                                           ),
@@ -595,6 +599,67 @@ class _LoanScreenState extends State<LoanScreen> {
             }
         ),
       ),
+    );
+  }
+
+  Widget _pdfUpload(LoanController controller, File? pdfFile, String text, bool isSalary) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          text.tr,
+          style: TextStyle(fontSize: 14.sp, color: AppColors.blackText),
+        ),
+        SizedBox(height: AppDimensions.paddingMedium.h),
+        SizedBox(
+          width: double.infinity,
+          child: ElevatedButtonWithState(
+            isLoading: false,
+            isError: controller.status == Status.error,
+            customStyle: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.white,
+              side: BorderSide(
+                color: controller.status == Status.error
+                    ? AppColors.redDark
+                    : AppColors.dividerColor,
+              ),
+              shadowColor: Colors.transparent,
+            ),
+            onPressed:() =>  controller.pickPdf(isSalary),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  text.tr,
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    color: AppColors.greyInactive,
+                  ),
+                ),
+                SizedBox(width: AppDimensions.paddingMedium.w),
+                if(controller.status == Status.error)...[
+                  SvgPicture.asset(
+                    AppAssets.X,
+                    width: 24.w,
+                    color:  AppColors.redDark,
+                  ),
+                ]else...[
+                  SvgPicture.asset(
+                    pdfFile == null
+                        ? AppAssets.pdfIcon
+                        : AppAssets.checkIcon,
+                    width: 24.w,
+                    color: pdfFile == null
+                        ? AppColors.grey
+                        : AppColors.green,
+                  ),],
+
+              ],
+            ),
+          ),
+        ),
+        SizedBox(height: 22.h,),
+      ],
     );
   }
 }

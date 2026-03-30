@@ -47,6 +47,9 @@ class ProfileModel extends HiveObject {
   @HiveField(13)
   final String? status;
 
+  @HiveField(14)
+  final List<String>? rejectedText;
+
   final dio.MultipartFile? passportScan;
 
   ProfileModel({
@@ -65,6 +68,7 @@ class ProfileModel extends HiveObject {
     this.homePhone,
     this.homeAddress,
     this.status,
+    this.rejectedText,
   });
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
@@ -89,6 +93,11 @@ class ProfileModel extends HiveObject {
       homePhone: _parseNullableInt(json['home_phone']),
       homeAddress: json['home_address'],
       status: json['status'],
+        rejectedText: json['rejected_text'] == null
+            ? []
+            : List<String>.from(
+          (json['rejected_text'] as List).map((e) => e.toString()),
+        ),
     );
   }
 
