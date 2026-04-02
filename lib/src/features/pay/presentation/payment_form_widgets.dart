@@ -232,8 +232,8 @@ Widget paymentPhoneField(PaymentController controller) {
       Row(
           children: [
             Container(
-              padding: EdgeInsets.symmetric(
-               horizontal:  AppDimensions.paddingExtraLarge.w,
+              padding: EdgeInsets.all(
+                AppDimensions.paddingExtraLarge.w,
               ),
               decoration: BoxDecoration(
                 color: AppColors.inputFillBackground,

@@ -286,7 +286,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                                                     SizedBox(height: 22.h,),
                                                                   ],
                                                                 ),
-                                                                _pdfUpload(controller, controller.salaryDocument, 'salary_document', true),
+                                                                _pdfUpload(controller, controller.profitDocument, 'income_certificate_6_12_months', 'profit'),
                                                               ],
                                                             ),
                                                           ),
@@ -473,8 +473,8 @@ class _LoanScreenState extends State<LoanScreen> {
                                                                     SizedBox(height: 22.h,),
                                                                   ],
                                                                 ),
-                                                                _pdfUpload(controller, controller.salaryDocument, 'salary_document', true),
-                                                                _pdfUpload(controller, controller.profitDocument, 'profit_document', false),
+                                                                _pdfUpload(controller, controller.profitDocument2, 'salary_certificate', 'profit2'),
+                                                                _pdfUpload(controller, controller.workDocument, 'work_book_copy', 'work'),
                                                               ],
                                                             ),
                                                           ),
@@ -602,7 +602,7 @@ class _LoanScreenState extends State<LoanScreen> {
     );
   }
 
-  Widget _pdfUpload(LoanController controller, File? pdfFile, String text, bool isSalary) {
+  Widget _pdfUpload(LoanController controller, File? pdfFile, String text, String type) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -625,18 +625,11 @@ class _LoanScreenState extends State<LoanScreen> {
               ),
               shadowColor: Colors.transparent,
             ),
-            onPressed:() =>  controller.pickPdf(isSalary),
+            onPressed:() =>  controller.pickPdf(type),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  text.tr,
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    color: AppColors.greyInactive,
-                  ),
-                ),
-                SizedBox(width: AppDimensions.paddingMedium.w),
+
                 if(controller.status == Status.error)...[
                   SvgPicture.asset(
                     AppAssets.X,
