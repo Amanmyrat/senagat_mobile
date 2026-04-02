@@ -286,7 +286,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                                                     SizedBox(height: 22.h,),
                                                                   ],
                                                                 ),
-                                                                _pdfUpload(controller, controller.salaryDocument, 'salary_document', true),
+                                                                _pdfUpload(controller, controller.profitDocument, 'income_certificate_6_12_months', 'profit'),
                                                               ],
                                                             ),
                                                           ),
@@ -434,6 +434,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                                                   children: [
                                                                     Text(r'wages'.tr, style: TextStyle(color: AppColors.blackText,fontSize: 14.sp),),
                                                                     SizedBox(height: AppDimensions.paddingMedium.h,),
+
                                                                     TextFormField(
                                                                       textInputAction: TextInputAction.next,
                                                                       keyboardType: TextInputType.number,
@@ -445,12 +446,21 @@ class _LoanScreenState extends State<LoanScreen> {
                                                                       decoration: InputDecoration(
                                                                         hintText: r'wages'.tr,
                                                                         border: OutlineInputBorder(),
+                                                                        errorBorder: OutlineInputBorder(
+                                                                          borderRadius: BorderRadius.circular(
+                                                                            AppDimensions.borderRadiusMedium,
+                                                                          ),
+                                                                          borderSide: BorderSide(
+                                                                            color: AppColors.redDark,
+                                                                            width: 1.w,
+                                                                          ),
+                                                                        ),
                                                                         focusedBorder: OutlineInputBorder(
                                                                           borderRadius: BorderRadius.circular(
                                                                             AppDimensions.borderRadiusMedium,
                                                                           ),
                                                                           borderSide: BorderSide(
-                                                                            color: AppColors.green,
+                                                                            color: controller.wagesError != null ? AppColors.redDark : AppColors.green,
                                                                             width: 1.w,
                                                                           ),
                                                                         ),
@@ -459,7 +469,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                                                             AppDimensions.borderRadiusMedium,
                                                                           ),
                                                                           borderSide: BorderSide(
-                                                                            color: AppColors.white,
+                                                                            color:controller.wagesError != null ? AppColors.redDark : AppColors.white,
                                                                             width: 1.w,
                                                                           ),
                                                                         ),
@@ -473,8 +483,8 @@ class _LoanScreenState extends State<LoanScreen> {
                                                                     SizedBox(height: 22.h,),
                                                                   ],
                                                                 ),
-                                                                _pdfUpload(controller, controller.salaryDocument, 'salary_document', true),
-                                                                _pdfUpload(controller, controller.profitDocument, 'profit_document', false),
+                                                                _pdfUpload(controller, controller.profitDocument2, 'salary_certificate', 'profit2'),
+                                                                _pdfUpload(controller, controller.workDocument, 'work_book_copy', 'work'),
                                                               ],
                                                             ),
                                                           ),
@@ -602,7 +612,7 @@ class _LoanScreenState extends State<LoanScreen> {
     );
   }
 
-  Widget _pdfUpload(LoanController controller, File? pdfFile, String text, bool isSalary) {
+  Widget _pdfUpload(LoanController controller, File? pdfFile, String text, String type) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -625,18 +635,11 @@ class _LoanScreenState extends State<LoanScreen> {
               ),
               shadowColor: Colors.transparent,
             ),
-            onPressed:() =>  controller.pickPdf(isSalary),
+            onPressed:() =>  controller.pickPdf(type),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  text.tr,
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    color: AppColors.greyInactive,
-                  ),
-                ),
-                SizedBox(width: AppDimensions.paddingMedium.w),
+
                 if(controller.status == Status.error)...[
                   SvgPicture.asset(
                     AppAssets.X,

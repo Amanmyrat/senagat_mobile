@@ -33,6 +33,7 @@ class LoanController extends GetxController
   late int term;
   late int amount;
   late double monthlyPayment;
+  late String minMonthlyPayment;
 
   CreditRepository repository;
   LocationRepository locRepository;
@@ -46,9 +47,11 @@ class LoanController extends GetxController
 
   late List<TextEditingController> controllers;
 
-  File? salaryDocument;
   File? profitDocument;
+  File? profitDocument2;
+  File? workDocument;
 
+  String? wagesError;
 
   LoanController(this.repository, this.locRepository);
 
@@ -78,42 +81,57 @@ class LoanController extends GetxController
     term = Get.arguments['term'];
     amount = Get.arguments['amount'];
     monthlyPayment = Get.arguments['monthlyPayment'];
+    minMonthlyPayment = Get.arguments['minMonthlyPayment'];
   }
 
   void onInformationNotEmpty(String? v) {
     if (selectedTabIndex == 1) {
-      if (workplaceController.text.isNotEmpty &&
-          positionAtWorkController.text.isNotEmpty &&
-          managerWorkAddressController.text.isNotEmpty &&
-          wagesController.text.isNotEmpty &&
-          salaryDocument != null&&
-          profitDocument != null) {
-        continueEnabled = true;
-        update();
-      } else {
-        continueEnabled = false;
-        update();
-      }
+      continueEnabled =
+          workplaceController.text.isNotEmpty &&
+              positionAtWorkController.text.isNotEmpty &&
+              managerWorkAddressController.text.isNotEmpty &&
+              wagesController.text.isNotEmpty &&
+              profitDocument2 != null &&
+              workDocument != null;
+
+      update();
+
     } else if (selectedTabIndex == 0) {
-      if (patentNumController.text.isNotEmpty &&
-          registerNumController.text.isNotEmpty &&
-          workAddressController.text.isNotEmpty
-          && salaryDocument !=null
-      ) {
-        continueEnabled = true;
-        update();
-      } else {
-        continueEnabled = false;
-        update();
-      }
+      continueEnabled =
+          patentNumController.text.isNotEmpty &&
+              registerNumController.text.isNotEmpty &&
+              workAddressController.text.isNotEmpty &&
+              profitDocument != null;
+
+      update();
     }
   }
 
   Future<void> onTap() async {
     if (pageIndex == 1 && continueEnabled) {
-      pageIndex = 2;
-      continueEnabled = false;
-      update();
+      if(selectedTabIndex == 1){
+        double? wages = double.tryParse(
+            wagesController.text.replaceAll(' ', '').replaceAll(',', '')
+        );
+        double? minWages = double.tryParse(
+            minMonthlyPayment.replaceAll(' ', '').replaceAll(',', '')
+        );
+
+        if (wages! < minWages!) {
+          continueEnabled = false;
+          update();
+         ShowSnack.showSnack('monthly_payment_min'.trParams({'sum': minMonthlyPayment}), SnackType.error);
+        }else{
+          pageIndex = 2;
+          continueEnabled = false;
+          update();
+        }
+
+      }else {
+        pageIndex = 2;
+        continueEnabled = false;
+        update();
+      }
     } else if (pageIndex == 2 && continueEnabled) {
       startBankVerification();
       update();
@@ -151,19 +169,19 @@ class LoanController extends GetxController
   }
 
   Future<CreditOrderModel> _getCreditWorkInfoModelForManager() async {
-    if (salaryDocument == null) {
+    if (profitDocument == null) {
       throw Exception('Salary document is required');
     }
 
     if (wagesController.text.isEmpty) {
       throw Exception('Salary is empty');
     }
-    if (profitDocument == null) {
+    if (workDocument == null) {
       throw Exception('Profit document is required');
     }
     final int salary = int.parse(wagesController.text);
-    // final salaryFile = await _parseImage(salaryDocument!);
-    // final profitFile = await _parseImage(profitDocument!);
+    // final salaryFile = await _parseImage(profitDocument!);
+    // final profitFile = await _parseImage(workDocument!);
 
     return CreditOrderModel(
       creditId: creditId,
@@ -176,14 +194,14 @@ class LoanController extends GetxController
       position: positionAtWorkController.text,
       salary: salary,
       bankId: selectedDropdownBank,
-      // salaryDocument: salaryFile,
-      // profitDocument: profitFile,
+      // profitDocument: salaryFile,
+      // workDocument: profitFile,
 
     );
   }
 
   Future<CreditOrderModel> _getCreditWorkInfoModelForEntrepreneur() async {
-    if (salaryDocument == null) {
+    if (profitDocument == null) {
       throw Exception('Salary document is required');
     }
 
@@ -245,16 +263,22 @@ class LoanController extends GetxController
       final formData = dio.FormData.fromMap({
         ...map,
 
-        if (salaryDocument != null)
-          'salary_document': await dio.MultipartFile.fromFile(
-            salaryDocument!.path,
-            filename: salaryDocument!.path.split('/').last,
-          ),
-
         if (profitDocument != null)
           'profit_document': await dio.MultipartFile.fromFile(
             profitDocument!.path,
             filename: profitDocument!.path.split('/').last,
+          ),
+
+        if (workDocument != null)
+          'work_document': await dio.MultipartFile.fromFile(
+            workDocument!.path,
+            filename: workDocument!.path.split('/').last,
+          ),
+
+        if (profitDocument2 != null)
+          'profit_document': await dio.MultipartFile.fromFile(
+            profitDocument2!.path,
+            filename: profitDocument2!.path.split('/').last,
           ),
       });
 
@@ -282,9 +306,9 @@ class LoanController extends GetxController
   //     final file = File(result.files.single.path!);
   //
   //     if (isSalary) {
-  //       salaryDocument = file;
-  //     } else {
   //       profitDocument = file;
+  //     } else {
+  //       workDocument = file;
   //     }
   //     onInformationNotEmpty(null);
   //     update();
@@ -301,7 +325,7 @@ class LoanController extends GetxController
   //   );
   // }
 
-  Future<void> pickPdf(bool isSalary) async {
+  Future<void> pickPdf(String type) async {
     const int maxSizeInBytes = 2 * 1024 * 1024;
 
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -321,11 +345,12 @@ class LoanController extends GetxController
         return;
       }
 
-      // ✅ Save file if valid
-      if (isSalary) {
-        salaryDocument = file;
-      } else {
+      if (type == 'profit') {
         profitDocument = file;
+      } else if(type == 'work') {
+        workDocument = file;
+      }else{
+        profitDocument2 = file;
       }
 
       onInformationNotEmpty(null);

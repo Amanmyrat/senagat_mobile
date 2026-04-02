@@ -266,9 +266,13 @@ const Map<String, String> tkTk = {
   r'phone_number_not_found_or_invalid':'Ulanyjy tapylmady',
   r'clear':'Arassalamak',
   r'monthly_payment_min':'Hasaplanan karz mukdary almak üçin siziň aýlyk girdeýjiňiz @sum manatdan ýokary bolmaly',
-  r'salary_document':'Aýlyk resminamasy',
-  r'profit_document':'Girdeýji resminamasy',
   r'file_size_limit':'Faýlyň ölçegi 2 MB-dan kiçi bolmaly',
+
+  r'income_certificate_6_12_months': 'Soňky 6 aý ýa-da 1 ýylyň dowamyndaky sap girdeýji güwänama',
+
+  r'salary_certificate': 'Aýlyk hakyndaky güwänama',
+
+  r'work_book_copy': 'Zähmet depderçesiniň tassyklanan göçürmesi',
 
   r'otp_not_match': r'Kod gabat gelmedi',
   r'otp_code_has_expired.': r'Kod möhleti gutardy',

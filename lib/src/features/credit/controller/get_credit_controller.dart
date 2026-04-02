@@ -103,9 +103,10 @@ class GetCreditController extends GetxController
         LoanScreen.route,
         arguments: {
           'creditId': creditId,
-          'term': term,
+          'term': tabBarController.index + 1,
           'amount': currentValue.toInt(),
           'monthlyPayment': monthlyPayment,
+          'minMonthlyPayment': minMonthlyPayment,
         },
       );
     }

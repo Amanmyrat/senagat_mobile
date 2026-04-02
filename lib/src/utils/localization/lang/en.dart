@@ -266,9 +266,15 @@ const Map<String, String> enUs = {
   r'phone_number_not_found_or_invalid':'User not found',
   r'clear_filter':'Clear',
   r'monthly_payment_min':'To receive the calculated loan amount, your monthly income must exceed @sum manat',
-  r'salary_document':'Salary document',
+  r'work_document':'Salary document',
   r'profit_document':'Profit document',
   r'file_size_limit':'File size must be less than 2 MB',
+
+  r'income_certificate_6_12_months': 'Certificate of net income for the last 6 months or 1 year',
+
+  r'salary_certificate': 'Salary certificate',
+
+  r'work_book_copy': 'Certified copy of employment record book',
 
   r'otp_not_match': r'OTP did not match',
   r'otp_code_has_expired.': r'OTP code has expired',
