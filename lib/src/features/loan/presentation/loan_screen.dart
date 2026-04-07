@@ -439,6 +439,7 @@ class _LoanScreenState extends State<LoanScreen> {
                                                                       textInputAction: TextInputAction.next,
                                                                       keyboardType: TextInputType.number,
                                                                       controller: controller.wagesController,
+                                                                      maxLength: 6,
                                                                       onChanged:(v) => controller.onInformationNotEmpty(v),
                                                                       style: TextStyle(
                                                                         fontSize: 14.sp,

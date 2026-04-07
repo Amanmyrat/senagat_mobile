@@ -112,17 +112,29 @@ class PaymentController extends GetxController with StateControlMixin {
   }
 
   void isTextNotEmpty() {
-    if(serviceIcon == AppAssets.astu){
-      continueEnabled = phoneController.text.length >= 6 &&
-          sumController.text.isNotEmpty &&
-          selectedCard != null;
-      update();
-    }else {
-      continueEnabled = phoneController.text.length >= 8 &&
-          sumController.text.isNotEmpty &&
-          selectedCard != null;
-      update();
+    final sumText = sumController.text;
+
+    final int? sum = int.tryParse(sumText);
+
+
+    final bool isValidSum =
+        sum != null &&
+            sum > 0 &&
+            !(sumText.length > 1 && sumText.startsWith('0'));
+
+    if (serviceIcon == AppAssets.astu) {
+      continueEnabled =
+          phoneController.text.length >= 6 &&
+              isValidSum &&
+              selectedCard != null;
+    } else {
+      continueEnabled =
+          phoneController.text.length >= 8 &&
+              isValidSum &&
+              selectedCard != null;
     }
+
+    update();
   }
 
   Future<void> onTap() async {

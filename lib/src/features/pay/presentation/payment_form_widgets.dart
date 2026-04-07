@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -331,6 +332,9 @@ Widget paymentSumField(PaymentController controller) {
           controller.isTextNotEmpty();
           controller.update();
         },
+        inputFormatters: [
+          FilteringTextInputFormatter.digitsOnly,
+        ],
         decoration: InputDecoration(
           hintText: r'enter_sum'.tr,
           fillColor: AppColors.inputFillBackground,

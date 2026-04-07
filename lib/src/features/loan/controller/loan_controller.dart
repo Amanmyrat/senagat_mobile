@@ -111,11 +111,12 @@ class LoanController extends GetxController
     if (pageIndex == 1 && continueEnabled) {
       if(selectedTabIndex == 1){
         double? wages = double.tryParse(
-            wagesController.text.replaceAll(' ', '').replaceAll(',', '')
+            wagesController.text.replaceAll(' ', '').replaceAll(',', '.')
         );
         double? minWages = double.tryParse(
-            minMonthlyPayment.replaceAll(' ', '').replaceAll(',', '')
+            minMonthlyPayment.replaceAll(' ', '').replaceAll(',', '.')
         );
+        print(wages);
 
         if (wages! < minWages!) {
           continueEnabled = false;
@@ -169,16 +170,7 @@ class LoanController extends GetxController
   }
 
   Future<CreditOrderModel> _getCreditWorkInfoModelForManager() async {
-    if (profitDocument == null) {
-      throw Exception('Salary document is required');
-    }
 
-    if (wagesController.text.isEmpty) {
-      throw Exception('Salary is empty');
-    }
-    if (workDocument == null) {
-      throw Exception('Profit document is required');
-    }
     final int salary = int.parse(wagesController.text);
     // final salaryFile = await _parseImage(profitDocument!);
     // final profitFile = await _parseImage(workDocument!);
@@ -201,9 +193,6 @@ class LoanController extends GetxController
   }
 
   Future<CreditOrderModel> _getCreditWorkInfoModelForEntrepreneur() async {
-    if (profitDocument == null) {
-      throw Exception('Salary document is required');
-    }
 
     return CreditOrderModel(
       creditId: creditId,
