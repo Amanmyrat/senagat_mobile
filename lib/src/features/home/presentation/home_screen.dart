@@ -768,9 +768,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   final item = controller.cardBox.getAt(index);
                   return GestureDetector(
                     onTap: () {
+                      final key = controller.cardBox.keyAt(index);
+
                       Get.toNamed(
                         CardSettingsScreen.route,
-                        arguments: {'index': index},
+                        arguments: {'key': key},
                       );
                     },
                     child: Container(

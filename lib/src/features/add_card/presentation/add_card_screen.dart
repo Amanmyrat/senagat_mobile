@@ -446,6 +446,7 @@ class AddCardScreen extends StatelessWidget {
                                                 TextFormField(
                                                   keyboardType:
                                                   TextInputType.phone,
+                                                  obscureText: true,
                                                   controller:
                                                       controller.cvcController,
                                                   onChanged:

@@ -10,19 +10,21 @@ class CardDetailsController extends GetxController with StateControlMixin {
   late final String cardNumber;
   late final String cardName;
   late final String cardTerm;
-  late final int index;
+  late final dynamic key;
+  CardModel? card;
   late String maskedNumber;
 
   @override
   void onInit() {
     super.onInit();
-    index = Get.arguments['index'];
+    key = Get.arguments['key'];
+    card = cardBox.get(key);
 
-    cardNumber = cardBox.getAt(index)?.cardNumber ?? '';
+    cardNumber = card?.cardNumber ?? '';
     maskedNumber = hideCardCenter(cardNumber);
 
-    cardName = cardBox.getAt(index)?.name ?? '';
-    cardTerm = cardBox.getAt(index)?.expiryDate ?? '';
+    cardName = card?.name ?? '';
+    cardTerm = card?.expiryDate ?? '';
 
   }
 

@@ -50,6 +50,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            if(!controller.otpEnabled)...[
+                              Text(
+                                r'step_1_of_2'.tr,
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  color: AppColors.blackText,
+                                ),
+                              ),
+                            ]else...[
                             Text(
                               controller.login == 'login'
                                   ? r'step_1_of_2'.tr
@@ -59,6 +68,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 color: AppColors.blackText,
                               ),
                             ),
+                            ],
                             SizedBox(
                               width: 24.w,
                               height: 24.h,

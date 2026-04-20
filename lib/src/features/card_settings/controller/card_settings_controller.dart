@@ -16,21 +16,18 @@ class CardSettingsController extends GetxController with StateControlMixin {
   late final String nickName;
   late final String cardDesign;
   late String maskedNumber;
-  late final int index;
+  late final dynamic key;
+  CardModel? card;
   final homeController = Get.find<HomeController>();
   final cardController = Get.find<CardController>();
 
 
   void onChangeNickName() {
-    if(continueEnabled) {
-      final card = cardBox.getAt(index);
-      if (card != null) {
-        card.nickName = cardNickNameController.text;
-        card.save();
-      }
-    } else if(cardNickNameController.text.isEmpty){
-      cardNickNameController.text = r'Senagat Bank';
+    if (continueEnabled && card != null) {
+      card!.nickName = cardNickNameController.text;
+      card!.save();
     }
+
     cardController.refresh();
     homeController.refresh();
 
@@ -58,13 +55,16 @@ class CardSettingsController extends GetxController with StateControlMixin {
   @override
   void onInit() {
     super.onInit();
-    index = Get.arguments['index'];
 
-    cardNumber = cardBox.getAt(index)?.cardNumber ?? '';
+    key = Get.arguments['key'];
+    card = cardBox.get(key);
+
+    cardNumber = card?.cardNumber ?? '';
     maskedNumber = hideCardCenter(cardNumber);
 
-    nickName = cardBox.getAt(index)?.nickName.tr ?? '';
-    cardDesign = cardBox.getAt(index)?.cardDesign ?? '';
+    nickName = card?.nickName.tr ?? '';
+    cardDesign = card?.cardDesign ?? '';
+
     cardNickNameController = TextEditingController(text: nickName);
   }
 

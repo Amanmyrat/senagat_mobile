@@ -27,6 +27,8 @@ class RegisterPasswordSetupController extends GetxController
   bool isPasswordVisible = false;
   bool isPasswordValid = false;
 
+  final bool otpEnabled = Configs.OTPEnabled;
+
   late final TextEditingController passwordController;
   late final FocusNode passwordFocus;
 
