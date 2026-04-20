@@ -145,11 +145,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   }
 
   Widget fastOperationsWidget(CategoryController controller) {
-    return controller.status == Status.loading
-        ? Center(
-      child: CircularProgressIndicator(color: AppColors.green),
-    )
-        :  Column(
+    return  Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
@@ -160,10 +156,14 @@ class _CategoryScreenState extends State<CategoryScreen> {
               Text(
                 r'selected2'.tr,
                 style: TextStyle(color: AppColors.blackText, fontSize: 17.sp),
-              ),
-            ],
-          ),
-        ),
+              ), SizedBox(width: AppDimensions.paddingMedium.w,),
+
+              if(controller.status == Status.loading)...[
+                SizedBox(width: 15.w,
+                  height: 15.h,
+                  child: CircularProgressIndicator(color: AppColors.green,),),
+              ],
+            ],),),
 
         SizedBox(
           height: 200.h,

@@ -5,8 +5,8 @@ import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/add_card/model/bank_model.dart';
-import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
 import '../../../utils/constants/app_assets.dart';
+import '../../card/controller/card_controller.dart';
 import '../model/card_model.dart';
 
 class AddCardController extends GetxController with StateControlMixin {
@@ -193,6 +193,8 @@ class AddCardController extends GetxController with StateControlMixin {
       nameController.clear();
       termController.clear();
       cvcController.clear();
+      final cardController = Get.find<CardController>();
+      cardController.update();
       Get.back();
       continueEnabled = false;
     } catch (e) {
@@ -246,7 +248,7 @@ class AddCardController extends GetxController with StateControlMixin {
 
     });
 
-    Future.delayed(const Duration(seconds: 4), () async {
+    Future.delayed(const Duration(seconds: 2), () async {
       await saveCard();
       check = false;
       update();

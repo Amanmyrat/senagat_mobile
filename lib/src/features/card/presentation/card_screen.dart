@@ -12,7 +12,6 @@ import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
-import 'package:senagat_mobile/src/widgets/header_widget.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../widgets/elevated_button_with_state.dart';
 
@@ -115,8 +114,11 @@ class _CardScreenState extends State<CardScreen> {
                           itemBuilder: (context, index) {
                             return GestureDetector(
                               onTap: () {
+                                final key = controller.cardBox.keyAt(index);
+
                                 Get.toNamed(CardSettingsScreen.route,
-                                    arguments: {'index': index});
+                                    arguments: {'key': key});
+                                controller.update();
                               },
                               child: Container(
                                 width: MediaQuery.of(context).size.width,

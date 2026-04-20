@@ -87,7 +87,7 @@ class _CardSettingsScreenState extends State<CardSettingsScreen> {
                           children: [
                             GestureDetector(
                               onTap:(){
-                                Get.toNamed(CardDetailsScreen.route, arguments: {'index': controller.index});
+                                Get.toNamed(CardDetailsScreen.route, arguments: {'key': controller.key});
                               },
                               child: Container(
                                 color: AppColors.transparent,
@@ -229,7 +229,7 @@ class _CardSettingsScreenState extends State<CardSettingsScreen> {
                       SizedBox(height: 16.h,),
                       GestureDetector(
                         onTap: (){
-                          Get.toNamed(DeleteCardScreen.route, arguments: {'index': controller.index});
+                          Get.toNamed(DeleteCardScreen.route, arguments: {'key': controller.key});
                         },
                         child: Container(
                           padding: EdgeInsets.all(

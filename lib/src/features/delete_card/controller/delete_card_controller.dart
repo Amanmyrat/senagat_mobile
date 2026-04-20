@@ -1,5 +1,7 @@
 import 'package:hive/hive.dart';
+import 'package:senagat_mobile/src/features/card/controller/card_controller.dart';
 import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
+import 'package:senagat_mobile/src/features/home/controller/home_controller.dart';
 
 import '../../../core/control_state_variable_mixin.dart';
 import 'package:get/get.dart';
@@ -14,27 +16,35 @@ class DeleteCardController extends GetxController with StateControlMixin {
  late final String cardName;
  late final String cardTerm;
  late final String cardDesign;
- late final int index;
+ late final dynamic key;
+ CardModel? card;
+
 
  void startBankVerification() {
    check = true;
    status = Status.loading;
    update();
-   Future.delayed(Duration(seconds: 1),(){
-     cardBox.deleteAt(index);
+
+   Future.delayed(Duration(seconds: 1), () {
+     cardBox.delete(key);
      status = Status.completed;
      update();
-
    });
 
-   Future.delayed(const Duration(seconds: 4), () async {
+   Future.delayed(const Duration(seconds: 2), () async {
      check = false;
      update();
      goBack();
    });
  }
+
  void goBack(){
-   Get.offNamed(DashboardScreen.route);
+   final cardController = Get.find<CardController>();
+   final homeController = Get.find<HomeController>();
+   Get.back(); // close delete screen
+   Get.back(); // close settings
+   cardController.update();
+   homeController.update();
  }
 
  String hideCardCenter(String number) {
@@ -60,13 +70,15 @@ class DeleteCardController extends GetxController with StateControlMixin {
  }
 
  @override
-  void onInit() {
-   index = Get.arguments['index'];
-
-   cardNumber = hideCardCenter(cardBox.getAt(index)?.cardNumber ?? '');
-   cardName = cardBox.getAt(index)?.name ?? '';
-   cardTerm = cardBox.getAt(index)?.expiryDate ?? '';
-   cardDesign = cardBox.getAt(index)?.cardDesign ?? '';
+ void onInit() {
    super.onInit();
-  }
+
+   key = Get.arguments['key'];
+   card = cardBox.get(key);
+
+   cardNumber = hideCardCenter(card?.cardNumber ?? '');
+   cardName = card?.name ?? '';
+   cardTerm = card?.expiryDate ?? '';
+   cardDesign = card?.cardDesign ?? '';
+ }
 }
