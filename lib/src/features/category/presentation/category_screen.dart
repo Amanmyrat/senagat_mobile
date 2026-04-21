@@ -27,116 +27,125 @@ class CategoryScreen extends StatefulWidget {
 class _CategoryScreenState extends State<CategoryScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: SafeArea(
-          child: GetBuilder<CategoryController>(
-            init: CategoryController(
-              PaymentRepository(apiService: ApiServices.apiService),
-            ),
-            builder: (controller) => Stack(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: AppDimensions.paddingExtraLarge.w,
-                        vertical: AppDimensions.paddingMedium.h,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: AppDimensions.paddingExtraLarge),
-                          fastOperationsWidget(controller),
-                          SizedBox(height: 16.h),
+    return WillPopScope(
+      onWillPop: () async {
+        final controller = Get.find<CategoryController>();
+        controller.phoneController.clear();
+        controller.continueEnabled = false;
+        controller.update();
+        return true;
+      },
+      child: Scaffold(
+        body: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: SafeArea(
+            child: GetBuilder<CategoryController>(
+              init: CategoryController(
+                PaymentRepository(apiService: ApiServices.apiService),
+              ),
+              builder: (controller) => Stack(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: AppDimensions.paddingExtraLarge.w,
+                          vertical: AppDimensions.paddingMedium.h,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: AppDimensions.paddingExtraLarge),
+                            fastOperationsWidget(controller),
+                            SizedBox(height: 16.h),
 
-                          Text(
-                            r'payments'.tr,
-                            style: TextStyle(
-                              color: AppColors.blackText,
-                              fontSize: 17.sp,
+                            Text(
+                              r'payments'.tr,
+                              style: TextStyle(
+                                color: AppColors.blackText,
+                                fontSize: 17.sp,
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 16.h),
-                          GridView.builder(
-                            scrollDirection: Axis.vertical,
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: controller.paymentsTitle.length,
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  controller.onServiceTap(index);
-                                },
-                                child: Container(
-                                  width: 190.w,
-                                  height: 70.h,
-                                  padding: EdgeInsets.symmetric(
-                                   vertical: AppDimensions.paddingMedium.h,
-                                   horizontal: AppDimensions.paddingMedium.w,
-                                  ),
-                                  margin: EdgeInsets.only(
-                                    right: AppDimensions.marginMedium.w,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(
-                                      AppDimensions.borderRadiusMedium.r,
+                            SizedBox(height: 16.h),
+                            GridView.builder(
+                              scrollDirection: Axis.vertical,
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: controller.paymentsTitle.length,
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    controller.onServiceTap(index);
+                                  },
+                                  child: Container(
+                                    width: 190.w,
+                                    height: 70.h,
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: AppDimensions.paddingMedium.h,
+                                      horizontal: AppDimensions.paddingMedium.w,
                                     ),
-                                    border: Border.all(
-                                      color: AppColors.dividerColor,
-                                      width: 1.w,
-                                      style: BorderStyle.solid,
+                                    margin: EdgeInsets.only(
+                                      right: AppDimensions.marginMedium.w,
                                     ),
-                                    boxShadow: softCardShadow,
-                                    color: AppColors.white,
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Image.asset(
-                                        controller.paymentsIcons[index],
-                                        // color: isSelected ? AppColors.green : AppColors.white,
-                                        width: 30.w,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(
+                                        AppDimensions.borderRadiusMedium.r,
                                       ),
-                                      SizedBox(
-                                        width: AppDimensions.paddingMedium.w,
+                                      border: Border.all(
+                                        color: AppColors.dividerColor,
+                                        width: 1.w,
+                                        style: BorderStyle.solid,
                                       ),
-                                      Expanded(
-                                        child: Text(
-                                          controller.paymentsTitle[index].tr,
-                                          style: TextStyle(
-                                            color: AppColors.blackText,
-                                            fontSize: 14.sp,
-                                            fontFamily: AppFonts.secondaryFont,
+                                      boxShadow: softCardShadow,
+                                      color: AppColors.white,
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Image.asset(
+                                          controller.paymentsIcons[index],
+                                          // color: isSelected ? AppColors.green : AppColors.white,
+                                          width: 30.w,
+                                        ),
+                                        SizedBox(
+                                          width: AppDimensions.paddingMedium.w,
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            controller.paymentsTitle[index].tr,
+                                            style: TextStyle(
+                                              color: AppColors.blackText,
+                                              fontSize: 14.sp,
+                                              fontFamily: AppFonts.secondaryFont,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  childAspectRatio: 3,
-                                  mainAxisSpacing: 10,
-                                ),
-                          ),
-                        ],
+                                );
+                              },
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    childAspectRatio: 3,
+                                    mainAxisSpacing: 10,
+                                  ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                if (controller.check)
-                  CheckWidget(
-                    isLoading: controller.status == Status.loading,
-                    isTitle: true,
-                    title: r'remove_card'.tr,
-                    successTitle: 'card_removed',
+                    ],
                   ),
-              ],
+                  if (controller.check)
+                    CheckWidget(
+                      isLoading: controller.status == Status.loading,
+                      isTitle: true,
+                      title: r'remove_card'.tr,
+                      successTitle: 'card_removed',
+                    ),
+                ],
+              ),
             ),
           ),
         ),
@@ -145,7 +154,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   }
 
   Widget fastOperationsWidget(CategoryController controller) {
-    return  Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
@@ -156,14 +165,19 @@ class _CategoryScreenState extends State<CategoryScreen> {
               Text(
                 r'selected2'.tr,
                 style: TextStyle(color: AppColors.blackText, fontSize: 17.sp),
-              ), SizedBox(width: AppDimensions.paddingMedium.w,),
+              ),
+              SizedBox(width: AppDimensions.paddingMedium.w),
 
-              if(controller.status == Status.loading)...[
-                SizedBox(width: 15.w,
+              if (controller.status == Status.loading) ...[
+                SizedBox(
+                  width: 15.w,
                   height: 15.h,
-                  child: CircularProgressIndicator(color: AppColors.green,),),
+                  child: CircularProgressIndicator(color: AppColors.green),
+                ),
               ],
-            ],),),
+            ],
+          ),
+        ),
 
         SizedBox(
           height: 200.h,
@@ -300,20 +314,20 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(height: AppDimensions.paddingMedium.h,),
+                      SizedBox(height: AppDimensions.paddingMedium.h),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
                             children: [
-
-                              if (item.title == 'astu_internet' || item.title == 'telecom_internet') ...[
+                              if (item.title == 'astu_internet' ||
+                                  item.title == 'telecom_internet') ...[
                                 Image.asset(
                                   AppAssets.router,
                                   width: 20.w,
                                   color: AppColors.green,
                                 ),
-                              ] else  if (item.phone.startsWith('12')) ...[
+                              ] else if (item.phone.startsWith('12')) ...[
                                 SvgPicture.asset(
                                   AppAssets.oldPhoneIcon,
                                   width: 20.w,
@@ -342,10 +356,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               ),
                             ],
                           ),
-                          SizedBox(height: AppDimensions.paddingMedium.h,),
+                          SizedBox(height: AppDimensions.paddingMedium.h),
 
-                          if(item.title == 'TM CELL' || item.title == 'Belet')...[
-                            if(item.phone == controller.phoneBox.get('phone'))...[
+                          if (item.title == 'TM CELL' ||
+                              item.title == 'Belet') ...[
+                            if (item.phone ==
+                                controller.phoneBox.get('phone')) ...[
                               Text(
                                 '${item.balance} TMT',
                                 maxLines: 1,
@@ -357,7 +373,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 ),
                               ),
                             ],
-                          ]else...[
+                          ] else ...[
                             Text(
                               '${item.balance} TMT',
                               maxLines: 1,
@@ -369,7 +385,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               ),
                             ),
                           ],
-
                         ],
                       ),
                     ],
@@ -429,7 +444,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         Navigator.pop(context);
 
                         Future.delayed(const Duration(milliseconds: 100), () {
-                          _showCheckBalanceBottomSheet(context, controller, index);
+                          _showCheckBalanceBottomSheet(
+                            context,
+                            controller,
+                            index,
+                          );
                         });
                       }
                     },
@@ -531,7 +550,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               AppDimensions.borderRadiusMedium,
                             ),
                           ),
-                          child: Text('+993', style: TextStyle(fontSize: 14.sp)),
+                          child: Text(
+                            '+993',
+                            style: TextStyle(fontSize: 14.sp),
+                          ),
                         ),
                         SizedBox(width: AppDimensions.paddingSmall.w),
                         Expanded(
@@ -617,45 +639,39 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     ),
 
                     SizedBox(height: 22.h),
-                    (controller.status != Status.loading)
-                        ? SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            child: Opacity(
-                              opacity: controller.continueEnabled ? 1 : 0.5,
-                              child: ElevatedButtonWithState(
-                                isLoading: false,
-                                isError: false,
-                                onPressed: () {
-                                  if (controller.continueEnabled) {
-                                    controller.checkBalance(index);
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: Opacity(
+                        opacity: controller.continueEnabled ? 1 : 0.5,
+                        child: ElevatedButtonWithState(
+                          isLoading: false,
+                          isError: false,
+                          onPressed: () {
+                            if (controller.continueEnabled) {
+                              controller.checkBalance(index);
 
-                                    Navigator.pop(context);
-                                  }
-                                },
-                                child: Text(
-                                  r'confirm'.tr,
-                                  style: TextStyle(
-                                    color: AppColors.white,
-                                    fontSize: 14.sp,
-                                  ),
-                                ),
-                              ),
+                              controller.phoneController.clear();
+                              controller.continueEnabled = false;
+                              controller.update();
+
+                              Navigator.pop(context);
+                            }
+                          },
+                          child: Text(
+                            r'confirm'.tr,
+                            style: TextStyle(
+                              color: AppColors.white,
+                              fontSize: 14.sp,
                             ),
-                          )
-                        : (controller.status == Status.loading)
-                        ? SizedBox(
-                            width: 24.w,
-                            height: 24.h,
-                            child: CircularProgressIndicator(
-                              color: AppColors.green,
-                            ),
-                          )
-                        : SizedBox(),
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
             );
-          }
+          },
         );
       },
     );

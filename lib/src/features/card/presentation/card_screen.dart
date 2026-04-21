@@ -13,7 +13,6 @@ import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
 import '../../../core/states/stateful_data.dart';
-import '../../../widgets/elevated_button_with_state.dart';
 
 class CardScreen extends StatefulWidget {
   static const route = '/card';
@@ -84,8 +83,28 @@ class _CardScreenState extends State<CardScreen> {
                         // SizedBox(height: 40.h),
                         SizedBox(height: AppDimensions.paddingExtraLarge,),
 
-                        Text(r'cards'.tr,
-                            style: TextStyle(fontSize: 20.sp, color: AppColors.black)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(r'cards'.tr,
+                                style: TextStyle(fontSize: 20.sp, color: AppColors.black)),
+                            if (controller.cardBox.length >= 1)
+                              GestureDetector(
+                                onTap: () => Get.toNamed(AddCardScreen.route),
+                                child: Container(
+                                  width: 32.w,
+                                  height: 32.h,
+                                  padding: EdgeInsets.all(5.w),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10.r),
+                                    color: AppColors.green,
+                                  ),
+                                  child: SvgPicture.asset(AppAssets.plusIcon, color: AppColors.white, width: 24.w,),
+                                ),
+                              ),
+
+                          ],
+                        ),
                         SizedBox(height: 16.h),
 
                         controller.cardBox.length == 0
@@ -122,8 +141,8 @@ class _CardScreenState extends State<CardScreen> {
                               },
                               child: Container(
                                 width: MediaQuery.of(context).size.width,
-                                padding: EdgeInsets.all(AppDimensions.paddingExtraLarge),
-                                margin: EdgeInsets.only(bottom: AppDimensions.paddingMedium.h),
+                                padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
+                                margin: EdgeInsets.only(bottom: AppDimensions.paddingLarge.h),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10.r),
                                   image: DecorationImage(
@@ -142,7 +161,7 @@ class _CardScreenState extends State<CardScreen> {
                                         controller.cardBox.getAt(index)?.nickName.tr ?? '',
                                         style: TextStyle(
                                           color: AppColors.white,
-                                          fontSize: 14,
+                                          fontSize: 14.sp,
                                         ),
                                       ),
                                     ),
@@ -411,24 +430,24 @@ class _CardScreenState extends State<CardScreen> {
                 ),
               ),
 
-              if (controller.cardBox.length >= 1)
-                Padding(
-                  padding: EdgeInsets.all(AppDimensions.paddingExtraLarge),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: ElevatedButtonWithState(
-                      isLoading: false,
-                      isError: false,
-                      onPressed: () {
-                        Get.toNamed(AddCardScreen.route);
-                      },
-                      child: Text(
-                        r'add_a_card'.tr,
-                        style: TextStyle(fontSize: 14.sp),
-                      ),
-                    ),
-                  ),
-                )
+              // if (controller.cardBox.length >= 1)
+              //   Padding(
+              //     padding: EdgeInsets.symmetric(horizontal: AppDimensions.paddingExtraLarge),
+              //     child: SizedBox(
+              //       width: MediaQuery.of(context).size.width,
+              //       child: ElevatedButtonWithState(
+              //         isLoading: false,
+              //         isError: false,
+              //         onPressed: () {
+              //           Get.toNamed(AddCardScreen.route);
+              //         },
+              //         child: Text(
+              //           r'add_a_card'.tr,
+              //           style: TextStyle(fontSize: 14.sp),
+              //         ),
+              //       ),
+              //     ),
+              //   )
             ],
           ),
         ),
