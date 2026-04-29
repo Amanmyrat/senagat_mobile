@@ -1,4 +1,6 @@
 // ignore_for_file: constant_identifier_names
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
@@ -55,13 +57,28 @@ class CustomException implements Exception {
     int? statusCode,
     required this.message,
     this.exceptionType = ExceptionType.ApiException,
-  })  : statusCode = statusCode ?? 500,
-        name = exceptionType.name;
+  }) : statusCode = statusCode ?? 500,
+       name = exceptionType.name;
 
   factory CustomException.fromDioException(Exception error) {
     try {
       if (error is DioError) {
+        print("RAW DIO ERROR TYPE: ${error.type}");
+        print("RAW DIO ERROR MSG: ${error.message}");
+        print("RAW DIO ERROR: $error");
         switch (error.type) {
+          case DioExceptionType.connectionError:
+            if (error.error is SocketException) {
+              return CustomException(
+                exceptionType: ExceptionType.FetchDataException,
+                message: 'network_error'.tr,
+              );
+            }
+            return CustomException(
+              exceptionType: ExceptionType.ApiException,
+              message: 'no_internet_connection'.tr,
+            );
+
           case DioErrorType.cancel:
             return CustomException(
               exceptionType: ExceptionType.CancelException,
@@ -91,22 +108,50 @@ class CustomException implements Exception {
               return CustomException(
                 exceptionType: ExceptionType.UnauthorizedException,
                 statusCode: error.response?.statusCode,
-                message: 'Authentication credentials were not provided.',
+                message: 'unauthorized'.tr,
               );
             }
-            if (error.message!.contains('Unauthenticated')) {
+            if (error.message?.contains('Unauthenticated') ?? false) {
               return CustomException(
                 exceptionType: ExceptionType.UnauthorizedException,
                 statusCode: error.response?.statusCode,
-                message: 'Authentication credentials were not provided.',
+                message: 'unauthorized'.tr,
               );
             }
+            // Try to parse structured error from response body
+            try {
+              final data = error.response?.data;
+              if (data is Map) {
+                final code = data['code']?.toString();
+                final message =
+                    data['message']?.toString() ??
+                        (data['errors'] is Map
+                            ? ((data['errors'] as Map).values.first as List?)?.first?.toString()
+                            : null) ??
+                        data['error_message']?.toString() ??
+                        data['error']?.toString() ??
+                        'Response error';
+
+                final success = data['success'] is bool
+                    ? data['success'] as bool
+                    : null;
+                return CustomException(
+                  exceptionType: ExceptionType.ApiException,
+                  statusCode: error.response?.statusCode,
+                  code: code,
+                  success: success,
+                  message: message,
+                );
+              }
+            } catch (_) {}
             return CustomException(
               exceptionType: ExceptionType.UnrecognizedException,
+              statusCode: error.response?.statusCode,
               message: 'Response error',
             );
           case DioErrorType.unknown:
-            if (error.message!.contains(ExceptionType.SocketException.name)) {
+            if (error.message?.contains(ExceptionType.SocketException.name) ??
+                false) {
               return CustomException(
                 exceptionType: ExceptionType.FetchDataException,
                 statusCode: error.response?.statusCode,
@@ -121,20 +166,30 @@ class CustomException implements Exception {
                 message: error.response?.statusMessage ?? 'Unknown',
               );
             }
-            const name = 'name';
-            final message = error.response?.data;
-            if (name == ExceptionType.TokenExpiredException.name) {
-              return CustomException(
-                exceptionType: ExceptionType.TokenExpiredException,
-                code: name,
-                statusCode: error.response?.statusCode,
-                message: message,
-              );
-            }
+            try {
+              final data = error.response?.data;
+              if (data is Map) {
+                final code = data['code']?.toString();
+                final message =
+                    data['message']?.toString() ??
+                    data['error']?.toString() ??
+                    'Unknown';
+                final success = data['success'] is bool
+                    ? data['success'] as bool
+                    : null;
+                return CustomException(
+                  exceptionType: ExceptionType.ApiException,
+                  statusCode: error.response?.statusCode,
+                  code: code,
+                  success: success,
+                  message: message,
+                );
+              }
+            } catch (_) {}
             return CustomException(
-              message: message.toString(),
-              code: name,
+              exceptionType: ExceptionType.UnrecognizedException,
               statusCode: error.response?.statusCode,
+              message: error.response?.statusMessage ?? 'Unknown',
             );
           case DioExceptionType.badCertificate:
             return CustomException(
@@ -146,7 +201,7 @@ class CustomException implements Exception {
             return CustomException(
               exceptionType: ExceptionType.ApiException,
               statusCode: error.response?.statusCode,
-              message: 'Connection error',
+              message: 'no_internet_connection'.tr,
             );
         }
       } else {

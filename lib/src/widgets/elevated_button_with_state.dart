@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../utils/theme/constants/app_colors.dart';
@@ -23,12 +24,16 @@ class ElevatedButtonWithState extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
-      style: customStyle ??
+      style:
+          customStyle ??
           ElevatedButton.styleFrom(
-            disabledBackgroundColor: AppColors.blue.withOpacity(.6),
+            disabledBackgroundColor: AppColors.green.withOpacity(.6),
             disabledForegroundColor: Colors.white70,
-            backgroundColor:
-                isError ? Theme.of(context).colorScheme.error : null,
+
+
+            backgroundColor: isError
+                ? Theme.of(context).colorScheme.error
+                : null,
           ),
       child: _getState(),
     );
@@ -36,8 +41,12 @@ class ElevatedButtonWithState extends StatelessWidget {
 
   Widget _getState() {
     if (isLoading) {
-      return const CircularProgressIndicator.adaptive(
-        valueColor: AlwaysStoppedAnimation<Color>(AppColors.white),
+      return SizedBox(
+        width: 30.w,
+        height: 30.h,
+        child: const CircularProgressIndicator.adaptive(
+          valueColor: AlwaysStoppedAnimation<Color>(AppColors.white),
+        ),
       );
     }
     if (isError) {

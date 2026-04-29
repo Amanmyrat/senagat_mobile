@@ -53,7 +53,6 @@ class ApiService implements ApiInterface {
     List<dynamic> body;
 
     try {
-      // Entire map of response
       final data = await _dioService.get<dynamic>(
         endpoint: endpoint,
         cacheOptions: _dioService.globalCacheOptions?.copyWith(
@@ -63,22 +62,31 @@ class ApiService implements ApiInterface {
               : null,
         ),
         options: Options(
-          extra: <String, Object?>{
-            'requiresAuthToken': requiresAuthToken,
-          },
+          extra: <String, Object?>{'requiresAuthToken': requiresAuthToken},
         ),
         queryParams: queryParams,
         cancelToken: cancelToken,
       );
-      // Items of table as json
-      body = data.body['data'];
+
+      final responseBody = data.body;
+
+      if (responseBody is List) {
+        // ✅ ROOT LIST RESPONSE (your case)
+        body = responseBody;
+      } else if (responseBody is Map && responseBody['data'] is List) {
+        // ✅ WRAPPED LIST RESPONSE
+        body = responseBody['data'];
+      } else {
+        throw Exception('Unexpected response format');
+      }
     } on Exception catch (ex) {
       throw CustomException.fromDioException(ex);
     }
 
     try {
-      // Returning the deserialized objects
-      return body.map((dataMap) => converter(dataMap)).toList();
+      return body
+          .map((item) => converter(item as Map<String, dynamic>))
+          .toList();
     } on Exception catch (ex) {
       throw CustomException.fromParsingException(ex);
     }
@@ -124,9 +132,7 @@ class ApiService implements ApiInterface {
               : null,
         ),
         options: Options(
-          extra: <String, Object?>{
-            'requiresAuthToken': requiresAuthToken,
-          },
+          extra: <String, Object?>{'requiresAuthToken': requiresAuthToken},
         ),
         cancelToken: cancelToken,
       );
@@ -161,9 +167,7 @@ class ApiService implements ApiInterface {
         endpoint: endpoint,
         data: data,
         options: Options(
-          extra: <String, Object?>{
-            'requiresAuthToken': requiresAuthToken,
-          },
+          extra: <String, Object?>{'requiresAuthToken': requiresAuthToken},
         ),
         cancelToken: cancelToken,
       );
@@ -197,8 +201,8 @@ class ApiService implements ApiInterface {
         endpoint: endpoint,
         data: data,
         options: Options(
-            extra: <String, Object?>{'requiresAuthToken': requiresAuthToken},
-            headers: {"Accept": "application/json"}
+          extra: <String, Object?>{'requiresAuthToken': requiresAuthToken},
+          headers: {"Accept": "application/json"},
         ),
         cancelToken: cancelToken,
       );
@@ -209,14 +213,23 @@ class ApiService implements ApiInterface {
     List<dynamic> responseData;
     try {
       // Assuming the data is returned as a list within the 'data' field of the response
-      responseData = response.body['data'];
+      final responseBody = response.body;
+      if (responseBody != null && responseBody['data'] != null) {
+        responseData = responseBody['data'];
+      } else {
+        throw Exception('Response body or data field is null');
+      }
     } catch (e) {
-      throw CustomException.fromParsingException(Exception('Invalid response format'));
+      throw CustomException.fromParsingException(
+        Exception('Invalid response format'),
+      );
     }
 
     try {
       // Returning the deserialized objects
-      return responseData.map((dataMap) => converter(ResponseModel.fromJson(dataMap))).toList();
+      return responseData
+          .map((dataMap) => converter(ResponseModel.fromJson(dataMap)))
+          .toList();
     } on Exception catch (ex) {
       throw CustomException.fromParsingException(ex);
     }
@@ -253,11 +266,10 @@ class ApiService implements ApiInterface {
       response = await _dioService.post<JSON>(
         endpoint: endpoint,
         data: data,
-        options: Options(extra: <String, Object?>{
-          'requiresAuthToken': requiresAuthToken,
-        }, headers: {
-          "Accept": "application/json"
-        }),
+        options: Options(
+          extra: <String, Object?>{'requiresAuthToken': requiresAuthToken},
+          headers: {"Accept": "application/json"},
+        ),
         cancelToken: cancelToken,
       );
     } on Exception catch (ex) {
@@ -305,12 +317,13 @@ class ApiService implements ApiInterface {
         endpoint: endpoint,
         data: data,
         queryParams: queryParams,
-        options: Options(extra: <String, Object?>{
-          'requiresAuthToken': requiresAuthToken,
-        }, headers: {
-          "Accept": "application/json",
-          'Content-type': 'application/x-www-form-urlencoded'
-        }),
+        options: Options(
+          extra: <String, Object?>{'requiresAuthToken': requiresAuthToken},
+          headers: {
+            "Accept": "application/json",
+            'Content-type': 'application/x-www-form-urlencoded',
+          },
+        ),
         cancelToken: cancelToken,
       );
     } on Exception catch (ex) {
@@ -356,9 +369,7 @@ class ApiService implements ApiInterface {
         endpoint: endpoint,
         data: data,
         options: Options(
-          extra: <String, Object?>{
-            'requiresAuthToken': requiresAuthToken,
-          },
+          extra: <String, Object?>{'requiresAuthToken': requiresAuthToken},
         ),
         cancelToken: cancelToken,
       );
@@ -406,9 +417,7 @@ class ApiService implements ApiInterface {
         endpoint: endpoint,
         data: data,
         options: Options(
-          extra: <String, Object?>{
-            'requiresAuthToken': requiresAuthToken,
-          },
+          extra: <String, Object?>{'requiresAuthToken': requiresAuthToken},
         ),
         cancelToken: cancelToken,
       );
@@ -452,18 +461,16 @@ class ApiService implements ApiInterface {
 
     await _dioService
         .delete(
-      endpoint: endpoint,
-      data: data,
-      options: Options(
-        extra: <String, Object?>{
-          'requiresAuthToken': requiresAuthToken,
-        },
-      ),
-      cancelToken: cancelToken,
-    )
+          endpoint: endpoint,
+          data: data,
+          options: Options(
+            extra: <String, Object?>{'requiresAuthToken': requiresAuthToken},
+          ),
+          cancelToken: cancelToken,
+        )
         .onError((error, stackTrace) {
-      throw CustomException.fromDioException(error as Exception);
-    });
+          throw CustomException.fromDioException(error as Exception);
+        });
 
     // try {
     //   // Returning the serialized object

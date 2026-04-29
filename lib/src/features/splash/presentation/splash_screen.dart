@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import '../../dashboard/presentation/dashboard_screen.dart';
+import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
+import 'package:senagat_mobile/src/features/welcome/presentation/welcome_screen.dart';
+import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
+import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
+
+import '../../../utils/services/show_snack.dart';
+import '../../auth/controller/account_status_controller.dart';
 
 class SplashScreen extends StatefulWidget {
-  static const route = r'/splash';
+  static const route = '/splash';
 
   const SplashScreen({super.key});
 
@@ -19,7 +26,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     Intl.defaultLocale = Get.locale.toString();
 
     return FutureBuilder(
@@ -45,8 +51,24 @@ class _SplashScreenState extends State<SplashScreen> {
   Scaffold waitingView() {
     return Scaffold(
       body: Center(
-        child: Container(color: Colors.red,)
-        // child: SvgPicture.asset(AppAssets.splashAsset,fit: BoxFit.fitWidth,)
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(AppAssets.senagatIcon, width: 134.w, height: 135.h),
+            Text(
+              'Senagat töleg',
+              style: TextStyle(
+                color: AppColors.blackText,
+                fontSize: 40.sp,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              r'pay_everything'.tr,
+              style: TextStyle(color: AppColors.greyInactive, fontSize: 14.sp),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -57,6 +79,13 @@ class OnBoard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const DashboardScreen();
+    final AccountLoginStatusController authController =
+    Get.put(AccountLoginStatusController());
+    final accountStatus = authController.accountLoginStatus.value;
+
+    return DashboardScreen();
+    // return accountStatus == AccountLoginStatus.loggedIn
+    //     ? const DashboardScreen()
+    //     : const WelcomeScreen();
   }
 }

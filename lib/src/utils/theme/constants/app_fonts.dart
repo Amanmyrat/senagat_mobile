@@ -5,7 +5,9 @@ class AppFonts {
 
   const AppFonts._();
 
-  static const String primaryFont = 'SF-PRO-DISPLAY';
-  static const String secondaryFont = 'SF-PRO-DISPLAY';
-  // static const String secondaryFont = 'Blazma';
+  static const String primaryFont = 'Kinetika';
+  static const String secondaryFont = 'Gilroy';
+  static const String XoloniumFont = 'Xolonium';
+
+
 }

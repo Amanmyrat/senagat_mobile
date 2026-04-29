@@ -2,22 +2,36 @@ import 'package:get/get.dart';
 import '../utils/nested_nav_ids.dart';
 
 class DashboardController extends GetxController {
-  ///Current index of navigation page.
-  final RxInt _currentIndex = 0.obs;
 
-  ///Getter for current index.
+  final RxInt _currentIndex = 0.obs;
+  RxInt get currentIndexRx => _currentIndex;
   int get currentIndex => _currentIndex.value;
 
   final RxBool _addProductEnabled = false.obs;
-
   bool get addProductEnabled => _addProductEnabled.value;
 
   String? phone;
 
-  ///Update current index due to selection.
-  ///
-  ///This method used on bottom navigation or top navigation tapped.
-  ///Variable currentIndex used to change current page index of navigation.
+  /// Resets dashboard tab selection and clears all nested navigator stacks.
+  /// Useful after login/logout to avoid stale nested navigation state.
+  void resetToHome() {
+    // Pop all nested navigators to their first route (if mounted).
+    for (final nestedId in <int>[
+      NestedNavigationIds.home,
+      NestedNavigationIds.catalog,
+      NestedNavigationIds.card,
+      NestedNavigationIds.settings,
+    ]) {
+      final state = Get.keys[nestedId]?.currentState;
+      if (state != null) {
+        state.popUntil((r) => r.isFirst);
+      }
+    }
+
+    // Select home tab.
+    _currentIndex.value = DashboardNavigationIndex.home;
+  }
+
   void updateCurrentIndex(int currentIndex) async {
     int keyIdForPosition = _getKeyIdForPosition(_currentIndex.value);
     if (_currentIndex.value == currentIndex) {
@@ -27,7 +41,6 @@ class DashboardController extends GetxController {
     }
   }
 
-  ///Method responsible for handling back tapping event
   Future<bool> onWillPop() async {
     int keyIdForPosition = _getKeyIdForPosition(_currentIndex.value);
     if (keyIdForPosition != -1) {
@@ -43,25 +56,17 @@ class DashboardController extends GetxController {
     return true;
   }
 
-  ///Method to getting id from selected navigation index.
-  ///
-  ///NestedNavigationIds is different from
-  ///DashboardNavigationIndex, NestedNavigationIds could take any
-  ///random int.
+
   int _getKeyIdForPosition(int position) {
     switch (position) {
-      case DashboardNavigationIndex.services:
-        return NestedNavigationIds.services;
-
-      case DashboardNavigationIndex.chats:
-        return NestedNavigationIds.chats;
-
-      case DashboardNavigationIndex.contacts:
-        return NestedNavigationIds.contacts;
-
-      case DashboardNavigationIndex.profile:
-        return NestedNavigationIds.profile;
-
+      case DashboardNavigationIndex.card:
+        return NestedNavigationIds.card;
+      case DashboardNavigationIndex.catalog:
+        return NestedNavigationIds.catalog;
+      case DashboardNavigationIndex.home:
+        return NestedNavigationIds.home;
+      case DashboardNavigationIndex.settings:
+        return NestedNavigationIds.settings;
       default:
         return -1;
     }

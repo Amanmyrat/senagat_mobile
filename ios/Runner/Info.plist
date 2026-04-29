@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Senagat Mobile</string>
+	<string>Senagat Töleg</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -45,5 +45,28 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+    <string>This app needs camera access to scan QR codes.</string>
+
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>This app needs photo access.</string>
+
+
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Need location to show nearby ATMs and offices.</string>
+
+    <key>NSContactsUsageDescription</key>
+    <string>We need access to your contacts to select a phone number</string>
+
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>We need your location to show nearby places.</string>
+
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>We need your location to show nearby places.</string>
+
+    <key>SKStoreReviewController</key>
+    <true/>
+
+
 </dict>
 </plist>

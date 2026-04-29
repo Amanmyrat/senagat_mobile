@@ -13,9 +13,7 @@ class RefreshTokenInterceptor extends Interceptor {
   /// An instance of [Dio] for network requests
   final Dio _dio;
 
-  RefreshTokenInterceptor({
-    required Dio dioClient,
-  }) : _dio = dioClient;
+  RefreshTokenInterceptor({required Dio dioClient}) : _dio = dioClient;
 
   /// The name of the exception on which this interceptor is triggered.
   // ignore: non_constant_identifier_names
@@ -41,12 +39,12 @@ class RefreshTokenInterceptor extends Interceptor {
     ErrorInterceptorHandler handler,
   ) async {
     if (dioError.response != null) {
-      if (dioError.response!.data != null) {
-        // final headers = dioError.response!.data['headers'] as JSON;
-        if (dioError.response!.data is! String &&
-            dioError.response!.data.containsKey('code')) {
+      final responseData = dioError.response!.data;
+      if (responseData != null) {
+        // final headers = responseData['headers'] as JSON;
+        if (responseData is! String && responseData.containsKey('code')) {
           // Check error type to be token expired error
-          final code = dioError.response!.data['code'] as String;
+          final code = responseData['code'] as String;
 
           if (code == TokenExpiredException) {
             // Make new dio and lock old one
@@ -100,53 +98,53 @@ class RefreshTokenInterceptor extends Interceptor {
   ///
   /// ** The structure of response is dependant on the API and may not always
   /// be the same. It might need changing according to your own API. **
-  Future<String?> _refreshTokenRequest({
-    required DioError dioError,
-    required ErrorInterceptorHandler handler,
-    required Dio tokenDio,
-    required JSON data,
-  }) async {
-    debugPrint('--> REFRESHING TOKEN');
-    try {
-      debugPrint('\tBody: $data');
-
-      final response = await tokenDio.post<JSON>(
-        ApiEndpoint.auth(AuthEndpoint.AUTHORIZE),
-        data: data,
-      );
-
-      debugPrint('\tStatus code:${response.statusCode}');
-      debugPrint('\tResponse: ${response.data}');
-
-      // Check new token success
-      final success = response.statusCode == 200;
-
-      if (success) {
-        debugPrint('<-- END REFRESH');
-        return response.data?['access'] as String;
-      } else {
-        throw Exception(response.data);
-      }
-    } on Exception catch (ex) {
-      // only caught here for logging
-      // forward to try-catch in dio_service for handling
-      debugPrint('\t--> ERROR');
-      if (ex is DioError) {
-        final de = ex;
-        debugPrint('\t\t--> Exception: ${de.error}');
-        debugPrint('\t\t--> Message: ${de.message}');
-        debugPrint('\t\t--> Response: ${de.response}');
-      } else {
-        debugPrint('\t\t--> Exception: $ex');
-      }
-      debugPrint('\t<-- END ERROR');
-      debugPrint('<-- END REFRESH');
-
-      return null;
-    } finally {
-      // _dio
-      //   ..unlock()
-      //   ..clear();
-    }
-  }
+  // Future<String?> _refreshTokenRequest({
+  //   required DioError dioError,
+  //   required ErrorInterceptorHandler handler,
+  //   required Dio tokenDio,
+  //   required JSON data,
+  // }) async {
+  //   debugPrint('--> REFRESHING TOKEN');
+  //   try {
+  //     debugPrint('\tBody: $data');
+  //
+  //     final response = await tokenDio.post<JSON>(
+  //       ApiEndpoint.auth(AuthEndpoint.AUTHORIZE),
+  //       data: data,
+  //     );
+  //
+  //     debugPrint('\tStatus code:${response.statusCode}');
+  //     debugPrint('\tResponse: ${response.data}');
+  //
+  //     // Check new token success
+  //     final success = response.statusCode == 200;
+  //
+  //     if (success) {
+  //       debugPrint('<-- END REFRESH');
+  //       return response.data?['access'] as String;
+  //     } else {
+  //       throw Exception(response.data);
+  //     }
+  //   } on Exception catch (ex) {
+  //     // only caught here for logging
+  //     // forward to try-catch in dio_service for handling
+  //     debugPrint('\t--> ERROR');
+  //     if (ex is DioError) {
+  //       final de = ex;
+  //       debugPrint('\t\t--> Exception: ${de.error}');
+  //       debugPrint('\t\t--> Message: ${de.message}');
+  //       debugPrint('\t\t--> Response: ${de.response}');
+  //     } else {
+  //       debugPrint('\t\t--> Exception: $ex');
+  //     }
+  //     debugPrint('\t<-- END ERROR');
+  //     debugPrint('<-- END REFRESH');
+  //
+  //     return null;
+  //   } finally {
+  //     // _dio
+  //     //   ..unlock()
+  //     //   ..clear();
+  //   }
+  // }
 }

@@ -23,7 +23,7 @@ class ShowSnack {
         break;
       case SnackType.warning:
         title = 'warning'.tr;
-        color = AppColors.orange;
+        color = AppColors.orangeLight;
         bcColor = const Color(0xFFFFFFFF);
         break;
       case SnackType.success:
@@ -33,9 +33,9 @@ class ShowSnack {
         break;
     }
     final snack = GetSnackBar(
-      title: title,
-      titleText: Text(title,
-          style: TextStyle(color: color, fontWeight: FontWeight.bold)),
+      // title: title,
+      // titleText: Text(title,
+      //     style: TextStyle(color: color, fontWeight: FontWeight.bold)),
       message: message,
       messageText: Text(message,
           style: TextStyle(color: color, fontWeight: FontWeight.bold)),
