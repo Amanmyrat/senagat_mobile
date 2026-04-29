@@ -1,4 +1,4 @@
-package com.example.senagat_mobile
+package com.aplinxy9plin.senagat
 
 import android.view.WindowManager
 import io.flutter.embedding.android.FlutterFragmentActivity

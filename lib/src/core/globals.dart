@@ -1,27 +1,22 @@
+import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
-import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
-import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
+import 'package:dio/io.dart';
 import 'package:flutter/foundation.dart';
 import 'package:senagat_mobile/src/core/networking/interceptors/account_blocked_interceptor.dart';
 import 'networking/interceptors/refresh_token_interceptor.dart';
-import '../utils/path_provider_service.dart';
 import 'networking/api_endpoint.dart';
 import 'networking/api_service.dart';
 import 'networking/dio_service.dart';
 import 'networking/interceptors/api_interceptor.dart';
 import 'networking/interceptors/logging_interceptor.dart';
+import 'dart:io';
 
 class Configs {
   const Configs._();
 
-  static const rootIpAddress = '109.207.172.16:4433';
-  static const rootIpAddress2 = '192.168.1.17:82';
-  static const rootIpAddress6 = '192.168.1.143:82';
-  static const rootIpAddress3 = '192.168.18.104:82';
-  static const rootIpAddress4 = '216.250.11.195';
-  static const rootIpAddress5 = 'senagatbank.com.tm';
-  static const baseUrl = "https://$rootIpAddress5/api/v1";
-  static const baseImageUrl = "https://$rootIpAddress5/";
+  static const host = 'senagatbank.com.tm';
+  static const baseUrl = "https://$host/api/v1";
+  static const baseImageUrl = "https://$host/";
 
   static const bool OTPEnabled = false;
 
@@ -38,21 +33,36 @@ class ApiServices {
     baseUrl: ApiEndpoint.baseUrl,
   );
 
-  static final _dio = Dio(_baseOptions);
+  static final _dio = Dio(_baseOptions)
+    ..httpClientAdapter = IOHttpClientAdapter(
+      createHttpClient: () {
+        final client = HttpClient();
 
-  static final _cacheOptions = CacheOptions(
-    store: HiveCacheStore(PathProviderService.path),
-    policy: CachePolicy.noCache,
-    maxStale: const Duration(days: 30),
-    keyBuilder: (options) => options.path,
-  );
+        client.badCertificateCallback =
+            (X509Certificate cert, String host, int port) {
+
+          // Only apply to your domain
+          if (host != Configs.host) return false;
+
+          // Convert certificate DER to SHA256 fingerprint
+          final bytes = cert.der;
+          final sha256Result = sha256.convert(bytes).toString().toUpperCase();
+
+          const expectedFingerprint =
+              "7B4F46E8D9EC05D63D3EB360D462231C2171A59C0140B438DB71FBB5617EE387";
+
+          return sha256Result == expectedFingerprint.toUpperCase();
+        };
+
+        return client;
+      },
+    );
+
 
   static final _dioService = DioService(
     dioClient: _dio,
-    globalCacheOptions: _cacheOptions,
     interceptors: [
       ApiInterceptor(),
-      DioCacheInterceptor(options: _cacheOptions),
       if (kDebugMode) LoggingInterceptor(),
       RefreshTokenInterceptor(dioClient: _dio),
       AccountBlockedInterceptor(dioClient: _dio),

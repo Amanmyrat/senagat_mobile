@@ -8,8 +8,6 @@ import 'package:senagat_mobile/src/features/home/repository/exchage_rate_reposit
 import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
 import 'package:senagat_mobile/src/features/web_view/presentation/web_view.dart';
 import '../features/home/controller/home_controller.dart';
-import '../features/map.dart';
-import '../features/map_search/presentation/map_search_screen.dart';
 import '../utils/constants/app_assets.dart';
 import '../utils/theme/constants/app_colors.dart';
 import '../utils/theme/constants/app_dimensions.dart';

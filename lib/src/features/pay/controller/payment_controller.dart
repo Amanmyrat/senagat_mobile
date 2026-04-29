@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
 import 'package:flutter_native_contact_picker/model/contact.dart';
@@ -60,7 +61,7 @@ class PaymentController extends GetxController with StateControlMixin {
       formattedBalance = args['balance'].toString();
 
     } else {
-      debugPrint('No or invalid arguments passed to this page');
+      if (kDebugMode) {debugPrint('No or invalid arguments passed to this page');}
     }
 
     if (cardBox.isNotEmpty) {
@@ -193,7 +194,6 @@ class PaymentController extends GetxController with StateControlMixin {
     try {
       final Contact? contact = await _contactPicker.selectContact();
       if (contact == null) {
-        print('No contact selected');
         return;
       }
 
@@ -205,7 +205,6 @@ class PaymentController extends GetxController with StateControlMixin {
       }
 
       if (phone == null) {
-        print('Contact has no phone number');
         return;
       }
 
@@ -216,11 +215,9 @@ class PaymentController extends GetxController with StateControlMixin {
         phone = phone.substring(1);
       }
 
-      print('Phone after formatting: $phone');
       phoneController.text = phone;
       update();
     } catch (e) {
-      print('Contact picker cancelled or failed: $e');
     }
   }
 

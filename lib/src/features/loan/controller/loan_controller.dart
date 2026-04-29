@@ -116,7 +116,6 @@ class LoanController extends GetxController
         double? minWages = double.tryParse(
             minMonthlyPayment.replaceAll(' ', '').replaceAll(',', '.')
         );
-        print(wages);
 
         if (wages! < minWages!) {
           continueEnabled = false;
@@ -165,7 +164,6 @@ class LoanController extends GetxController
           status = Status.error;
           update();
           ApiErrorHandler.handleApiError(e);
-          debugPrint(e.toString());
         });
   }
 
@@ -277,7 +275,6 @@ class LoanController extends GetxController
     } catch (e) {
       status = Status.error;
       ApiErrorHandler.handleApiError(e);
-      debugPrint(e.toString());
     }
 
     update();

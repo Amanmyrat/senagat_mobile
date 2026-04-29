@@ -27,7 +27,6 @@ import '../../identity_verification/models/profile_model.dart';
 import '../../inquiries/presentation/inquiries_screen.dart';
 import '../../pay/model/pay_model.dart';
 import '../../pay/model/paymet_history_model.dart';
-import '../../qr_code/presentation/qr_code_screen.dart';
 import '../../service_settings/controller/service_settings_controller.dart';
 
 enum HomeTapType { none, qr, foundation, service, notification }
@@ -90,12 +89,6 @@ class HomeController extends GetxController with StateControlMixin {
   ];
 
   HomeController(this.repository, this.authRepository, this.paymentRepository);
-
-  void onQrScanTap() {
-    lastTap = HomeTapType.qr;
-    update();
-    Get.toNamed(QrCodeScreen.route);
-  }
 
   void onNotificationScanTap() {
     lastTap = HomeTapType.notification;
@@ -262,7 +255,6 @@ class HomeController extends GetxController with StateControlMixin {
       update();
     } catch (e) {
       status = Status.error;
-      debugPrint("ERROR => $e");
       ApiErrorHandler.handleApiError(e);
     } finally {
       update();
@@ -301,7 +293,6 @@ class HomeController extends GetxController with StateControlMixin {
           status = Status.error;
           update();
           ApiErrorHandler.handleApiError(e);
-          debugPrint(e.toString());
         })
         .whenComplete(() {
           _isFetchingUserInfo = false;

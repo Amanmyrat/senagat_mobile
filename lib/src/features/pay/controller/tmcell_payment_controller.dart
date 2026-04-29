@@ -51,7 +51,6 @@ class TmcellPaymentController extends PaymentController {
       status = Status.error;
       update();
       ApiErrorHandler.handleApiError(e);
-      debugPrint(e.toString());
     }
   }
 }

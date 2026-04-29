@@ -47,7 +47,6 @@ class BeletPaymentController extends PaymentController {
       status = Status.completed;
     } catch (e) {
       status = Status.error;
-      debugPrint("ERROR => $e");
       ApiErrorHandler.handleApiError(e);
     } finally {
       update();
@@ -92,7 +91,6 @@ class BeletPaymentController extends PaymentController {
       status = Status.error;
       update();
       ApiErrorHandler.handleApiError(e);
-      debugPrint(e.toString());
     }
   }
 }

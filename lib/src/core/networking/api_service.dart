@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 
 // Exceptions
 import './custom_exception.dart';
@@ -45,7 +44,6 @@ class ApiService implements ApiInterface {
     required String endpoint,
     JSON? queryParams,
     CancelToken? cancelToken,
-    CachePolicy? cachePolicy,
     int? cacheAgeDays,
     bool requiresAuthToken = false,
     required T Function(JSON responseBody) converter,
@@ -55,12 +53,6 @@ class ApiService implements ApiInterface {
     try {
       final data = await _dioService.get<dynamic>(
         endpoint: endpoint,
-        cacheOptions: _dioService.globalCacheOptions?.copyWith(
-          policy: cachePolicy,
-          maxStale: cacheAgeDays != null
-              ? Nullable(Duration(days: cacheAgeDays))
-              : null,
-        ),
         options: Options(
           extra: <String, Object?>{'requiresAuthToken': requiresAuthToken},
         ),
@@ -71,10 +63,8 @@ class ApiService implements ApiInterface {
       final responseBody = data.body;
 
       if (responseBody is List) {
-        // ✅ ROOT LIST RESPONSE (your case)
         body = responseBody;
       } else if (responseBody is Map && responseBody['data'] is List) {
-        // ✅ WRAPPED LIST RESPONSE
         body = responseBody['data'];
       } else {
         throw Exception('Unexpected response format');
@@ -114,7 +104,6 @@ class ApiService implements ApiInterface {
     required String endpoint,
     JSON? queryParams,
     CancelToken? cancelToken,
-    CachePolicy? cachePolicy,
     int? cacheAgeDays,
     bool requiresAuthToken = false,
     required T Function(JSON response) converter,
@@ -125,12 +114,6 @@ class ApiService implements ApiInterface {
       final data = await _dioService.get<JSON>(
         endpoint: endpoint,
         queryParams: queryParams,
-        cacheOptions: _dioService.globalCacheOptions?.copyWith(
-          policy: cachePolicy,
-          maxStale: cacheAgeDays != null
-              ? Nullable(Duration(days: cacheAgeDays))
-              : null,
-        ),
         options: Options(
           extra: <String, Object?>{'requiresAuthToken': requiresAuthToken},
         ),
@@ -155,7 +138,6 @@ class ApiService implements ApiInterface {
     required String endpoint,
     required dynamic data,
     CancelToken? cancelToken,
-    CachePolicy? cachePolicy,
     int? cacheAgeDays,
     bool requiresAuthToken = false,
     required T Function(JSON response) converter,

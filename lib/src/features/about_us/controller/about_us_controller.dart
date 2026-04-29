@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
@@ -29,7 +30,9 @@ class AboutUsController extends GetxController with StateControlMixin {
         await InAppUpdate.performImmediateUpdate();
       }
     } catch (e) {
-      debugPrint('In-app update error: $e');
+      if (kDebugMode) {
+        debugPrint('In-app update error: $e');
+      }
     }
   }
 
@@ -40,8 +43,7 @@ class AboutUsController extends GetxController with StateControlMixin {
   }
   Future<void> _loadVersion() async {
     final info = await PackageInfo.fromPlatform();
-    appVersion = info.version; // e.g. 1.0.3
-    print(appVersion ?? 'aaaaaaaaaaaa');
+    appVersion = info.version;
     update();
   }
 

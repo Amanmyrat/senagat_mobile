@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:senagat_mobile/src/core/globals.dart';
 import 'package:senagat_mobile/src/features/about_us/controller/about_us_controller.dart';
@@ -22,7 +21,6 @@ import 'package:senagat_mobile/src/features/identity_verification/presentation/i
 import 'package:senagat_mobile/src/features/inquiries_list/presentation/inquiries_list.dart';
 import 'package:senagat_mobile/src/features/lang_settings/presentation/lang_settings_screen.dart';
 import 'package:senagat_mobile/src/features/loan/presentation/loan_screen.dart';
-import 'package:senagat_mobile/src/features/map.dart';
 import 'package:senagat_mobile/src/features/net_and_tv/presentation/net_and_tv_screen.dart';
 import 'package:senagat_mobile/src/features/no_internet/presentation/no_internet_screen.dart';
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
@@ -36,7 +34,6 @@ import 'package:senagat_mobile/src/features/pay/presentation/tmcell_payment_scre
 import 'package:senagat_mobile/src/features/pay/presentation/telecom_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
 import 'package:senagat_mobile/src/features/profile/controller/profile_controller.dart';
-import 'package:senagat_mobile/src/features/qr_code/presentation/qr_code_screen.dart';
 import 'package:senagat_mobile/src/features/register/presentation/register_screen.dart';
 import 'package:senagat_mobile/src/features/register_confirmation/presentation/register_confirmation.dart';
 import 'package:senagat_mobile/src/features/register_password_setup/presentation/register_password_setup_screen.dart';
@@ -48,7 +45,6 @@ import 'package:senagat_mobile/src/features/splash/presentation/splash_screen.da
 import 'package:senagat_mobile/src/utils/localization/controller/language_controller.dart';
 import 'package:senagat_mobile/src/utils/localization/localization_service.dart';
 import 'package:senagat_mobile/src/utils/theme/app_theme.dart';
-import 'package:senagat_mobile/src/utils/theme/controller/theme_controller.dart';
 import 'features/add_card/controller/add_card_controller.dart';
 import 'features/auth/controller/auth_controller.dart';
 import 'features/auth/repository/auth_repository.dart';
@@ -62,7 +58,6 @@ import 'features/inquiries/presentation/inquiries_screen.dart';
 import 'features/no_internet/controller/internet_checker.dart';
 import 'features/payment_history/presentation/payment_history_screen.dart';
 import 'features/payment_verification/presentation/payment_verification_screen.dart';
-import 'features/map_search/presentation/map_search_screen.dart';
 import 'features/web_view/presentation/web_view.dart';
 
 class SenagatApp extends StatefulWidget {
@@ -74,18 +69,6 @@ class SenagatApp extends StatefulWidget {
 
 class _SenagatAppState extends State<SenagatApp> {
   final localizationService = LocalizationService();
-  final _box = GetStorage();
-
-  ThemeMode _initThemeMode() {
-    bool? isDarkMode = _box.read<bool>(r'theme');
-    if (isDarkMode == null) {
-      final brightness = PlatformDispatcher.instance.platformBrightness;
-      isDarkMode = brightness == Brightness.dark;
-    }
-    Get.changeThemeMode(isDarkMode ? ThemeMode.dark : ThemeMode.light);
-
-    return isDarkMode ? ThemeMode.dark : ThemeMode.light;
-  }
 
   @override
   void initState() {
@@ -111,7 +94,7 @@ class _SenagatAppState extends State<SenagatApp> {
             theme: AppTheme.lightTheme,
             // darkTheme: AppTheme.darkTheme,
             debugShowCheckedModeBanner: false,
-            themeMode: _initThemeMode(),
+            themeMode: ThemeMode.light,
             initialRoute: SplashScreen.route,
             initialBinding: DashboardBinding(),
             defaultTransition: Transition.cupertino,
@@ -190,10 +173,6 @@ class _SenagatAppState extends State<SenagatApp> {
                 page: () => const ServiceSettingsScreen(),
               ),
               GetPage(
-                name: QrCodeScreen.route,
-                page: () => const QrCodeScreen(),
-              ),
-              GetPage(
                 name: FoundationScreen.route,
                 page: () => const FoundationScreen(),
               ),
@@ -204,10 +183,6 @@ class _SenagatAppState extends State<SenagatApp> {
               GetPage(
                 name: InquiriesScreen.route,
                 page: () => const InquiriesScreen(),
-              ),
-              GetPage(
-                name: MapSearchScreen.route,
-                page: () => const MapSearchScreen(),
               ),
               GetPage(
                 name: GetCreditScreen.route,
@@ -274,7 +249,6 @@ class _SenagatAppState extends State<SenagatApp> {
                 page: () => const InquiriesList(),
               ),
               GetPage(name: CreditList.route, page: () => const CreditList()),
-              GetPage(name: MapScreen.route, page: () => const MapScreen()),
               GetPage(name: NoInternetScreen.route, page: () => const NoInternetScreen()),
               GetPage(name: CheckPhoneBalanceScreen.route, page: () => const CheckPhoneBalanceScreen()),
               GetPage(name: WebViewScreen.route, page: () => const WebViewScreen()),
@@ -289,7 +263,6 @@ class _SenagatAppState extends State<SenagatApp> {
 class DashboardBinding extends Bindings {
   @override
   void dependencies() {
-    Get.put(ThemeController(), permanent: true);
     Get.put(LanguageController(), permanent: true);
     Get.put(DashboardController(), permanent: true);
     Get.put(AuthController(), permanent: true);

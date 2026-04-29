@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:senagat_mobile/src/features/add_card/model/bank_model.dart';
 import 'bank_service.dart';
@@ -61,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (step1Resp.status != HackResponseStatus.ok) {
       /// only [alreadyProcessed] returns in error state
       if (step1Resp.status == HackResponseStatus.alreadyProcessed) {
-        debugPrint('session expired or already processed');
+        if (kDebugMode) {debugPrint('session expired or already processed');}
       }
       return;
     }
@@ -101,7 +102,6 @@ class _MyHomePageState extends State<MyHomePage> {
     //   });
     // }
 
-    debugPrint('asdasd $otp');
 
     ConfirmPaymentRequest confirmPaymentReq = ConfirmPaymentRequest(
       application: 'step3',
@@ -115,7 +115,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
     final confirm = await bankService.step4ConfirmPayment(confirmPaymentReq);
 
-    debugPrint('aaa');
   }
 
   @override /*  */

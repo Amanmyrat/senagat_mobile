@@ -24,7 +24,6 @@ import '../../../utils/constants/app_assets.dart';
 import '../../check_phone_balance/model/check_balance_model.dart';
 import '../../foundation/presentation/foundation_screen.dart';
 import '../../pay/repository/payment_repository.dart';
-import '../../qr_code/presentation/qr_code_screen.dart';
 import '../../service_settings/controller/service_settings_controller.dart';
 import '../model/fast_service_model.dart';
 
@@ -114,11 +113,7 @@ class CategoryController extends GetxController with StateControlMixin {
     super.onInit();
   }
 
-  void onQrScanTap() {
-    lastTap = CategoryTapType.qr;
-    update();
-    Get.toNamed(QrCodeScreen.route);
-  }
+
   void onNotificationScanTap() {
     lastTap = CategoryTapType.notification;
     update();
@@ -363,7 +358,6 @@ class CategoryController extends GetxController with StateControlMixin {
       update();
 
       ApiErrorHandler.handleApiError(e);
-      debugPrint(e.toString());
     } finally {
       phoneController.clear();
     }

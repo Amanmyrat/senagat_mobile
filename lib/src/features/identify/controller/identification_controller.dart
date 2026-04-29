@@ -40,7 +40,7 @@ class IdentificationController extends GetxController with StateControlMixin {
   String? get profileStatus => profileBox.get('currentProfile')?.status;
 
   Future<void> logout() async {
-    _keyValueStorageService.resetKeys();
+    await _keyValueStorageService.resetKeys();
     _accountLoginStatusController.getAccountStatus(
       StatefulData.error(ExceptionType.UnauthorizedException),
     );

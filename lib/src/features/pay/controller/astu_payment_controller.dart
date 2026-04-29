@@ -32,7 +32,6 @@ class AstuPaymentController extends PaymentController {
     } else if (serviceName == 'CDMA') {
       type = 'cdma';
     }
-    print(type);
     String cleanSpaces(String phoneNumber) {
       return phoneNumber.replaceAll(' ', '');
     }
@@ -66,7 +65,6 @@ class AstuPaymentController extends PaymentController {
         status = Status.error;
         update();
         ApiErrorHandler.handleApiError(e);
-        debugPrint(e.toString());
       }
     }else{
       String clean12(String phoneNumber) {
@@ -100,7 +98,6 @@ class AstuPaymentController extends PaymentController {
         status = Status.error;
         update();
         ApiErrorHandler.handleApiError(e);
-        debugPrint(e.toString());
       }
     }
     }

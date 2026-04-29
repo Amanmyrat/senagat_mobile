@@ -64,11 +64,8 @@ class CheckPhoneBalanceController extends GetxController with StateControlMixin 
     if (args is Map<String, dynamic>) {
       serviceName   = args['selectedServiceTitle'] as String? ?? '';
       serviceIcon   = args['selectedServiceIcon'] as String? ?? '';
-    } else {
-      debugPrint('No or invalid arguments passed to this page');
     }
 
-    print(serviceName);
 
     if(serviceName == 'IP TV'){
       type = 'iptv';

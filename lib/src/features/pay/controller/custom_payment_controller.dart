@@ -66,7 +66,6 @@ class CustomPaymentController extends GetxController with StateControlMixin {
       if (step1Resp.status != HackResponseStatus.ok) {
         /// only [alreadyProcessed] returns in error state
         if (step1Resp.status == HackResponseStatus.alreadyProcessed) {
-          debugPrint('session expired or already processed');
           errorMessage = r'session_expired'.tr;
         }
         _setResult(step1Resp.status);
@@ -84,7 +83,6 @@ class CustomPaymentController extends GetxController with StateControlMixin {
       // final card = cardBox.getAt(0)!;
       final card = selectedCard;
 
-      print(card.cardNumber.trim());
       final SubmitCardRequest submitCardReq = SubmitCardRequest(
         application: 'step2',
         identity: 'identity',
@@ -147,7 +145,6 @@ class CustomPaymentController extends GetxController with StateControlMixin {
         _setResult(confirm.status);
       }
     } catch (e) {
-      debugPrint('Payment error: $e');
       errorMessage = r'payment_error'.tr;
       status = Status.error;
       update();

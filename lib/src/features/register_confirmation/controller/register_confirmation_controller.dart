@@ -138,12 +138,11 @@ class RegisterConfirmationController extends GetxController
       final loginModel = await _getLoginModel();
       await repository
           .login(data: loginModel.toMap())
-          .then((value) {
+          .then((value) async {
             status = Status.completed;
             update();
 
-            authController.onAccountUpdate(value);
-            authController.onTokenUpdate(value);
+            await authController.onAccountUpdate(value);
 
             accountModel = value;
             Get.toNamed(

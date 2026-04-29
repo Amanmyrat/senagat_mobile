@@ -40,7 +40,6 @@ enum ExceptionType {
   /// The exception for any parsing failure encountered during
   /// serialization/deserialization of a request.
   SerializationException,
-
   UnauthorizedException,
 }
 
@@ -63,9 +62,6 @@ class CustomException implements Exception {
   factory CustomException.fromDioException(Exception error) {
     try {
       if (error is DioError) {
-        print("RAW DIO ERROR TYPE: ${error.type}");
-        print("RAW DIO ERROR MSG: ${error.message}");
-        print("RAW DIO ERROR: $error");
         switch (error.type) {
           case DioExceptionType.connectionError:
             if (error.error is SocketException) {
@@ -125,12 +121,13 @@ class CustomException implements Exception {
                 final code = data['code']?.toString();
                 final message =
                     data['message']?.toString() ??
-                        (data['errors'] is Map
-                            ? ((data['errors'] as Map).values.first as List?)?.first?.toString()
-                            : null) ??
-                        data['error_message']?.toString() ??
-                        data['error']?.toString() ??
-                        'Response error';
+                    (data['errors'] is Map
+                        ? ((data['errors'] as Map).values.first as List?)?.first
+                              ?.toString()
+                        : null) ??
+                    data['error_message']?.toString() ??
+                    data['error']?.toString() ??
+                    'Response error';
 
                 final success = data['success'] is bool
                     ? data['success'] as bool
@@ -224,7 +221,9 @@ class CustomException implements Exception {
   }
 
   factory CustomException.fromParsingException(Exception error) {
-    debugPrint('fromParsingException: $error');
+    if (kDebugMode) {
+      debugPrint('fromParsingException: $error');
+    }
     return CustomException(
       exceptionType: ExceptionType.SerializationException,
       message: 'Failed to parse network response to model or vice versa',

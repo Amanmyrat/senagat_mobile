@@ -47,7 +47,6 @@ class GetCardController extends GetxController
           status = Status.error;
           update();
           ApiErrorHandler.handleApiError(e);
-          debugPrint(e.toString());
         });
   }
 

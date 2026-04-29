@@ -10,7 +10,6 @@ import '../../add_card/model/card_model.dart';
 import '../../auth/controller/account_status_controller.dart';
 import '../../auth/repository/auth_repository.dart';
 import '../../home/models/user_information_model.dart';
-import '../../qr_code/presentation/qr_code_screen.dart';
 
 enum CardTapType { none, qr, foundation, service, fastOperation, notification }
 
@@ -42,12 +41,6 @@ class CardController extends GetxController with StateControlMixin {
   }
 
 
-  void onQrScanTap() {
-    lastTap = CardTapType.qr;
-    update();
-    Get.toNamed(QrCodeScreen.route);
-  }
-
   void onNotificationScanTap() {
     lastTap = CardTapType.notification;
     update();
@@ -72,7 +65,6 @@ class CardController extends GetxController with StateControlMixin {
         status = Status.error;
         update();
         ApiErrorHandler.handleApiError(e);
-        debugPrint(e.toString());
       });
     }
   }

@@ -93,7 +93,6 @@ class GetCreditController extends GetxController
           status = Status.error;
           update();
           ApiErrorHandler.handleApiError(e);
-          debugPrint(e.toString());
         });
   }
 
@@ -162,8 +161,6 @@ class GetCreditController extends GetxController
       formatBid(interest);
 
       calculate();
-    } else {
-      debugPrint('⚠️ Credit type not found for $selectedDropdownValue');
     }
   }
 

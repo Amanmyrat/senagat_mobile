@@ -89,11 +89,10 @@ class RegisterPasswordSetupController extends GetxController
       final registerModel2 = await _getRegisterModel2();
       await repository
           .register(data: Configs.OTPEnabled == false ? registerModel2.toMap() : registerModel.toMap())
-          .then((value) {
+          .then((value) async {
             status = Status.completed;
             update();
-            authController.onAccountUpdate(value);
-            authController.onTokenUpdate(value);
+            await authController.onAccountUpdate(value);
 
             Get.toNamed(AuthSuccessScreen.route);
           })

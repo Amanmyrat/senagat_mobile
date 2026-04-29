@@ -17,8 +17,8 @@ class LanguageController extends GetxController {
     super.onInit();
   }
 
-  void updateLanguage(String lang) {
-    localizationService.changeLocale(lang);
+  Future<void> updateLanguage(String lang) async {
+    await localizationService.changeLocale(lang);
     selectedLocale.value = localizationService.getLocale();
     currentIndex.value =
         LocalizationService.availableLocales.indexOf(selectedLocale.value);

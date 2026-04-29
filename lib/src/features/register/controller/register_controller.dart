@@ -165,12 +165,11 @@ class RegisterController extends GetxController with StateControlMixin {
       final loginModel = await _getLoginModel();
       await repository
           .login(data: loginModel.toMap())
-          .then((value) {
+          .then((value) async {
         status = Status.completed;
         update();
 
-        authController.onAccountUpdate(value);
-        authController.onTokenUpdate(value);
+        await authController.onAccountUpdate(value);
 
         phoneBox.put('phone', phoneController.text);
         update();
@@ -185,7 +184,6 @@ class RegisterController extends GetxController with StateControlMixin {
         status = Status.error;
         update();
         ApiErrorHandler.handleApiError(e);
-        debugPrint(e.toString());
       });
   }
 

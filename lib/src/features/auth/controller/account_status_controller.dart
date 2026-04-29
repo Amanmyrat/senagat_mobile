@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import '../../../core/networking/custom_exception.dart';
 import '../../../core/states/stateful_data.dart';
@@ -33,7 +33,7 @@ class AccountLoginStatusController extends GetxController {
       accountLoginStatus.value = updateLoginStatus;
     }
 
-    debugPrint(accountLoginStatus.value.toString());
+    if (kDebugMode) {debugPrint(accountLoginStatus.value.toString());}
     update();
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -31,7 +32,9 @@ class KeyValueStorageBase {
   /// when possible.
   static Future<void> init() async {
     _sharedPrefs ??= await SharedPreferences.getInstance();
-    _secureStorage ??= const FlutterSecureStorage();
+    _secureStorage ??= const FlutterSecureStorage(
+      aOptions: AndroidOptions(encryptedSharedPreferences: true),
+    );
   }
 
   /// Reads the value for the key from common preferences storage
@@ -50,18 +53,26 @@ class KeyValueStorageBase {
           return _sharedPrefs!.get(key) as T?;
       }
     } on Exception catch (ex) {
-      debugPrint('$ex');
+      if (kDebugMode) {
+        debugPrint('$ex');
+      }
       return null;
     }
   }
 
   /// Reads the decrypted value for the key from secure storage
-  Future<String?> getEncrypted(String key) {
+  Future<String?> getEncrypted(String key) async {
     try {
-      return _secureStorage!.read(key: key);
+      debugPrint('[KeyValueStorageBase] Reading encrypted key: $key');
+      final value = await _secureStorage!.read(key: key);
+      debugPrint('[KeyValueStorageBase] Read encrypted key "$key": ${value != null ? 'SUCCESS (${value.length} chars)' : 'NULL'}');
+      return value;
     } on PlatformException catch (ex) {
-      debugPrint('$ex');
-      return Future<String?>.value();
+      debugPrint('[KeyValueStorageBase] ERROR reading encrypted key "$key": $ex');
+      if (kDebugMode) {
+        debugPrint('$ex');
+      }
+      return null;
     }
   }
 
@@ -82,13 +93,25 @@ class KeyValueStorageBase {
   }
 
   /// Sets the encrypted value for the key to secure storage
-  Future<bool> setEncrypted(String key, String value) {
+  // Future<bool> setEncrypted(String key, String value) {
+  //   try {
+  //     _secureStorage!.write(key: key, value: value);
+  //     return Future.value(true);
+  //   } on PlatformException catch (ex) {
+  //     debugPrint('$ex');
+  //     return Future.value(false);
+  //   }
+  // }
+
+  Future<bool> setEncrypted(String key, String value) async {
     try {
-      _secureStorage!.write(key: key, value: value);
-      return Future.value(true);
+      debugPrint('[KeyValueStorageBase] Writing encrypted key: $key (${value.length} chars)');
+      await _secureStorage!.write(key: key, value: value);
+      debugPrint('[KeyValueStorageBase] Successfully wrote encrypted key: $key');
+      return true;
     } on PlatformException catch (ex) {
-      debugPrint('$ex');
-      return Future.value(false);
+      debugPrint('[KeyValueStorageBase] ERROR writing encrypted key "$key": $ex');
+      return false;
     }
   }
 
@@ -101,7 +124,9 @@ class KeyValueStorageBase {
       await _secureStorage!.deleteAll();
       return true;
     } on PlatformException catch (ex) {
-      debugPrint('$ex');
+      if (kDebugMode) {
+        debugPrint('$ex');
+      }
       return false;
     }
   }

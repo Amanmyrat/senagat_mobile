@@ -35,7 +35,6 @@ class AuthSuccessController extends GetxController with StateControlMixin {
       );
     } catch (e) {
       status = Status.error;
-      print('Error navigating to next screen: $e');
     }
   }
 }

@@ -4,14 +4,14 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" android:maxSdkVersion="30" />
-
     <application
         android:label="Senagat Töleg"
         android:name="${applicationName}"
-        android:icon="@mipmap/launcher_icon">
+        android:icon="@mipmap/launcher_icon"
+        android:usesCleartextTraffic="false"
+        android:allowBackup="false"
+        android:fullBackupContent="false"
+        >
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -20,7 +20,8 @@
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize"
+            >
             <!-- Specifies an Android theme to apply to this Activity as soon as
                  the Android process has started. This theme is visible to the user
                  while the Flutter UI initializes. After that, this theme continues
@@ -38,15 +39,6 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-
-
-<!--        <meta-data android:name="com.google.android.geo.API_KEY"-->
-<!--            android:value="AIzaSyCJAZc&#45;&#45;O8JvGpzLmentE_6nH8q_PRNWbcs"/>-->
-        <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCSlYpD9YBJEhb1chpIyIYnzhKflt3jsE8"/>
-
-
-
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and

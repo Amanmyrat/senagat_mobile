@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
-import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 
 // Exceptions
 import './custom_exception.dart';
@@ -18,9 +17,6 @@ class DioService {
   /// An instance of [Dio] for executing network requests.
   final Dio _dio;
 
-  /// A set of cache options to be used for each request
-  final CacheOptions? globalCacheOptions;
-
   /// An instance of [CancelToken] used to pre-maturely cancel
   /// network requests.
   final CancelToken _cancelToken;
@@ -34,7 +30,6 @@ class DioService {
   /// this custom one.
   DioService({
     required Dio dioClient,
-    this.globalCacheOptions,
     Iterable<Interceptor>? interceptors,
     HttpClientAdapter? httpClientAdapter,
   }) : _dio = dioClient,
@@ -73,16 +68,12 @@ class DioService {
     required String endpoint,
     JSON? queryParams,
     Options? options,
-    CacheOptions? cacheOptions,
     CancelToken? cancelToken,
   }) async {
     final uri = Uri(path: endpoint, queryParameters: queryParams);
     final response = await _dio.getUri<R>(
       uri,
-      options: _mergeDioAndCacheOptions(
-        dioOptions: options,
-        cacheOptions: cacheOptions,
-      ),
+      options: options,
       cancelToken: cancelToken ?? _cancelToken,
     );
     if (response.data != null) {
@@ -247,27 +238,4 @@ class DioService {
   //   );
   // }
 
-  /// A utility method used to merge together [Options]
-  /// and [CacheOptions].
-  ///
-  /// Returns an [Options] object with [CacheOptions] stored
-  /// in the [options.extra] key.
-  Options? _mergeDioAndCacheOptions({
-    Options? dioOptions,
-    CacheOptions? cacheOptions,
-  }) {
-    if (dioOptions == null && cacheOptions == null) {
-      return null;
-    } else if (dioOptions == null && cacheOptions != null) {
-      return cacheOptions.toOptions();
-    } else if (dioOptions != null && cacheOptions == null) {
-      return dioOptions;
-    }
-
-    final cacheOptionsMap = cacheOptions!.toExtra();
-    final options = dioOptions!.copyWith(
-      extra: <String, dynamic>{...dioOptions.extra!, ...cacheOptionsMap},
-    );
-    return options;
-  }
 }

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/features/pay/controller/payment_controller.dart';
@@ -61,7 +62,7 @@ class FoundationPaymentController extends PaymentController {
       status = Status.error;
       update();
       ApiErrorHandler.handleApiError(e);
-      debugPrint(e.toString());
+      if (kDebugMode) {debugPrint(e.toString());}
     }
   }
 }

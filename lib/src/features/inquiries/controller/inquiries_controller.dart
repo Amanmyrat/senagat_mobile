@@ -116,7 +116,6 @@ class InquiriesController extends GetxController with StateControlMixin {
             status = Status.error;
             update();
             ApiErrorHandler.handleApiError(e);
-            debugPrint(e.toString());
           });
     }
   }

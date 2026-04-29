@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/utils.dart';
 import '../../../core/local/key_value_storage_service.dart';
 
@@ -38,15 +39,26 @@ class ApiInterceptor extends Interceptor {
       "Accept-Language": Get.locale?.countryCode?.toLowerCase() ?? "en",
     });
 
-    if (options.extra.containsKey('requiresAuthToken')) {
+    debugPrint('[ApiInterceptor] requiresAuthToken extra: ${options.extra['requiresAuthToken']}');
+    
+    if (options.extra['requiresAuthToken'] == true) {
+      debugPrint('[ApiInterceptor] Token required for ${options.method} ${options.path}');
       final token = await KeyValueStorageService().getAuthToken();
+      debugPrint('[ApiInterceptor] Retrieved token: ${token.isEmpty ? 'EMPTY' : '${token.length} chars'}');
+      
       if (token.isNotEmpty) {
+        debugPrint('[ApiInterceptor] Adding Authorization header with token');
         options.headers.addAll(<String, Object?>{
           'Authorization': 'Bearer $token',
         });
+      } else {
+        debugPrint('[ApiInterceptor] Token is empty, NOT adding Authorization header');
       }
       options.extra.remove('requiresAuthToken');
+    } else {
+      debugPrint('[ApiInterceptor] Token NOT required for ${options.method} ${options.path}');
     }
+    
     return handler.next(options);
   }
 

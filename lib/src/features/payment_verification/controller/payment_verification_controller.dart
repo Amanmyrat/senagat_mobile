@@ -51,7 +51,6 @@ class PaymentVerificationController extends GetxController with StateControlMixi
       userName = Get.arguments['userName'];
       createdAt = Get.arguments['createdAt'];
     }catch (e){
-      print(e);
     }
 
     super.onInit();
