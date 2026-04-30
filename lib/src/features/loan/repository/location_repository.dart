@@ -1,4 +1,4 @@
-import 'package:senagat_mobile/src/features/map_search/model/location_model.dart';
+import 'package:senagat_mobile/src/features/loan/models/location_model.dart';
 import '../../../core/networking/api_endpoint.dart';
 import '../../../core/networking/api_service.dart';
 

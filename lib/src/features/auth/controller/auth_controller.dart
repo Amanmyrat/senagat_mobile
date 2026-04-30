@@ -41,7 +41,7 @@ class AuthController extends GetxController with StateControlMixin {
       _accountLoginStatusController.getAccountStatus(state);
       update();
 
-      onAccountUpdate(_keyValueStorageService.getAuthUser()!);
+      onAccountUpdate(_keyValueStorageService.getAuthUser());
       // _authRepository.getAccount().then((value) {
       //   state = StatefulData.completed(value);
       //   account = value;

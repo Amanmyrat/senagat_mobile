@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/globals.dart';
 import 'package:senagat_mobile/src/features/get_card/repository/card_repository.dart';
 import 'package:senagat_mobile/src/features/get_card_details/controller/get_card_details_controller.dart';
-import 'package:senagat_mobile/src/features/map_search/repository/location_repository.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
 
 import '../../../core/states/stateful_data.dart';
@@ -15,6 +14,7 @@ import '../../../utils/constants/app_assets.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
 import '../../../widgets/elevated_button_with_state.dart';
+import '../../loan/repository/location_repository.dart';
 
 class GetCardDetailsScreen extends StatefulWidget {
   static const route = '/get/card/details';

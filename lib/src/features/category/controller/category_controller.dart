@@ -11,6 +11,7 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/check_phone_balance/presentation/check_phone_balance.dart';
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
+import 'package:senagat_mobile/src/features/pay/presentation/alem_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/astu_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/belet_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/tmcell_payment_screen.dart';
@@ -175,19 +176,18 @@ class CategoryController extends GetxController with StateControlMixin {
         'selectedServiceIcon': paymentsIcons[index],
       });
     }else if (paymentsTitle[index] == 'TM CELL') {
-      // ShowSnack.showSnack('payment_temporarily_unavailable'.tr, SnackType.warning);
 
       Get.toNamed(CheckPhoneBalanceScreen.route, arguments: {
         'selectedServiceTitle': paymentsTitle[index],
         'selectedServiceIcon': paymentsIcons[index],
       });
-    } else if (paymentsTitle[index] == 'ÄlemTv') {
-      ShowSnack.showSnack('payment_temporarily_unavailable'.tr, SnackType.warning);
 
-      // Get.toNamed(TmcellPaymentScreen.route, arguments: {
-      //   'selectedServiceTitle': paymentsTitle[index],
-      //   'selectedServiceIcon': paymentsIcons[index],
-      // });
+    } else if (paymentsTitle[index] == 'ÄlemTv') {
+      Get.toNamed(AlemPaymentScreen.route, arguments: {
+        'selectedServiceTitle': paymentsTitle[index],
+        'selectedServiceIcon': paymentsIcons[index],
+      });
+
     } else if (paymentsTitle[index] == 'telecom_internet') {
       Get.toNamed(CheckPhoneBalanceScreen.route, arguments: {
         'selectedServiceTitle': paymentsTitle[index],
@@ -222,8 +222,6 @@ class CategoryController extends GetxController with StateControlMixin {
         'balance': selected[index].balance,
       });
     }else if (selected[index].title == 'TM CELL') {
-      // ShowSnack.showSnack('payment_temporarily_unavailable'.tr, SnackType.warning);
-
       Get.toNamed(TmcellPaymentScreen.route, arguments: {
         'selectedServiceTitle': selected[index].title,
         'selectedServiceIcon': selected[index].icon,
@@ -231,12 +229,11 @@ class CategoryController extends GetxController with StateControlMixin {
         'balance': selected[index].balance,
       });
     } else if (selected[index].title == 'ÄlemTv') {
-      ShowSnack.showSnack('payment_temporarily_unavailable'.tr, SnackType.warning);
 
-      // Get.toNamed(TmcellPaymentScreen.route, arguments: {
-      //   'selectedServiceTitle': paymentsTitle[index],
-      //   'selectedServiceIcon': paymentsIcons[index],
-      // });
+      Get.toNamed(AlemPaymentScreen.route, arguments: {
+        'selectedServiceTitle': paymentsTitle[index],
+        'selectedServiceIcon': paymentsIcons[index],
+      });
     } else if (selected[index].title == 'telecom_internet') {
       Get.toNamed(TelecomPaymentScreen.route, arguments: {
         'selectedServiceTitle': selected[index].title,
@@ -299,7 +296,6 @@ class CategoryController extends GetxController with StateControlMixin {
       CheckBalanceModel response;
       String currentType = title;
 
-      /// 🧠 определяем тип и запрос
       if (title == 'telecom_internet') {
         requestModel = await _getTelecomBalanceModel();
         response = await repository.telecomBalance(data: requestModel.toMap());

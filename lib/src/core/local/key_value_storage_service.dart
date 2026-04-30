@@ -39,8 +39,16 @@ class KeyValueStorageService {
   /// Sets the authentication token to this value. Even though this method is
   /// asynchronous, we don't care about it's completion which is why we don't
   /// use `await` and let it execute in the background.
-  void setAuthToken(String token) {
-    _keyValueStorage.setEncrypted(_authTokenKey, token);
+  // void setAuthToken(String token) {
+  //   _keyValueStorage.setEncrypted(_authTokenKey, token);
+  // }
+
+  Future<void> setAuthToken(String token) async {
+    final success = await _keyValueStorage.setEncrypted(_authTokenKey, token);
+
+    if (!success) {
+      throw Exception('Failed to store auth token');
+    }
   }
 
   AccountModel? getAuthUser() {
@@ -49,19 +57,36 @@ class KeyValueStorageService {
     return AccountModel.fromJson(jsonDecode(user) as JSON);
   }
 
+  // AccountModel? getAuthUser() async {
+  //   final user = await _keyValueStorage.getEncrypted(_authUserKey);
+  //   if (user == null) return null;
+  //   return AccountModel.fromJson(jsonDecode(user));
+  // }
+
   /// Sets the authenticated user to this value. Even though this method is
   /// asynchronous, we don't care about it's completion which is why we don't
   /// use `await` and let it execute in the background.
-  void setAuthUser(AccountModel user) {
-    _keyValueStorage.setCommon<String>(_authUserKey, jsonEncode(user.toMap()));
+  // void setAuthUser(AccountModel user) {
+  //   _keyValueStorage.setCommon<String>(_authUserKey, jsonEncode(user.toMap()));
+  // }
+  Future<void> setAuthUser(AccountModel user) async {
+    await _keyValueStorage.setEncrypted(
+      _authUserKey,
+      jsonEncode(user.toMap()),
+    );
   }
 
   /// Resets the authentication. Even though these methods are asynchronous, we
   /// don't care about their completion which is why we don't use `await` and
   /// let them execute in the background.
-  void resetKeys() {
-    _keyValueStorage
-      ..clearCommon()
-      ..clearEncrypted();
+  // void resetKeys() {
+  //   _keyValueStorage
+  //     ..clearCommon()
+  //     ..clearEncrypted();
+  // }
+
+  Future<void> resetKeys() async {
+    await _keyValueStorage.clearCommon();
+    await _keyValueStorage.clearEncrypted();
   }
 }

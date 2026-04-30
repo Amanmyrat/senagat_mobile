@@ -22,12 +22,11 @@ import 'package:senagat_mobile/src/features/identity_verification/presentation/i
 import 'package:senagat_mobile/src/features/inquiries_list/presentation/inquiries_list.dart';
 import 'package:senagat_mobile/src/features/lang_settings/presentation/lang_settings_screen.dart';
 import 'package:senagat_mobile/src/features/loan/presentation/loan_screen.dart';
-import 'package:senagat_mobile/src/features/map.dart';
 import 'package:senagat_mobile/src/features/net_and_tv/presentation/net_and_tv_screen.dart';
 import 'package:senagat_mobile/src/features/no_internet/presentation/no_internet_screen.dart';
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
 import 'package:senagat_mobile/src/features/notifications_settings/presentation/notifications_settings_screen.dart';
-import 'package:senagat_mobile/src/features/pay/presentation/payment_screen.dart';
+import 'package:senagat_mobile/src/features/pay/presentation/alem_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/astu_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/belet_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/foundation_payment_screen.dart';
@@ -62,7 +61,6 @@ import 'features/inquiries/presentation/inquiries_screen.dart';
 import 'features/no_internet/controller/internet_checker.dart';
 import 'features/payment_history/presentation/payment_history_screen.dart';
 import 'features/payment_verification/presentation/payment_verification_screen.dart';
-import 'features/map_search/presentation/map_search_screen.dart';
 import 'features/web_view/presentation/web_view.dart';
 
 class SenagatApp extends StatefulWidget {
@@ -153,10 +151,7 @@ class _SenagatAppState extends State<SenagatApp> {
                 page: () => AddCardScreen(),
                 binding: AddCardBinding(),
               ),
-              GetPage(
-                name: PaymentScreen.route,
-                page: () => const PaymentScreen(),
-              ),
+
               GetPage(
                 name: AstuPaymentScreen.route,
                 page: () => const AstuPaymentScreen(),
@@ -204,10 +199,6 @@ class _SenagatAppState extends State<SenagatApp> {
               GetPage(
                 name: InquiriesScreen.route,
                 page: () => const InquiriesScreen(),
-              ),
-              GetPage(
-                name: MapSearchScreen.route,
-                page: () => const MapSearchScreen(),
               ),
               GetPage(
                 name: GetCreditScreen.route,
@@ -270,11 +261,14 @@ class _SenagatAppState extends State<SenagatApp> {
                 page: () => const GetCardDetailsScreen(),
               ),
               GetPage(
+                name: AlemPaymentScreen.route,
+                page: () => const AlemPaymentScreen(),
+              ),
+              GetPage(
                 name: InquiriesList.route,
                 page: () => const InquiriesList(),
               ),
               GetPage(name: CreditList.route, page: () => const CreditList()),
-              GetPage(name: MapScreen.route, page: () => const MapScreen()),
               GetPage(name: NoInternetScreen.route, page: () => const NoInternetScreen()),
               GetPage(name: CheckPhoneBalanceScreen.route, page: () => const CheckPhoneBalanceScreen()),
               GetPage(name: WebViewScreen.route, page: () => const WebViewScreen()),

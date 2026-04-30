@@ -59,13 +59,11 @@ dependencies:
   secure_application: ^4.0.0
   dotted_border: ^2.1.0
 
-  flutter_map: ^7.0.2
   latlong2: ^0.9.1
   fl_chart: ^0.63.0
   flutter_staggered_animations: ^1.1.1
   flutter_switch: ^0.3.2
   roundcheckbox: ^2.0.5
-  google_maps_flutter: ^2.14.0
 
 dev_dependencies:
   flutter_test:

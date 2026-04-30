@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -31,7 +32,14 @@ class KeyValueStorageBase {
   /// when possible.
   static Future<void> init() async {
     _sharedPrefs ??= await SharedPreferences.getInstance();
-    _secureStorage ??= const FlutterSecureStorage();
+    _secureStorage ??= const FlutterSecureStorage(
+      aOptions: AndroidOptions(
+        encryptedSharedPreferences: true,
+      ),
+      iOptions: IOSOptions(
+        accessibility: KeychainAccessibility.first_unlock_this_device,
+      ),
+    );
   }
 
   /// Reads the value for the key from common preferences storage
@@ -82,13 +90,22 @@ class KeyValueStorageBase {
   }
 
   /// Sets the encrypted value for the key to secure storage
-  Future<bool> setEncrypted(String key, String value) {
+  // Future<bool> setEncrypted(String key, String value) {
+  //   try {
+  //     _secureStorage!.write(key: key, value: value);
+  //     return Future.value(true);
+  //   } on PlatformException catch (ex) {
+  //     debugPrint('$ex');
+  //     return Future.value(false);
+  //   }
+  // }
+
+  Future<bool> setEncrypted(String key, String value) async {
     try {
-      _secureStorage!.write(key: key, value: value);
-      return Future.value(true);
-    } on PlatformException catch (ex) {
-      debugPrint('$ex');
-      return Future.value(false);
+      await _secureStorage!.write(key: key, value: value);
+      return true;
+    } on PlatformException {
+      return false;
     }
   }
 
@@ -101,7 +118,9 @@ class KeyValueStorageBase {
       await _secureStorage!.deleteAll();
       return true;
     } on PlatformException catch (ex) {
-      debugPrint('$ex');
+      if (kDebugMode) {
+        debugPrint('$ex');
+      }
       return false;
     }
   }

@@ -367,6 +367,63 @@ Widget paymentSumField(PaymentController controller) {
   );
 }
 
+Widget alemPaymentField(PaymentController controller) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        r'AlemTV belgisi'.tr,
+        style: TextStyle(
+          color: AppColors.blackText,
+          fontSize: 14.sp,
+        ),
+      ),
+      SizedBox(height: 16.h),
+      TextFormField(
+        keyboardType: TextInputType.text,
+        controller: controller.phoneController,
+        onChanged: (_) {
+          controller.selectedBeletIndex = null;
+          controller.isTextNotEmpty();
+          controller.update();
+        },
+        style: TextStyle(
+          fontSize: 14.sp,
+          fontFamily: AppFonts.primaryFont,
+        ),
+        decoration: InputDecoration(
+          hintText: r'dalem-xxxx | 2100xxxx',
+          fillColor: AppColors.inputFillBackground,
+
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(
+              AppDimensions.borderRadiusMedium,
+            ),
+            borderSide: BorderSide(
+              color: AppColors.green,
+              width: 1.w,
+            ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(
+              AppDimensions.borderRadiusMedium,
+            ),
+            borderSide: BorderSide(
+              color: controller.isOtherSelected ? AppColors.green : AppColors.white,
+              width: 1.w,
+            ),
+          ),
+          counter: const SizedBox(),
+          contentPadding: EdgeInsets.symmetric(
+            vertical: AppDimensions.paddingExtraLarge.h,
+            horizontal: AppDimensions.paddingLarge.w,
+          ),
+        ),
+      ),
+    ],
+  );
+}
+
 Widget paymentCardPicker(PaymentController controller) {
   if (controller.cardBox.isNotEmpty) {
     return GestureDetector(

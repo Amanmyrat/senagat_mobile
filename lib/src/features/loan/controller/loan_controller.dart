@@ -10,8 +10,8 @@ import 'package:senagat_mobile/src/features/loan/models/credit_order_model.dart'
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/api_error_handler.dart';
 import '../../../utils/services/show_snack.dart';
-import '../../map_search/model/location_model.dart';
-import '../../map_search/repository/location_repository.dart';
+import '../models/location_model.dart';
+import '../repository/location_repository.dart';
 
 class LoanController extends GetxController
     with StateControlMixin, GetSingleTickerProviderStateMixin {

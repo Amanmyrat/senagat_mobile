@@ -52,14 +52,9 @@
     <string>This app needs photo access.</string>
 
 
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Need location to show nearby ATMs and offices.</string>
-
     <key>NSContactsUsageDescription</key>
     <string>We need access to your contacts to select a phone number</string>
 
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>We need your location to show nearby places.</string>
 
     <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
     <string>We need your location to show nearby places.</string>
