@@ -53,7 +53,7 @@ const Map<String, String> ruRu = {
   r'branch': r'Филиалы',
   r'add_a_card': r'Добавить карту',
   r'adding_a_card': r'Добавление карты',
-  r'tune': r'Настроить',
+  r'edit': r'Настроить',
   r'fast_operations': r'Быстрые операции',
   r'donations_of_any_amount': r'Пожертвования любой суммы приветствуются.',
   r'services': r'Сервисы',
@@ -267,6 +267,12 @@ const Map<String, String> ruRu = {
   r'clear':'Очистить',
   r'monthly_payment_min':'Для получения рассчитанной суммы кредита ваш ежемесячный доход должен превышать @sum manat',
   r'file_size_limit':'Размер файла должен быть меньше 2 МБ',
+
+  r'month':'месяц',
+
+  r'select_tariff':'Выберите тариф',
+
+  r'alem_number':'Номер ÄlemTV',
 
   r'income_certificate_6_12_months': 'Справка о чистом доходе за последние 6 месяцев или 1 год',
 

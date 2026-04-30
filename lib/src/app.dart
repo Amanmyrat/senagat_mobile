@@ -25,7 +25,7 @@ import 'package:senagat_mobile/src/features/net_and_tv/presentation/net_and_tv_s
 import 'package:senagat_mobile/src/features/no_internet/presentation/no_internet_screen.dart';
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
 import 'package:senagat_mobile/src/features/notifications_settings/presentation/notifications_settings_screen.dart';
-import 'package:senagat_mobile/src/features/pay/presentation/payment_screen.dart';
+import 'package:senagat_mobile/src/features/pay/presentation/alem_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/astu_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/belet_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/foundation_payment_screen.dart';
@@ -136,10 +136,7 @@ class _SenagatAppState extends State<SenagatApp> {
                 page: () => AddCardScreen(),
                 binding: AddCardBinding(),
               ),
-              GetPage(
-                name: PaymentScreen.route,
-                page: () => const PaymentScreen(),
-              ),
+
               GetPage(
                 name: AstuPaymentScreen.route,
                 page: () => const AstuPaymentScreen(),
@@ -243,6 +240,10 @@ class _SenagatAppState extends State<SenagatApp> {
               GetPage(
                 name: GetCardDetailsScreen.route,
                 page: () => const GetCardDetailsScreen(),
+              ),
+              GetPage(
+                name: AlemPaymentScreen.route,
+                page: () => const AlemPaymentScreen(),
               ),
               GetPage(
                 name: InquiriesList.route,

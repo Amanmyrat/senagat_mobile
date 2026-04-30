@@ -189,8 +189,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
             clipBehavior: Clip.none,
             itemCount: controller.selected.length + 1,
             itemBuilder: (context, index) {
-              /// ADD BUTTON — appears only when selected.length < 4
-              if (index == controller.selected.length) {
+               if (index == controller.selected.length) {
                 return GestureDetector(
                   onTap: () {
                     _showFilterBottomSheet(context, controller);
@@ -315,7 +314,46 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         ],
                       ),
                       SizedBox(height: AppDimensions.paddingMedium.h),
-                      Column(
+                      if(item.title == 'ÄlemTv')...[
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                  SvgPicture.asset(
+                                    AppAssets.tvIcon,
+                                    width: 20.w,
+                                    color: AppColors.green,
+                                  ),
+
+                                SizedBox(width: AppDimensions.paddingMedium.w),
+                                Text(
+                                  item.phone,
+                                  maxLines: 1,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: AppColors.blackText,
+                                    fontSize: 14.sp,
+                                    fontFamily: AppFonts.secondaryFont,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: AppDimensions.paddingMedium.h),
+                              Text(
+                                item.balance ?? '',
+                                maxLines: 1,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: AppColors.blackText,
+                                  fontSize: 17.sp,
+                                  fontFamily: AppFonts.primaryFont,
+                                ),
+                              ),
+                          ],
+                        ),
+                      ]else...[
+                        Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
@@ -387,6 +425,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           ],
                         ],
                       ),
+                      ],
                     ],
                   ),
                 ),
@@ -401,7 +440,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
   void _showFilterBottomSheet(
     BuildContext context,
     CategoryController controller,
-  ) {
+  )
+  {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -434,13 +474,22 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   final type = controller.paymentsTitle[index];
                   return GestureDetector(
                     onTap: () {
-                      if (type == 'state_traffic_safety_inspectorate' ||
-                          type == 'ÄlemTv') {
+                      if (type == 'state_traffic_safety_inspectorate') {
                         ShowSnack.showSnack(
                           'payment_temporarily_unavailable'.tr,
                           SnackType.warning,
                         );
-                      } else {
+                      }else if(type == 'ÄlemTv'){
+                        Navigator.pop(context);
+
+                        Future.delayed(const Duration(milliseconds: 100), () {
+                          _showAlemBottomSheet(
+                            context,
+                            controller,
+                            index,
+                          );
+                        });
+                      }else {
                         Navigator.pop(context);
 
                         Future.delayed(const Duration(milliseconds: 100), () {
@@ -508,7 +557,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
     BuildContext context,
     CategoryController controller,
     int index,
-  ) {
+  )
+  {
     showModalBottomSheet(
       isScrollControlled: false,
       context: context,
@@ -527,7 +577,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   left: 20.w,
                   right: 20.w,
                   top: 40.h,
-                  bottom: 0.h, // or 0
+                  bottom: 20.h,
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -561,25 +611,22 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             keyboardType: TextInputType.phone,
                             controller: controller.phoneController,
                             inputFormatters: [
-                              if (controller.paymentsTitle[index] ==
-                                  'telecom_internet') ...[
+                              if (controller.paymentsTitle[index] == 'telecom_internet') ...[
                                 controller.currentMask,
-                              ] else if (controller.paymentsTitle[index] ==
-                                  'Belet') ...[
+                              ] else if (controller.paymentsTitle[index] == 'Belet') ...[
                                 controller.beletMask,
-                              ] else if (controller.paymentsTitle[index] ==
-                                  'TM CELL') ...[
+                              ] else if (controller.paymentsTitle[index] == 'TM CELL') ...[
                                 controller.beletMask,
-                              ] else if (controller.paymentsTitle[index] ==
-                                  'CDMA') ...[
+                              ] else if (controller.paymentsTitle[index] == 'CDMA') ...[
                                 controller.cdmaMask,
-                              ] else ...[
+                              ]else if (controller.paymentsTitle[index] == 'CDMA') ...[
+
+                              ]else ...[
                                 controller.defaultMask,
                               ],
                             ],
                             onChanged: (v) {
                               final digits = v.replaceAll(' ', '');
-
                               controller.currentMask.updateMask(
                                 mask: digits.startsWith('12')
                                     ? '## ######'
@@ -651,6 +698,139 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               controller.checkBalance(index);
 
                               controller.phoneController.clear();
+                              controller.continueEnabled = false;
+                              controller.update();
+
+                              Navigator.pop(context);
+                            }
+                          },
+                          child: Text(
+                            r'confirm'.tr,
+                            style: TextStyle(
+                              color: AppColors.white,
+                              fontSize: 14.sp,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  void _showAlemBottomSheet(
+    BuildContext context,
+    CategoryController controller,
+    int index,
+  ) {
+    showModalBottomSheet(
+      isScrollControlled: false,
+      context: context,
+      useRootNavigator: false,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
+      ),
+      backgroundColor: AppColors.white,
+
+      builder: (_) {
+        return GetBuilder<CategoryController>(
+          builder: (controller) {
+            return SafeArea(
+              child: Padding(
+                padding: EdgeInsets.only(
+                  left: 20.w,
+                  right: 20.w,
+                  top: 40.h,
+                  bottom: 20.h,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      controller.paymentsTitle[index].tr,
+                      style: TextStyle(color: AppColors.black, fontSize: 24.sp),
+                    ),
+                    SizedBox(height: 22.h),
+
+                    Row(
+                      children: [
+
+                        Expanded(
+                          child: TextFormField(
+                            keyboardType: TextInputType.text,
+                            controller: controller.alemAccountController,
+                            onChanged: (v) {
+                              controller.isTextNotEmpty(index);
+                            },
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              fontFamily: AppFonts.primaryFont,
+                            ),
+                            decoration: InputDecoration(
+                              hintText: controller.hintText(index),
+                              border: OutlineInputBorder(),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(
+                                  AppDimensions.borderRadiusMedium,
+                                ),
+                                borderSide: BorderSide(
+                                  color: controller.status == Status.error
+                                      ? AppColors.redDark
+                                      : AppColors.green,
+                                  width: 1,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(
+                                  AppDimensions.borderRadiusMedium,
+                                ),
+                                borderSide: BorderSide(
+                                  color: controller.status == Status.error
+                                      ? AppColors.redDark
+                                      : AppColors.white,
+                                  width: 1,
+                                ),
+                              ),
+                              counter: const SizedBox(),
+                              contentPadding: EdgeInsets.symmetric(
+                                vertical: AppDimensions.paddingExtraLarge.h,
+                                horizontal: AppDimensions.paddingLarge.w,
+                              ),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  Icons.contacts,
+                                  color: AppColors.green,
+                                  size: 20.w,
+                                ),
+                                onPressed: () async {
+                                  controller.contactPicker(index);
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    SizedBox(height: 22.h),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: Opacity(
+                        opacity: controller.continueEnabled ? 1 : 0.5,
+                        child: ElevatedButtonWithState(
+                          isLoading: false,
+                          isError: false,
+                          onPressed: () {
+                            if (controller.continueEnabled) {
+                              controller.getAlemTariffs(index);
+
+                              controller.alemAccountController.clear();
                               controller.continueEnabled = false;
                               controller.update();
 

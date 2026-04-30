@@ -383,6 +383,10 @@ class HomeController extends GetxController with StateControlMixin {
         return AppAssets.astu;
       case 'telecom':
         return AppAssets.telecom;
+      case 'alem_iptv':
+        return AppAssets.alemTv;
+      case 'alem_tv':
+        return AppAssets.alemTv;
       default:
         return AppAssets.deviceMobileIcon;
     }
@@ -406,33 +410,43 @@ class HomeController extends GetxController with StateControlMixin {
         return 'astu_internet'.tr;
       case 'telecom':
         return 'telecom_internet'.tr;
+      case 'alem_iptv':
+        return 'ÄlemTv'.tr;
+      case 'alem_tv':
+        return 'ÄlemTv'.tr;
       default:
         return AppAssets.deviceMobileIcon;
     }
   }
 
-  String historyPhoneByType(String type, String phone) {
+
+  String historyPhoneByType(String type, String value) {
     switch (type) {
       case 'tmcell':
-        return '+993$phone';
+        return '+993$value';
       case 'charity':
-        return '+993$phone';
+        return '+993$value';
       case 'belet':
-        return '+$phone';
+        return '+$value';
       case 'astu iptv':
-        return '12$phone';
-      case 'astu phone':
-        return '12$phone';
+        return '12$value';
+      case 'astu value':
+        return '12$value';
       case 'cdma':
-        return '$phone';
+        return value;
       case 'astu internet':
-        return '12$phone';
+        return '12$value';
       case 'telecom':
-        return phone;
+        return value;
+      case 'alem_iptv':
+        return value;
+      case 'alem_tv':
+        return value;
       default:
         return AppAssets.deviceMobileIcon;
     }
   }
+
   Color checkPaymentsStatus(int index) {
     if (history[index].status == 'pending') {
       return AppColors.orange;

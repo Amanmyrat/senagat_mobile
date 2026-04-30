@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/globals.dart';
-import 'package:senagat_mobile/src/features/map_search/repository/location_repository.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/constants/app_assets.dart';
@@ -17,6 +16,7 @@ import '../../../widgets/elevated_button_with_state.dart';
 import '../../credit/repository/credit_repository.dart';
 import '../../dashboard/presentation/dashboard_screen.dart';
 import '../controller/loan_controller.dart';
+import '../repository/location_repository.dart';
 
 class LoanScreen extends StatefulWidget {
   static const route = '/loan';

@@ -54,7 +54,7 @@ const Map<String, String> tkTk = {
   r'branch': r'Şahamçalar',
   r'add_a_card': r'Kart goşmak',
   r'adding_a_card': r'Kart goşulýar',
-  r'tune': r'Sazlamak',
+  r'edit': r'Sazlamak',
   r'fast_operations': r'Çalt amallar',
   r'donations_of_any_amount': r'Islendik mukdarda haýyr-sahawat kabul edilýär.',
   r'services': r'Hyzmatlar',
@@ -267,6 +267,12 @@ const Map<String, String> tkTk = {
   r'clear':'Arassalamak',
   r'monthly_payment_min':'Hasaplanan karz mukdary almak üçin siziň aýlyk girdeýjiňiz @sum manatdan ýokary bolmaly',
   r'file_size_limit':'Faýlyň ölçegi 2 MB-dan kiçi bolmaly',
+
+  r'month':'aý',
+
+  r'select_tariff':'Tarifi saýla',
+
+  r'alem_number':'ÄlemTV belgisi',
 
   r'income_certificate_6_12_months': 'Soňky 6 aý ýa-da 1 ýylyň dowamyndaky sap girdeýji güwänama',
 

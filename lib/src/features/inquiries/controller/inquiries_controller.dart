@@ -4,12 +4,12 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/inquiries/models/inquiries_model.dart';
 import 'package:senagat_mobile/src/features/inquiries/repository/inquiries_repository.dart';
-import 'package:senagat_mobile/src/features/map_search/repository/location_repository.dart';
 import 'package:senagat_mobile/src/features/payment_verification/presentation/payment_verification_screen.dart';
 
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/api_error_handler.dart';
-import '../../map_search/model/location_model.dart';
+import '../../loan/models/location_model.dart';
+import '../../loan/repository/location_repository.dart';
 import '../models/inquiries_order_model.dart';
 
 class InquiriesController extends GetxController with StateControlMixin {

@@ -101,13 +101,11 @@ class _InquiriesListState extends State<InquiriesList> {
                                                   onTap: () {
                                                     final rejectedList =
                                                         inquiries?.rejectedText ?? [];
-
+                                                    if(rejectedList.isNotEmpty){
                                                     showCupertinoDialog(
                                                       context: context,
                                                       builder: (context) => CupertinoAlertDialog(
-                                                        content: rejectedList.isEmpty
-                                                            ? Text("No rejection reason")
-                                                            : Column(
+                                                        content: Column(
                                                           mainAxisSize: MainAxisSize.min,
                                                           crossAxisAlignment: CrossAxisAlignment.start,
                                                           children: rejectedList
@@ -133,6 +131,7 @@ class _InquiriesListState extends State<InquiriesList> {
                                                         ],
                                                       ),
                                                     );
+                                                    }
                                                   },
                                                   child: SvgPicture.asset(
                                                     AppAssets.infoIcon,

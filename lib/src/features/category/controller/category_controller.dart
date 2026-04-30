@@ -1,28 +1,27 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
 import 'package:flutter_native_contact_picker/model/contact.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/check_phone_balance/presentation/check_phone_balance.dart';
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
+import 'package:senagat_mobile/src/features/pay/presentation/alem_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/astu_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/belet_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/tmcell_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/telecom_payment_screen.dart';
 import 'package:senagat_mobile/src/utils/services/show_snack.dart';
-import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
-import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
+
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/api_error_handler.dart';
 import '../../../utils/constants/app_assets.dart';
 import '../../check_phone_balance/model/check_balance_model.dart';
 import '../../foundation/presentation/foundation_screen.dart';
+import '../../pay/model/alem_get_tariff_model.dart';
 import '../../pay/repository/payment_repository.dart';
 import '../../service_settings/controller/service_settings_controller.dart';
 import '../model/fast_service_model.dart';
@@ -30,21 +29,28 @@ import '../model/fast_service_model.dart';
 enum CategoryTapType { none, qr, service, fastOperation, notification, foundation }
 
 class CategoryController extends GetxController with StateControlMixin {
+
   CategoryTapType lastTap = CategoryTapType.none;
   late ServiceSettingsController fastServiceController;
   late TextEditingController phoneController;
   late var checkBalanceModel = CheckBalanceModel();
   PaymentRepository repository;
   bool continueEnabled = false;
-  final FlutterNativeContactPicker _contactPicker =
-  FlutterNativeContactPicker();
+  final FlutterNativeContactPicker _contactPicker = FlutterNativeContactPicker();
+
   String type = '';
   List<FastServiceItem> selected = [];
   late Box<FastServiceItem> fastBox;
   Timer? _balanceTimer;
   final phoneBox = Hive.box<String>('phoneBox');
 
+  late final TextEditingController  alemAccountController;
+
   late bool check = false;
+
+  late String alemType = '';
+  AlemGetTariffModel? tariff;
+  String? lastRequestedAccount;
 
   CategoryController(this.repository);
 
@@ -100,12 +106,13 @@ class CategoryController extends GetxController with StateControlMixin {
   void onInit() {
     fastServiceController = Get.find<ServiceSettingsController>();
     phoneController = TextEditingController();
+    alemAccountController = TextEditingController();
     fastBox = Hive.box<FastServiceItem>('fastServices');
 
     selected = fastBox.values.toList();
 
     _refreshBalances();
-    _balanceTimer?.cancel(); // на всякий случай
+    _balanceTimer?.cancel();
 
     _balanceTimer = Timer.periodic(Duration(seconds: 60), (timer) {
       _refreshBalances();
@@ -145,7 +152,25 @@ class CategoryController extends GetxController with StateControlMixin {
   }
 
   void isTextNotEmpty(int index){
-    if(paymentsTitle[index] == 'Belet' || paymentsTitle[index] == 'TM CELL'){
+
+    if (paymentsIcons[index] == AppAssets.alemTv) {
+      final account = alemAccountController.text;
+
+      if (alemAccountController.text.startsWith('dalem-')) {
+        alemType = 'iptv';
+        continueEnabled = true;
+        update();
+      } else
+      if (!alemAccountController.text.startsWith('dalem') && account.length == 10) {
+        alemType = 'tv';
+        continueEnabled = true;
+        update();
+      }else{
+        continueEnabled = false;
+        update();
+      }
+
+    }else if(paymentsTitle[index] == 'Belet' || paymentsTitle[index] == 'TM CELL'){
       phoneController.text.length >= 8 ? continueEnabled = true : continueEnabled = false;
       update();
     }else {
@@ -156,33 +181,69 @@ class CategoryController extends GetxController with StateControlMixin {
     }
   }
 
+  Future<void> getAlemTariffs(int index) async {
+    final account = alemAccountController.text;
+
+    status = Status.loading;
+    update();
+
+    if (alemType != '' && account != lastRequestedAccount) {
+      lastRequestedAccount = account;
+      update();
+
+      try {
+        tariff = await repository.alemGetTariff(
+          data: {
+            "type": alemType,
+            "account": account,
+          },
+        );
+
+        final item = FastServiceItem(
+          type: 'ÄlemTv',
+          phone: account,
+          title: 'ÄlemTv',
+          icon: AppAssets.alemTv,
+          balance: tariff?.end,
+        );
+
+        saveFastService(item);
+
+        status = Status.completed;
+        update();
+
+      } catch (e) {
+        tariff = null;
+      }
+      alemAccountController.clear();
+    }
+    update();
+  }
+
+
   void onServiceTap(int index) {
 
     if (paymentsTitle[index] == r'state_traffic_safety_inspectorate') {
       ShowSnack.showSnack('payment_temporarily_unavailable'.tr, SnackType.warning);
 
-      // Get.toNamed(NetAndTvScreen.route, arguments: {
-      //   'selectedServiceTitle': paymentsTitle[index],
-      // });
     } else if (paymentsTitle[index] == 'Belet') {
       Get.toNamed(CheckPhoneBalanceScreen.route, arguments: {
         'selectedServiceTitle': paymentsTitle[index],
         'selectedServiceIcon': paymentsIcons[index],
       });
     }else if (paymentsTitle[index] == 'TM CELL') {
-      // ShowSnack.showSnack('payment_temporarily_unavailable'.tr, SnackType.warning);
 
       Get.toNamed(CheckPhoneBalanceScreen.route, arguments: {
         'selectedServiceTitle': paymentsTitle[index],
         'selectedServiceIcon': paymentsIcons[index],
       });
-    } else if (paymentsTitle[index] == 'ÄlemTv') {
-      ShowSnack.showSnack('payment_temporarily_unavailable'.tr, SnackType.warning);
 
-      // Get.toNamed(TmcellPaymentScreen.route, arguments: {
-      //   'selectedServiceTitle': paymentsTitle[index],
-      //   'selectedServiceIcon': paymentsIcons[index],
-      // });
+    } else if (paymentsTitle[index] == 'ÄlemTv') {
+      Get.toNamed(AlemPaymentScreen.route, arguments: {
+        'selectedServiceTitle': paymentsTitle[index],
+        'selectedServiceIcon': paymentsIcons[index],
+      });
+
     } else if (paymentsTitle[index] == 'telecom_internet') {
       Get.toNamed(CheckPhoneBalanceScreen.route, arguments: {
         'selectedServiceTitle': paymentsTitle[index],
@@ -206,9 +267,6 @@ class CategoryController extends GetxController with StateControlMixin {
     if (selected[index].title == r'state_traffic_safety_inspectorate') {
       ShowSnack.showSnack('payment_temporarily_unavailable'.tr, SnackType.warning);
 
-      // Get.toNamed(NetAndTvScreen.route, arguments: {
-      //   'selectedServiceTitle': paymentsTitle[index],
-      // });
     } else if (selected[index].title == 'Belet') {
       Get.toNamed(BeletPaymentScreen.route, arguments: {
         'selectedServiceTitle': selected[index].title,
@@ -217,8 +275,6 @@ class CategoryController extends GetxController with StateControlMixin {
         'balance': selected[index].balance,
       });
     }else if (selected[index].title == 'TM CELL') {
-      // ShowSnack.showSnack('payment_temporarily_unavailable'.tr, SnackType.warning);
-
       Get.toNamed(TmcellPaymentScreen.route, arguments: {
         'selectedServiceTitle': selected[index].title,
         'selectedServiceIcon': selected[index].icon,
@@ -226,12 +282,12 @@ class CategoryController extends GetxController with StateControlMixin {
         'balance': selected[index].balance,
       });
     } else if (selected[index].title == 'ÄlemTv') {
-      ShowSnack.showSnack('payment_temporarily_unavailable'.tr, SnackType.warning);
 
-      // Get.toNamed(TmcellPaymentScreen.route, arguments: {
-      //   'selectedServiceTitle': paymentsTitle[index],
-      //   'selectedServiceIcon': paymentsIcons[index],
-      // });
+      Get.toNamed(AlemPaymentScreen.route, arguments: {
+        'selectedServiceTitle': selected[index].title,
+        'selectedServiceIcon': selected[index].icon,
+        'number': selected[index].phone,
+      });
     } else if (selected[index].title == 'telecom_internet') {
       Get.toNamed(TelecomPaymentScreen.route, arguments: {
         'selectedServiceTitle': selected[index].title,
@@ -260,16 +316,19 @@ class CategoryController extends GetxController with StateControlMixin {
   String _clean12(String phoneNumber) {
     return phoneNumber.replaceAll('12 ', '').replaceAll(' ', '');
   }
+
   Future<CheckBalanceModel> _getTelecomBalanceModel() async {
     return CheckBalanceModel(
       phone: _cleanSpaces(phoneController.text),
     );
   }
+
   Future<CheckBalanceModel> _getCDMABalanceModel() async {
     return CheckBalanceModel(
       phone: _cleanSpaces(phoneController.text),
     );
   }
+
   Future<CheckBalanceModel> _getAstuBalanceModel() async {
     return CheckBalanceModel(
       phone: _clean12(phoneController.text),
@@ -284,6 +343,13 @@ class CategoryController extends GetxController with StateControlMixin {
   }
 
   Future<void> checkBalance(int index) async {
+    final phone = phoneController.text;
+
+    if (phone.isEmpty) {
+      print('Phone is empty BEFORE request');
+      return;
+    }
+
     status = Status.loading;
     update();
 
@@ -294,25 +360,19 @@ class CategoryController extends GetxController with StateControlMixin {
       CheckBalanceModel response;
       String currentType = title;
 
-      /// 🧠 определяем тип и запрос
       if (title == 'telecom_internet') {
         requestModel = await _getTelecomBalanceModel();
         response = await repository.telecomBalance(data: requestModel.toMap());
-      }
-      else if (title == 'Belet') {
+      } else if (title == 'Belet') {
         requestModel = await _getBeletBalanceModel();
         response = await repository.beletBalance(data: requestModel.toMap());
-      }
-      else if (title == 'TM CELL') {
+      } else if (title == 'TM CELL') {
         requestModel = await _getTelecomBalanceModel();
         response = await repository.tmcellBalance(data: requestModel.toMap());
-      }
-      else if (title == 'CDMA') {
+      } else if (title == 'CDMA') {
         requestModel = await _getCDMABalanceModel();
         response = await repository.cdmaBalance(data: requestModel.toMap());
-      }
-      else {
-        /// ASTU logic
+      } else {
         if (title == 'IP TV') {
           type = 'iptv';
         } else if (title == 'astu_phone') {
@@ -321,13 +381,11 @@ class CategoryController extends GetxController with StateControlMixin {
           type = 'internet';
         }
 
-        currentType = type ?? title;
+        currentType = type;
 
         requestModel = await _getAstuBalanceModel();
         response = await repository.astuBalance(data: requestModel.toMap());
       }
-
-      checkBalanceModel = response;
 
       if (response.success != true) {
         throw response.message ?? 'Unknown error';
@@ -335,9 +393,10 @@ class CategoryController extends GetxController with StateControlMixin {
 
       status = Status.completed;
 
+
       final item = FastServiceItem(
         type: currentType,
-        phone: phoneController.text,
+        phone: phone,
         title: title,
         icon: paymentsIcons[index],
         balance: response.balance,
@@ -356,7 +415,6 @@ class CategoryController extends GetxController with StateControlMixin {
     } catch (e) {
       status = Status.error;
       update();
-
       ApiErrorHandler.handleApiError(e);
     } finally {
       phoneController.clear();
@@ -391,12 +449,26 @@ class CategoryController extends GetxController with StateControlMixin {
 
   Future<void> _refreshBalances() async {
     for (var item in selected) {
-      phoneController.text = item.phone;
-      type = item.type;
-
       int index = paymentsTitle.indexOf(item.title);
-      if (index != -1) {
-        await checkBalance(index);
+
+      if (item.title == 'ÄlemTv') {
+        alemAccountController.text = item.phone;
+
+        // detect type again
+        if (item.phone.startsWith('dalem-')) {
+          alemType = 'iptv';
+        } else {
+          alemType = 'tv';
+        }
+
+        await getAlemTariffs(index);
+      } else {
+        phoneController.text = item.phone;
+        type = item.type;
+
+        if (index != -1) {
+          await checkBalance(index);
+        }
       }
     }
   }
@@ -444,6 +516,8 @@ class CategoryController extends GetxController with StateControlMixin {
       return 'xxxxxxxx';
     }else if( paymentsTitle[index] == 'CDMA'){
       return '60 xxxxxx';
+    }else if( paymentsTitle[index] == 'ÄlemTv'){
+      return 'dalem-xxxx | 2100xxxx';
     }else{
       return '12 xxxxxx';
     }

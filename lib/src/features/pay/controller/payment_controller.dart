@@ -12,6 +12,7 @@ import 'package:senagat_mobile/src/features/service_settings/controller/service_
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import '../../add_card/model/card_model.dart';
 import '../../payment_verification/presentation/payment_verification_screen.dart';
+import '../model/alem_get_tariff_model.dart';
 
 class PaymentController extends GetxController with StateControlMixin {
   bool continueEnabled = false;
@@ -23,9 +24,11 @@ class PaymentController extends GetxController with StateControlMixin {
   late final TextEditingController nameController;
   late final TextEditingController lastnameController;
   late final TextEditingController accountController;
+  late final TextEditingController  alemAccountController;
   late ServiceSettingsController serviceSettingsController;
   late final PageController pageController;
 
+  PaymentOption? selectedPaymentOption;
   final cardBox = Hive.box<CardModel>('cardsBox');
 
   final PaymentRepository repository;
@@ -38,14 +41,23 @@ class PaymentController extends GetxController with StateControlMixin {
   String formattedBalance = '';
   bool isInquiries = false;
   bool isFoundation = false;
+
+  late String alemType = '';
+
   late String cardNumber = '';
   late final String maskedNumber;
-  final FlutterNativeContactPicker _contactPicker =
-      FlutterNativeContactPicker();
+
+  final FlutterNativeContactPicker _contactPicker = FlutterNativeContactPicker();
+
   CardModel? selectedCard;
   int? selectedBeletIndex;
 
   late final FocusNode phoneFocus;
+
+
+  AlemGetTariffModel? tariff;
+  bool isTariffLoading = false;
+  String? lastRequestedAccount;
 
   @override
   void onInit() {
@@ -78,6 +90,26 @@ class PaymentController extends GetxController with StateControlMixin {
     nameController = TextEditingController();
     lastnameController = TextEditingController();
     accountController = TextEditingController(text: '100');
+    alemAccountController = TextEditingController(text: number);
+
+
+    if (serviceIcon == AppAssets.alemTv) {
+      final account = alemAccountController.text;
+
+      if (alemAccountController.text.startsWith('dalem-')) {
+        alemType = 'iptv';
+        getAlemTariffs();
+      } else if (!alemAccountController.text.startsWith('dalem') && account.length == 10) {
+        alemType = 'tv';
+        getAlemTariffs();
+      }
+
+      if(alemAccountController.text.isNotEmpty && selectedPaymentOption != null && selectedCard != null){
+        continueEnabled = true;
+      }else{
+        continueEnabled = false;
+      }
+    }
     super.onInit();
   }
 
@@ -112,11 +144,10 @@ class PaymentController extends GetxController with StateControlMixin {
     });
   }
 
-  void isTextNotEmpty() {
+
+  void isTextNotEmpty() async {
     final sumText = sumController.text;
-
     final int? sum = int.tryParse(sumText);
-
 
     final bool isValidSum =
         sum != null &&
@@ -135,11 +166,59 @@ class PaymentController extends GetxController with StateControlMixin {
               selectedCard != null;
     }
 
+    if (serviceIcon == AppAssets.alemTv) {
+      final account = alemAccountController.text;
+
+      if (alemAccountController.text.startsWith('dalem-')) {
+        alemType = 'iptv';
+        getAlemTariffs();
+      } else if (!alemAccountController.text.startsWith('dalem') && account.length == 10) {
+        alemType = 'tv';
+        getAlemTariffs();
+      }
+
+      if(alemAccountController.text.isNotEmpty && selectedPaymentOption != null && selectedCard != null){
+        continueEnabled = true;
+      }else{
+        continueEnabled = false;
+      }
+    }
+
+    update();
+  }
+
+  Future<void> getAlemTariffs() async {
+    final account = alemAccountController.text;
+
+    if (alemType != '' &&
+        account != lastRequestedAccount &&
+        !isTariffLoading) {
+      lastRequestedAccount = account;
+      isTariffLoading = true;
+      update();
+
+      try {
+        tariff = await repository.alemGetTariff(
+          data: {
+            "type": alemType,
+            "account": account,
+          },
+        );
+
+        if (tariff != null && tariff!.paymentOptions.isNotEmpty) {
+          selectedPaymentOption ??= tariff!.paymentOptions.first;
+        }
+
+      } catch (e) {
+        tariff = null;
+      }
+
+      isTariffLoading = false;
+    }
     update();
   }
 
   Future<void> onTap() async {
-    // Default behavior: simple verification flow; override in specific controllers
      onPayTap();
   }
 
@@ -218,6 +297,7 @@ class PaymentController extends GetxController with StateControlMixin {
       phoneController.text = phone;
       update();
     } catch (e) {
+      debugPrint(e.toString());
     }
   }
 

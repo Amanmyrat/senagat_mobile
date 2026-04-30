@@ -7,6 +7,7 @@ import 'package:senagat_mobile/src/features/add_card/model/card_model.dart';
 import 'package:senagat_mobile/src/features/add_card/presentation/add_card_screen.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/features/pay/controller/payment_controller.dart';
+import 'package:senagat_mobile/src/features/pay/model/alem_get_tariff_model.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
@@ -164,6 +165,94 @@ Future<CardModel?> showPaymentCardBottomSheet(PaymentController controller) {
   );
 }
 
+Future<PaymentOption?> showAlemTariffBottomSheet(
+    PaymentController controller,
+    List<PaymentOption> paymentOptions,
+    ) {
+  return showModalBottomSheet<PaymentOption>(
+    isScrollControlled: true,
+    context: Get.context!,
+    backgroundColor: AppColors.white,
+    builder: (_) {
+      return Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(Get.context!).viewInsets.bottom,
+        ),
+        child: SizedBox(
+          width: MediaQuery.of(Get.context!).size.width,
+          height: MediaQuery.of(Get.context!).size.height /2,
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(color: AppColors.grey, width: 24.w, height: 2.h),
+                SizedBox(height: 22.h),
+
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    'select_tariff'.tr,
+                    style: TextStyle(fontSize: 17.sp, color: AppColors.black),
+                  ),
+                ),
+
+                SizedBox(height: 22.h),
+
+                Flexible(
+                  child: ListView.builder(
+                    itemCount: paymentOptions.length,
+                    itemBuilder: (context, index) {
+                      final option = paymentOptions[index];
+
+                      return GestureDetector(
+                        onTap: () {
+                          controller.selectedPaymentOption = option;
+                          controller.isTextNotEmpty();
+                          Get.back(result: option);
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(vertical: 5.h),
+                          child: Row(
+                            children: [
+                              Checkbox(
+                                value: controller.selectedPaymentOption == option,
+                                onChanged: (_) {
+                                  controller.selectedPaymentOption = option;
+                                  controller.isTextNotEmpty();
+                                  Get.back(result: option);
+                                },
+                              ),
+
+                              SizedBox(width: 10.w),
+
+                              Expanded(
+                                child: Text(
+                                  "${option.months} ${'month'.tr} - ${option.amount} TMT",
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    color: AppColors.black,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+
+                SizedBox(height: 5.h),
+              ],
+            ),
+          ),
+        ),
+      );
+    },
+  );
+}
+
 Widget paymentAccountWidget(PaymentController controller) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -206,6 +295,60 @@ Widget paymentAccountWidget(PaymentController controller) {
                   Text(
                     '${controller.formattedBalance} ${r'manat'.tr}',
                     style: TextStyle(color: AppColors.green, fontSize: 17.sp),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+      SizedBox(height: AppDimensions.paddingExtraLarge.w),
+    ],
+  );
+}
+
+Widget alemStatusWidget(PaymentController controller) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        r'status'.tr,
+        style: TextStyle(color: AppColors.blackText, fontSize: 14.sp),
+      ),
+      SizedBox(height: AppDimensions.paddingMedium.h),
+      Container(
+        width: MediaQuery.of(Get.context!).size.width,
+        padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(
+            AppDimensions.borderRadiusMedium.r,
+          ),
+          border: Border.all(
+            color: AppColors.dividerColor,
+            width: 1.w,
+            style: BorderStyle.solid,
+          ),
+          boxShadow: [
+            BoxShadow(color: AppColors.dividerColor, blurRadius: 4.r),
+          ],
+          color: AppColors.white,
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    controller.tariff?.tarif ?? '',
+                    style: TextStyle(color: AppColors.green, fontSize: 17.sp),
+                  ),
+                  Text(
+                    controller.tariff?.end ?? '',
+                    style: TextStyle(
+                      color: AppColors.greyInactive,
+                      fontSize: 14.sp,
+                    ),
                   ),
                 ],
               ),
@@ -367,6 +510,59 @@ Widget paymentSumField(PaymentController controller) {
   );
 }
 
+Widget alemPaymentField(PaymentController controller) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        r'alem_number'.tr,
+        style: TextStyle(
+          color: AppColors.blackText,
+          fontSize: 14.sp,
+        ),
+      ),
+      SizedBox(height: 16.h),
+      TextFormField(
+        keyboardType: TextInputType.text,
+        controller: controller.alemAccountController,
+        onChanged: (value) => controller.isTextNotEmpty(),
+        style: TextStyle(
+          fontSize: 14.sp,
+          fontFamily: AppFonts.primaryFont,
+        ),
+        decoration: InputDecoration(
+          hintText: r'dalem-xxxx | 2100xxxx',
+          fillColor: AppColors.inputFillBackground,
+
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(
+              AppDimensions.borderRadiusMedium,
+            ),
+            borderSide: BorderSide(
+              color: AppColors.green,
+              width: 1.w,
+            ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(
+              AppDimensions.borderRadiusMedium,
+            ),
+            borderSide: BorderSide(
+              color: controller.isOtherSelected ? AppColors.green : AppColors.white,
+              width: 1.w,
+            ),
+          ),
+          counter: const SizedBox(),
+          contentPadding: EdgeInsets.symmetric(
+            vertical: AppDimensions.paddingExtraLarge.h,
+            horizontal: AppDimensions.paddingLarge.w,
+          ),
+        ),
+      ),
+    ],
+  );
+}
+
 Widget paymentCardPicker(PaymentController controller) {
   if (controller.cardBox.isNotEmpty) {
     return GestureDetector(
@@ -421,6 +617,72 @@ Widget paymentCardPicker(PaymentController controller) {
         color: AppColors.black,
         width: 24.w,
       ),
+    ),
+  );
+}
+
+Widget alemTariffPicker(PaymentController controller) {
+  final selected = controller.selectedPaymentOption;
+
+  return Padding(
+    padding:  EdgeInsets.symmetric(vertical: 22.h),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+
+        Text(
+          r'select_tariff'.tr,
+          style: TextStyle(color: AppColors.blackText, fontSize: 14.sp),
+        ),
+        SizedBox(height: AppDimensions.paddingMedium.h),
+
+        GestureDetector(
+          onTap: () async {
+            if (controller.tariff == null ||
+                controller.tariff!.paymentOptions.isEmpty) {
+              return;
+            }
+
+            final result = await showAlemTariffBottomSheet(
+              controller,
+              controller.tariff!.paymentOptions,
+            );
+
+            if (result != null) {
+              controller.selectedPaymentOption = result;
+              controller.isTextNotEmpty();
+            }
+          },
+          child: Container(
+            padding: EdgeInsets.all(20.w),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: AppColors.inputFillBackground,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Text(
+                    "${selected?.months} ${'month'.tr} - ${selected?.amount} TMT",
+
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      color: selected == null
+                          ? AppColors.grey
+                          : AppColors.black,
+                    ),
+                  ),
+                ),
+                SvgPicture.asset(
+                  AppAssets.caretDownIcon,
+                  width: 18.w,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     ),
   );
 }

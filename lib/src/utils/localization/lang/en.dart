@@ -48,12 +48,12 @@ const Map<String, String> enUs = {
   r'fund_balance': r'Fund balance',
   r'fund_text': r'Childhood cancer is treatable. We work to ensure that any child in Turkmenistan can receive all the necessary treatment.',
   r'find_an_ATM': r'Find an ATM',
-  r'find_a_branch': r'Find an branch',
+  r'find_a_branch': r'Find a branch',
   r'atm': r'ATMs',
   r'branch': r'Branchs',
   r'add_a_card': r'Add a card',
   r'adding_a_card': r'Adding a card',
-  r'tune': r'Tune',
+  r'edit': r'Edit',
   r'fast_operations': r'Fast Operations',
   r'donations_of_any_amount': r'Donations of any amount are welcome.',
   r'services': r'Services',
@@ -269,6 +269,11 @@ const Map<String, String> enUs = {
   r'work_document':'Salary document',
   r'profit_document':'Profit document',
   r'file_size_limit':'File size must be less than 2 MB',
+  r'month':'month(s)',
+
+  r'select_tariff':'Select tariff',
+
+  r'alem_number':'ÄlemTV number',
 
   r'income_certificate_6_12_months': 'Certificate of net income for the last 6 months or 1 year',
 

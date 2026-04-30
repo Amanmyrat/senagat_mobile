@@ -119,38 +119,50 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       onTap: () {
                                         final rejectedList =
                                             controller.profileBox.get('currentProfile')?.rejectedText ?? [];
-
-                                        showCupertinoDialog(
-                                          context: context,
-                                          builder: (context) => CupertinoAlertDialog(
-                                            content: rejectedList.isEmpty
-                                                ? Text("No rejection reason")
-                                                : Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: rejectedList
-                                                  .map<Widget>((e) => Padding(
-                                                padding: EdgeInsets.only(bottom: 6),
-                                                child: Row(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text("• ",
-                                                        style: TextStyle(color: AppColors.redDark)),
-                                                    Expanded(child: Text(e)),
+                                        if(rejectedList.isNotEmpty) {
+                                          showCupertinoDialog(
+                                            context: context,
+                                            builder: (context) =>
+                                                CupertinoAlertDialog(
+                                                  content: Column(
+                                                    mainAxisSize: MainAxisSize
+                                                        .min,
+                                                    crossAxisAlignment: CrossAxisAlignment
+                                                        .start,
+                                                    children: rejectedList
+                                                        .map<Widget>((e) =>
+                                                        Padding(
+                                                          padding: EdgeInsets
+                                                              .only(bottom: 6),
+                                                          child: Row(
+                                                            crossAxisAlignment: CrossAxisAlignment
+                                                                .start,
+                                                            children: [
+                                                              Text("• ",
+                                                                  style: TextStyle(
+                                                                      color: AppColors
+                                                                          .redDark)),
+                                                              Expanded(
+                                                                  child: Text(
+                                                                      e)),
+                                                            ],
+                                                          ),
+                                                        ))
+                                                        .toList(),
+                                                  ),
+                                                  actions: [
+                                                    CupertinoDialogAction(
+                                                      isDestructiveAction: true,
+                                                      child: Text("back".tr),
+                                                      onPressed: () =>
+                                                          Navigator
+                                                              .of(context)
+                                                              .pop(),
+                                                    ),
                                                   ],
                                                 ),
-                                              ))
-                                                  .toList(),
-                                            ),
-                                            actions: [
-                                              CupertinoDialogAction(
-                                                isDestructiveAction: true,
-                                                child: Text("back".tr),
-                                                onPressed: () => Navigator.of(context).pop(),
-                                              ),
-                                            ],
-                                          ),
-                                        );
+                                          );
+                                        }
                                       },
                                       child: SvgPicture.asset(
                                         AppAssets.infoIcon,

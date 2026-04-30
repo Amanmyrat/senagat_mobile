@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:roundcheckbox/roundcheckbox.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
 import '../../../utils/theme/constants/app_colors.dart';
@@ -191,7 +190,6 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         final id = items[index];
-        final checked = controller.selectedItems.contains(id);
 
         return GestureDetector(
           onLongPress: () => controller.onLongTap(),
@@ -201,20 +199,6 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             padding: EdgeInsets.symmetric(vertical: AppDimensions.paddingMedium.h),
             child: Row(
               children: [
-                controller.isLongTap
-                    ? RoundCheckBox(
-                  size: 24.w,
-                  isRound: false,
-                  borderColor: controller.selectedItems.isEmpty ? AppColors.black : AppColors.green,
-                  checkedColor: AppColors.green,
-                  isChecked: checked,
-                  checkedWidget: Padding(
-                    padding: EdgeInsets.all(2.w),
-                    child: SvgPicture.asset(AppAssets.checkIcon, color: AppColors.white, width: 16.w,),
-                  ),
-                  onTap: (v) => controller.onItemSelect(id),
-                )
-                    : SizedBox(),
                 SizedBox(width: controller.isLongTap ? AppDimensions.paddingMedium.w : 0),
                 Container(
                   width: 40.w,
