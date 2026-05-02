@@ -33,12 +33,10 @@ dependencies:
   url_launcher: ^6.3.2
   persistent_bottom_nav_bar: ^6.1.2
   smooth_page_indicator: ^1.2.1
-  mask_text_input_formatter: ^2.4.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   dropdown_button2: ^2.3.9
   flutter_xlider: ^3.5.0
-  flutter_masked_text2: ^0.9.0
   universal_image: ^1.0.11
   file_picker: ^8.0.0
   flutter_native_contact_picker: ^0.0.11
@@ -49,11 +47,9 @@ dependencies:
   package_info_plus: ^8.0.0
   webview_flutter: ^4.7.0
   secure_application: ^4.0.0
-  dotted_border: ^2.1.0
   crypto: ^3.0.3
 
   flutter_staggered_animations: ^1.1.1
-  flutter_switch: ^0.3.2
 
 dev_dependencies:
   flutter_test:

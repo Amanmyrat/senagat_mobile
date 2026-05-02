@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_xlider/flutter_xlider.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/globals.dart';
 import 'package:senagat_mobile/src/features/credit/repository/credit_repository.dart';
-import 'package:senagat_mobile/src/features/loan/presentation/loan_screen.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
@@ -15,6 +13,7 @@ import '../../../core/states/stateful_data.dart';
 import '../../../utils/constants/app_assets.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../../widgets/elevated_button_with_state.dart';
+import '../../../widgets/input_formatter.dart';
 import '../controller/get_credit_controller.dart';
 
 class GetCreditScreen extends StatefulWidget {
@@ -173,6 +172,9 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                         controller: controller.sumController,
                                         textAlign: TextAlign.center,
                                         keyboardType: TextInputType.number,
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.digitsOnly,
+                                        ],
                                         onChanged: (value) {
                                           final parsed = double.tryParse(
                                             value.replaceAll(',', ''),
@@ -206,38 +208,16 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                       SizedBox(
                                         height: AppDimensions.paddingMedium.h,
                                       ),
-                                      FlutterSlider(
-                                        values: [controller.currentValue],
+                                      Slider(
+                                        value: controller.currentValue,
+                                        onChanged: (value) {
+                                          controller.updateText(value);
+                                          },
+                                        inactiveColor: AppColors.lightGreen,
                                         min: controller.minAmount,
-                                        max: controller.maxAmount,
-                                        step: FlutterSliderStep(step: 100),
-                                        tooltip: FlutterSliderTooltip(
-                                          disabled: true,
-                                        ),
-                                        trackBar: FlutterSliderTrackBar(
-                                          activeTrackBar: BoxDecoration(
-                                            color: AppColors.green,
-                                          ),
-                                          inactiveTrackBar: BoxDecoration(
-                                            color: AppColors.lightGreen,
-                                          ),
-                                        ),
-                                        handlerWidth: 22.w,
-                                        handlerHeight: 22.h,
-                                        handler: FlutterSliderHandler(
-                                          child: SvgPicture.asset(
-                                            AppAssets.thumbIcon,
-                                          ),
-                                        ),
-                                        onDragging:
-                                            (
-                                              handlerIndex,
-                                              lowerValue,
-                                              upperValue,
-                                            ) {
-                                              controller.updateText(lowerValue);
-                                            },
+                                          max: controller.maxAmount,
                                       ),
+
                                       SizedBox(
                                         height:
                                             AppDimensions.paddingExtraLarge.h,

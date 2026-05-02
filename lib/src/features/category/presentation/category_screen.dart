@@ -1,4 +1,3 @@
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -11,7 +10,9 @@ import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/services/show_snack.dart';
 import '../../../widgets/check_widget.dart';
+import '../../../widgets/custom_dotted_border_widget.dart';
 import '../../../widgets/elevated_button_with_state.dart';
+import '../../../widgets/text_input_masks.dart';
 import '../../pay/repository/payment_repository.dart';
 import '../controller/category_controller.dart';
 
@@ -194,24 +195,19 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   onTap: () {
                     _showFilterBottomSheet(context, controller);
                   },
-                  child: DottedBorder(
-                    borderType: BorderType.RRect,
-                    radius: Radius.circular(AppDimensions.borderRadiusMedium.r),
-                    dashPattern: [6, 3],
-                    // dash, space
+                  child: CustomDottedBorder(
+                    radius: AppDimensions.borderRadiusMedium.r,
                     color: AppColors.green,
                     strokeWidth: 1,
+                    dashPattern: [6, 3],
                     child: Container(
                       width: 250.w,
                       height: 200.h,
-                      padding: EdgeInsets.all(
-                        AppDimensions.paddingExtraLarge.w,
-                      ),
+                      padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(
                           AppDimensions.borderRadiusMedium.r,
                         ),
-                        // boxShadow: softCardShadow,
                         color: AppColors.white,
                       ),
                       child: Column(
@@ -221,9 +217,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             child: Container(
                               width: 50.w,
                               height: 50.h,
-                              padding: EdgeInsets.all(
-                                AppDimensions.paddingMedium.w,
-                              ),
+                              padding: EdgeInsets.all(AppDimensions.paddingMedium.w),
                               decoration: BoxDecoration(
                                 border: Border.all(
                                   color: AppColors.dividerColor,
@@ -613,6 +607,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             inputFormatters: [
                               if (controller.paymentsTitle[index] == 'telecom_internet') ...[
                                 controller.currentMask,
+                                DynamicPhoneFormatter(),
                               ] else if (controller.paymentsTitle[index] == 'Belet') ...[
                                 controller.beletMask,
                               ] else if (controller.paymentsTitle[index] == 'TM CELL') ...[
@@ -626,12 +621,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               ],
                             ],
                             onChanged: (v) {
-                              final digits = v.replaceAll(' ', '');
-                              controller.currentMask.updateMask(
-                                mask: digits.startsWith('12')
-                                    ? '## ######'
-                                    : '### ######',
-                              );
                               controller.isTextNotEmpty(index);
                             },
                             maxLength: 9,

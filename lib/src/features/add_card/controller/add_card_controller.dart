@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/add_card/model/bank_model.dart';
 import '../../../utils/constants/app_assets.dart';
+import '../../../widgets/text_input_masks.dart';
 import '../../card/controller/card_controller.dart';
 import '../model/card_model.dart';
 
@@ -70,17 +70,12 @@ class AddCardController extends GetxController with StateControlMixin {
   };
 
 
-  late final cardNumberFormatter = MaskTextInputFormatter(
-    mask: '#### #### #### ####',
-    filter: {"#": RegExp(r'\d')},
+  final cardNumberFormatter = CustomMaskFormatter(
+    mask: '#### #### #### ####', prefix: '',
   );
 
-  late final termFormatter = MaskTextInputFormatter(
-    mask: '##/##',
-    filter: {
-      "#": RegExp(r'[0-9]'),
-    },
-    type: MaskAutoCompletionType.lazy,
+  final termFormatter = CustomMaskFormatter(
+    mask: '##/##', prefix: '',
   );
 
 

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:senagat_mobile/src/features/pay/controller/payment_controller.dart';
 import 'package:senagat_mobile/src/utils/constants/app_assets.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
+import 'package:senagat_mobile/src/widgets/text_input_masks.dart';
 import '../../../core/globals.dart';
 import '../../../core/networking/api_service.dart';
 import '../../../core/states/stateful_data.dart';
@@ -128,7 +129,8 @@ class _CheckPhoneBalanceScreenState extends State<CheckPhoneBalanceScreen> {
                                                   .phoneController,
                                               inputFormatters: [
                                                 if(controller.serviceName == 'telecom_internet')...[
-                                                    controller.currentMask
+                                                    controller.currentMask,
+                                                  DynamicPhoneFormatter(),
                                                 ]else if(controller.serviceName == 'Belet')...[
                                                     controller.beletMask
                                                 ]else if(controller.serviceName == 'TM CELL')...[
@@ -140,11 +142,6 @@ class _CheckPhoneBalanceScreenState extends State<CheckPhoneBalanceScreen> {
                                                 ]
                                               ],
                                               onChanged: (v) {
-                                                final digits = v.replaceAll(' ', '');
-
-                                                controller.currentMask.updateMask(
-                                                  mask: digits.startsWith('12') ? '## ######' : '### ######',
-                                                );
                                                 controller
                                                     .isTextNotEmpty();
                                               },

@@ -312,7 +312,7 @@ Widget alemStatusWidget(PaymentController controller) {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Text(
-        r'status'.tr,
+        r'your_account'.tr,
         style: TextStyle(color: AppColors.blackText, fontSize: 14.sp),
       ),
       SizedBox(height: AppDimensions.paddingMedium.h),

@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
 import 'package:flutter_native_contact_picker/model/contact.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/check_phone_balance/presentation/check_phone_balance.dart';
 import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
@@ -19,6 +19,7 @@ import 'package:senagat_mobile/src/utils/services/show_snack.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/api_error_handler.dart';
 import '../../../utils/constants/app_assets.dart';
+import '../../../widgets/text_input_masks.dart';
 import '../../check_phone_balance/model/check_balance_model.dart';
 import '../../foundation/presentation/foundation_screen.dart';
 import '../../pay/model/alem_get_tariff_model.dart';
@@ -79,29 +80,21 @@ class CategoryController extends GetxController with StateControlMixin {
     r'ÄlemTv',
   ];
 
-  late MaskTextInputFormatter currentMask = telecomMaskOther;
+  late TextInputFormatter currentMask = telecomMaskOther;
+  final beletMask = CustomMaskFormatter(mask: '########', prefix: '');
 
-  final beletMask = MaskTextInputFormatter(
-    mask: '########',
-    filter: {"#": RegExp(r'[0-9]')},
+  final telecomMaskOther = CustomMaskFormatter(
+    mask: '### ######', prefix: '',
   );
 
-  final telecomMaskOther = MaskTextInputFormatter(
-    mask: '### ######',
-    filter: {"#": RegExp(r'[0-9]')},
+  final cdmaMask = CustomMaskFormatter(
+    mask: '## ######', prefix: '60',
   );
 
-  final cdmaMask = MaskTextInputFormatter(
-    mask: '60 ######',
-    filter: {"#": RegExp(r'[0-9]')},
+  final defaultMask = CustomMaskFormatter(
+    mask: '## ######', prefix: '12',
   );
 
-  final defaultMask = MaskTextInputFormatter(
-    mask: '12 ######',
-    filter: { "#": RegExp(r'[0-9]') },
-    initialText: "12 ",
-
-  );
   @override
   void onInit() {
     fastServiceController = Get.find<ServiceSettingsController>();
