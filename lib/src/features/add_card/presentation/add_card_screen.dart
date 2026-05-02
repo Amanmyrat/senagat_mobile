@@ -13,6 +13,7 @@ import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
 import '../../../utils/theme/constants/app_fonts.dart';
 import '../../../widgets/elevated_button_with_state.dart';
+import '../../../widgets/text_input_masks.dart';
 
 class AddCardBinding extends Bindings {
   @override
@@ -376,7 +377,7 @@ class AddCardScreen extends StatelessWidget {
                                                       TextInputType.phone,
                                                   maxLength: 5,
                                                   inputFormatters: [
-                                                    controller.termFormatter,
+                                                    ExpiryDateFormatter(),
                                                   ],
                                                   style: TextStyle(
                                                     fontSize: 14.sp,

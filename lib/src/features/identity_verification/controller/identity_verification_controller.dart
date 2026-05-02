@@ -4,7 +4,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:senagat_mobile/src/features/home/controller/home_controller.dart';
@@ -12,6 +11,7 @@ import 'package:senagat_mobile/src/features/identity_verification/repository/pro
 import 'package:senagat_mobile/src/features/profile/controller/profile_controller.dart';
 import 'package:senagat_mobile/src/utils/localization/localization_service.dart';
 import 'package:senagat_mobile/src/utils/api_error_handler.dart';
+import 'package:senagat_mobile/src/widgets/text_input_masks.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../dashboard/controller/dashboard_controller.dart';
 import '../../dashboard/utils/nested_nav_ids.dart';
@@ -44,9 +44,8 @@ class IdentityVerificationController extends GetxController
   bool continueEnabled = false;
   bool check = false;
 
-  final dateFormatter = MaskTextInputFormatter(
-    mask: '##-##-####',
-    filter: {"#": RegExp(r'[0-9]')},
+  final dateFormatter = CustomMaskFormatter(
+    mask: '##-##-####', prefix: '',
   );
 
   List<String> textFieldTitle = [

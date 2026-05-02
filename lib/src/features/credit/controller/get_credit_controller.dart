@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:intl/intl.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/credit/models/credit_types_model.dart';
@@ -12,8 +11,7 @@ import '../../loan/presentation/loan_screen.dart';
 
 class GetCreditController extends GetxController
     with StateControlMixin, GetTickerProviderStateMixin {
-  late MoneyMaskedTextController sumController;
-
+  late TextEditingController sumController;
   late TextEditingController bidController;
   late TextEditingController paymentController;
 
@@ -67,7 +65,9 @@ class GetCreditController extends GetxController
 
   void updateText(double value) {
     currentValue = value;
-    sumController.updateValue(currentValue);
+
+    sumController.text = sumFormat(value);
+
     calculate();
     update();
   }
@@ -114,11 +114,7 @@ class GetCreditController extends GetxController
   @override
   void onInit() {
     getCredits();
-    sumController = MoneyMaskedTextController(
-      decimalSeparator: '',
-      thousandSeparator: ',',
-      precision: 0,
-    );
+    sumController = TextEditingController();
 
     bidController = TextEditingController();
 
@@ -142,7 +138,7 @@ class GetCreditController extends GetxController
       maxAmount = selectedCredit.maxAmount!.toDouble();
 
       currentValue = minAmount;
-      sumController.updateValue(currentValue);
+      sumController.text = sumFormat(currentValue);
 
       minAmountStr = formatMoney(selectedCredit.minAmount ?? 0);
       maxAmountStr = formatMoney(selectedCredit.maxAmount ?? 0);
@@ -214,6 +210,11 @@ class GetCreditController extends GetxController
   }
 
   String formatMoney(int value) {
+    final formatter = NumberFormat("#,##0", "en_US");
+    return formatter.format(value);
+  }
+
+  String sumFormat(double value) {
     final formatter = NumberFormat("#,##0", "en_US");
     return formatter.format(value);
   }

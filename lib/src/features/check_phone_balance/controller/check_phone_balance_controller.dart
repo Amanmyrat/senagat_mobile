@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
 import 'package:flutter_native_contact_picker/model/contact.dart';
 import 'package:get/get.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/check_phone_balance/model/check_balance_model.dart';
@@ -11,6 +10,7 @@ import 'package:senagat_mobile/src/features/pay/presentation/telecom_payment_scr
 import 'package:senagat_mobile/src/features/pay/presentation/tmcell_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
 import '../../../utils/api_error_handler.dart';
+import '../../../widgets/text_input_masks.dart';
 import '../../pay/presentation/astu_payment_screen.dart';
 
 class CheckPhoneBalanceController extends GetxController with StateControlMixin {
@@ -31,29 +31,21 @@ class CheckPhoneBalanceController extends GetxController with StateControlMixin 
 
   CheckPhoneBalanceController(this.repository);
 
-  late MaskTextInputFormatter currentMask = telecomMaskOther;
+  late CustomMaskFormatter currentMask = telecomMaskOther;
 
 
-  final beletMask = MaskTextInputFormatter(
-    mask: '########',
-    filter: {"#": RegExp(r'[0-9]')},
+  final beletMask = CustomMaskFormatter(mask: '########', prefix: '');
+
+  final telecomMaskOther = CustomMaskFormatter(
+    mask: '### ######', prefix: '',
   );
 
-  final cdmaMask = MaskTextInputFormatter(
-    mask: '60 ######',
-    filter: {"#": RegExp(r'[0-9]')},
+  final cdmaMask = CustomMaskFormatter(
+    mask: '## ######', prefix: '60',
   );
 
-  final telecomMaskOther = MaskTextInputFormatter(
-    mask: '### ######',
-    filter: {"#": RegExp(r'[0-9]')},
-  );
-
-  final defaultMask = MaskTextInputFormatter(
-    mask: '12 ######',
-    filter: { "#": RegExp(r'[0-9]') },
-    initialText: "12 ",
-
+  final defaultMask = CustomMaskFormatter(
+    mask: '## ######', prefix: '12',
   );
 
   @override

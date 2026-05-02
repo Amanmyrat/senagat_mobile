@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/get_card_details/models/card_order_model.dart';
 import 'package:senagat_mobile/src/features/payment_verification/presentation/payment_verification_screen.dart';
+import 'package:senagat_mobile/src/widgets/text_input_masks.dart';
 
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/api_error_handler.dart';
@@ -33,9 +33,8 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
 
   GetCardDetailsController(this.repository, this.locRepository);
 
-  final dateOfBirthFormatter = MaskTextInputFormatter(
-    mask: '##-##-####',
-    filter: {"#": RegExp(r'[0-9]')},
+  final dateOfBirthFormatter = CustomMaskFormatter(
+    mask: '##-##-####', prefix: '',
   );
 
   late List<TextEditingController> controllers;
