@@ -1,44 +1,34 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// Base class containing a unified API for key-value pairs' storage.
-/// This class provides low level methods for storing:
-/// - Sensitive keys using [FlutterSecureStorage]
-/// - Insensitive keys using [SharedPreferences]
 class KeyValueStorageBase {
-  /// Instance of shared preferences
   static SharedPreferences? _sharedPrefs;
 
-  /// Instance of flutter secure storage
-  static FlutterSecureStorage? _secureStorage;
+  static const MethodChannel _secureChannel =
+  MethodChannel('senagat_secure_storage');
 
-  /// Singleton instance of KeyValueStorage Helper
   static KeyValueStorageBase? _instance;
 
-  /// Get instance of this class
   factory KeyValueStorageBase() => _instance ?? const KeyValueStorageBase._();
 
-  /// Private constructor
   const KeyValueStorageBase._();
 
-  /// Initializer for shared prefs and flutter secure storage
-  /// Should be called in main before runApp and
-  /// after WidgetsBinding.FlutterInitialized(), to allow for synchronous tasks
-  /// when possible.
   static Future<void> init() async {
     _sharedPrefs ??= await SharedPreferences.getInstance();
-    _secureStorage ??= const FlutterSecureStorage(
-      aOptions: AndroidOptions(encryptedSharedPreferences: true),
-    );
   }
 
-  /// Reads the value for the key from common preferences storage
+  void _ensureInitialized() {
+    if (_sharedPrefs == null) {
+      throw StateError('KeyValueStorageBase is not initialized');
+    }
+  }
+
   T? getCommon<T>(String key) {
+    _ensureInitialized();
+
     try {
       switch (T) {
         case String:
@@ -52,32 +42,31 @@ class KeyValueStorageBase {
         default:
           return _sharedPrefs!.get(key) as T?;
       }
-    } on Exception catch (ex) {
+    } catch (ex) {
       if (kDebugMode) {
-        debugPrint('$ex');
+        debugPrint('Common storage read error: $ex');
       }
       return null;
     }
   }
 
-  /// Reads the decrypted value for the key from secure storage
   Future<String?> getEncrypted(String key) async {
     try {
-      debugPrint('[KeyValueStorageBase] Reading encrypted key: $key');
-      final value = await _secureStorage!.read(key: key);
-      debugPrint('[KeyValueStorageBase] Read encrypted key "$key": ${value != null ? 'SUCCESS (${value.length} chars)' : 'NULL'}');
-      return value;
+      return await _secureChannel.invokeMethod<String>(
+        'read',
+        {'key': key},
+      );
     } on PlatformException catch (ex) {
-      debugPrint('[KeyValueStorageBase] ERROR reading encrypted key "$key": $ex');
       if (kDebugMode) {
-        debugPrint('$ex');
+        debugPrint('Secure storage read error: ${ex.message}');
       }
       return null;
     }
   }
 
-  /// Sets the value for the key to common preferences storage
   Future<bool> setCommon<T>(String key, T value) {
+    _ensureInitialized();
+
     switch (T) {
       case String:
         return _sharedPrefs!.setString(key, value as String);
@@ -92,40 +81,36 @@ class KeyValueStorageBase {
     }
   }
 
-  /// Sets the encrypted value for the key to secure storage
-  // Future<bool> setEncrypted(String key, String value) {
-  //   try {
-  //     _secureStorage!.write(key: key, value: value);
-  //     return Future.value(true);
-  //   } on PlatformException catch (ex) {
-  //     debugPrint('$ex');
-  //     return Future.value(false);
-  //   }
-  // }
-
   Future<bool> setEncrypted(String key, String value) async {
     try {
-      debugPrint('[KeyValueStorageBase] Writing encrypted key: $key (${value.length} chars)');
-      await _secureStorage!.write(key: key, value: value);
-      debugPrint('[KeyValueStorageBase] Successfully wrote encrypted key: $key');
+      await _secureChannel.invokeMethod<void>(
+        'write',
+        {
+          'key': key,
+          'value': value,
+        },
+      );
       return true;
     } on PlatformException catch (ex) {
-      debugPrint('[KeyValueStorageBase] ERROR writing encrypted key "$key": $ex');
+      if (kDebugMode) {
+        debugPrint('Secure storage write error: ${ex.message}');
+      }
       return false;
     }
   }
 
-  /// Erases common preferences keys
-  Future<bool> clearCommon() => _sharedPrefs!.clear();
+  Future<bool> clearCommon() async {
+    _ensureInitialized();
+    return _sharedPrefs!.clear();
+  }
 
-  /// Erases encrypted keys
   Future<bool> clearEncrypted() async {
     try {
-      await _secureStorage!.deleteAll();
+      await _secureChannel.invokeMethod<void>('deleteAll');
       return true;
     } on PlatformException catch (ex) {
       if (kDebugMode) {
-        debugPrint('$ex');
+        debugPrint('Secure storage clear error: ${ex.message}');
       }
       return false;
     }

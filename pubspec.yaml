@@ -19,7 +19,6 @@ dependencies:
   cached_network_image: ^3.4.1
   dio: ^5.9.2
   shared_preferences: ^2.3.3
-  flutter_secure_storage: ^10.0.0
   flutter_svg: ^2.0.14
   flutter_native_splash: ^2.4.2
   json_annotation: ^4.9.0

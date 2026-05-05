@@ -65,10 +65,20 @@ android {
     }
 }
 
+configurations.all {
+    resolutionStrategy {
+        force("androidx.appcompat:appcompat:1.7.0")
+        force("androidx.appcompat:appcompat-resources:1.7.0")
+    }
+}
+
 dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
     implementation("com.google.android.gms:play-services-location:21.1.0")
     implementation("com.google.android.play:integrity:1.4.0")
+
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
+    implementation("androidx.appcompat:appcompat:1.7.0")
 }
 
 flutter {
