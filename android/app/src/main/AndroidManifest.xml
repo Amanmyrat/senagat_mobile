@@ -1,7 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.CAMERA" />
-
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
@@ -11,6 +9,7 @@
         android:usesCleartextTraffic="false"
         android:allowBackup="false"
         android:fullBackupContent="false"
+        android:extractNativeLibs="false"
         >
         <activity
             android:name=".MainActivity"
