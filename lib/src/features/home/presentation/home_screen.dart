@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Padding(
                             padding: EdgeInsets.symmetric(
                               horizontal: AppDimensions.paddingExtraLarge.w,
-                              vertical: AppDimensions.paddingMedium.h
+                              vertical: AppDimensions.paddingMedium.h,
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,6 +74,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               ],
                             ),
                           ),
+
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: AppDimensions.paddingExtraLarge.w,
+                            ),
+                            child: charityFoundationWidget(controller),
+                          ),
                           cardsWidget(controller),
 
                           Padding(
@@ -85,7 +92,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 fastOperationsWidget(controller),
-                                charityFoundationWidget(controller),
 
                                 if (controller
                                         .userInformationModel
@@ -199,11 +205,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
 
                           SizedBox(
-                            height: 282.h,
+                            height: 250.h,
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               padding: EdgeInsets.only(
-                                bottom: 50.h,
+                                bottom: 60.h,
                                 left: AppDimensions.paddingExtraLarge,
                                 right: AppDimensions.paddingExtraLarge,
                               ),
@@ -223,8 +229,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     margin: EdgeInsets.only(
                                       right: AppDimensions.marginMedium,
                                     ),
-                                    width: 290.w,
-                                    padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
+                                    width: 270.w,
+                                    padding: EdgeInsets.all(
+                                      AppDimensions.paddingExtraLarge.w,
+                                    ),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(
                                         AppDimensions.borderRadiusMedium.r,
@@ -240,14 +248,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ? AppColors.green
                                           : AppColors.white,
                                     ),
-                                    child: Row(
+                                    child: Column(
                                       children: [
                                         Align(
                                           alignment: Alignment.topLeft,
                                           child: Text(
-                                            controller
-                                                .serviceTitles[index]
-                                                .tr,
+                                            controller.serviceTitles[index].tr,
                                             style: TextStyle(
                                               color: isSelected
                                                   ? AppColors.white
@@ -256,39 +262,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                           ),
                                         ),
-                                        controller.serviceImage[index].endsWith(
-                                              '.svg',
-                                            )
-                                            ? Expanded(
-                                              child: SvgPicture.asset(
-                                                controller
-                                                    .serviceImage[index],
-                                                width: 100.w,
-                                                height: 100.h,
-                                                color: isSelected
-                                                    ? AppColors.white
-                                                    : null,
-                                              ),
-                                            )
-                                            : Expanded(
-                                              child: Padding(
-                                                padding: EdgeInsets.symmetric(horizontal: AppDimensions.paddingSmall.w),
-                                                child: Image.asset(
-                                                  controller
-                                                      .serviceImage[index],
-                                                  width: 150.w,
-                                                  height: 150.h,
-                                                ),
-                                              ),
-                                            ),
+                                        const Spacer(),
                                         Align(
                                           alignment: Alignment.bottomRight,
                                           child: SvgPicture.asset(
-                                            AppAssets.arrowRightIcon,
+                                            controller
+                                                .serviceImage[index],
+                                            width: 80.w,
                                             color: isSelected
                                                 ? AppColors.white
-                                                : AppColors.black,
-                                            width: 14.w,
+                                                : null,
                                           ),
                                         ),
                                       ],
@@ -299,14 +282,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
 
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: AppDimensions.paddingExtraLarge.w,
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  if (controller.history.isNotEmpty) ...[
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: AppDimensions.paddingExtraLarge.w,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                if (controller.history.isNotEmpty) ...[
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -324,15 +307,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   fontSize: 17.sp,
                                                 ),
                                               ),
-                                              SizedBox(width: AppDimensions.paddingMedium.w,),
+                                              SizedBox(
+                                                width: AppDimensions
+                                                    .paddingMedium
+                                                    .w,
+                                              ),
 
-                                              if(controller.historyIsLoading)...[
+                                              if (controller
+                                                  .historyIsLoading) ...[
                                                 SizedBox(
                                                   width: 15.w,
                                                   height: 15.h,
-                                                  child: CircularProgressIndicator(
-                                                    color: AppColors.green,
-                                                  ),
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                        color: AppColors.green,
+                                                      ),
                                                 ),
                                               ],
                                             ],
@@ -442,7 +431,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                       .history[index]
                                                                       .status ==
                                                                   'confirmed'
-                                                              ? 'payment_approved'.tr
+                                                              ? 'payment_approved'
+                                                                    .tr
                                                               : controller
                                                                     .history[index]
                                                                     .status
@@ -489,7 +479,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   .spaceBetween,
                                                           children: [
                                                             Text(
-                                                              controller.historyTitleByType(controller.history[index].type),
+                                                              controller
+                                                                  .historyTitleByType(
+                                                                    controller
+                                                                        .history[index]
+                                                                        .type,
+                                                                  ),
                                                               style: TextStyle(
                                                                 color: AppColors
                                                                     .blackText,
@@ -497,7 +492,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               ),
                                                             ),
                                                             Text(
-                                                             controller.historyPhoneByType(controller.history[index].type, controller.history[index].paymentTarget.value),
+                                                              controller.historyPhoneByType(
+                                                                controller
+                                                                    .history[index]
+                                                                    .type,
+                                                                controller
+                                                                    .history[index]
+                                                                    .paymentTarget
+                                                                    .value,
+                                                              ),
                                                               style: TextStyle(
                                                                 color: AppColors
                                                                     .blackText,
@@ -528,108 +531,129 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ],
                                   ),
                                   SizedBox(height: AppDimensions.padding40.h),
-                                  ],
+                                ],
 
-                                  if (controller.exchange.isNotEmpty) ...[
-                                    Text(
-                                      r'exchange_rates'.tr,
-                                      style: TextStyle(
-                                        color: AppColors.blackText,
-                                        fontSize: 17.sp,
-                                      ),
+                                if (controller.exchange.isNotEmpty) ...[
+                                  Text(
+                                    r'exchange_rates'.tr,
+                                    style: TextStyle(
+                                      color: AppColors.blackText,
+                                      fontSize: 17.sp,
                                     ),
-                                    SizedBox(height: 16.h),
+                                  ),
+                                  SizedBox(height: 16.h),
 
-                                    Container(
-                                      padding: EdgeInsets.all(
-                                        AppDimensions.paddingExtraLarge.w,
+                                  Container(
+                                    padding: EdgeInsets.all(
+                                      AppDimensions.paddingExtraLarge.w,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(
+                                        AppDimensions.borderRadiusMedium.r,
                                       ),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(
-                                          AppDimensions.borderRadiusMedium.r,
-                                        ),
-                                        border: Border.all(
-                                          color: AppColors.dividerColor,
-                                          width: 1.w,
-                                          style: BorderStyle.solid,
-                                        ),
-                                        boxShadow: softCardShadow,
-                                        color: AppColors.white,
+                                      border: Border.all(
+                                        color: AppColors.dividerColor,
+                                        width: 1.w,
+                                        style: BorderStyle.solid,
                                       ),
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Expanded(
-                                                child: Text(
-                                                  r'currency'.tr,
+                                      boxShadow: softCardShadow,
+                                      color: AppColors.white,
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                r'currency'.tr,
+                                                style: TextStyle(
+                                                  color: AppColors.blackText,
+                                                  fontSize: 14.sp,
+                                                ),
+                                              ),
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  r'purchase'.tr,
                                                   style: TextStyle(
                                                     color: AppColors.blackText,
                                                     fontSize: 14.sp,
                                                   ),
                                                 ),
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                    r'purchase'.tr,
-                                                    style: TextStyle(
-                                                      color:
-                                                          AppColors.blackText,
-                                                      fontSize: 14.sp,
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    width: AppDimensions
-                                                        .paddingExtraLarge
-                                                        .w,
-                                                  ),
-                                                  Text(
-                                                    r'sale'.tr,
-                                                    style: TextStyle(
-                                                      color:
-                                                          AppColors.blackText,
-                                                      fontSize: 14.sp,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-
-                                          ListView.builder(
-                                            physics:
-                                                NeverScrollableScrollPhysics(),
-                                            shrinkWrap: true,
-                                            itemCount:
-                                                controller.exchange.length,
-                                            itemBuilder: (context, index) {
-                                              return Padding(
-                                                padding: EdgeInsets.only(
-                                                  top: AppDimensions
+                                                SizedBox(
+                                                  width: AppDimensions
                                                       .paddingExtraLarge
-                                                      .h,
+                                                      .w,
                                                 ),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Row(
-                                                      children: [
-                                                        Image.network(
-                                                          controller
-                                                                  .exchange[index]
-                                                              .imageUrl ??
-                                                              '',
-                                                          width: 28.w,
-                                                          height: 20.h,
+                                                Text(
+                                                  r'sale'.tr,
+                                                  style: TextStyle(
+                                                    color: AppColors.blackText,
+                                                    fontSize: 14.sp,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+
+                                        ListView.builder(
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
+                                          shrinkWrap: true,
+                                          itemCount: controller.exchange.length,
+                                          itemBuilder: (context, index) {
+                                            return Padding(
+                                              padding: EdgeInsets.only(
+                                                top: AppDimensions
+                                                    .paddingExtraLarge
+                                                    .h,
+                                              ),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Image.network(
+                                                        controller
+                                                                .exchange[index]
+                                                                .imageUrl ??
+                                                            '',
+                                                        width: 28.w,
+                                                        height: 20.h,
+                                                      ),
+                                                      SizedBox(width: 4.w),
+                                                      Text(
+                                                        controller
+                                                                .exchange[index]
+                                                                .currency ??
+                                                            '',
+                                                        style: TextStyle(
+                                                          color: AppColors
+                                                              .blackText,
+                                                          fontSize: 14.sp,
                                                         ),
-                                                        SizedBox(width: 4.w),
-                                                        Text(
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      SizedBox(
+                                                        width: AppDimensions
+                                                            .padding60
+                                                            .w,
+                                                        child: Text(
+                                                          textAlign:
+                                                              TextAlign.end,
                                                           controller
                                                                   .exchange[index]
-                                                                  .currency ??
+                                                                  .purchase ??
                                                               '',
                                                           style: TextStyle(
                                                             color: AppColors
@@ -637,68 +661,44 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             fontSize: 14.sp,
                                                           ),
                                                         ),
-                                                      ],
-                                                    ),
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        SizedBox(
-                                                          width: AppDimensions
-                                                              .padding60
-                                                              .w,
-                                                          child: Text(
-                                                            textAlign:
-                                                                TextAlign.end,
-                                                            controller
-                                                                    .exchange[index]
-                                                                    .purchase ??
-                                                                '',
-                                                            style: TextStyle(
-                                                              color: AppColors
-                                                                  .blackText,
-                                                              fontSize: 14.sp,
-                                                            ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: AppDimensions
+                                                            .paddingSuperExtraLarge
+                                                            .w,
+                                                      ),
+                                                      SizedBox(
+                                                        width: AppDimensions
+                                                            .padding60
+                                                            .w,
+                                                        child: Text(
+                                                          textAlign:
+                                                              TextAlign.end,
+                                                          controller
+                                                                  .exchange[index]
+                                                                  .sale ??
+                                                              '',
+                                                          style: TextStyle(
+                                                            color: AppColors
+                                                                .blackText,
+                                                            fontSize: 14.sp,
                                                           ),
                                                         ),
-                                                        SizedBox(
-                                                          width: AppDimensions
-                                                              .paddingSuperExtraLarge
-                                                              .w,
-                                                        ),
-                                                        SizedBox(
-                                                          width: AppDimensions
-                                                              .padding60
-                                                              .w,
-                                                          child: Text(
-                                                            textAlign:
-                                                                TextAlign.end,
-                                                            controller
-                                                                    .exchange[index]
-                                                                    .sale ??
-                                                                '',
-                                                            style: TextStyle(
-                                                              color: AppColors
-                                                                  .blackText,
-                                                              fontSize: 14.sp,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                        ],
-                                      ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ],
                                     ),
-                                  ],
+                                  ),
                                 ],
-                              ),
+                              ],
                             ),
+                          ),
                         ],
                       );
               },
@@ -985,9 +985,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: EdgeInsets.symmetric(
                     vertical: AppDimensions.paddingMedium.h,
                   ),
-                  margin: EdgeInsets.only(
-                    right: AppDimensions.marginMedium.w,
-                  ),
+                  margin: EdgeInsets.only(right: AppDimensions.marginMedium.w),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(
                       AppDimensions.borderRadiusMedium.r,
@@ -1350,11 +1348,30 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   List<BoxShadow> softCardShadow = [
-    BoxShadow(offset: Offset(0, 2), blurRadius: 4, color: Color(0xFFD5D9D3).withOpacity(0.39)),
-    BoxShadow(offset: Offset(0, 7), blurRadius: 7, color: Color(0xFFD5D9D3).withOpacity(0.34)),
-    BoxShadow(offset: Offset(0, 16), blurRadius: 10, color: Color(0xFFD5D9D3).withOpacity(0.20)),
-    BoxShadow(offset: Offset(0, 29), blurRadius: 12, color: Color(0xFFD5D9D3).withOpacity(0.06)),
-    BoxShadow(offset: Offset(0, 45), blurRadius: 13, color: Color(0xFFD5D9D3).withOpacity(0.01)),
+    BoxShadow(
+      offset: Offset(0, 2),
+      blurRadius: 4,
+      color: Color(0xFFD5D9D3).withOpacity(0.39),
+    ),
+    BoxShadow(
+      offset: Offset(0, 7),
+      blurRadius: 7,
+      color: Color(0xFFD5D9D3).withOpacity(0.34),
+    ),
+    BoxShadow(
+      offset: Offset(0, 16),
+      blurRadius: 10,
+      color: Color(0xFFD5D9D3).withOpacity(0.20),
+    ),
+    BoxShadow(
+      offset: Offset(0, 29),
+      blurRadius: 12,
+      color: Color(0xFFD5D9D3).withOpacity(0.06),
+    ),
+    BoxShadow(
+      offset: Offset(0, 45),
+      blurRadius: 13,
+      color: Color(0xFFD5D9D3).withOpacity(0.01),
+    ),
   ];
-
 }

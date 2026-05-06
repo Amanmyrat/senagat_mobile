@@ -53,6 +53,7 @@ class AppAssets {
 
   static const reference = 'assets/icons/ReferenceIcon.svg';
   static const creditIcon = 'assets/icons/creditIcon.svg';
+  static const cardIcon = 'assets/icons/card.svg';
 
   static const navigationCreditCardIcon = 'assets/icons/CreditCard.svg';
   static const navigationSettingIcon = 'assets/icons/GearSix.svg';
@@ -67,8 +68,6 @@ class AppAssets {
   static const sandClock = 'assets/images/sandClock.png';
   static const threeDCard = 'assets/images/3DCard.png';
   static const threeDPercent = 'assets/images/3DPercent.png';
-  static const paymentCardImage = 'assets/images/payment_card_image.png';
-  static const paymentCardImage2 = 'assets/images/payment_card_image2.png';
   static const astu = 'assets/icons/astu.png';
   static const telecom = 'assets/icons/telecom-logo.png';
   static const tmCell = 'assets/icons/tmCell.png';
