@@ -208,14 +208,21 @@ class _GetCreditScreenState extends State<GetCreditScreen> {
                                       SizedBox(
                                         height: AppDimensions.paddingMedium.h,
                                       ),
-                                      Slider(
-                                        value: controller.currentValue,
-                                        onChanged: (value) {
-                                          controller.updateText(value);
-                                          },
-                                        inactiveColor: AppColors.lightGreen,
-                                        min: controller.minAmount,
+                                      SliderTheme(
+                                        data: SliderTheme.of(context).copyWith(
+                                          tickMarkShape: SliderTickMarkShape.noTickMark,
+                                        ),
+                                        child: Slider(
+                                          value: controller.currentValue,
+                                          min: controller.minAmount,
                                           max: controller.maxAmount,
+                                          divisions: ((controller.maxAmount - controller.minAmount) ~/ 500),
+                                          onChanged: (value) {
+                                            final steppedValue = (value / 500).round() * 500;
+                                            controller.updateText(steppedValue.toDouble());
+                                          },
+                                          inactiveColor: AppColors.lightGreen,
+                                        ),
                                       ),
 
                                       SizedBox(

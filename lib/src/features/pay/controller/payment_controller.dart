@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
@@ -169,9 +171,13 @@ class PaymentController extends GetxController with StateControlMixin {
     if (serviceIcon == AppAssets.alemTv) {
       final account = alemAccountController.text;
 
-      if (alemAccountController.text.startsWith('dalem-')) {
-        alemType = 'iptv';
-        getAlemTariffs();
+      if (account.startsWith('dalem-')) {
+        final suffix = account.substring(6);
+
+        if (suffix.isNotEmpty) {
+          alemType = 'iptv';
+          getAlemTariffs();
+        }
       } else if (!alemAccountController.text.startsWith('dalem') && account.length == 10) {
         alemType = 'tv';
         getAlemTariffs();
@@ -185,6 +191,16 @@ class PaymentController extends GetxController with StateControlMixin {
     }
 
     update();
+  }
+
+  Timer? _debounce;
+
+  void onAlemChanged(String value) {
+    _debounce?.cancel();
+
+    _debounce = Timer(const Duration(milliseconds: 1000), () {
+      isTextNotEmpty();
+    });
   }
 
   Future<void> getAlemTariffs() async {

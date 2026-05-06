@@ -915,7 +915,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Get.toNamed(ServiceSettingsScreen.route);
                 },
                 child: Text(
-                  r'tune'.tr,
+                  r'edit'.tr,
                   style: TextStyle(
                     color: AppColors.green,
                     fontSize: 14.sp,

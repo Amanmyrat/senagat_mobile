@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
-import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/api_error_handler.dart';
 import '../../../utils/theme/constants/app_colors.dart';
@@ -41,11 +40,6 @@ class CardController extends GetxController with StateControlMixin {
   }
 
 
-  void onNotificationScanTap() {
-    lastTap = CardTapType.notification;
-    update();
-    Get.toNamed(NotificationsScreen.route);
-  }
 
   void getUserProfileInfo() async {
     if (accountLoginStatusController.accountLoginStatus.value ==

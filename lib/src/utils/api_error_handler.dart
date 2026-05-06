@@ -1,7 +1,5 @@
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/utils/services/error_utils.dart';
-import '../core/networking/custom_exception.dart';
-import '../features/no_internet/presentation/no_internet_screen.dart';
 import '../utils/services/show_snack.dart';
 
 class ApiErrorHandler {

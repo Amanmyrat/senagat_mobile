@@ -27,7 +27,7 @@ class AlemPaymentScreen extends StatelessWidget {
 
             alemPaymentField(controller),
 
-            if(controller.selectedPaymentOption != null)
+            if(controller.tariff != null && controller.tariff!.paymentOptions.isNotEmpty)
               alemTariffPicker(controller),
 
           ],

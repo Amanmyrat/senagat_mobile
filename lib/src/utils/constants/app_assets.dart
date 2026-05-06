@@ -11,12 +11,10 @@ class AppAssets {
   static const eyeIcon = 'assets/icons/Eye.svg';
   static const eyeSlashIcon = 'assets/icons/EyeSlash.svg';
   static const globeIcon = 'assets/icons/Globe.svg';
-  static const magnIcon = 'assets/icons/magn.svg';
   static const plusIcon = 'assets/icons/Plus.svg';
   static const arrowLeftIcon = 'assets/icons/arrow_left.svg';
   static const arrowRightIcon = 'assets/icons/CaretRight.svg';
   static const infoIcon = 'assets/icons/Info.svg';
-  static const broomIcon = 'assets/icons/Broom.svg';
   static const plusCircleIcon = 'assets/icons/PlusCircle.svg';
   static const minusCircleIcon = 'assets/icons/MinusCircle.svg';
   static const listIcon = 'assets/icons/List.svg';

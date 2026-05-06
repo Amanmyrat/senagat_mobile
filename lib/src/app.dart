@@ -20,9 +20,6 @@ import 'package:senagat_mobile/src/features/inquiries_list/presentation/inquirie
 import 'package:senagat_mobile/src/features/lang_settings/presentation/lang_settings_screen.dart';
 import 'package:senagat_mobile/src/features/loan/presentation/loan_screen.dart';
 import 'package:senagat_mobile/src/features/net_and_tv/presentation/net_and_tv_screen.dart';
-import 'package:senagat_mobile/src/features/no_internet/presentation/no_internet_screen.dart';
-import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
-import 'package:senagat_mobile/src/features/notifications_settings/presentation/notifications_settings_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/alem_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/astu_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/belet_payment_screen.dart';
@@ -35,7 +32,6 @@ import 'package:senagat_mobile/src/features/profile/controller/profile_controlle
 import 'package:senagat_mobile/src/features/register/presentation/register_screen.dart';
 import 'package:senagat_mobile/src/features/register_confirmation/presentation/register_confirmation.dart';
 import 'package:senagat_mobile/src/features/register_password_setup/presentation/register_password_setup_screen.dart';
-import 'package:senagat_mobile/src/features/accounts/presentation/accounts_screen.dart';
 import 'package:senagat_mobile/src/features/service_settings/controller/service_settings_controller.dart';
 import 'package:senagat_mobile/src/features/service_settings/presentation/service_settings_screen.dart';
 import 'package:senagat_mobile/src/features/welcome/presentation/welcome_screen.dart';
@@ -53,7 +49,6 @@ import 'features/dashboard/controller/dashboard_controller.dart';
 import 'features/dashboard/presentation/dashboard_screen.dart';
 import 'features/get_card/presentation/get_card_screen.dart';
 import 'features/inquiries/presentation/inquiries_screen.dart';
-import 'features/no_internet/controller/internet_checker.dart';
 import 'features/payment_history/presentation/payment_history_screen.dart';
 import 'features/payment_verification/presentation/payment_verification_screen.dart';
 import 'features/web_view/presentation/web_view.dart';
@@ -126,10 +121,6 @@ class _SenagatAppState extends State<SenagatApp> {
                 page: () => const WelcomeScreen(),
               ),
               GetPage(
-                name: NotificationsScreen.route,
-                page: () => const NotificationsScreen(),
-              ),
-              GetPage(
                 name: AddCardScreen.route,
                 page: () => AddCardScreen(),
                 binding: AddCardBinding(),
@@ -184,20 +175,12 @@ class _SenagatAppState extends State<SenagatApp> {
                   page: () => const LoanScreen(),
               ),
               GetPage(
-                name: NotificationsSettingsScreen.route,
-                page: () => const NotificationsSettingsScreen(),
-              ),
-              GetPage(
                 name: LangSettingsScreen.route,
                 page: () => const LangSettingsScreen(),
               ),
               GetPage(
                 name: AboutUsScreen.route,
                 page: () => const AboutUsScreen(),
-              ),
-              GetPage(
-                name: AccountScreen.route,
-                page: () => const AccountScreen(),
               ),
               GetPage(
                 name: IdentifyScreen.route,
@@ -244,7 +227,6 @@ class _SenagatAppState extends State<SenagatApp> {
                 page: () => const InquiriesList(),
               ),
               GetPage(name: CreditList.route, page: () => const CreditList()),
-              GetPage(name: NoInternetScreen.route, page: () => const NoInternetScreen()),
               GetPage(name: CheckPhoneBalanceScreen.route, page: () => const CheckPhoneBalanceScreen()),
               GetPage(name: WebViewScreen.route, page: () => const WebViewScreen()),
             ],
@@ -272,6 +254,5 @@ class DashboardBinding extends Bindings {
       ),
     );
     Get.put(ProfileController());
-    Get.put(InternetChecker());
   }
 }

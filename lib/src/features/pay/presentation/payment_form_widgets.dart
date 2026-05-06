@@ -514,18 +514,34 @@ Widget alemPaymentField(PaymentController controller) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Text(
-        r'alem_number'.tr,
-        style: TextStyle(
-          color: AppColors.blackText,
-          fontSize: 14.sp,
-        ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            r'alem_number'.tr,
+            style: TextStyle(
+              color: AppColors.blackText,
+              fontSize: 14.sp,
+            ),
+          ),
+
+          if (controller.isTariffLoading) ...[
+            SizedBox(
+              width: 15.w,
+              height: 15.h,
+              child: CircularProgressIndicator(color: AppColors.green),
+            ),
+          ],
+        ],
       ),
       SizedBox(height: 16.h),
       TextFormField(
         keyboardType: TextInputType.text,
         controller: controller.alemAccountController,
-        onChanged: (value) => controller.isTextNotEmpty(),
+        onChanged: (value) => controller.onAlemChanged(value),
+        onFieldSubmitted: (value) {
+          controller.isTextNotEmpty();
+        },
         style: TextStyle(
           fontSize: 14.sp,
           fontFamily: AppFonts.primaryFont,

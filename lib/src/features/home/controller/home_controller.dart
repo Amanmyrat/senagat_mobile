@@ -12,7 +12,6 @@ import 'package:senagat_mobile/src/features/get_card/presentation/get_card_scree
 import 'package:senagat_mobile/src/features/home/models/exchange_rate_model.dart';
 import 'package:senagat_mobile/src/features/home/models/user_information_model.dart';
 import 'package:senagat_mobile/src/features/home/repository/exchage_rate_repository.dart';
-import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/astu_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/foundation_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
@@ -90,11 +89,6 @@ class HomeController extends GetxController with StateControlMixin {
 
   HomeController(this.repository, this.authRepository, this.paymentRepository);
 
-  void onNotificationScanTap() {
-    lastTap = HomeTapType.notification;
-    update();
-    Get.toNamed(NotificationsScreen.route);
-  }
 
   void onFoundationTap() {
     lastTap = HomeTapType.foundation;

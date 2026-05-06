@@ -8,7 +8,6 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/check_phone_balance/presentation/check_phone_balance.dart';
-import 'package:senagat_mobile/src/features/notifications/presentation/notifications_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/alem_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/astu_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/belet_payment_screen.dart';
@@ -113,11 +112,6 @@ class CategoryController extends GetxController with StateControlMixin {
   }
 
 
-  void onNotificationScanTap() {
-    lastTap = CategoryTapType.notification;
-    update();
-    Get.toNamed(NotificationsScreen.route);
-  }
 
   void saveFastService(FastServiceItem item) {
     /// remove duplicate

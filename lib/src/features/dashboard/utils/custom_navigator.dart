@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:senagat_mobile/src/features/blank/presentation/blank_screen.dart';
 import 'package:senagat_mobile/src/features/home/presentation/home_screen.dart';
 
 class CustomNavigator extends StatelessWidget {
@@ -26,9 +25,6 @@ class CustomNavigator extends StatelessWidget {
       Widget screen;
       switch (settings.name) {
         case HomeScreen.route:
-          screen = initialRoute;
-          break;
-        case BlankScreen.route:
           screen = initialRoute;
           break;
         default:
