@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -12,7 +11,6 @@ import 'package:senagat_mobile/src/features/card_detials/presentation/card_detai
 import 'package:senagat_mobile/src/features/card_settings/presentation/card_settings_screen.dart';
 import 'package:senagat_mobile/src/features/delete_card/presentation/delete_card_screen.dart';
 import 'package:senagat_mobile/src/features/category/presentation/category_screen.dart';
-import 'package:senagat_mobile/src/features/foundation/presentation/foundation_screen.dart';
 import 'package:senagat_mobile/src/features/get_card_details/presentation/get_card_details_screen.dart';
 import 'package:senagat_mobile/src/features/home/controller/home_controller.dart';
 import 'package:senagat_mobile/src/features/home/repository/exchage_rate_repository.dart';
@@ -168,10 +166,6 @@ class _SenagatAppState extends State<SenagatApp> {
               GetPage(
                 name: ServiceSettingsScreen.route,
                 page: () => const ServiceSettingsScreen(),
-              ),
-              GetPage(
-                name: FoundationScreen.route,
-                page: () => const FoundationScreen(),
               ),
               GetPage(
                 name: NetAndTvScreen.route,

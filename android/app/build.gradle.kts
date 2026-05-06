@@ -72,6 +72,8 @@ android {
 }
 
 configurations.all {
+    exclude(group = "androidx.profileinstaller", module = "profileinstaller")
+
     resolutionStrategy {
         force("androidx.appcompat:appcompat:1.7.0")
         force("androidx.appcompat:appcompat-resources:1.7.0")

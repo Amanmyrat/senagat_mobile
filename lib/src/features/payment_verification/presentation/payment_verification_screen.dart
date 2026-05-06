@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
-import 'package:senagat_mobile/src/features/foundation/presentation/foundation_screen.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
 import 'package:senagat_mobile/src/widgets/check_widget.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';

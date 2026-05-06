@@ -21,7 +21,6 @@ import '../../../utils/api_error_handler.dart';
 import '../../../utils/constants/app_assets.dart';
 import '../../../widgets/text_input_masks.dart';
 import '../../check_phone_balance/model/check_balance_model.dart';
-import '../../foundation/presentation/foundation_screen.dart';
 import '../../pay/model/alem_get_tariff_model.dart';
 import '../../pay/repository/payment_repository.dart';
 import '../../service_settings/controller/service_settings_controller.dart';
@@ -118,13 +117,6 @@ class CategoryController extends GetxController with StateControlMixin {
     lastTap = CategoryTapType.notification;
     update();
     Get.toNamed(NotificationsScreen.route);
-  }
-
-
-  void onFoundationTap() {
-    lastTap = CategoryTapType.foundation;
-    update();
-    Get.toNamed(FoundationScreen.route);
   }
 
   void saveFastService(FastServiceItem item) {
