@@ -8,7 +8,6 @@ import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:senagat_mobile/src/features/home/controller/home_controller.dart';
 import 'package:senagat_mobile/src/features/identity_verification/repository/profile_repository.dart';
-import 'package:senagat_mobile/src/features/profile/controller/profile_controller.dart';
 import 'package:senagat_mobile/src/utils/localization/localization_service.dart';
 import 'package:senagat_mobile/src/utils/api_error_handler.dart';
 import 'package:senagat_mobile/src/widgets/text_input_masks.dart';
@@ -64,6 +63,10 @@ class IdentityVerificationController extends GetxController
   final List<String> citySelection = ["AŞ", "AH", "LB", 'MR', 'DZ', 'BN'];
   final List<String> number = ["I", "II", "III", 'IV'];
 
+  final defaultMask = CustomMaskFormatter(
+    mask: '## ######', prefix: '12',
+  );
+
   late List<TextEditingController> controllers;
   File? pdfFile;
 
@@ -116,28 +119,54 @@ class IdentityVerificationController extends GetxController
   }
 
   void parsePassport(String value) {
-    final regex = RegExp(r'^(I|II|III|IV)(AŞ|AH|LB|MR|DŞ)(\d+)$');
+    final regex = RegExp(
+      r'^(I|II|III|IV)-(AŞ|AH|LB|MR|DZ|BN)(\d+)$',
+    );
+
     final match = regex.firstMatch(value);
 
     if (match != null) {
-      parsedRoman = match.group(1)!; // III
-      parsedCity = match.group(2)!; // MR
-      parsedNumbers = match.group(3)!; // 123456
+      parsedRoman = match.group(1)!;
+      parsedCity = match.group(2)!;
+      parsedNumbers = match.group(3)!;
 
       selectedRoman = parsedRoman;
       selectedCity = parsedCity;
     }
   }
 
-  /// VALIDATION
   void onTextIsNotEmpty(String? v) {
-    continueEnabled =
-        controllers.where((c) =>
-        c != homePhoneController &&
-            c != surNameController).every((c) => c.text.isNotEmpty) &&
-            pdfFile != null &&
-            selectedRoman != null &&
-            selectedCity != null;
+    final savedProfile = profileBox.get('currentProfile');
+
+    final isUpdate = savedProfile != null;
+
+    final currentPassport =
+        "${selectedRoman ?? ''}-${selectedCity ?? ''}${passportNumberController.text}";
+
+    final hasChanges =
+        nameController.text != savedProfile?.firstName ||
+            lastNameController.text != savedProfile?.lastName ||
+            surNameController.text != savedProfile?.middleName ||
+            dateOfBirthController.text != savedProfile?.birthDate ||
+            currentPassport != savedProfile?.passportNumber ||
+            dateIssueController.text != savedProfile?.issuedDate ||
+            placeIssueController.text != savedProfile?.issuedBy ||
+            citizenshipController.text != savedProfile?.citizenship ||
+            homePhoneController.text != savedProfile?.homePhone.toString() ||
+            homeAddressController.text != savedProfile?.homeAddress ||
+            pdfFile != null;
+
+    continueEnabled = controllers
+        .where(
+          (c) =>
+      c != homePhoneController &&
+          c != surNameController,
+    )
+        .every((c) => c.text.isNotEmpty) &&
+        selectedRoman != null &&
+        selectedCity != null &&
+        (isUpdate || pdfFile != null) &&
+        (!isUpdate || hasChanges);
 
     update();
   }
@@ -153,9 +182,8 @@ class IdentityVerificationController extends GetxController
       middleName: surNameController.text,
       birthDate: dateOfBirthController.text,
 
-      /// NEW PASSPORT FORMAT
       passportNumber:
-          "${selectedRoman ?? ''}${selectedCity ?? ''}${passportNumberController.text}",
+      "${selectedRoman ?? ''}-${selectedCity ?? ''}${passportNumberController.text}",
 
       issuedDate: dateIssueController.text,
       issuedBy: placeIssueController.text,
@@ -166,34 +194,138 @@ class IdentityVerificationController extends GetxController
     );
   }
 
-  /// START VERIFICATION
-  Future<void> startBankVerification() async {
+  Future<ProfileModel> _getUpdatedProfileModel() async {
+    final savedProfile = profileBox.get('currentProfile');
+
+    dio.MultipartFile? passportFile;
+
+    if (pdfFile != null) {
+      passportFile = await _parseImage();
+    }
+
+    final newPassport =
+        "${selectedRoman ?? ''}-${selectedCity ?? ''}${passportNumberController.text}";
+
+    print(newPassport);
+
+    return ProfileModel(
+      firstName: nameController.text != savedProfile?.firstName
+          ? nameController.text
+          : null,
+
+      lastName: lastNameController.text != savedProfile?.lastName
+          ? lastNameController.text
+          : null,
+
+      middleName: surNameController.text != savedProfile?.middleName
+          ? surNameController.text
+          : null,
+
+      birthDate: dateOfBirthController.text != savedProfile?.birthDate
+          ? dateOfBirthController.text
+          : null,
+
+      passportNumber: newPassport != savedProfile?.passportNumber
+          ? newPassport
+          : null,
+
+      issuedDate: dateIssueController.text != savedProfile?.issuedDate
+          ? dateIssueController.text
+          : null,
+
+      issuedBy: placeIssueController.text != savedProfile?.issuedBy
+          ? placeIssueController.text
+          : null,
+
+      citizenship: citizenshipController.text != savedProfile?.citizenship
+          ? citizenshipController.text
+          : null,
+
+      homePhone:
+      homePhoneController.text != savedProfile?.homePhone.toString()
+          ? int.parse(homePhoneController.text)
+          : null,
+
+      homeAddress: homeAddressController.text != savedProfile?.homeAddress
+          ? homeAddressController.text
+          : null,
+
+      passportScan: passportFile,
+    );
+  }
+
+
+  Future<void> createOrUpdateProfile() async {
     try {
       status = Status.loading;
       update();
 
-      final model = await _getProfileModel();
-      final formData = dio.FormData.fromMap(await model.toMap());
+      final savedProfile = profileBox.get('currentProfile');
 
-      await repository.createProfile(formData);
+      if (savedProfile != null) {
+        final updateModel = await _getUpdatedProfileModel();
+
+        final updateMap = await updateModel.toMap();
+
+        updateMap.removeWhere((key, value) => value == null);
+
+        final updateFormData = dio.FormData.fromMap(updateMap);
+
+        await repository.createProfile(updateFormData);
+      } else {
+        /// CREATE -> send all fields
+        final createModel = await _getProfileModel();
+
+        final createFormData = dio.FormData.fromMap(
+          await createModel.toMap(),
+        );
+
+        await repository.createProfile(createFormData);
+      }
 
       status = Status.completed;
-      await profileBox.put('currentProfile', model);
+
+      final oldProfile = profileBox.get('currentProfile');
+
+      final latestProfile = ProfileModel(
+        firstName: nameController.text,
+        lastName: lastNameController.text,
+        middleName: surNameController.text,
+        birthDate: dateOfBirthController.text,
+        passportNumber:
+        "${selectedRoman ?? ''}-${selectedCity ?? ''}${passportNumberController.text}",
+        issuedDate: dateIssueController.text,
+        issuedBy: placeIssueController.text,
+        citizenship: citizenshipController.text,
+        homePhone: int.parse(homePhoneController.text),
+        homeAddress: homeAddressController.text,
+
+        /// keep server fields
+        status: oldProfile?.status,
+        rejectedText: oldProfile?.rejectedText,
+        passportScan: oldProfile?.passportScan,
+      );
+
+      await profileBox.put('currentProfile', latestProfile);
 
       final dashboardController = Get.find<DashboardController>();
-      final profileController = Get.find<ProfileController>();
       final homeController = Get.find<HomeController>();
 
       homeController.getUserProfileInfo();
 
-      dashboardController.updateCurrentIndex(NestedNavigationIds.settings);
-      dashboardController.updateCurrentIndex(NestedNavigationIds.home);
+      dashboardController.updateCurrentIndex(
+        NestedNavigationIds.settings,
+      );
+
+      dashboardController.updateCurrentIndex(
+        NestedNavigationIds.home,
+      );
 
       update();
 
       Navigator.of(Get.context!).pushNamedAndRemoveUntil(
         DashboardScreen.route,
-        (Route<dynamic> route) => false,
+            (Route<dynamic> route) => false,
       );
     } catch (e) {
       status = Status.error;
@@ -218,21 +350,27 @@ class IdentityVerificationController extends GetxController
     }
   }
 
-  Future<dio.MultipartFile> _parseImage() async {
+  Future<dio.MultipartFile?> _parseImage() async {
+    if (pdfFile == null) return null;
+
     final fileName = pdfFile!.path.split('/').last;
-    return dio.MultipartFile.fromFile(pdfFile!.path, filename: fileName);
+
+    return dio.MultipartFile.fromFile(
+      pdfFile!.path,
+      filename: fileName,
+    );
   }
 
   /// UPDATE DROPDOWNS
   void setDropdownCity(String? value) {
     selectedCity = value;
-    onTextIsNotEmpty(value);
+    onTextIsNotEmpty(null);
     update();
   }
 
   void setDropdownNumber(String? value) {
     selectedRoman = value;
-    onTextIsNotEmpty(value);
+    onTextIsNotEmpty(null);
     update();
   }
 
