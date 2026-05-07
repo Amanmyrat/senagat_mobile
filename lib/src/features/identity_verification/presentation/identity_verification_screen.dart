@@ -116,7 +116,7 @@ class _IdentityVerificationScreenState
                         isLoading: controller.status == Status.loading,
                         isError: controller.status == Status.error,
                         onPressed: controller.continueEnabled
-                            ? () => controller.startBankVerification()
+                            ? () => controller.createOrUpdateProfile()
                             : null,
                         child: Text(
                           'confirm'.tr,
@@ -333,7 +333,7 @@ class _IdentityVerificationScreenState
               Expanded(
                 child: TextFormField(
                   controller: controller.homePhoneController,
-                  maxLength: 10,
+                  inputFormatters: [controller.defaultMask],
                   keyboardType: TextInputType.number,
                   onChanged: controller.onTextIsNotEmpty,
                   style: TextStyle(fontSize: 14.sp),
