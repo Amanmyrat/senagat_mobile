@@ -161,11 +161,13 @@ class PaymentController extends GetxController with StateControlMixin {
           phoneController.text.length >= 6 &&
               isValidSum &&
               selectedCard != null;
+      update();
     } else {
       continueEnabled =
           phoneController.text.length >= 8 &&
               isValidSum &&
               selectedCard != null;
+      update();
     }
 
     if (serviceIcon == AppAssets.alemTv) {
@@ -178,18 +180,29 @@ class PaymentController extends GetxController with StateControlMixin {
           alemType = 'iptv';
           getAlemTariffs();
         }
+        if(alemAccountController.text.length > 6 && selectedPaymentOption != null && selectedCard != null){
+          continueEnabled = true;
+        }else{
+          continueEnabled = false;
+        }
       } else if (!alemAccountController.text.startsWith('dalem') && account.length == 10) {
         alemType = 'tv';
         getAlemTariffs();
+        if(alemAccountController.text.isNotEmpty && selectedPaymentOption != null && selectedCard != null){
+          continueEnabled = true;
+        }else{
+          continueEnabled = false;
+        }
       }
 
-      if(alemAccountController.text.isNotEmpty && selectedPaymentOption != null && selectedCard != null){
-        continueEnabled = true;
-      }else{
-        continueEnabled = false;
-      }
+
+      update([
+        'alem_loading',
+        'alem_status',
+        'tariff_picker',
+      ]);
     }
-
+    update(['continue_button']);
     update();
   }
 
@@ -211,8 +224,11 @@ class PaymentController extends GetxController with StateControlMixin {
         !isTariffLoading) {
       lastRequestedAccount = account;
       isTariffLoading = true;
-      update();
-
+      update([
+        'alem_loading',
+        'alem_status',
+        'tariff_picker',
+      ]);
       try {
         tariff = await repository.alemGetTariff(
           data: {
@@ -231,8 +247,11 @@ class PaymentController extends GetxController with StateControlMixin {
 
       isTariffLoading = false;
     }
-    update();
-  }
+    update([
+      'alem_loading',
+      'alem_status',
+      'tariff_picker',
+    ]);  }
 
   Future<void> onTap() async {
      onPayTap();
@@ -327,6 +346,7 @@ class PaymentController extends GetxController with StateControlMixin {
     lastnameController.dispose();
     accountController.dispose();
     pageController.dispose();
+    alemAccountController.dispose();
 
     super.dispose();
   }

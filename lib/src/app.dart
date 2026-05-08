@@ -220,7 +220,7 @@ class _SenagatAppState extends State<SenagatApp> {
               ),
               GetPage(
                 name: AlemPaymentScreen.route,
-                page: () => const AlemPaymentScreen(),
+                page: () => AlemPaymentScreen(),
               ),
               GetPage(
                 name: InquiriesList.route,

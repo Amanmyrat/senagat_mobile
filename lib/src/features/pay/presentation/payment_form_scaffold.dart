@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
+import 'package:senagat_mobile/src/features/pay/controller/alem_payment_controller.dart';
 import 'package:senagat_mobile/src/features/pay/controller/payment_controller.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/payment_form_widgets.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
@@ -114,32 +115,33 @@ class PaymentFormScaffold extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsets.all(
-                                AppDimensions.paddingExtraLarge.w,
-                              ),
-                              child: Opacity(
-                                opacity: controller.continueEnabled ? 1.0 : 0.5,
-                                child: SizedBox(
-                                  width: MediaQuery.of(context).size.width,
-                                  child: ElevatedButtonWithState(
-                                    isLoading:
-                                        controller.status == Status.loading,
-                                    isError: controller.status == Status.error,
-                                    onPressed: controller.continueEnabled
-                                        ? onPayPressed
-                                        : null,
-                                    child: Text(
-                                      r'pay'.tr,
-                                      style: TextStyle(
-                                        fontSize: 14.sp,
-                                        color: AppColors.white,
-                                        fontFamily: AppFonts.primaryFont,
+                            GetBuilder<PaymentController>(
+                              id: 'continue_button',
+                              init: controller,
+                              global: false,
+                              builder: (c) {
+                                return Padding(
+                                  padding: EdgeInsets.all(
+                                    AppDimensions.paddingExtraLarge.w,
+                                  ),
+                                  child: Opacity(
+                                    opacity: c.continueEnabled ? 1.0 : 0.5,
+                                    child: SizedBox(
+                                      width: MediaQuery.of(context).size.width,
+                                      child: ElevatedButtonWithState(
+                                        isLoading: c.status == Status.loading,
+                                        isError: c.status == Status.error,
+                                        onPressed: c.continueEnabled
+                                            ? onPayPressed
+                                            : null,
+                                        child: Text(
+                                          r'pay'.tr,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ),
+                                );
+                              },
                             ),
                           ],
                         ),

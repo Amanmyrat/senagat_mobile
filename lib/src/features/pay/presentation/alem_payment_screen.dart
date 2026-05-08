@@ -9,32 +9,52 @@ import 'package:senagat_mobile/src/features/pay/repository/payment_repository.da
 class AlemPaymentScreen extends StatelessWidget {
   static const route = r'/payment/alemTV';
 
-  const AlemPaymentScreen({super.key});
+  AlemPaymentScreen({super.key});
+
+  final AlemPaymentController controller = Get.put(
+    AlemPaymentController(
+      PaymentRepository(apiService: ApiServices.apiService),
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AlemPaymentController>(
-      init: AlemPaymentController(
-        PaymentRepository(apiService: ApiServices.apiService),
-      ),
-      builder: (controller) {
-        return PaymentFormScaffold(
-          controller: controller,
-          title: controller.serviceName.tr,
-          formChildren: [
-            if(controller.tariff != null)
-              alemStatusWidget(controller),
+    return PaymentFormScaffold(
+      controller: controller,
+      title: controller.serviceName.tr,
+      formChildren: [
 
-            alemPaymentField(controller),
+        GetBuilder<AlemPaymentController>(
+          id: 'alem_status',
+          init: controller,
+          global: false,
+          builder: (_) {
+            if(controller.tariff != null){
 
-            if(controller.tariff != null && controller.tariff!.paymentOptions.isNotEmpty)
-              alemTariffPicker(controller),
+            return alemStatusWidget(controller);
+            }
+            return const SizedBox();
 
-          ],
-          onPayPressed: controller.onTap,
-        );
-      },
+          },
+        ),
+
+        alemPaymentField(controller),
+
+        GetBuilder<AlemPaymentController>(
+          id: 'tariff_picker',
+          init: controller,
+          global: false,
+          builder: (_) {
+            if (controller.tariff != null &&
+                controller.tariff!.paymentOptions.isNotEmpty) {
+              return alemTariffPicker(controller);
+            }
+
+            return const SizedBox();
+          },
+        ),
+      ],
+      onPayPressed: controller.onTap,
     );
   }
 }
-

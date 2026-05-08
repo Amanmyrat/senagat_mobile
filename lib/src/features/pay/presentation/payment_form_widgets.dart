@@ -14,6 +14,8 @@ import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
 import 'package:senagat_mobile/src/widgets/elevated_button_with_state.dart';
 
+import '../controller/alem_payment_controller.dart';
+
 Future<CardModel?> showPaymentCardBottomSheet(PaymentController controller) {
   return showModalBottomSheet<CardModel>(
     isScrollControlled: true,
@@ -525,13 +527,24 @@ Widget alemPaymentField(PaymentController controller) {
             ),
           ),
 
-          if (controller.isTariffLoading) ...[
-            SizedBox(
-              width: 15.w,
-              height: 15.h,
-              child: CircularProgressIndicator(color: AppColors.green),
-            ),
-          ],
+          GetBuilder<PaymentController>(
+            id: 'alem_loading',
+            init: controller,
+            global: false,
+            builder: (c) {
+              if (!c.isTariffLoading) {
+                return const SizedBox();
+              }
+
+              return SizedBox(
+                width: 15.w,
+                height: 15.h,
+                child: CircularProgressIndicator(
+                  color: AppColors.green,
+                ),
+              );
+            },
+          ),
         ],
       ),
       SizedBox(height: 16.h),
@@ -539,9 +552,6 @@ Widget alemPaymentField(PaymentController controller) {
         keyboardType: TextInputType.text,
         controller: controller.alemAccountController,
         onChanged: (value) => controller.onAlemChanged(value),
-        onFieldSubmitted: (value) {
-          controller.isTextNotEmpty();
-        },
         style: TextStyle(
           fontSize: 14.sp,
           fontFamily: AppFonts.primaryFont,
@@ -549,7 +559,6 @@ Widget alemPaymentField(PaymentController controller) {
         decoration: InputDecoration(
           hintText: r'dalem-xxxx | 2100xxxx',
           fillColor: AppColors.inputFillBackground,
-
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(
               AppDimensions.borderRadiusMedium,

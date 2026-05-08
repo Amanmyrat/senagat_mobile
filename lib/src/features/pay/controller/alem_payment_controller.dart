@@ -2,7 +2,6 @@
 
 import 'package:senagat_mobile/src/features/pay/controller/payment_controller.dart';
 import 'package:senagat_mobile/src/features/pay/model/alem_top_up_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/states/stateful_data.dart';
 import '../../../utils/api_error_handler.dart';
