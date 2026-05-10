@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/features/category/model/fast_service_model.dart';
 import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
+import 'package:senagat_mobile/src/features/dashboard/utils/nested_nav_ids.dart';
 import 'package:senagat_mobile/src/features/home/controller/home_controller.dart';
 import '../../../core/control_state_variable_mixin.dart';
 import '../../../core/local/key_value_storage_service.dart';
@@ -12,6 +13,7 @@ import '../../../utils/theme/constants/app_colors.dart';
 import '../../add_card/model/card_model.dart';
 import '../../auth/controller/account_status_controller.dart';
 import '../../card/controller/card_controller.dart';
+import '../../category/controller/category_controller.dart';
 import '../../dashboard/controller/dashboard_controller.dart';
 import '../../identity_verification/models/profile_model.dart';
 import '../../pay/model/pay_model.dart';
@@ -75,6 +77,14 @@ class IdentificationController extends GetxController with StateControlMixin {
       final cardController = Get.find<CardController>();
       cardController.userInformationModel = null;
       cardController.update();
+    } catch (e) {
+      // CardController might not be initialized yet, ignore
+    }
+
+    try {
+      final categoryController = Get.find<CategoryController>();
+      categoryController.selected.clear();
+      categoryController.update();
     } catch (e) {
       // CardController might not be initialized yet, ignore
     }

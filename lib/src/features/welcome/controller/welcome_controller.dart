@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:senagat_mobile/src/features/category/controller/category_controller.dart';
 import 'package:senagat_mobile/src/features/register/presentation/register_screen.dart';
 import '../../../core/control_state_variable_mixin.dart';
 import '../../../core/states/stateful_data.dart';
@@ -7,7 +8,9 @@ import '../../../utils/localization/localization_service.dart';
 import '../../../utils/localization/controller/language_controller.dart';
 import '../../add_card/model/card_model.dart';
 import '../../card/controller/card_controller.dart';
+import '../../category/model/fast_service_model.dart';
 import '../../dashboard/controller/dashboard_controller.dart';
+import '../../dashboard/utils/nested_nav_ids.dart';
 import '../../home/controller/home_controller.dart';
 import '../../identity_verification/models/profile_model.dart';
 import '../../pay/model/pay_model.dart';
@@ -22,6 +25,7 @@ class WelcomeController extends GetxController with StateControlMixin {
   final phoneBox = Hive.box<String>('phoneBox');
   final cardsBox = Hive.box<CardModel>('cardsBox');
   final fastOperation = Hive.box('fastOperations');
+  final fastService = Hive.box<FastServiceItem>('fastServices');
   final paymentBox = Hive.box<PayModel>('payBox');
 
   final homeController = Get.find<HomeController>();
@@ -44,6 +48,7 @@ class WelcomeController extends GetxController with StateControlMixin {
     phoneBox.clear();
     cardsBox.clear();
     fastOperation.clear();
+    fastService.clear();
     paymentBox.clear();
 
     try {
@@ -64,6 +69,13 @@ class WelcomeController extends GetxController with StateControlMixin {
       final cardController = Get.find<CardController>();
       cardController.userInformationModel = null;
       cardController.update();
+    } catch (e) {
+    }
+
+    try {
+      final categoryController = Get.find<CategoryController>();
+      categoryController.selected.clear();
+      categoryController.update();
     } catch (e) {
     }
 
