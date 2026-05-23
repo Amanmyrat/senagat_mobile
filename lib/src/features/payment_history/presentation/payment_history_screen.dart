@@ -317,9 +317,7 @@ void _showFilterBottomSheet(
                     childAspectRatio: 2.7,
                   ),
                   itemBuilder: (_, index) {
-                    final type = controller.paymentsTitle[index];
-                    final isSelected =
-                    controller.selectedTypes.contains(type);
+                    final type = controller.paymentsTypes[index];
 
                     return GestureDetector(
                       onTap: () {

@@ -23,14 +23,12 @@ class PaymentHistoryController extends GetxController
 
   late TabController tabController;
   int selectedTabIndex = 0;
-  Set<String> selectedTypes = {};
-
 
   /// FILTER STATE
   PaymentStatus selectedStatus = PaymentStatus.all;
-  String? selectedType = 'all';
+  Set<String> selectedTypes = {};
 
-  /// YOUR TYPES
+  /// PAYMENT ICONS
   final List<String> paymentsIcons = [
     AppAssets.foundation,
     AppAssets.tmCell,
@@ -40,12 +38,25 @@ class PaymentHistoryController extends GetxController
     AppAssets.astu,
     AppAssets.telecom,
     AppAssets.beletIcon,
-    // AppAssets.policeCar,
     AppAssets.alemTv,
   ];
 
+  /// REAL BACKEND TYPES
+  /// Use these values for filtering.
+  final List<String> paymentsTypes = [
+    'charity',
+    'tmcell',
+    'cdma',
+    'astu iptv',
+    'astu phone',
+    'astu internet',
+    'telecom',
+    'belet',
+    'alem_tv',
+  ];
 
-
+  /// DISPLAY TITLES
+  /// Use these values only for UI text.
   final List<String> paymentsTitle = [
     'charity',
     'tmcell',
@@ -55,10 +66,8 @@ class PaymentHistoryController extends GetxController
     'astu internet',
     'telecom',
     'belet',
-    // 'state_traffic_safety_inspectorate',
     'ÄlemTv',
   ];
-
 
   final List<MapEntry<String, PaymentStatus>> statusTabs = [
     MapEntry('all', PaymentStatus.all),
@@ -68,7 +77,8 @@ class PaymentHistoryController extends GetxController
 
   @override
   void onInit() {
-    _loadHistory();
+    super.onInit();
+
     tabController = TabController(
       length: statusTabs.length,
       vsync: this,
@@ -76,25 +86,18 @@ class PaymentHistoryController extends GetxController
 
     tabController.addListener(() {
       if (!tabController.indexIsChanging) {
-        final status =
-            statusTabs[tabController.index].value;
+        final status = statusTabs[tabController.index].value;
         setStatusFilter(status);
       }
     });
 
-    super.onInit();
+    _loadHistory();
   }
 
-  void selectSingleType(String type) {
-    selectedTypes.clear();
-    selectedTypes.add(type);
-    update();
-  }
-
-  void clearTypes() {
-    selectedTypes.clear();
-    applyFilters();
-    Get.back();
+  @override
+  void onClose() {
+    tabController.dispose();
+    super.onClose();
   }
 
   Future<void> _loadHistory() async {
@@ -104,6 +107,7 @@ class PaymentHistoryController extends GetxController
     try {
       history = await repository.getPaymentHistory();
       filteredHistory = List.from(history);
+
       status = Status.completed;
       update();
     } catch (e) {
@@ -111,6 +115,30 @@ class PaymentHistoryController extends GetxController
       update();
       ApiErrorHandler.handleApiError(e);
     }
+  }
+
+  /// SELECT ONE TYPE
+  void selectSingleType(String type) {
+    selectedTypes.clear();
+
+    if (type != 'all') {
+      selectedTypes.add(type);
+    }
+
+    applyFilters();
+  }
+
+  /// CLEAR TYPE FILTERS
+  void clearTypes() {
+    selectedTypes.clear();
+    applyFilters();
+    Get.back();
+  }
+
+  /// SET STATUS FILTER
+  void setStatusFilter(PaymentStatus status) {
+    selectedStatus = status;
+    applyFilters();
   }
 
   /// APPLY FILTERS
@@ -122,7 +150,8 @@ class PaymentHistoryController extends GetxController
 
       final typeMatch = selectedTypes.isEmpty
           ? true
-          : selectedTypes.contains(item.type);
+          : selectedTypes.contains(item.type) ||
+          _alemTvTypeMatch(item.type);
 
       return statusMatch && typeMatch;
     }).toList();
@@ -130,22 +159,22 @@ class PaymentHistoryController extends GetxController
     update();
   }
 
-  /// SETTERS
-  void setStatusFilter(PaymentStatus status) {
-    selectedStatus = status;
-    applyFilters();
+  /// ÄlemTv backend compatibility
+  /// Use this only if backend can return both alem_tv and alem_iptv.
+  bool _alemTvTypeMatch(String? itemType) {
+    if (!selectedTypes.contains('alem_tv')) {
+      return false;
+    }
+
+    return itemType == 'alem_tv' || itemType == 'alem_iptv';
   }
 
-  void setTypeFilter(String? type) {
-    selectedType = type;
-    applyFilters();
-  }
-
-  /// RESET
+  /// RESET FILTERS
   void resetFilters() {
     selectedStatus = PaymentStatus.all;
-    selectedType = null;
+    selectedTypes.clear();
     filteredHistory = List.from(history);
+    tabController.index = 0;
     update();
   }
 
@@ -178,7 +207,7 @@ class PaymentHistoryController extends GetxController
         return '+$value';
       case 'astu iptv':
         return '12$value';
-      case 'astu value':
+      case 'astu phone':
         return '12$value';
       case 'cdma':
         return value;
@@ -191,9 +220,10 @@ class PaymentHistoryController extends GetxController
       case 'alem_tv':
         return value;
       default:
-        return AppAssets.deviceMobileIcon;
+        return value;
     }
   }
+
   String iconByType(String type) {
     switch (type) {
       case 'tmcell':
@@ -212,9 +242,9 @@ class PaymentHistoryController extends GetxController
         return AppAssets.astu;
       case 'telecom':
         return AppAssets.telecom;
-        case 'alem_iptv':
+      case 'alem_iptv':
         return AppAssets.alemTv;
-        case 'alem_tv':
+      case 'alem_tv':
         return AppAssets.alemTv;
       default:
         return AppAssets.deviceMobileIcon;
@@ -239,13 +269,12 @@ class PaymentHistoryController extends GetxController
         return 'astu_internet'.tr;
       case 'telecom':
         return 'telecom_internet'.tr;
-        case 'alem_iptv':
+      case 'alem_iptv':
         return 'ÄlemTv'.tr;
-        case 'alem_tv':
+      case 'alem_tv':
         return 'ÄlemTv'.tr;
       default:
-        return AppAssets.deviceMobileIcon;
+        return type;
     }
   }
 }
-
