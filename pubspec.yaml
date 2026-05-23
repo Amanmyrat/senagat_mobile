@@ -3,7 +3,7 @@ description: "Senagat bank mobile app"
 
 publish_to: 'none'
 
-version: 10.1.9+2
+version: 11.0.0+1
 
 environment:
   sdk: ^3.8.1
