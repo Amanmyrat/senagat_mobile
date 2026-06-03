@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -185,7 +186,7 @@ class AddCardScreen extends StatelessWidget {
                                             AppDimensions.borderRadiusMedium,
                                           ),
                                           borderSide: BorderSide(
-                                            color: AppColors.green,
+                                            color: controller.isValidCardNumber(controller.cardNumberController.text)? AppColors.green : AppColors.redDark,
                                             width: 1.w,
                                           ),
                                         ),
@@ -194,7 +195,7 @@ class AddCardScreen extends StatelessWidget {
                                             AppDimensions.borderRadiusMedium,
                                           ),
                                           borderSide: BorderSide(
-                                            color: AppColors.white,
+                                            color: controller.isValidCardNumber(controller.cardNumberController.text)? AppColors.white : AppColors.redDark,
                                             width: 1.w,
                                           ),
                                         ),
@@ -258,10 +259,18 @@ class AddCardScreen extends StatelessWidget {
                                         TextField(
                                           keyboardType:
                                           TextInputType.text,
+                                          textCapitalization: TextCapitalization.characters,
                                           controller:
                                           controller.nameController,
                                           onChanged: (value) =>
                                               controller.update(),
+                                          inputFormatters: [
+                                            TextInputFormatter.withFunction((oldValue, newValue) {
+                                              return newValue.copyWith(
+                                                text: newValue.text.toUpperCase(),
+                                              );
+                                            }),
+                                          ],
                                           textInputAction:
                                           TextInputAction.next,
                                           style: TextStyle(

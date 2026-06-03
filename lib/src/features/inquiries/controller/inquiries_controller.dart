@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/inquiries/models/inquiries_model.dart';
 import 'package:senagat_mobile/src/features/inquiries/repository/inquiries_repository.dart';
+import 'package:senagat_mobile/src/features/pay/controller/payment_controller.dart';
 import 'package:senagat_mobile/src/features/payment_verification/presentation/payment_verification_screen.dart';
 import 'package:senagat_mobile/src/widgets/text_input_masks.dart';
 
@@ -12,10 +12,12 @@ import '../../loan/models/location_model.dart';
 import '../../loan/repository/location_repository.dart';
 import '../models/inquiries_order_model.dart';
 
-class InquiriesController extends GetxController with StateControlMixin {
+class InquiriesController extends PaymentController{
+  InquiriesController(super.repository, this.inquiriesRepository, this.locRepository, this.key);
+
   late final TextEditingController addressController;
 
-  InquiriesRepository repository;
+  InquiriesRepository inquiriesRepository;
   LocationRepository locRepository;
   final GlobalKey<FormState> key;
   final _inquiries = <InquiriesModel>[];
@@ -30,7 +32,15 @@ class InquiriesController extends GetxController with StateControlMixin {
 
   String? selectedDropdownType;
   int? selectedDropdownBranch;
-  bool continueEnabled = false;
+  bool _continueEnabled = false;
+
+  @override
+  bool get continueEnabled => _continueEnabled;
+
+  @override
+  set continueEnabled(bool value) {
+    _continueEnabled = value;
+  }
   bool isDropdownSelected = false;
 
   final dateOfBirthFormatter = CustomMaskFormatter(
@@ -52,8 +62,6 @@ class InquiriesController extends GetxController with StateControlMixin {
     3: r'about_the_wage_situation',
     4: r'certificate_of_loan_balance',
   };
-
-  InquiriesController(this.repository, this.locRepository, this.key);
 
   @override
   void onInit() {
@@ -88,12 +96,13 @@ class InquiriesController extends GetxController with StateControlMixin {
     );
   }
 
+  @override
   Future<void> onTap() async {
     if (continueEnabled) {
       status = Status.loading;
       update();
       final inquiriesOrderModel = await _getInquiriesOrderModel();
-      await repository
+      await inquiriesRepository
           .createInquiresOrder(data: inquiriesOrderModel.toMap())
           .then((value) {
             status = Status.completed;
@@ -122,7 +131,7 @@ class InquiriesController extends GetxController with StateControlMixin {
   void getInquiries() async {
     status = Status.loading;
     update();
-    await repository
+    await inquiriesRepository
         .getInquiriesTypes()
         .then((value) {
           status = Status.completed;

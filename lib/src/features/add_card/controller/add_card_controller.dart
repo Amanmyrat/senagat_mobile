@@ -144,6 +144,7 @@ class AddCardController extends GetxController with StateControlMixin {
 
     continueEnabled =
         cardNumberController.text.length >= 19 &&
+        isValidCardNumber(cardNumberController.text) &&
             nameController.text.isNotEmpty &&
             isValidExpiry(termController.text) &&
             cvcController.text.length >= 3;
@@ -152,6 +153,32 @@ class AddCardController extends GetxController with StateControlMixin {
     update();
   }
 
+  bool isValidCardNumber(String cardNumber) {
+    cardNumber = cardNumber.replaceAll(' ', '');
+
+    if (cardNumber.isEmpty || !RegExp(r'^\d+$').hasMatch(cardNumber)) {
+      return false;
+    }
+
+    int sum = 0;
+    bool shouldDouble = false;
+
+    for (int i = cardNumber.length - 1; i >= 0; i--) {
+      int digit = int.parse(cardNumber[i]);
+
+      if (shouldDouble) {
+        digit *= 2;
+        if (digit > 9) {
+          digit -= 9;
+        }
+      }
+
+      sum += digit;
+      shouldDouble = !shouldDouble;
+    }
+
+    return sum % 10 == 0;
+  }
 
   void setDropdownBank(BankModel? value) {
     selectedDropdownBank = value;

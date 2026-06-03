@@ -27,6 +27,10 @@ Future<CardModel?> showPaymentCardBottomSheet(PaymentController controller) {
       if (controller.isFoundation == false) {
         cards = cards.where((c) => c?.bank != 'rysgal').toList();
       }
+
+      if (controller.isInquiries == true) {
+        cards = cards.where((c) => c?.bank != 'senagat').toList();
+      }
       return Padding(
         padding: EdgeInsets.only(
           bottom: MediaQuery.of(Get.context!).viewInsets.bottom,
@@ -551,7 +555,22 @@ Widget alemPaymentField(PaymentController controller) {
       TextFormField(
         keyboardType: TextInputType.text,
         controller: controller.alemAccountController,
-        onChanged: (value) => controller.onAlemChanged(value),
+        onChanged: (value) {
+          final isDeleting = value.length < controller.previousValue.length;
+
+          if (!isDeleting &&
+              value.length == 1 &&
+              !RegExp(r'^[0-9]$').hasMatch(value)) {
+            controller.alemAccountController.value = const TextEditingValue(
+              text: 'dalem-',
+              selection: TextSelection.collapsed(offset: 6),
+            );
+          }
+
+          controller.previousValue = controller.alemAccountController.text;
+
+          controller.onAlemChanged(value);
+        },
         style: TextStyle(
           fontSize: 14.sp,
           fontFamily: AppFonts.primaryFont,

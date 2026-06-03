@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/globals.dart';
+import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
 import '../../../core/states/stateful_data.dart';
@@ -12,6 +13,7 @@ import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_fonts.dart';
 import '../../../widgets/elevated_button_with_state.dart';
 import '../../loan/repository/location_repository.dart';
+import '../../pay/presentation/payment_form_widgets.dart';
 import '../controller/inquiries_controller.dart';
 import '../repository/inquiries_repository.dart';
 
@@ -33,6 +35,7 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
       body: SafeArea(
         child: GetBuilder<InquiriesController>(
           init: InquiriesController(
+            PaymentRepository(apiService: ApiServices.apiService),
             InquiriesRepository(apiService: ApiServices.apiService),
             LocationRepository(apiService: ApiServices.apiService),
             _key,
@@ -256,6 +259,41 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                           ),
                                         ),
                                       ),
+                                      SizedBox(height: 22.h),
+
+                                      GestureDetector(
+                                        onTap: (){
+
+                                        },
+                                        child: Container(
+                                          color: AppColors.white,
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(r'Onlaýn tölemek'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.black,),),
+                                              Checkbox(
+                                                  side: BorderSide(width: 1.w),
+                                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.r)),
+                                                  value: false,
+                                                  onChanged: (value) {
+
+                                                  }
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: 22.h),
+                                      
+                                      Text(
+                                        r'select_a_card'.tr,
+                                        style: TextStyle(
+                                          fontSize: 14.sp,
+                                          color: AppColors.blackText,
+                                        ),
+                                      ),
+                                      SizedBox(height: 16.h),
+                                      paymentCardPicker(controller),
 
                                     ],
                                   ),

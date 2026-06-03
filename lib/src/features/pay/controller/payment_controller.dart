@@ -56,6 +56,7 @@ class PaymentController extends GetxController with StateControlMixin {
 
   late final FocusNode phoneFocus;
 
+  late String previousValue = '';
 
   AlemGetTariffModel? tariff;
   bool isTariffLoading = false;
