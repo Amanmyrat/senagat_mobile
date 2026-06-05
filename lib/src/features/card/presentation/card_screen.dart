@@ -230,6 +230,7 @@ class _CardScreenState extends State<CardScreen> {
                                   ),
                                   child: Column(
                                     children: [
+
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
@@ -241,27 +242,27 @@ class _CardScreenState extends State<CardScreen> {
                                           ),
                                           Row(
                                             children: [
-                                              Container(
-                                                padding: EdgeInsets.symmetric(
-                                                  horizontal:
-                                                  AppDimensions.paddingMedium.w,
-                                                  vertical: 4,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(
-                                                    AppDimensions.borderRadiusMedium.r,
-                                                  ),
-                                                  color: controller.checkCardStatus(index),
-                                                ),
-                                                child: Text(
-                                                  card?.status?.tr ?? '',
-                                                  style: TextStyle(
-                                                    fontSize: 14.sp,
-                                                    color: AppColors.white,
-                                                    fontFamily: AppFonts.secondaryFont,
-                                                  ),
-                                                ),
-                                              ),
+                                              // Container(
+                                              //   padding: EdgeInsets.symmetric(
+                                              //     horizontal:
+                                              //     AppDimensions.paddingMedium.w,
+                                              //     vertical: 4,
+                                              //   ),
+                                              //   decoration: BoxDecoration(
+                                              //     borderRadius: BorderRadius.circular(
+                                              //       AppDimensions.borderRadiusMedium.r,
+                                              //     ),
+                                              //     color: controller.checkCardStatus(index),
+                                              //   ),
+                                              //   child: Text(
+                                              //     card?.status?.tr ?? '',
+                                              //     style: TextStyle(
+                                              //       fontSize: 14.sp,
+                                              //       color: AppColors.white,
+                                              //       fontFamily: AppFonts.secondaryFont,
+                                              //     ),
+                                              //   ),
+                                              // ),
                                               if(card?.status == 'rejected')...[
                                                 SizedBox(width: AppDimensions.paddingMedium.w,),
 
@@ -317,7 +318,96 @@ class _CardScreenState extends State<CardScreen> {
                                       ),
 
                                         SizedBox(height: 20.h),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  r'payment_status'.tr,
+                                                  style: TextStyle(
+                                                    color: AppColors.grey,
+                                                    fontSize: 14.sp,
+                                                    fontFamily: AppFonts.secondaryFont,
+                                                  ),
+                                                ),
+                                                SizedBox(height: 10.h),
+                                                Container(
+                                                  padding: EdgeInsets.symmetric(
+                                                    horizontal:
+                                                    AppDimensions.paddingMedium.w,
+                                                    vertical: 4,
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(
+                                                      AppDimensions.borderRadiusMedium.r,
+                                                    ),
+                                                    color: controller.checkCardPaymentStatus(index),
+                                                  ),
+                                                  child: Text(
+                                                    card?.paymentStatus?.tr ?? '',
+                                                    style: TextStyle(
+                                                      fontSize: 14.sp,
+                                                      color: AppColors.white,
+                                                      fontFamily: AppFonts.secondaryFont,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
 
+                                          Container(
+                                            width: 1.w,
+                                            height: 44.h,
+                                            margin: EdgeInsets.symmetric(
+                                              horizontal: AppDimensions.paddingExtraLarge.w,
+                                            ),
+                                            color: AppColors.dividerColor,
+                                          ),
+
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  r'request_status'.tr,
+                                                  style: TextStyle(
+                                                    color: AppColors.grey,
+                                                    fontSize: 14.sp,
+                                                    fontFamily: AppFonts.secondaryFont,
+                                                  ),
+                                                  maxLines: 1,
+                                                ),
+                                                SizedBox(height: 10.h),
+                                                Container(
+                                                  padding: EdgeInsets.symmetric(
+                                                    horizontal:
+                                                    AppDimensions.paddingMedium.w,
+                                                    vertical: 4,
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(
+                                                      AppDimensions.borderRadiusMedium.r,
+                                                    ),
+                                                    color: controller.checkCardStatus(index),
+                                                  ),
+                                                  child: Text(
+                                                    card?.status?.tr ?? '',
+                                                    style: TextStyle(
+                                                      fontSize: 14.sp,
+                                                      color: AppColors.white,
+                                                      fontFamily: AppFonts.secondaryFont,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 20.h),
                                         Row(
                                           children: [
                                             Expanded(
@@ -363,8 +453,9 @@ class _CardScreenState extends State<CardScreen> {
                                             ),
                                           ],
                                         ),
+                                      SizedBox(height: 20.h),
 
-                                        SizedBox(height: 20.h),
+
 
                                         Row(
                                           children: [

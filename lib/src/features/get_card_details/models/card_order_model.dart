@@ -10,6 +10,10 @@ class CardOrderModel {
   final bool? delivery;
   final String? email;
   final String? createdAt;
+  final String? paymentUrl;
+  final String? bankName;
+  final bool? requiredPayment;
+
 
   CardOrderModel({
     this.id,
@@ -23,6 +27,9 @@ class CardOrderModel {
     this.delivery,
     this.email,
     this.createdAt,
+    this.requiredPayment,
+    this.paymentUrl,
+    this.bankName,
   });
 
   factory CardOrderModel.fromJson(Map<String, dynamic> json) {
@@ -38,11 +45,12 @@ class CardOrderModel {
       delivery: json['delivery'],
       email: json['email'],
       createdAt: json['created_at'],
+      paymentUrl: json['payment_url'],
     );
   }
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{
+    final Map<String, dynamic> map = <String, dynamic>{
       "card_type_id": typeId,
       "bank_branch_id": bankBranch,
       "work_position": workPosition,
@@ -50,6 +58,13 @@ class CardOrderModel {
       "internet_service": internetService,
       "delivery": delivery,
       "email": email,
+      "required_payment": requiredPayment,
     };
+    if (requiredPayment == true) {
+    map["bank_name"] = bankName;
+    }
+
+    return map;
+
   }
 }

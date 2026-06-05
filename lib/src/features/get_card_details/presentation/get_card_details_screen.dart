@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:senagat_mobile/src/core/globals.dart';
 import 'package:senagat_mobile/src/features/get_card/repository/card_repository.dart';
 import 'package:senagat_mobile/src/features/get_card_details/controller/get_card_details_controller.dart';
+import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
 import 'package:senagat_mobile/src/widgets/custom_app_bar.dart';
 
 import '../../../core/states/stateful_data.dart';
@@ -15,6 +16,7 @@ import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
 import '../../../widgets/elevated_button_with_state.dart';
 import '../../loan/repository/location_repository.dart';
+import '../../pay/presentation/payment_form_widgets.dart';
 
 class GetCardDetailsScreen extends StatefulWidget {
   static const route = '/get/card/details';
@@ -32,6 +34,7 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
       body: SafeArea(
         child: GetBuilder<GetCardDetailsController>(
           init: GetCardDetailsController(
+            PaymentRepository(apiService: ApiServices.apiService),
             CardRepository(apiService: ApiServices.apiService),
             LocationRepository(apiService: ApiServices.apiService),
           ),
@@ -343,7 +346,7 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                                 ),
                               ),
                               SizedBox(
-                                height: AppDimensions.paddingExtraLarge.w,
+                                height: 22.h,
                               ),
                               Text(
                                 'delivery'.tr,
@@ -394,6 +397,66 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                             ],
                           ),
                           SizedBox(height: 22.h),
+                          Text(
+                            'Onlaýn tölemek'.tr,
+                            style: TextStyle(
+                              color: AppColors.blackText,
+                              fontSize: 14.sp,
+                            ),
+                          ),
+                          SizedBox(height: AppDimensions.paddingMedium.h),
+                          GestureDetector(
+                            onTap: (){
+                              controller.requiredPayment = !controller.requiredPayment;
+                              controller.onInformationNotEmpty('');
+                              controller.update();
+                            },
+                            child: Container(
+                              padding: EdgeInsets.fromLTRB(
+                                AppDimensions.paddingExtraLarge.w,
+                                AppDimensions.paddingSmall.h,
+                                AppDimensions.paddingSmall.h,
+                                AppDimensions.paddingSmall.h,
+                              ),
+                              decoration: BoxDecoration(
+                                color: AppColors.inputFillBackground,
+                                borderRadius: BorderRadius.circular(
+                                  AppDimensions.borderRadiusMedium,
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(r'Onlaýn tölemek'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.grey,),),
+                                  Checkbox(
+                                    side: BorderSide(width: 1.w),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.r)),
+                                    value: controller.requiredPayment,
+                                    onChanged: (bool? newValue) {
+                                      controller.requiredPayment = newValue ?? false;
+                                      controller.onInformationNotEmpty('');
+                                      controller.update();
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          if(controller.requiredPayment)...[
+                            SizedBox(height: 22.h),
+
+                            Text(
+                              r'select_a_card'.tr,
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                color: AppColors.blackText,
+                              ),
+                            ),
+                            SizedBox(height: 16.h),
+                            paymentCardPicker(controller),
+                            SizedBox(height: 22.h),
+
+                          ]
                         ],
                       ),
                     ),
@@ -409,7 +472,7 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                       child: ElevatedButtonWithState(
                         isLoading: controller.status == Status.loading,
                         isError: controller.status == Status.error,
-                        onPressed: () => controller.onTap(),
+                        onPressed: () => controller.onButtonTap(),
                         child: Text(
                           r'next'.tr,
                           style: TextStyle(

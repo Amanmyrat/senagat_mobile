@@ -75,6 +75,20 @@ class CardController extends GetxController with StateControlMixin {
     }
   }
 
+  Color checkCardPaymentStatus(int index) {
+    if (userInformationModel?.cards?[index].paymentStatus == 'pending') {
+      return AppColors.orange;
+    } else if (userInformationModel?.cards?[index].paymentStatus ==
+        'failed') {
+      return AppColors.redDark;
+    } else if (userInformationModel?.cards?[index].paymentStatus ==
+        'approved') {
+      return AppColors.green;
+    } else {
+      return AppColors.grey;
+    }
+  }
+
   String hideCardCenter(String number) {
     if (number.length < 8) return number;
 

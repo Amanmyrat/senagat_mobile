@@ -281,6 +281,14 @@ const Map<String, String> enUs = {
 
   r'work_book_copy': 'Certified copy of employment record book',
 
+  r'request_status': 'Request status',
+  r'payment_status': 'Payment status',
+
+  r'pay_later': 'Pay later',
+  r'online_pay': 'Online pay',
+  r'not_required': 'Not paid',
+
+
   r'otp_not_match': r'OTP did not match',
   r'otp_code_has_expired.': r'OTP code has expired',
   r'otp_could_not_be_sent.': r'OTP could not be sent',

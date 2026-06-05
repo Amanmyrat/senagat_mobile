@@ -44,7 +44,7 @@ class LoanModel {
   final String? status;
   final String? bankBranch;
   final String? createdAt;
-  final List<String>? rejectedText; // 👈 ДОБАВИЛИ
+  final List<String>? rejectedText;
 
   LoanModel({
     this.creditName,
@@ -80,7 +80,8 @@ class CertificateModel {
   final String? status;
   final String? bankBranch;
   final String? createdAt;
-  final List<String>? rejectedText; // 👈 ДОБАВИЛИ
+  final String? paymentStatus;
+  final List<String>? rejectedText;
 
   CertificateModel({
     this.certificateName,
@@ -90,6 +91,7 @@ class CertificateModel {
     this.bankBranch,
     this.createdAt,
     this.rejectedText,
+    this.paymentStatus,
   });
 
   factory CertificateModel.fromJson(Map<String, dynamic> json) {
@@ -100,6 +102,7 @@ class CertificateModel {
       status: json['status'],
       bankBranch: json['bank_branch'],
       createdAt: json['created_at'],
+      paymentStatus: json['payment_status'],
       rejectedText: json['rejected_text'] == null
           ? []
           : List<String>.from(
@@ -116,7 +119,8 @@ class CardsModel {
   final String? status;
   final String? bankBranch;
   final String? createdAt;
-  final List<String>? rejectedText; // 👈 ДОБАВИЛИ
+  final String? paymentStatus;
+  final List<String>? rejectedText;
 
   CardsModel({
     this.cardTitle,
@@ -126,6 +130,7 @@ class CardsModel {
     this.bankBranch,
     this.createdAt,
     this.rejectedText,
+    this.paymentStatus,
   });
 
   factory CardsModel.fromJson(Map<String, dynamic> json) {
@@ -136,6 +141,7 @@ class CardsModel {
       delivery: json['delivery'],
       bankBranch: json['bank_branch'],
       createdAt: json['created_at'],
+      paymentStatus: json['payment_status'],
       rejectedText: json['rejected_text'] == null
           ? []
           : List<String>.from(

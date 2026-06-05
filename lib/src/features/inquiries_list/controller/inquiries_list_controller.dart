@@ -36,6 +36,20 @@ class InquiriesListController extends GetxController with StateControlMixin {
     }
   }
 
+  Color checkCertificatePaymentStatus(int index) {
+    if (userInformationModel?.certificates?[index].paymentStatus == 'pending') {
+      return AppColors.orange;
+    } else if (userInformationModel?.certificates?[index].paymentStatus ==
+        'failed') {
+      return AppColors.redDark;
+    } else if (userInformationModel?.certificates?[index].paymentStatus ==
+        'approved') {
+      return AppColors.green;
+    } else {
+      return AppColors.grey;
+    }
+  }
+
   void getUserProfileInfo() async {
     if (_isFetchingUserInfo) return;
 

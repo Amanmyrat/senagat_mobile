@@ -260,40 +260,65 @@ class _InquiriesScreenState extends State<InquiriesScreen> {
                                         ),
                                       ),
                                       SizedBox(height: 22.h),
-
+                                      Text(
+                                        'Onlaýn tölemek'.tr,
+                                        style: TextStyle(
+                                          color: AppColors.blackText,
+                                          fontSize: 14.sp,
+                                        ),
+                                      ),
+                                      SizedBox(height: AppDimensions.paddingMedium.h),
                                       GestureDetector(
                                         onTap: (){
-
+                                          controller.requiredPayment = !controller.requiredPayment;
+                                          controller.onInformationNotEmpty(controller.requiredPayment);
+                                          controller.update();
                                         },
                                         child: Container(
-                                          color: AppColors.white,
+                                          padding: EdgeInsets.fromLTRB(
+                                            AppDimensions.paddingExtraLarge.w,
+                                            AppDimensions.paddingSmall.h,
+                                            AppDimensions.paddingSmall.h,
+                                            AppDimensions.paddingSmall.h,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: AppColors.inputFillBackground,
+                                            borderRadius: BorderRadius.circular(
+                                              AppDimensions.borderRadiusMedium,
+                                            ),
+                                          ),
                                           child: Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Text(r'Onlaýn tölemek'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.black,),),
+                                              Text(r'Onlaýn tölemek'.tr, style: TextStyle(fontSize: 14.sp, color: AppColors.grey,),),
                                               Checkbox(
                                                   side: BorderSide(width: 1.w),
                                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.r)),
-                                                  value: false,
-                                                  onChanged: (value) {
-
-                                                  }
+                                                  value: controller.requiredPayment,
+                                                onChanged: (bool? newValue) {
+                                                    controller.requiredPayment = newValue ?? false;
+                                                    controller.onInformationNotEmpty(newValue);
+                                                    controller.update();
+                                                    },
                                               ),
                                             ],
                                           ),
                                         ),
                                       ),
-                                      SizedBox(height: 22.h),
-                                      
-                                      Text(
-                                        r'select_a_card'.tr,
-                                        style: TextStyle(
-                                          fontSize: 14.sp,
-                                          color: AppColors.blackText,
+                                      if(controller.requiredPayment)...[
+                                        SizedBox(height: 22.h),
+
+                                        Text(
+                                          r'select_a_card'.tr,
+                                          style: TextStyle(
+                                            fontSize: 14.sp,
+                                            color: AppColors.blackText,
+                                          ),
                                         ),
-                                      ),
-                                      SizedBox(height: 16.h),
-                                      paymentCardPicker(controller),
+                                        SizedBox(height: 16.h),
+                                        paymentCardPicker(controller),
+
+                                      ]
 
                                     ],
                                   ),
