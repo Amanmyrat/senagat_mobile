@@ -1,22 +1,29 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
+import 'package:senagat_mobile/src/features/add_card/model/card_model.dart';
 import 'package:senagat_mobile/src/features/identity_verification/models/profile_model.dart';
+import 'package:senagat_mobile/src/features/pay/controller/payment_controller.dart';
 import 'package:senagat_mobile/src/features/pay/model/pay_model.dart';
 import '../../../core/states/stateful_data.dart';
 
-class PaymentVerificationController extends GetxController with StateControlMixin {
+class PaymentVerificationController extends PaymentController {
+  PaymentVerificationController(super.repository);
 
-  bool check = false;
+  bool check2 = false;
 
-  late String? serviceName;
-  late String? serviceIcon;
-  late String? number;
+  late String? serviceName2;
+  late String? serviceIcon2;
+  late String? number2;
   late String? sum;
   late String? userName;
   late String? createdAt;
-  late bool isInquiries;
-  late bool isFoundation;
+  late String? paymentUrl;
+  late bool isInquiries2;
+  late bool isFoundation2;
+  late bool requiredPayment;
+
 
   late String? firstName;
   late String? lastName;
@@ -28,6 +35,7 @@ class PaymentVerificationController extends GetxController with StateControlMixi
 
 
   final profileBox = Hive.box<ProfileModel>('profileBox');
+
 
   @override
   void onInit() {
@@ -42,25 +50,29 @@ class PaymentVerificationController extends GetxController with StateControlMixi
     issuedBy = savedProfile?.issuedBy;
 
     try{
-      serviceName = Get.arguments['serviceName'];
-      serviceIcon = Get.arguments['serviceIcon'];
-      isInquiries = Get.arguments['isInquiries'];
-      isFoundation = Get.arguments['isFoundation'];
-      number = Get.arguments['number'];
+      serviceName2 = Get.arguments['serviceName'];
+      serviceIcon2 = Get.arguments['serviceIcon'];
+      isInquiries2 = Get.arguments['isInquiries'];
+      isFoundation2 = Get.arguments['isFoundation'];
+      number2 = Get.arguments['number'];
       sum = Get.arguments['sum']?.replaceAll('.', ',');
       userName = Get.arguments['userName'];
       createdAt = Get.arguments['createdAt'];
+      paymentUrl = Get.arguments['paymentUrl'];
+      requiredPayment = Get.arguments['requiredPayment'];
+      selectedCard = Get.arguments['selectedCard'];
     }catch (e){
+      debugPrint(e.toString());
     }
 
     super.onInit();
   }
 
-  void startBankVerification() {
+  void startBankVerification2() {
     if(isInquiries == false) {
       saveCard();
     }
-    check = true;
+    check2 = true;
     status = Status.loading;
     update();
     Future.delayed(Duration(seconds: 3),(){
@@ -70,13 +82,18 @@ class PaymentVerificationController extends GetxController with StateControlMixi
     });
 
   }
+  onTapPay(){
+    if(selectedCard !=null) {
+      openBankPayment(paymentUrl!, '');
+    }
+  }
 
   Future<void> saveCard() async {
     final box = Hive.box<PayModel>(isFoundation ? 'payFoundationBox' : 'payBox');
     final pay = PayModel(
-      serviceName: serviceName ?? '',
-      serviceIcon: serviceIcon ?? '',
-      number: number ?? '',
+      serviceName: serviceName2 ?? '',
+      serviceIcon: serviceIcon2 ?? '',
+      number: number2 ?? '',
       sum: sum ?? '',
       userName: userName ?? '',
     );

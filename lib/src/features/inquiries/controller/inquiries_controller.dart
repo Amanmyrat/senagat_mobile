@@ -23,7 +23,10 @@ class InquiriesController extends PaymentController{
   final _inquiries = <InquiriesModel>[];
 
   late int inquiriesId;
-  late int inquiriesPrice;
+  late double inquiriesPrice;
+
+
+  late bool requiredPayment = false;
 
   List<InquiriesModel> get inquiries => _inquiries;
 
@@ -66,13 +69,22 @@ class InquiriesController extends PaymentController{
   @override
   void onInit() {
     super.onInit();
+    isInquiries = true;
     addressController = TextEditingController();
     getInquiries();
     getBranches();
   }
 
   void onInformationNotEmpty(v) {
-    if (addressController.text.isNotEmpty && selectedDropdownBranch != null) {
+    if (requiredPayment) {
+      if (addressController.text.isNotEmpty && selectedDropdownBranch != null && selectedCard !=null) {
+        continueEnabled = true;
+        update();
+      } else {
+        continueEnabled = false;
+        update();
+      }
+    } else if (addressController.text.isNotEmpty && selectedDropdownBranch != null) {
       continueEnabled = true;
       update();
     } else {
@@ -89,11 +101,13 @@ class InquiriesController extends PaymentController{
 
   Future<InquiriesOrderModel> _getInquiriesOrderModel() async {
     getInquiriesId();
-    return InquiriesOrderModel(
-      typeId: inquiriesId,
-      homeAddress: addressController.text,
-      bankBranch: selectedDropdownBranch,
-    );
+      return InquiriesOrderModel(
+        typeId: inquiriesId,
+        homeAddress: addressController.text,
+        bankBranch: selectedDropdownBranch,
+        requiredPayment: requiredPayment,
+        bankName: selectedCard?.bank,
+      );
   }
 
   @override
@@ -117,6 +131,9 @@ class InquiriesController extends PaymentController{
                 'serviceName': r'get_inquiries',
                 'createdAt': value.createdAt,
                 'sum': inquiriesPrice.toString(),
+                'paymentUrl': value.paymentUrl,
+                'requiredPayment':  requiredPayment,
+                'selectedCard':  selectedCard,
               },
             );
           })

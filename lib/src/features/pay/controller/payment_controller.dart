@@ -8,6 +8,8 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/core/states/stateful_data.dart';
 import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
+import 'package:senagat_mobile/src/features/get_card_details/controller/get_card_details_controller.dart';
+import 'package:senagat_mobile/src/features/inquiries/controller/inquiries_controller.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/service_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
 import 'package:senagat_mobile/src/features/service_settings/controller/service_settings_controller.dart';
@@ -43,6 +45,7 @@ class PaymentController extends GetxController with StateControlMixin {
   String formattedBalance = '';
   bool isInquiries = false;
   bool isFoundation = false;
+  bool isGetCard = false;
 
   late String alemType = '';
 
@@ -203,6 +206,14 @@ class PaymentController extends GetxController with StateControlMixin {
         'tariff_picker',
       ]);
     }
+    if(isGetCard) {
+      Get.find<GetCardDetailsController>().onInformationNotEmpty('');
+    }
+
+    if(isInquiries) {
+      Get.find<InquiriesController>().onInformationNotEmpty('');
+    }
+
     update(['continue_button']);
     update();
   }

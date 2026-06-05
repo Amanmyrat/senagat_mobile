@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:senagat_mobile/src/core/control_state_variable_mixin.dart';
 import 'package:senagat_mobile/src/features/get_card_details/models/card_order_model.dart';
+import 'package:senagat_mobile/src/features/pay/controller/payment_controller.dart';
 import 'package:senagat_mobile/src/features/payment_verification/presentation/payment_verification_screen.dart';
 import 'package:senagat_mobile/src/widgets/text_input_masks.dart';
 
@@ -11,7 +11,9 @@ import '../../get_card/repository/card_repository.dart';
 import '../../loan/models/location_model.dart';
 import '../../loan/repository/location_repository.dart';
 
-class GetCardDetailsController extends GetxController with StateControlMixin {
+class GetCardDetailsController extends PaymentController {
+  GetCardDetailsController(super.repository,this.cardRepository, this.locRepository);
+
   late final TextEditingController workPhoneController;
   late final TextEditingController emailController;
   late final TextEditingController workPositionController;
@@ -24,14 +26,23 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
   String? sum;
   int? selectedCardId;
   int? selectedDropdownBranch;
-  bool continueEnabled = false;
-  CardRepository repository;
+  bool _continueEnabled = false;
+
+  @override
+  bool get continueEnabled => _continueEnabled;
+
+  @override
+  set continueEnabled(bool value) {
+    _continueEnabled = value;
+  }
+  CardRepository cardRepository;
   LocationRepository locRepository;
+
+  late bool requiredPayment = false;
 
   final List<LocationModel> _branches = [];
   List<LocationModel> get branches => _branches;
 
-  GetCardDetailsController(this.repository, this.locRepository);
 
   final dateOfBirthFormatter = CustomMaskFormatter(
     mask: '##-##-####', prefix: '',
@@ -42,6 +53,7 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
   @override
   void onInit() {
     super.onInit();
+    isGetCard = true;
     selectedCardTitle = Get.arguments['selectedCardTitle'];
     selectedCardImage = Get.arguments['selectedCardImage'];
     selectedCardId = Get.arguments['selectedCardId'];
@@ -61,11 +73,18 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
       emailError = null;
     }
 
-    // Only email (valid) + branch required
-    continueEnabled =
-        emailText.isNotEmpty &&
-            emailError == null &&
-            selectedDropdownBranch != null;
+    if(requiredPayment){
+      if(emailText.isNotEmpty && emailError == null && selectedDropdownBranch != null && selectedCard != null){
+        continueEnabled = true;
+      }else{
+        continueEnabled = false;
+      }
+
+    }else{
+      continueEnabled = emailText.isNotEmpty && emailError == null && selectedDropdownBranch != null;
+
+    }
+
 
     update();
   }
@@ -95,16 +114,18 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
       internetService: internetService,
       delivery: delivery,
       email: emailController.text,
+      bankName: selectedCard?.bank,
+      requiredPayment: requiredPayment,
     );
   }
 
 
-  Future<void> onTap() async {
+  Future<void> onButtonTap() async {
     if (continueEnabled) {
       status = Status.loading;
       update();
       final cardOrderModel = await _getCardOrderModel();
-      await repository
+      await cardRepository
           .createCardOrder(data: cardOrderModel.toMap())
           .then((value) {
             status = Status.completed;
@@ -116,8 +137,11 @@ class GetCardDetailsController extends GetxController with StateControlMixin {
                 'serviceName': r'get_a_card',
                 'sum': sum,
                 'createdAt': value.createdAt,
+                'paymentUrl': value.paymentUrl,
                 'isInquiries': true,
                 'isFoundation': false,
+                'requiredPayment':  requiredPayment,
+                'selectedCard':  selectedCard,
               },
             );
           })

@@ -1,7 +1,7 @@
 class InquiriesModel {
   final int? id;
   final String? title;
-  final int? price;
+  final double? price;
 
   InquiriesModel({
     this.id,
@@ -13,7 +13,7 @@ class InquiriesModel {
     return InquiriesModel(
       id: json['id'],
       title: json['title'],
-      price: json['price'],
+      price: (json['price'] as num?)?.toDouble(),
     );
   }
 

@@ -28,8 +28,8 @@ Future<CardModel?> showPaymentCardBottomSheet(PaymentController controller) {
         cards = cards.where((c) => c?.bank != 'rysgal').toList();
       }
 
-      if (controller.isInquiries == true) {
-        cards = cards.where((c) => c?.bank != 'senagat').toList();
+      if (controller.isInquiries == false) {
+        cards = cards.where((c) => c?.bank == 'senagat').toList();
       }
       return Padding(
         padding: EdgeInsets.only(

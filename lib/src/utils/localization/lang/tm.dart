@@ -280,6 +280,14 @@ const Map<String, String> tkTk = {
 
   r'work_book_copy': 'Zähmet depderçesiniň tassyklanan göçürmesi',
 
+  r'request_status': 'Arzanyň statusy',
+  r'payment_status': 'Töleg statusy',
+  r'pay_later': 'Soň tölemek',
+  r'online_pay': 'Onlaýn tölemek',
+
+  r'not_required': 'Tölenmedi',
+
+
   r'otp_not_match': r'Kod gabat gelmedi',
   r'otp_code_has_expired.': r'Kod möhleti gutardy',
   r'otp_could_not_be_sent.': r'Kod ugradylyp bilmedi',

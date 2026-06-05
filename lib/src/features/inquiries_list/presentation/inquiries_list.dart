@@ -84,14 +84,113 @@ class _InquiriesListState extends State<InquiriesList> {
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
+
                                           Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
+                                              Expanded(
+                                                child: Text(
+                                                  inquiries?.certificateName ?? '',
+                                                  style: TextStyle(color: AppColors.black, fontSize: 14.sp),
+                                                ),
+                                              ),
+
                                               Text(
                                                 inquiries?.createdAt ?? '',
                                                 style: TextStyle(
                                                   color: AppColors.grey,
                                                   fontSize: 14.sp,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(height: AppDimensions.paddingExtraLarge.h),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      r'payment_status'.tr,
+                                                      style: TextStyle(
+                                                        color: AppColors.grey,
+                                                        fontSize: 14.sp,
+                                                        fontFamily: AppFonts.secondaryFont,
+                                                      ),
+                                                    ),
+                                                    SizedBox(height: 10.h),
+                                                    Container(
+                                                      padding: EdgeInsets.symmetric(
+                                                        horizontal:
+                                                        AppDimensions.paddingMedium.w,
+                                                        vertical: 4,
+                                                      ),
+                                                      decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(
+                                                          AppDimensions.borderRadiusMedium.r,
+                                                        ),
+                                                        color: controller.checkCertificatePaymentStatus(index),
+                                                      ),
+                                                      child: Text(
+                                                        inquiries?.paymentStatus?.tr ?? '',
+                                                        style: TextStyle(
+                                                          fontSize: 14.sp,
+                                                          color: AppColors.white,
+                                                          fontFamily: AppFonts.secondaryFont,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+
+                                              Container(
+                                                width: 1.w,
+                                                height: 44.h,
+                                                margin: EdgeInsets.symmetric(
+                                                  horizontal: AppDimensions.paddingExtraLarge.w,
+                                                ),
+                                                color: AppColors.dividerColor,
+                                              ),
+
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      r'request_status'.tr,
+                                                      style: TextStyle(
+                                                        color: AppColors.grey,
+                                                        fontSize: 14.sp,
+                                                        fontFamily: AppFonts.secondaryFont,
+                                                      ),
+                                                      maxLines: 1,
+                                                    ),
+                                                    SizedBox(height: 10.h),
+                                                    Container(
+                                                      padding: EdgeInsets.symmetric(
+                                                        horizontal:
+                                                        AppDimensions.paddingMedium.w,
+                                                        vertical: 4,
+                                                      ),
+                                                      decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(
+                                                          AppDimensions.borderRadiusMedium.r,
+                                                        ),
+                                                        color: controller.checkCertificateStatus(index),
+                                                      ),
+                                                      child: Text(
+                                                        inquiries?.status?.tr ?? '',
+                                                        style: TextStyle(
+                                                          fontSize: 14.sp,
+                                                          color: AppColors.white,
+                                                          fontFamily: AppFonts.secondaryFont,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
                                               if(inquiries?.status == 'rejected')...[
@@ -102,35 +201,35 @@ class _InquiriesListState extends State<InquiriesList> {
                                                     final rejectedList =
                                                         inquiries?.rejectedText ?? [];
                                                     if(rejectedList.isNotEmpty){
-                                                    showCupertinoDialog(
-                                                      context: context,
-                                                      builder: (context) => CupertinoAlertDialog(
-                                                        content: Column(
-                                                          mainAxisSize: MainAxisSize.min,
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: rejectedList
-                                                              .map<Widget>((e) => Padding(
-                                                            padding: EdgeInsets.only(bottom: 6),
-                                                            child: Row(
-                                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                                              children: [
-                                                                Text("• ",
-                                                                    style: TextStyle(color: AppColors.redDark)),
-                                                                Expanded(child: Text(e)),
-                                                              ],
-                                                            ),
-                                                          ))
-                                                              .toList(),
-                                                        ),
-                                                        actions: [
-                                                          CupertinoDialogAction(
-                                                            isDestructiveAction: true,
-                                                            child: Text("back".tr),
-                                                            onPressed: () => Navigator.of(context).pop(),
+                                                      showCupertinoDialog(
+                                                        context: context,
+                                                        builder: (context) => CupertinoAlertDialog(
+                                                          content: Column(
+                                                            mainAxisSize: MainAxisSize.min,
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: rejectedList
+                                                                .map<Widget>((e) => Padding(
+                                                              padding: EdgeInsets.only(bottom: 6),
+                                                              child: Row(
+                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                children: [
+                                                                  Text("• ",
+                                                                      style: TextStyle(color: AppColors.redDark)),
+                                                                  Expanded(child: Text(e)),
+                                                                ],
+                                                              ),
+                                                            ))
+                                                                .toList(),
                                                           ),
-                                                        ],
-                                                      ),
-                                                    );
+                                                          actions: [
+                                                            CupertinoDialogAction(
+                                                              isDestructiveAction: true,
+                                                              child: Text("back".tr),
+                                                              onPressed: () => Navigator.of(context).pop(),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      );
                                                     }
                                                   },
                                                   child: SvgPicture.asset(
@@ -140,43 +239,9 @@ class _InquiriesListState extends State<InquiriesList> {
                                                   ),
                                                 ),
                                               ],
-
                                             ],
                                           ),
-                                          SizedBox(height: AppDimensions.paddingMedium.h,),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Expanded(
-                                                child: Text(
-                                                  inquiries?.certificateName ?? '',
-                                                  style: TextStyle(color: AppColors.black, fontSize: 14.sp),
-                                                ),
-                                              ),
-                                              Container(
-                                                padding: EdgeInsets.symmetric(
-                                                  horizontal:
-                                                  AppDimensions.paddingMedium.w,
-                                                  vertical: 4,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(
-                                                    AppDimensions.borderRadiusMedium.r,
-                                                  ),
-                                                  color: controller.checkCertificateStatus(index),
-                                                ),
-                                                child: Text(
-                                                  inquiries?.status?.tr ?? '',
-                                                  style: TextStyle(
-                                                    fontSize: 14,
-                                                    color: AppColors.white,
-                                                    fontFamily: AppFonts.secondaryFont,
-                                                  ),
-                                                ),
-                                              ),
 
-                                            ],
-                                          ),
                                           SizedBox(height: AppDimensions.paddingExtraLarge.h),
                                           Row(
                                             children: [
@@ -241,6 +306,8 @@ class _InquiriesListState extends State<InquiriesList> {
 
                                             ],
                                           ),
+
+
                                         ],
                                       ),
                                     ),

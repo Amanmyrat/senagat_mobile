@@ -280,6 +280,15 @@ const Map<String, String> ruRu = {
 
   r'work_book_copy': 'Заверенная копия трудовой книжки',
 
+  r'request_status': 'Статус запроса',
+  r'payment_status': 'Статус платежа',
+
+  r'pay_later': 'Оплатить потом',
+  r'online_pay': 'Оплатить онлайн',
+
+  r'not_required': 'Hе оплачено',
+
+
   r'otp_not_match': r'Код не совпадает',
   r'otp_code_has_expired.': r'Срок действия кода истёк',
   r'otp_could_not_be_sent.': r'Не удалось отправить код',
