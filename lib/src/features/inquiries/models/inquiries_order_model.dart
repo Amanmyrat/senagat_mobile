@@ -7,7 +7,6 @@ class InquiriesOrderModel {
   final String? homeAddress;
   final bool? requiredPayment;
   final String? createdAt;
-  final String? bankName;
   final String? paymentUrl;
 
   InquiriesOrderModel({
@@ -19,7 +18,6 @@ class InquiriesOrderModel {
     this.homeAddress,
     this.createdAt,
     this.requiredPayment,
-    this.bankName,
     this.paymentUrl,
   });
 
@@ -43,10 +41,6 @@ class InquiriesOrderModel {
       "home_address": homeAddress,
       "required_payment": requiredPayment,
     };
-
-    if (requiredPayment == true) {
-      map["bank_name"] = bankName;
-    }
 
     return map;
   }

@@ -32,8 +32,6 @@ class BeletPaymentScreen extends StatelessWidget {
             paymentPhoneField(controller),
             if (controller.status != Status.loading) ...[
               _beletTopUpGrid(controller),
-              SizedBox(height: 22.h),
-              if (controller.isOtherSelected) paymentSumField(controller),
             ],
           ],
           onPayPressed: controller.onTap,

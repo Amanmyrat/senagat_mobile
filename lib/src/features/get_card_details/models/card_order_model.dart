@@ -11,7 +11,6 @@ class CardOrderModel {
   final String? email;
   final String? createdAt;
   final String? paymentUrl;
-  final String? bankName;
   final bool? requiredPayment;
 
 
@@ -29,7 +28,6 @@ class CardOrderModel {
     this.createdAt,
     this.requiredPayment,
     this.paymentUrl,
-    this.bankName,
   });
 
   factory CardOrderModel.fromJson(Map<String, dynamic> json) {
@@ -60,9 +58,6 @@ class CardOrderModel {
       "email": email,
       "required_payment": requiredPayment,
     };
-    if (requiredPayment == true) {
-    map["bank_name"] = bankName;
-    }
 
     return map;
 
