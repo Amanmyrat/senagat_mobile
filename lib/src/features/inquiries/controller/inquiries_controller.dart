@@ -106,7 +106,6 @@ class InquiriesController extends PaymentController{
         homeAddress: addressController.text,
         bankBranch: selectedDropdownBranch,
         requiredPayment: requiredPayment,
-        bankName: selectedCard?.bank,
       );
   }
 

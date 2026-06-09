@@ -114,7 +114,6 @@ class GetCardDetailsController extends PaymentController {
       internetService: internetService,
       delivery: delivery,
       email: emailController.text,
-      bankName: selectedCard?.bank,
       requiredPayment: requiredPayment,
     );
   }

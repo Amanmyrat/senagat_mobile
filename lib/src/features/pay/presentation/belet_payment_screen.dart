@@ -32,8 +32,6 @@ class BeletPaymentScreen extends StatelessWidget {
             paymentPhoneField(controller),
             if (controller.status != Status.loading) ...[
               _beletTopUpGrid(controller),
-              SizedBox(height: 22.h),
-              if (controller.isOtherSelected) paymentSumField(controller),
             ],
           ],
           onPayPressed: controller.onTap,
@@ -55,7 +53,7 @@ class BeletPaymentScreen extends StatelessWidget {
         ),
         SizedBox(height: 16.h),
         GridView.builder(
-          itemCount: controller.beletBalances.length + 1, // +1 for Other
+          itemCount: controller.beletBalances.length,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -65,26 +63,18 @@ class BeletPaymentScreen extends StatelessWidget {
             childAspectRatio: 3.5,
           ),
           itemBuilder: (context, index) {
-            final isOther = index == controller.beletBalances.length;
-            final isSelected = isOther
-                ? controller.isOtherSelected
-                : controller.selectedBeletIndex == index;
+            final isSelected =  controller.selectedBeletIndex == index;
 
             return InkWell(
               borderRadius: BorderRadius.circular(
                 AppDimensions.borderRadiusMedium.r,
               ),
               onTap: () {
-                if (isOther) {
-                  controller.isOtherSelected = true;
-                  controller.selectedBeletIndex = null;
-                  controller.sumController.clear();
-                } else {
+
                   final item = controller.beletBalances[index];
                   controller.selectedBeletIndex = index;
                   controller.isOtherSelected = false;
                   controller.sumController.text = item.value.toString();
-                }
 
                 controller.isTextNotEmpty();
                 controller.update();
@@ -104,9 +94,7 @@ class BeletPaymentScreen extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    isOther
-                        ? r'other'.tr
-                        : controller.beletBalances[index].title ?? '',
+                     controller.beletBalances[index].title ?? '',
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
