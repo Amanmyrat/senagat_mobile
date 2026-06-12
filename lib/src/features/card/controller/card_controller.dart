@@ -82,7 +82,7 @@ class CardController extends GetxController with StateControlMixin {
         'failed') {
       return AppColors.redDark;
     } else if (userInformationModel?.cards?[index].paymentStatus ==
-        'approved') {
+        'confirmed') {
       return AppColors.green;
     } else {
       return AppColors.grey;

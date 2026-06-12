@@ -43,7 +43,7 @@ class InquiriesListController extends GetxController with StateControlMixin {
         'failed') {
       return AppColors.redDark;
     } else if (userInformationModel?.certificates?[index].paymentStatus ==
-        'approved') {
+        'confirmed') {
       return AppColors.green;
     } else {
       return AppColors.grey;

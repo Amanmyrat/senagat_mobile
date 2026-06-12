@@ -13,6 +13,7 @@ import '../../../utils/services/bank_service/bank_services.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
 import '../../../widgets/elevated_button_with_state.dart';
 import '../../add_card/model/card_model.dart';
+import '../../card/controller/card_controller.dart';
 import '../../dashboard/controller/dashboard_controller.dart';
 import '../../home/controller/home_controller.dart';
 
@@ -97,7 +98,9 @@ class ServicePaymentScreen extends StatelessWidget {
                             final dashboardController = Get.find<DashboardController>();
                             homeController.paymentTimer = true;
                             homeController.update();
+                            final cardController = Get.find<CardController>();
                             homeController.getProfile();
+                            cardController.getUserProfileInfo();
                             dashboardController.updateCurrentIndex(NestedNavigationIds.home);
 
                             Get.offAllNamed(DashboardScreen.route);

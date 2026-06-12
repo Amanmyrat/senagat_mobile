@@ -286,6 +286,7 @@ const Map<String, String> tkTk = {
   r'online_pay': 'Onlaýn tölemek',
 
   r'not_required': 'Tölenmedik',
+  r'confirmed': r'Geçdi',
 
 
   r'otp_not_match': r'Kod gabat gelmedi',

@@ -288,6 +288,8 @@ const Map<String, String> ruRu = {
 
   r'not_required': 'Hе оплачено',
 
+  r'confirmed': r'Прошла',
+
 
   r'otp_not_match': r'Код не совпадает',
   r'otp_code_has_expired.': r'Срок действия кода истёк',

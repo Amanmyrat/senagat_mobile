@@ -251,6 +251,7 @@ const Map<String, String> enUs = {
   r'notConfirmed': r'Not confirmed',
   r'failed': r'Failed',
   r'payment_approved': r'Confirmed',
+  r'confirmed': r'Confirmed',
   r'status': r'Status',
   r'not_found': r'Not found',
   r'not_found_for_search': r'Nothing was found for your search.',
