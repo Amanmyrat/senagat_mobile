@@ -251,7 +251,7 @@ const Map<String, String> tkTk = {
   r'charity': r'Haýyr-sahawat gaznasy',
   r'back': r'Yza',
   r'notConfirmed': r'Tassyklanmadyk',
-  r'failed': r'Geçmedi',
+  r'failed': r'Ret edildi',
   r'payment_approved': r'Geçdi',
   r'status': r'Status',
   r'not_found': r'Hiç zat tapylmady',
@@ -285,8 +285,8 @@ const Map<String, String> tkTk = {
   r'pay_later': 'Soň tölemek',
   r'online_pay': 'Onlaýn tölemek',
 
-  r'not_required': 'Tölenmedik',
-  r'confirmed': r'Geçdi',
+  r'not_required': 'Talap edilmeýär',
+  r'confirmed': r'Töleg kabul edildi',
 
 
   r'otp_not_match': r'Kod gabat gelmedi',

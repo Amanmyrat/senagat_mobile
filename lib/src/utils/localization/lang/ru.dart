@@ -249,7 +249,7 @@ const Map<String, String> ruRu = {
   r'charity': r'Благотворительный фонд',
   r'back': r'Назад',
   r'notConfirmed': r'Не подтверждено',
-  r'failed': r'Не прошла',
+  r'failed': r'Отклонен',
   r'payment_approved': r'Прошла',
   r'status': r'Статус',
   r'not_found': r'Ничего не найдено',
@@ -286,9 +286,9 @@ const Map<String, String> ruRu = {
   r'pay_later': 'Оплатить потом',
   r'online_pay': 'Оплатить онлайн',
 
-  r'not_required': 'Hе оплачено',
+  r'not_required': 'Не требуется',
 
-  r'confirmed': r'Прошла',
+  r'confirmed': r'Оплачено',
 
 
   r'otp_not_match': r'Код не совпадает',

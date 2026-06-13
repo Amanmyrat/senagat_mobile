@@ -249,7 +249,7 @@ const Map<String, String> enUs = {
   r'charity': r'Charitable Foundation',
   r'back': r'Back',
   r'notConfirmed': r'Not confirmed',
-  r'failed': r'Failed',
+  r'failed': r'Rejected',
   r'payment_approved': r'Confirmed',
   r'confirmed': r'Confirmed',
   r'status': r'Status',
@@ -287,7 +287,7 @@ const Map<String, String> enUs = {
 
   r'pay_later': 'Pay later',
   r'online_pay': 'Online pay',
-  r'not_required': 'Not paid',
+  r'not_required': 'Not required',
 
 
   r'otp_not_match': r'OTP did not match',
