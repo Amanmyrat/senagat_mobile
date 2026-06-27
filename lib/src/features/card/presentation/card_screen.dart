@@ -204,7 +204,7 @@ class _CardScreenState extends State<CardScreen> {
 
                         SizedBox(height: 40.h),
 
-                        if (controller.userInformationModel?.cards != null) ...[
+                        if (controller.userInformationModel?.cards != null && controller.userInformationModel?.cards?.isNotEmpty == true) ...[
                           Text(r'open_applications'.tr,
                               style: TextStyle(fontSize: 17.sp, color: AppColors.black)),
                           SizedBox(height: 16.h),

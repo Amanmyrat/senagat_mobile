@@ -424,7 +424,7 @@ class HomeController extends GetxController with StateControlMixin {
         return '+$value';
       case 'astu iptv':
         return '12$value';
-      case 'astu value':
+      case 'astu phone':
         return '12$value';
       case 'cdma':
         return value;
@@ -437,7 +437,7 @@ class HomeController extends GetxController with StateControlMixin {
       case 'alem_tv':
         return value;
       default:
-        return AppAssets.deviceMobileIcon;
+        return value;
     }
   }
 

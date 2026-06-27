@@ -22,18 +22,11 @@ Future<CardModel?> showPaymentCardBottomSheet(PaymentController controller) {
     context: Get.context!,
     backgroundColor: AppColors.white,
     builder: (_) {
-      List<CardModel?> cards = controller.cardBox.values.toList();
+      final cards = getAvailablePaymentCards(controller);
 
-      if (controller.isFoundation == false) {
-        cards = cards.where((c) => c?.bank != 'rysgal').toList();
-      }
-
-      if (controller.isInquiries == false) {
-        cards = cards.where((c) => c?.bank == 'senagat').toList();
-      }
       return Padding(
         padding: EdgeInsets.only(
-          bottom: MediaQuery.of(Get.context!).viewInsets.bottom,
+          bottom: 20,
         ),
         child: SizedBox(
           width: MediaQuery.of(Get.context!).size.width,
@@ -608,7 +601,8 @@ Widget alemPaymentField(PaymentController controller) {
 }
 
 Widget paymentCardPicker(PaymentController controller) {
-  if (controller.cardBox.isNotEmpty) {
+  final availableCards = getAvailablePaymentCards(controller);
+  if (availableCards.isNotEmpty) {
     return GestureDetector(
       onTap: () async {
         await showPaymentCardBottomSheet(controller);
@@ -665,6 +659,19 @@ Widget paymentCardPicker(PaymentController controller) {
   );
 }
 
+List<CardModel?> getAvailablePaymentCards(PaymentController controller) {
+  var cards = controller.cardBox.values.toList();
+
+  if (controller.isFoundation == false) {
+    cards = cards.where((c) => c.bank != 'rysgal').toList();
+  }
+
+  if (controller.isInquiries == true || controller.isGetCard == true) {
+    cards = cards.where((c) => c.bank == 'senagat').toList();
+  }
+
+  return cards;
+}
 Widget alemTariffPicker(PaymentController controller) {
   final selected = controller.selectedPaymentOption;
 

@@ -95,8 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                 if (controller
                                         .userInformationModel
-                                        ?.certificates !=
-                                    null) ...[
+                                        ?.certificates != null && controller.userInformationModel?.certificates?.isNotEmpty == true) ...[
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -145,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ],
 
                                 if (controller.userInformationModel?.loan !=
-                                    null) ...[
+                                    null && controller.userInformationModel?.loan?.isNotEmpty == true) ...[
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -1145,8 +1144,16 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget inquiriesWidget(HomeController controller, int index) {
+    final certificates = controller.userInformationModel?.certificates ?? [];
+
+    if (index < 0 || index >= certificates.length) {
+      return const SizedBox.shrink();
+    }
+
+    final certificate = certificates[index];
+
     return Padding(
-      padding: EdgeInsetsGeometry.only(bottom: AppDimensions.padding40.h),
+      padding: EdgeInsets.only(bottom: AppDimensions.padding40.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -1158,46 +1165,32 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               color: AppColors.orange,
             ),
-            child: Column(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Expanded(
+                  child: Text(
+                    certificate.certificateName ?? '',
+                    style: TextStyle(
+                      color: AppColors.white,
+                      fontSize: 14.sp,
+                    ),
+                  ),
+                ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Expanded(
-                      child: Text(
-                        controller
-                                .userInformationModel
-                                ?.certificates
-                                ?.first
-                                .certificateName ??
-                            '',
-                        style: TextStyle(
-                          color: AppColors.white,
-                          fontSize: 14.sp,
-                        ),
+                    Text(
+                      certificate.createdAt ?? '',
+                      style: TextStyle(
+                        color: AppColors.orangeLight,
+                        fontSize: 14.sp,
                       ),
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          controller
-                                  .userInformationModel
-                                  ?.certificates
-                                  ?.first
-                                  .createdAt ??
-                              '',
-                          style: TextStyle(
-                            color: AppColors.orangeLight,
-                            fontSize: 14.sp,
-                          ),
-                        ),
-                        SizedBox(width: 6.w),
-                        SvgPicture.asset(
-                          AppAssets.arrowRightIcon,
-                          width: 14.w,
-                          color: AppColors.white,
-                        ),
-                      ],
+                    SizedBox(width: 6.w),
+                    SvgPicture.asset(
+                      AppAssets.arrowRightIcon,
+                      width: 14.w,
+                      color: AppColors.white,
                     ),
                   ],
                 ),
@@ -1208,9 +1201,14 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
   Widget creditsWidget(HomeController controller, int index) {
-    final loan = controller.userInformationModel?.loan?[0];
+    final loans = controller.userInformationModel?.loan ?? [];
+
+    if (index < 0 || index >= loans.length) {
+      return const SizedBox.shrink();
+    }
+
+    final loan = loans[index];
     return Padding(
       padding: EdgeInsetsGeometry.only(bottom: AppDimensions.padding40.h),
       child: Column(
@@ -1230,17 +1228,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      loan?.creditName ?? '',
+                      loan.creditName ?? '',
                       style: TextStyle(color: AppColors.white, fontSize: 14.sp),
                     ),
                     Row(
                       children: [
                         Text(
-                          controller
-                                  .userInformationModel
-                                  ?.loan
-                                  ?.first
-                                  .createdAt ??
+                          loan.createdAt ??
                               '',
                           style: TextStyle(
                             color: AppColors.blueLight,
@@ -1274,7 +1268,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           SizedBox(height: 4.h),
                           Text(
-                            '${loan?.amount.toString()} TMT',
+                            '${loan.amount.toString()} TMT',
                             style: TextStyle(
                               color: AppColors.white,
                               fontSize: 17.sp,
@@ -1308,7 +1302,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           SizedBox(height: 4.h),
                           Text(
-                            '${loan?.monthlyPayment.toString()} TMT',
+                            '${loan.monthlyPayment.toString()} TMT',
                             style: TextStyle(
                               color: AppColors.white,
                               fontSize: 17.sp,
