@@ -179,10 +179,10 @@ class CheckPhoneBalanceController extends GetxController with StateControlMixin 
 
   void isTextNotEmpty(){
     if(serviceName == 'Belet' || serviceName == 'TM CELL'){
-      phoneController.text.length >= 8 ? continueEnabled = true : continueEnabled = false;
+      phoneController.text.length == 8 ? continueEnabled = true : continueEnabled = false;
       update();
     }else {
-      phoneController.text.length >= 9
+      phoneController.text.length == 9
           ? continueEnabled = true
           : continueEnabled = false;
       update();
@@ -229,8 +229,10 @@ class CheckPhoneBalanceController extends GetxController with StateControlMixin 
         phone = phone.substring(1);
       }
 
-      if(phone.length >= 6){
+      if(phone.length == 6){
        phone = '12 $phone';
+      }else{
+        phone;
       }
 
       print('Phone after formatting: $phone');

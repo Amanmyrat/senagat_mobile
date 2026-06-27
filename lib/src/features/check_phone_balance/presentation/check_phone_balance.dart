@@ -167,7 +167,7 @@ class _CheckPhoneBalanceScreenState extends State<CheckPhoneBalanceScreen> {
                                                     color: controller.status == Status.error
                                                         ? AppColors.redDark
                                                         : AppColors.green,
-                                                    width: 1,
+                                                    width: 1.w,
                                                   ),
                                                 ),
                                                 enabledBorder: OutlineInputBorder(
@@ -180,7 +180,7 @@ class _CheckPhoneBalanceScreenState extends State<CheckPhoneBalanceScreen> {
                                                     color: controller.status == Status.error
                                                         ? AppColors.redDark
                                                         : AppColors.white,
-                                                    width: 1,
+                                                    width: 1.w,
                                                   ),
                                                 ),
                                                 counter:
