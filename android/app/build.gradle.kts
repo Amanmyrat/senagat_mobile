@@ -16,7 +16,7 @@ if (keystorePropertiesFile.exists()) {
 android {
     namespace = "com.aplinxy9plin.senagat"
     compileSdk = 36
-    ndkVersion = "27.0.12077973"
+    ndkVersion = "30.0.14904198"
 
     packaging {
         jniLibs {

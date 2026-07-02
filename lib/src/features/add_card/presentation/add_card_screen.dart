@@ -186,7 +186,7 @@ class AddCardScreen extends StatelessWidget {
                                             AppDimensions.borderRadiusMedium,
                                           ),
                                           borderSide: BorderSide(
-                                            color: controller.isValidCardNumber(controller.cardNumberController.text)? AppColors.green : AppColors.redDark,
+                                            color: controller.cardNumberController.text.isNotEmpty? controller.isValidCardNumber(controller.cardNumberController.text)? AppColors.green : AppColors.redDark : AppColors.green,
                                             width: 1.w,
                                           ),
                                         ),
@@ -195,7 +195,7 @@ class AddCardScreen extends StatelessWidget {
                                             AppDimensions.borderRadiusMedium,
                                           ),
                                           borderSide: BorderSide(
-                                            color: controller.isValidCardNumber(controller.cardNumberController.text)? AppColors.white : AppColors.redDark,
+                                            color: controller.cardNumberController.text.isNotEmpty? controller.isValidCardNumber(controller.cardNumberController.text)? AppColors.white : AppColors.redDark : AppColors.white,
                                             width: 1.w,
                                           ),
                                         ),

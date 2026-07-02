@@ -182,7 +182,7 @@ class CheckPhoneBalanceController extends GetxController with StateControlMixin 
       phoneController.text.length == 8 ? continueEnabled = true : continueEnabled = false;
       update();
     }else {
-      phoneController.text.length == 9
+      phoneController.text.length >= 9
           ? continueEnabled = true
           : continueEnabled = false;
       update();

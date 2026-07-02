@@ -162,13 +162,13 @@ class PaymentController extends GetxController with StateControlMixin {
 
     if (serviceIcon == AppAssets.astu) {
       continueEnabled =
-          phoneController.text.length == 6 &&
+          phoneController.text.length >= 6 &&
               isValidSum &&
               selectedCard != null;
       update();
     } else {
       continueEnabled =
-          phoneController.text.length == 8 &&
+          phoneController.text.length >= 8 &&
               isValidSum &&
               selectedCard != null;
       update();

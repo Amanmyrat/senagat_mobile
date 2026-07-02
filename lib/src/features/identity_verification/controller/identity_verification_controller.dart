@@ -120,10 +120,10 @@ class IdentityVerificationController extends GetxController
 
   void parsePassport(String value) {
     final regex = RegExp(
-      r'^(I|II|III|IV)-(AŞ|AH|LB|MR|DZ|BN)(\d+)$',
+      r'^(I|II|III|IV)-(AŞ|AH|LB|MR|DZ|BN)\s*(\d+)$',
     );
 
-    final match = regex.firstMatch(value);
+    final match = regex.firstMatch(value.trim());
 
     if (match != null) {
       parsedRoman = match.group(1)!;
@@ -134,7 +134,7 @@ class IdentityVerificationController extends GetxController
       selectedCity = parsedCity;
     }
   }
-
+  
   void onTextIsNotEmpty(String? v) {
     final savedProfile = profileBox.get('currentProfile');
 

@@ -353,30 +353,39 @@ class _IdentityVerificationScreenState
   }
 
   Widget _dropdown(
-    IdentityVerificationController controller, {
-    required List<String> items,
-    required Function(String?) onChange,
-    required String hint,
-    required String? value,
-  }) {
+      IdentityVerificationController controller, {
+        required List<String> items,
+        required Function(String?) onChange,
+        required String hint,
+        required String? value,
+      }) {
     return SizedBox(
       width: 72.w,
       child: Theme(
-        data: Theme.of(
-          context,
-        ).copyWith(canvasColor: AppColors.inputFillBackground),
+        data: Theme.of(context).copyWith(
+          canvasColor: AppColors.inputFillBackground,
+        ),
         child: DropdownButtonFormField2<String>(
-          hint: Text(hint.tr, style: TextStyle(fontSize: 14.sp)),
+          isExpanded: true,
+          hint: Text(
+            hint.tr,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontSize: 14.sp),
+          ),
           value: value,
           onChanged: onChange,
-          items: items
-              .map(
-                (e) => DropdownMenuItem(
-                  value: e,
-                  child: Text(e, style: TextStyle(fontSize: 14.sp)),
-                ),
-              )
-              .toList(),
+          items: items.map((e) {
+            return DropdownMenuItem<String>(
+              value: e,
+              child: Text(
+                e,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontSize: 14.sp),
+              ),
+            );
+          }).toList(),
           dropdownStyleData: DropdownStyleData(
             width: 72.w,
             decoration: BoxDecoration(
@@ -384,14 +393,18 @@ class _IdentityVerificationScreenState
             ),
           ),
           iconStyleData: IconStyleData(
-            icon: SvgPicture.asset(AppAssets.caretDownIcon, width: 18.w),
+            icon: SvgPicture.asset(
+              AppAssets.caretDownIcon,
+              width: 14.w,
+            ),
           ),
           decoration: InputDecoration(
+            isDense: true,
             contentPadding: EdgeInsets.symmetric(
               vertical: 17.h,
-              horizontal: AppDimensions.paddingLarge.w,
+              horizontal: 8.w,
             ),
-            border: OutlineInputBorder(),
+            border: const OutlineInputBorder(),
           ),
         ),
       ),
