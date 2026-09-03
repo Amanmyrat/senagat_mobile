@@ -23,7 +23,8 @@ class GetCardDetailsController extends PaymentController {
 
   String? selectedCardTitle;
   String? selectedCardImage;
-  String? sum;
+  double cardPrice = 0;
+  double deliveryPrice = 0;
   int? selectedCardId;
   int? selectedDropdownBranch;
   bool _continueEnabled = false;
@@ -57,7 +58,8 @@ class GetCardDetailsController extends PaymentController {
     selectedCardTitle = Get.arguments['selectedCardTitle'];
     selectedCardImage = Get.arguments['selectedCardImage'];
     selectedCardId = Get.arguments['selectedCardId'];
-    sum = Get.arguments['sum'];
+    cardPrice = _parseAmount(Get.arguments['sum']);
+    deliveryPrice = _parseAmount(Get.arguments['deliveryPrice']);
     workPhoneController = TextEditingController();
     emailController = TextEditingController();
     workPositionController = TextEditingController();
@@ -134,7 +136,10 @@ class GetCardDetailsController extends PaymentController {
               PaymentVerificationScreen.route,
               arguments: {
                 'serviceName': r'get_a_card',
-                'sum': sum,
+                'sum': formatAmount(displaySum),
+                'cardPrice': formatAmount(cardPrice),
+                'deliveryPrice': formatAmount(deliveryPrice),
+                'delivery': delivery,
                 'createdAt': value.createdAt,
                 'paymentUrl': value.paymentUrl,
                 'isInquiries': true,
@@ -182,5 +187,17 @@ class GetCardDetailsController extends PaymentController {
     selectedDropdownBranch = value;
     onInformationNotEmpty('');
     update();
+  }
+
+  double get displaySum => delivery ? cardPrice + deliveryPrice : cardPrice;
+
+  double _parseAmount(dynamic value) {
+    if (value is num) return value.toDouble();
+    return double.tryParse(value?.toString() ?? '') ?? 0;
+  }
+
+  String formatAmount(double value) {
+    if (value % 1 == 0) return value.toInt().toString();
+    return value.toString();
   }
 }

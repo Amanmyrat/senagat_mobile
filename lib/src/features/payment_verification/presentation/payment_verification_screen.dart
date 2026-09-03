@@ -467,7 +467,55 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
             ],
           ),
         ),
+        if (controller.isGetCard) ...[
+          Divider(color: AppColors.dividerColor, height: 1.h),
+          _infoPriceRow(
+            r'card_price'.tr,
+            '${controller.cardPrice ?? ''} ${r'manat'.tr}',
+          ),
+          if (controller.delivery) ...[
+            Divider(color: AppColors.dividerColor, height: 1.h),
+            _infoPriceRow(
+              r'delivery_price'.tr,
+              '${controller.deliveryPrice ?? ''} ${r'manat'.tr}',
+            ),
+            Divider(color: AppColors.dividerColor, height: 1.h),
+            _infoPriceRow(
+              r'total'.tr,
+              '${controller.sum ?? ''} ${r'manat'.tr}',
+            ),
+          ],
+        ],
       ],
+    );
+  }
+
+  Widget _infoPriceRow(String label, String value) {
+    return Padding(
+      padding: EdgeInsets.all(AppDimensions.paddingMedium.w),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Flexible(
+            child: Text(
+              label,
+              style: TextStyle(
+                fontSize: 14.sp,
+                color: AppColors.blackText,
+                fontFamily: AppFonts.secondaryFont,
+              ),
+            ),
+          ),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 14.sp,
+              color: AppColors.blackText,
+              fontFamily: AppFonts.secondaryFont,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

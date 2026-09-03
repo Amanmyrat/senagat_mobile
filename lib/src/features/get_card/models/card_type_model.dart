@@ -5,6 +5,7 @@ class CardTypeModel {
   final String? title;
   final String? category;
   final double? price;
+  final double? deliveryPrice;
   final String? image;
   final List<AdvantageModel>? advantages;
 
@@ -15,6 +16,7 @@ class CardTypeModel {
     this.title,
     this.category,
     this.price,
+    this.deliveryPrice,
     this.image,
     this.advantages,
   });
@@ -33,6 +35,9 @@ class CardTypeModel {
       title: json['title'],
       category: json['category'],
       price: json['price'] == null ? null : (json['price'] as num).toDouble(),
+      deliveryPrice: json['delivery_price'] == null
+          ? 20.0
+          : (json['delivery_price'] as num).toDouble(),
       image: json['image_url'],
       advantages: (json['advantages'] as List<dynamic>?)
           ?.map((item) => AdvantageModel.fromJson(item))

@@ -383,4 +383,7 @@ const Map<String, String> ruRu = {
   "payment_already_processed": "Этот платеж уже был обработан",
   "network_error_try_again": "Ошибка сети. Пожалуйста, попробуйте еще раз",
   r'please_login': r'Пожалуйста, войдите, чтобы воспользоваться этой услугой',
+  r'card_price': r'Стоимость карты',
+  r'delivery_price': r'Стоимость доставки',
+  r'total': r'Итого',
 };

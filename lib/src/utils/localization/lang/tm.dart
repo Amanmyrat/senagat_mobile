@@ -381,4 +381,7 @@ const Map<String, String> tkTk = {
   "payment_already_processed": "Bu töleg eýýäm ýerine ýetirildi",
   "network_error_try_again": "Internet näsazlygy. Gaýtadan synanyşyň",
   r'please_login': r'Bu hyzmatdan peýdalanmak üçin ulgama giriň',
+  r'card_price': r'Kart bahasy',
+  r'delivery_price': r'Eltip bermek bahasy',
+  r'total': r'Jemi',
 };

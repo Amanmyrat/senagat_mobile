@@ -16,6 +16,9 @@ class GetCardController extends GetxController
 
   List<CardTypeModel> get cards => _cards;
 
+  List<CardTypeModel> get individualCards =>
+      _cards.where((c) => c.category == 'individual').toList();
+
   GetCardController(this.repository);
 
   final List<String> tabLabels = [
@@ -57,17 +60,21 @@ class GetCardController extends GetxController
   }
 
   void onTap() {
+    final selected = individualCards[selectedTabIndex];
     Get.toNamed(
       GetCardDetailsScreen.route,
       arguments: {
-        'selectedCardTitle': currentTabText,
-        'selectedCardImage': cards[selectedTabIndex].imageUrl,
-        'selectedCardId': selectedTabIndex + 1,
-        'sum': cards[selectedTabIndex].price.toString(),
+        'selectedCardTitle': selected.title ?? '',
+        'selectedCardImage': selected.imageUrl,
+        'selectedCardId': selected.id ?? selectedTabIndex + 1,
+        'sum': selected.price.toString(),
+        'deliveryPrice': selected.deliveryPrice.toString(),
       },
     );
   }
 
   String get currentTabText =>
-      cards.isNotEmpty ? cards[selectedTabIndex].title ?? '' : '';
+      individualCards.isNotEmpty
+          ? individualCards[selectedTabIndex].title ?? ''
+          : '';
 }

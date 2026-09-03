@@ -92,8 +92,7 @@ class _GetCardScreenState extends State<GetCardScreen> {
                                   ),
                                   color: AppColors.blackText,
                                 ),
-                                tabs: controller.cards
-                                    .where((c) => c.category == 'individual')
+                                tabs: controller.individualCards
                                     .map((item) => Tab(text: item.title?.tr))
                                     .toList(),
                               ),
@@ -102,7 +101,7 @@ class _GetCardScreenState extends State<GetCardScreen> {
                             Expanded(
                               child: TabBarView(
                                 controller: controller.tabController,
-                                children: controller.cards.where((c) => c.category == 'individual').map((item) {
+                                children: controller.individualCards.map((item) {
                                   return Padding(
                                     padding: EdgeInsets.symmetric(
                                       horizontal:
@@ -184,6 +183,14 @@ class _GetCardScreenState extends State<GetCardScreen> {
                                                     ),
                                                   ),
                                                 ),
+                                              _priceRow(
+                                                label: r'card_price'.tr,
+                                                value: item.price,
+                                              ),
+                                              _priceRow(
+                                                label: r'delivery_price'.tr,
+                                                value: item.deliveryPrice,
+                                              ),
                                             ],
                                           ),
                                         ),
@@ -222,6 +229,36 @@ class _GetCardScreenState extends State<GetCardScreen> {
                   );
           },
         ),
+      ),
+    );
+  }
+
+  Widget _priceRow({required String label, required double? value}) {
+    final amount = value == null
+        ? '0'
+        : (value % 1 == 0 ? value.toInt().toString() : value.toString());
+    return Padding(
+      padding: EdgeInsets.only(top: 10.h),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Flexible(
+            child: Text(
+              label,
+              style: TextStyle(
+                fontSize: 14.sp,
+                color: AppColors.grey,
+              ),
+            ),
+          ),
+          Text(
+            '$amount ${r'manat'.tr}',
+            style: TextStyle(
+              fontSize: 14.sp,
+              color: AppColors.blackText,
+            ),
+          ),
+        ],
       ),
     );
   }

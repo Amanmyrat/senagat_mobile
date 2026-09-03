@@ -382,6 +382,9 @@ const Map<String, String> enUs = {
   "payment_already_processed": "This payment was already processed",
   "network_error_try_again": "Network error. Please try again",
   r'please_login': r'Please sign in to use this service',
+  r'card_price': r'Card price',
+  r'delivery_price': r'Delivery price',
+  r'total': r'Total',
 
 
 };

@@ -23,6 +23,9 @@ class PaymentVerificationController extends PaymentController {
   late bool isInquiries2;
   late bool isFoundation2;
   late bool requiredPayment;
+  bool delivery = false;
+  String? cardPrice;
+  String? deliveryPrice;
 
 
   late String? firstName;
@@ -61,6 +64,10 @@ class PaymentVerificationController extends PaymentController {
       paymentUrl = Get.arguments['paymentUrl'];
       requiredPayment = Get.arguments['requiredPayment'];
       selectedCard = Get.arguments['selectedCard'];
+      delivery = Get.arguments['delivery'] == true;
+      isGetCard = Get.arguments['cardPrice'] != null;
+      cardPrice = Get.arguments['cardPrice']?.toString().replaceAll('.', ',');
+      deliveryPrice = Get.arguments['deliveryPrice']?.toString().replaceAll('.', ',');
     }catch (e){
       debugPrint(e.toString());
     }

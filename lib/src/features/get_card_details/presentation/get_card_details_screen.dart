@@ -454,9 +454,18 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
                             ),
                             SizedBox(height: 16.h),
                             paymentCardPicker(controller),
-                            SizedBox(height: 22.h),
-
-                          ]
+                          ],
+                          SizedBox(height: 22.h),
+                          Text(
+                            r'payment_amount'.tr,
+                            style: TextStyle(
+                              color: AppColors.blackText,
+                              fontSize: 14.sp,
+                            ),
+                          ),
+                          SizedBox(height: AppDimensions.paddingMedium.h),
+                          _priceSummary(controller),
+                          SizedBox(height: 22.h),
                         ],
                       ),
                     ),
@@ -489,6 +498,97 @@ class _GetCardDetailsScreenState extends State<GetCardDetailsScreen> {
           },
         ),
       ),
+    );
+  }
+
+  Widget _priceSummary(GetCardDetailsController controller) {
+    return Container(
+      width: double.infinity,
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(
+          AppDimensions.borderRadiusMedium.r,
+        ),
+        border: Border.all(
+          color: AppColors.dividerColor,
+          width: 1.w,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.dividerColor,
+            blurRadius: 4.r,
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
+            child: Column(
+              children: [
+                _priceRow(
+                  r'card_price'.tr,
+                  controller.formatAmount(controller.cardPrice),
+                ),
+                if (controller.delivery) ...[
+                  SizedBox(height: 12.h),
+                  _priceRow(
+                    r'delivery_price'.tr,
+                    controller.formatAmount(controller.deliveryPrice),
+                    prefix: '+',
+                  ),
+                ],
+              ],
+            ),
+          ),
+          if (controller.delivery) ...[
+            Divider(color: AppColors.dividerColor, height: 1.h),
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.symmetric(
+                horizontal: AppDimensions.paddingExtraLarge.w,
+                vertical: AppDimensions.paddingLarge.h,
+              ),
+              color: AppColors.inputFillBackground,
+              child: _priceRow(
+                r'total'.tr,
+                controller.formatAmount(controller.displaySum),
+                isTotal: true,
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _priceRow(
+    String label,
+    String amount, {
+    String? prefix,
+    bool isTotal = false,
+  }) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Flexible(
+          child: Text(
+            label,
+            style: TextStyle(
+              fontSize: isTotal ? 16.sp : 14.sp,
+              color: isTotal ? AppColors.blackText : AppColors.grey,
+            ),
+          ),
+        ),
+        Text(
+          '${prefix ?? ''}$amount ${r'manat'.tr}',
+          style: TextStyle(
+            fontSize: isTotal ? 16.sp : 14.sp,
+            color: isTotal ? AppColors.green : AppColors.blackText,
+          ),
+        ),
+      ],
     );
   }
 }
