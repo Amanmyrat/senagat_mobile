@@ -25,7 +25,7 @@ import '../../pay/repository/payment_repository.dart';
 import '../../service_settings/controller/service_settings_controller.dart';
 import '../model/fast_service_model.dart';
 
-enum CategoryTapType { none, qr, service, fastOperation, notification, foundation }
+enum CategoryTapType { none, service, fastOperation, foundation }
 
 class CategoryController extends GetxController with StateControlMixin {
 

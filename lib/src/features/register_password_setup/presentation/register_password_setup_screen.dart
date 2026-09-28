@@ -49,7 +49,7 @@ class _RegisterPasswordSetupScreenState extends State<RegisterPasswordSetupScree
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            controller.otpEnabled ? r'step_3_of_3'.tr : r'step_2_of_2'.tr,
+                            controller.stepLabelKey.tr,
                             style: TextStyle(
                               fontSize: 14,
                               color: AppColors.blackText,
@@ -61,7 +61,7 @@ class _RegisterPasswordSetupScreenState extends State<RegisterPasswordSetupScree
                             child:
                             CircularProgressIndicator(
                               color: AppColors.green,
-                              value: 0.75,
+                              value: 1,
                               backgroundColor: AppColors.dividerColor,
                             )
                           ),

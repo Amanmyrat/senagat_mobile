@@ -10,7 +10,7 @@ import '../../auth/controller/account_status_controller.dart';
 import '../../auth/repository/auth_repository.dart';
 import '../../home/models/user_information_model.dart';
 
-enum CardTapType { none, qr, foundation, service, fastOperation, notification }
+enum CardTapType { none, foundation, service, fastOperation }
 
 class CardController extends GetxController with StateControlMixin {
   CardTapType lastTap = CardTapType.none;

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:senagat_mobile/src/core/globals.dart';
 import 'package:senagat_mobile/src/features/add_card/presentation/add_card_screen.dart';
 import 'package:senagat_mobile/src/features/payment_history/presentation/payment_history_screen.dart';
 import 'package:senagat_mobile/src/features/credit_list/presentation/credit_list.dart';
@@ -16,12 +15,9 @@ import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../widgets/header_widget.dart';
-import '../../auth/repository/auth_repository.dart';
 import '../../card_settings/presentation/card_settings_screen.dart';
 import '../../identity_verification/presentation/identity_verification_screen.dart';
-import '../../pay/repository/payment_repository.dart';
 import '../controller/home_controller.dart';
-import '../repository/exchage_rate_repository.dart';
 
 class HomeScreen extends StatefulWidget {
   static const route = '/home';
@@ -43,11 +39,6 @@ class _HomeScreenState extends State<HomeScreen> {
         body: SingleChildScrollView(
           child: SafeArea(
             child: GetBuilder<HomeController>(
-              init: HomeController(
-                ExchangeRateRepository(apiService: ApiServices.apiService),
-                AuthRepository(apiService: ApiServices.apiService),
-                PaymentRepository(apiService: ApiServices.apiService),
-              ),
               builder: (controller) {
                 return controller.status == Status.loading
                     ? Center(
@@ -68,7 +59,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 HeaderWidget(),
 
-                                if (controller.isProfileRequired == true) ...[
+                                if (controller.isProfileRequired ||
+                                    controller.isProfilePending) ...[
                                   profileIsRequiredWidget(controller),
                                 ],
                               ],
@@ -737,7 +729,7 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(width: 6.w),
             Flexible(
               child: Text(
-                r'most_functions'.tr,
+                controller.profileBannerKey.tr,
                 style: TextStyle(
                   fontSize: 14.sp,
                   color: AppColors.white,

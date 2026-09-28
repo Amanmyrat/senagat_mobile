@@ -29,6 +29,11 @@ class RegisterPasswordSetupController extends GetxController
 
   final bool otpEnabled = Configs.OTPEnabled;
 
+  bool get isThreeStepFlow => otpEnabled || login == 'reset_password';
+
+  String get stepLabelKey =>
+      isThreeStepFlow ? r'step_3_of_3' : r'step_2_of_2';
+
   late final TextEditingController passwordController;
   late final FocusNode passwordFocus;
 

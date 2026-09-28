@@ -41,6 +41,11 @@ class RegisterConfirmationController extends GetxController
 
   bool get isPinFull => otpController.text.length == otpLength;
 
+  String get stepLabelKey =>
+      login == 'login' ? r'step_2_of_2' : r'step_2_of_3';
+
+  double get stepProgress => login == 'login' ? 1 : 2 / 3;
+
   @override
   void onInit() {
     super.onInit();

@@ -201,6 +201,22 @@ class _IdentifyScreenState extends State<IdentifyScreen> {
                             ),
                           ),
                         ),
+                        if (controller.profileStatus == 'rejected' &&
+                            controller.rejectedReasons.isNotEmpty) ...[
+                          SizedBox(height: 16.h),
+                          ...controller.rejectedReasons.map(
+                            (reason) => Padding(
+                              padding: EdgeInsets.only(bottom: 6.h),
+                              child: Text(
+                                '• $reason',
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  color: AppColors.redDark,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ],
                     ),
                   ),

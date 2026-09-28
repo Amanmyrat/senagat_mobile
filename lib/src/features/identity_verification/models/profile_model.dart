@@ -3,6 +3,16 @@ import 'package:dio/dio.dart' as dio;
 
 part 'profile_model.g.dart';
 
+List<String> _parseRejectedText(dynamic value) {
+  if (value is List) {
+    return value.map((item) => item.toString()).toList();
+  }
+  if (value is String && value.trim().isNotEmpty) {
+    return [value.trim()];
+  }
+  return [];
+}
+
 @HiveType(typeId: 2)
 class ProfileModel extends HiveObject {
   @HiveField(0)
@@ -93,11 +103,7 @@ class ProfileModel extends HiveObject {
       homePhone: _parseNullableInt(json['home_phone']),
       homeAddress: json['home_address'],
       status: json['status'],
-        rejectedText: json['rejected_text'] == null
-            ? []
-            : List<String>.from(
-          (json['rejected_text'] as List).map((e) => e.toString()),
-        ),
+      rejectedText: _parseRejectedText(json['rejected_text']),
     );
   }
 

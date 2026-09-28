@@ -36,7 +36,7 @@ android {
 
     defaultConfig {
         applicationId = "com.aplinxy9plin.senagat"
-        minSdk = 29
+        minSdk = 28
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName

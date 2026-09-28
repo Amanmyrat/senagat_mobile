@@ -60,6 +60,33 @@ class _IdentityVerificationScreenState
 
                         SizedBox(height: 32.h),
 
+                        if (controller.isUnderReview) ...[
+                          Text(
+                            r'verification_pending_locked'.tr,
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              color: AppColors.orange,
+                            ),
+                          ),
+                          SizedBox(height: 16.h),
+                        ],
+                        if (controller.profileStatus == 'rejected' &&
+                            controller.rejectedReasons.isNotEmpty) ...[
+                          ...controller.rejectedReasons.map(
+                            (reason) => Padding(
+                              padding: EdgeInsets.only(bottom: 6.h),
+                              child: Text(
+                                '• $reason',
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  color: AppColors.redDark,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 16.h),
+                        ],
+
                         // FORM FIELDS
                         ListView.builder(
                           itemCount: controller.controllers.length,
@@ -108,25 +135,40 @@ class _IdentityVerificationScreenState
                 // SUBMIT BUTTON
                 Padding(
                   padding: EdgeInsets.all(AppDimensions.paddingExtraLarge.w),
-                  child: Opacity(
-                    opacity: controller.continueEnabled ? 1.0 : 0.5,
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButtonWithState(
-                        isLoading: controller.status == Status.loading,
-                        isError: controller.status == Status.error,
-                        onPressed: controller.continueEnabled
-                            ? () => controller.createOrUpdateProfile()
-                            : null,
-                        child: Text(
-                          'confirm'.tr,
+                  child: Column(
+                    children: [
+                      if (!controller.isUnderReview &&
+                          controller.validationMessage != null) ...[
+                        Text(
+                          controller.validationMessage!.tr,
                           style: TextStyle(
                             fontSize: 14.sp,
-                            color: AppColors.white,
+                            color: AppColors.redDark,
+                          ),
+                        ),
+                        SizedBox(height: 12.h),
+                      ],
+                      Opacity(
+                        opacity: controller.continueEnabled ? 1.0 : 0.5,
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButtonWithState(
+                            isLoading: controller.status == Status.loading,
+                            isError: controller.status == Status.error,
+                            onPressed: controller.continueEnabled
+                                ? () => controller.createOrUpdateProfile()
+                                : null,
+                            child: Text(
+                              'confirm'.tr,
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                color: AppColors.white,
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
               ],
@@ -258,11 +300,7 @@ class _IdentityVerificationScreenState
                 items: controller.number,
                 hint: 'I',
                 value: controller.selectedRoman,
-                onChange: (v) {
-                  controller.selectedRoman = v!;
-                  controller.onTextIsNotEmpty(v);
-                  controller.update();
-                },
+                onChange: controller.setDropdownNumber,
               ),
               SizedBox(width: 4.w),
 
@@ -271,11 +309,7 @@ class _IdentityVerificationScreenState
                 items: controller.citySelection,
                 hint: 'AŞ',
                 value: controller.selectedCity,
-                onChange: (v) {
-                  controller.selectedCity = v!;
-                  controller.onTextIsNotEmpty(v);
-                  controller.update();
-                },
+                onChange: controller.setDropdownCity,
               ),
               SizedBox(width: 4.w),
 
@@ -335,7 +369,7 @@ class _IdentityVerificationScreenState
               Expanded(
                 child: TextFormField(
                   controller: controller.homePhoneController,
-                  inputFormatters: [controller.defaultMask],
+                  inputFormatters: [controller.homePhoneFormatter],
                   keyboardType: TextInputType.number,
                   onChanged: controller.onTextIsNotEmpty,
                   style: TextStyle(fontSize: 14.sp),
@@ -425,36 +459,29 @@ class _IdentityVerificationScreenState
           width: double.infinity,
           child: ElevatedButtonWithState(
             isLoading: false,
-            isError: controller.status == Status.error,
+            isError: false,
             customStyle: ElevatedButton.styleFrom(
               backgroundColor: AppColors.white,
-              side: BorderSide(
-                color: controller.status == Status.error
-                    ? AppColors.redDark
-                    : AppColors.dividerColor,
-              ),
+              side: BorderSide(color: AppColors.dividerColor),
               shadowColor: Colors.transparent,
             ),
-            onPressed: controller.pickPdf,
+            onPressed: controller.isUnderReview ? null : controller.pickPdf,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'passport_scan'.tr,
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    color: AppColors.greyInactive,
+                Flexible(
+                  child: Text(
+                    controller.pdfFileName ?? 'passport_scan'.tr,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      color: AppColors.greyInactive,
+                    ),
                   ),
                 ),
                 SizedBox(width: AppDimensions.paddingMedium.w),
-                if(controller.status == Status.error)...[
-                  SvgPicture.asset(
-                    AppAssets.X,
-                    width: 24.w,
-                    color:  AppColors.redDark,
-                  ),
-                ]else...[
-                  SvgPicture.asset(
+                SvgPicture.asset(
                   controller.pdfFile == null
                       ? AppAssets.pdfIcon
                       : AppAssets.checkIcon,
@@ -462,10 +489,17 @@ class _IdentityVerificationScreenState
                   color: controller.pdfFile == null
                       ? AppColors.grey
                       : AppColors.green,
-                ),],
-
+                ),
               ],
             ),
+          ),
+        ),
+        SizedBox(height: 8.h),
+        Text(
+          r'passport_file_hint'.tr,
+          style: TextStyle(
+            fontSize: 12.sp,
+            color: AppColors.greyInactive,
           ),
         ),
       ],

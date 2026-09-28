@@ -48,7 +48,7 @@ class _RegisterConfirmationScreenState extends State<RegisterConfirmationScreen>
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            controller.login == 'login' ? r'step_1_of_2'.tr :r'step_2_of_3'.tr,
+                            controller.stepLabelKey.tr,
                             style: TextStyle(
                               fontSize: 14.sp,
                               color: AppColors.blackText,
@@ -60,7 +60,7 @@ class _RegisterConfirmationScreenState extends State<RegisterConfirmationScreen>
                             child: CircularProgressIndicator(
                               color: AppColors.green,
                               backgroundColor: AppColors.dividerColor,
-                              value: controller.login == 'login' ? 0.75 : 0.5,
+                              value: controller.stepProgress,
                             )
                           ),
                         ],

@@ -85,7 +85,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Column(
                             children: [
 
-                              Text('+993 ${controller.phoneBox.get('phone')}', style: TextStyle(fontSize: 17.sp, color: AppColors.black,),),
+                              if (controller.phoneBox.get('phone') != null &&
+                                  controller.phoneBox.get('phone')!.isNotEmpty)
+                                Text(
+                                  '+993 ${controller.phoneBox.get('phone')}',
+                                  style: TextStyle(
+                                    fontSize: 17.sp,
+                                    color: AppColors.black,
+                                  ),
+                                ),
                               SizedBox(height: 5.h,),
 
                               Row(

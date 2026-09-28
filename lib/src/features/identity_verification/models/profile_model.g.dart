@@ -31,13 +31,14 @@ class ProfileModelAdapter extends TypeAdapter<ProfileModel> {
       homePhone: fields[11] as int?,
       homeAddress: fields[12] as String?,
       status: fields[13] as String?,
+      rejectedText: (fields[14] as List?)?.map((item) => item.toString()).toList(),
     );
   }
 
   @override
   void write(BinaryWriter writer, ProfileModel obj) {
     writer
-      ..writeByte(14)
+      ..writeByte(15)
       ..writeByte(0)
       ..write(obj.firstName)
       ..writeByte(1)
@@ -65,7 +66,9 @@ class ProfileModelAdapter extends TypeAdapter<ProfileModel> {
       ..writeByte(12)
       ..write(obj.homeAddress)
       ..writeByte(13)
-      ..write(obj.status);
+      ..write(obj.status)
+      ..writeByte(14)
+      ..write(obj.rejectedText);
   }
 
   @override

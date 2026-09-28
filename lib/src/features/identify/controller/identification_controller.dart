@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:senagat_mobile/src/features/category/model/fast_service_model.dart';
 import 'package:senagat_mobile/src/features/dashboard/presentation/dashboard_screen.dart';
-import 'package:senagat_mobile/src/features/dashboard/utils/nested_nav_ids.dart';
 import 'package:senagat_mobile/src/features/home/controller/home_controller.dart';
 import '../../../core/control_state_variable_mixin.dart';
 import '../../../core/local/key_value_storage_service.dart';
@@ -12,6 +11,7 @@ import '../../../core/states/stateful_data.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../add_card/model/card_model.dart';
 import '../../auth/controller/account_status_controller.dart';
+import '../../auth/controller/auth_controller.dart';
 import '../../card/controller/card_controller.dart';
 import '../../category/controller/category_controller.dart';
 import '../../dashboard/controller/dashboard_controller.dart';
@@ -38,8 +38,20 @@ class IdentificationController extends GetxController with StateControlMixin {
   AccountModel? currentUser;
   final homeController = Get.find<HomeController>();
 
-  String? get phone => phoneBox.get('phone');
+  String? get phone {
+    final stored = phoneBox.get('phone');
+    if (stored != null && stored.isNotEmpty) return stored;
+    if (Get.isRegistered<AuthController>()) {
+      final accountPhone = Get.find<AuthController>().account.phoneNumber;
+      if (accountPhone != null && accountPhone.isNotEmpty) return accountPhone;
+    }
+    return null;
+  }
+
   String? get profileStatus => profileBox.get('currentProfile')?.status;
+
+  List<String> get rejectedReasons =>
+      profileBox.get('currentProfile')?.rejectedText ?? [];
 
   Future<void> logout() async {
     await _keyValueStorageService.resetKeys();

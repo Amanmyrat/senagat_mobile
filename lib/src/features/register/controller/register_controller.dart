@@ -31,6 +31,33 @@ class RegisterController extends GetxController with StateControlMixin {
   final bool otpEnabled = Configs.OTPEnabled;
   final authController = Get.find<AuthController>();
 
+  /// Password reset always sends a code. Login and registration do that only
+  /// when [otpEnabled] is true.
+  bool get sendsConfirmationCode => otpEnabled || login == 'reset_password';
+
+  /// Login without OTP is one screen: phone, password, then the session.
+  bool get isSingleStepLogin => !otpEnabled && login == 'login';
+
+  bool get isThreeStepFlow =>
+      login == 'reset_password' || (otpEnabled && login != 'login');
+
+  String get stepLabelKey =>
+      isThreeStepFlow ? r'step_1_of_3' : r'step_1_of_2';
+
+  double get stepProgress => isThreeStepFlow ? 1 / 3 : 0.5;
+
+  String get subtitleKey {
+    if (sendsConfirmationCode) return r'send_sms';
+    if (login == 'login') return r'enter_phone_and_password';
+    return r'enter_your_phone';
+  }
+
+  String get actionLabelKey {
+    if (sendsConfirmationCode) return r'send_code';
+    if (login == 'login') return r'sign_in';
+    return r'next';
+  }
+
 
   RegisterController(this.repository, this.key);
 
@@ -88,9 +115,12 @@ class RegisterController extends GetxController with StateControlMixin {
         });
       }
     } else if (otpEnabled == false) {
-      Get.toNamed(RegisterPasswordSetupScreen.route);
       phoneBox.put('phone', phoneController.text);
       update();
+      Get.toNamed(
+        RegisterPasswordSetupScreen.route,
+        arguments: {'login': login},
+      );
     } else if (key.currentState?.validate() ?? false) {
       status = Status.loading;
 

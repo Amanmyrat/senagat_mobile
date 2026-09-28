@@ -12,6 +12,7 @@ import 'package:senagat_mobile/src/features/get_card/presentation/get_card_scree
 import 'package:senagat_mobile/src/features/home/models/exchange_rate_model.dart';
 import 'package:senagat_mobile/src/features/home/models/user_information_model.dart';
 import 'package:senagat_mobile/src/features/home/repository/exchage_rate_repository.dart';
+import 'package:senagat_mobile/src/features/pay/presentation/alem_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/astu_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/presentation/foundation_payment_screen.dart';
 import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
@@ -28,7 +29,7 @@ import '../../pay/model/pay_model.dart';
 import '../../pay/model/paymet_history_model.dart';
 import '../../service_settings/controller/service_settings_controller.dart';
 
-enum HomeTapType { none, qr, foundation, service, notification }
+enum HomeTapType { none, foundation, service }
 
 class HomeController extends GetxController with StateControlMixin {
   HomeTapType lastTap = HomeTapType.none;
@@ -54,11 +55,11 @@ class HomeController extends GetxController with StateControlMixin {
   String cardKey = 'card';
 
   bool isProfileRequired = false;
+  bool isProfilePending = false;
   bool isServiceRequired = true;
 
   List<ExchangeRateModel> exchange = [];
   bool _isFetchingExchangeRates = false;
-  bool _isFetchingUserInfo = false;
   bool historyIsLoading = false;
   bool paymentTimer = false;
 
@@ -123,14 +124,21 @@ class HomeController extends GetxController with StateControlMixin {
     }
   }
 
+  String get profileBannerKey {
+    final status = _profileStatus;
+    if (status == 'rejected') return r'profile_rejected_hint';
+    if (status == 'pending') return r'profile_pending_hint';
+    return r'most_functions';
+  }
+
+  String? get _profileStatus =>
+      userInformationModel?.profileModel?.status ?? currentProfile?.status;
+
   String textStatus() {
-    if (currentProfile?.status == 'pending' && userInformationModel?.profileModel?.status == 'pending') {
-      return r'pending'.tr;
-    } else if (currentProfile?.status == 'rejected') {
-      return 'rejected'.tr;
-    } else {
-      return '';
-    }
+    final status = _profileStatus;
+    if (status == 'pending') return r'pending'.tr;
+    if (status == 'rejected') return r'rejected'.tr;
+    return '';
   }
 
   void onFastServiceTap(int index) {
@@ -153,12 +161,10 @@ class HomeController extends GetxController with StateControlMixin {
         'selectedServiceIcon': item.icon,
       });
     } else if (item.title == 'ÄlemTv') {
-      ShowSnack.showSnack('payment_temporarily_unavailable'.tr, SnackType.warning);
-
-      // Get.toNamed(TmcellPaymentScreen.route, arguments: {
-      //   'selectedServiceTitle': item.title,
-      //   'selectedServiceIcon': item.icon,
-      // });
+      Get.toNamed(AlemPaymentScreen.route, arguments: {
+        'selectedServiceTitle': item.title,
+        'selectedServiceIcon': item.icon,
+      });
     } else if (item.title == 'telecom_internet') {
       Get.toNamed(CheckPhoneBalanceScreen.route, arguments: {
         'selectedServiceTitle': item.title,
@@ -256,41 +262,41 @@ class HomeController extends GetxController with StateControlMixin {
     }
   }
 
-  void getUserProfileInfo() async {
-    if (_isFetchingUserInfo) return;
+  int _profileFetchGen = 0;
 
-    _isFetchingUserInfo = true;
+  Future<void> getUserProfileInfo() async {
+    final generation = ++_profileFetchGen;
     status = Status.loading;
     update();
 
-    await authRepository
-        .getUserInformation()
-        .then((value) {
-          userInformationModel = value;
-          status = Status.completed;
-          if (userInformationModel?.profileModel != null) {
-            profileBox.put(
-              'currentProfile',
-              userInformationModel!.profileModel!,
-            );
-            phoneBox.put('phone', userInformationModel!.phone!);
-            currentProfile = userInformationModel!.profileModel!;
+    try {
+      final value = await authRepository.getUserInformation();
+      if (generation != _profileFetchGen) return;
 
-          }
+      userInformationModel = value;
+      status = Status.completed;
+      if (value.profileModel != null) {
+        await profileBox.put('currentProfile', value.profileModel!);
+        currentProfile = value.profileModel;
+      } else {
+        await profileBox.delete('currentProfile');
+        currentProfile = null;
+      }
 
-          checkProfile();
-          checkProfileStatus();
-          textStatus();
-          update();
-        })
-        .catchError((e) {
-          status = Status.error;
-          update();
-          ApiErrorHandler.handleApiError(e);
-        })
-        .whenComplete(() {
-          _isFetchingUserInfo = false;
-        });
+      final phone = value.phone;
+      if (phone != null && phone.isNotEmpty) {
+        await phoneBox.put('phone', phone);
+      }
+
+      checkProfile();
+      checkProfileStatus();
+      update();
+    } catch (e) {
+      if (generation != _profileFetchGen) return;
+      status = Status.error;
+      update();
+      ApiErrorHandler.handleApiError(e);
+    }
   }
 
   void loadHistory() async {
@@ -310,33 +316,26 @@ class HomeController extends GetxController with StateControlMixin {
   }
 
   checkProfile() {
-    if(accountLoginStatusController.accountLoginStatus.value ==
+    if (accountLoginStatusController.accountLoginStatus.value ==
         AccountLoginStatus.loggedIn) {
-      // Keep in-memory state aligned with persisted state
       currentProfile = profileBox.get('currentProfile');
-      if (currentProfile == null &&
-          userInformationModel?.profileModel == null) {
-        isProfileRequired = true;
-        update();
-      } else {
-        isProfileRequired = false;
-        update();
-      }
+      _applyProfileFlags();
     }
   }
 
   checkProfileStatus() {
-    // Keep in-memory state aligned with persisted state
     currentProfile = profileBox.get('currentProfile');
-    // Check both sources - use userInformationModel if available, otherwise fall back to Hive
-    final profileStatus = userInformationModel?.profileModel?.status ?? currentProfile?.status;
-    if (profileStatus == 'approved') {
-      isServiceRequired = false;
-      update();
-    } else {
-      isServiceRequired = true;
-      update();
-    }
+    _applyProfileFlags();
+  }
+
+  void _applyProfileFlags() {
+    final status = _profileStatus;
+    final missing = currentProfile == null &&
+        userInformationModel?.profileModel == null;
+    isProfileRequired = missing || status == 'rejected';
+    isProfilePending = status == 'pending';
+    isServiceRequired = status != 'approved';
+    update();
   }
 
   String hideCardCenter(String number) {

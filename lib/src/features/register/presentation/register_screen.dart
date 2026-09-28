@@ -47,39 +47,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            if(!controller.otpEnabled)...[
+                        if (!controller.isSingleStepLogin)
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
                               Text(
-                                r'step_1_of_2'.tr,
+                                controller.stepLabelKey.tr,
                                 style: TextStyle(
                                   fontSize: 14.sp,
                                   color: AppColors.blackText,
                                 ),
                               ),
-                            ]else...[
-                            Text(
-                              controller.login == 'login'
-                                  ? r'step_1_of_2'.tr
-                                  : r'step_1_of_3'.tr,
-                              style: TextStyle(
-                                fontSize: 14.sp,
-                                color: AppColors.blackText,
+                              SizedBox(
+                                width: 24.w,
+                                height: 24.h,
+                                child: CircularProgressIndicator(
+                                  color: AppColors.green,
+                                  value: controller.stepProgress,
+                                  backgroundColor: AppColors.lightGrey,
+                                ),
                               ),
-                            ),
                             ],
-                            SizedBox(
-                              width: 24.w,
-                              height: 24.h,
-                              child: CircularProgressIndicator(
-                                color: AppColors.green,
-                                value: 0.25,
-                                backgroundColor: AppColors.lightGrey,
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
                         SizedBox(height: AppDimensions.padding40.h),
                         Text(
                           r'phone'.tr,
@@ -89,7 +78,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                         Text(
-                          r'send_sms'.tr,
+                          controller.subtitleKey.tr,
                           style: TextStyle(
                             fontSize: 14.sp,
                             color: AppColors.greyInactive,
@@ -292,9 +281,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   ? controller.onRegisterTap
                                   : null,
                               child: Text(
-                                controller.otpEnabled == true?
-                                r'send_code'.tr :
-                                r'sign_in'.tr,
+                                controller.actionLabelKey.tr,
                                 style: TextStyle(
                                   fontSize: 14.sp,
                                   color: AppColors.white,
