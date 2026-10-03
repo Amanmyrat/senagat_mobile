@@ -10,6 +10,7 @@ import 'package:senagat_mobile/src/features/home/controller/home_controller.dart
 import 'package:senagat_mobile/src/features/identity_verification/repository/profile_repository.dart';
 import 'package:senagat_mobile/src/utils/api_error_handler.dart';
 import 'package:senagat_mobile/src/utils/services/show_snack.dart';
+import 'package:senagat_mobile/src/widgets/input_formatter.dart';
 import 'package:senagat_mobile/src/widgets/text_input_masks.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../dashboard/controller/dashboard_controller.dart';
@@ -119,7 +120,28 @@ class IdentityVerificationController extends GetxController with StateControlMix
       ),
     ];
 
+    for (final controller in [
+      nameController,
+      lastNameController,
+      surNameController,
+    ]) {
+      controller.addListener(() => _keepFirstLetterUpper(controller));
+    }
+
     onTextIsNotEmpty(null);
+  }
+
+  void _keepFirstLetterUpper(TextEditingController controller) {
+    final updated = capitalizeFirstLetter(controller.text);
+    if (updated == controller.text) return;
+
+    final offset = controller.selection.extentOffset;
+    controller.value = TextEditingValue(
+      text: updated,
+      selection: TextSelection.collapsed(
+        offset: offset < 0 ? updated.length : offset.clamp(0, updated.length),
+      ),
+    );
   }
 
   (String?, String?, String) _parsePassport(String value) {
@@ -292,10 +314,10 @@ class IdentityVerificationController extends GetxController with StateControlMix
   }
 
   Future<ProfileModel> _getProfileModel() async {
-    final middleName = surNameController.text.trim();
+    final middleName = capitalizeFirstLetter(surNameController.text.trim());
     return ProfileModel(
-      firstName: nameController.text.trim(),
-      lastName: lastNameController.text.trim(),
+      firstName: capitalizeFirstLetter(nameController.text.trim()),
+      lastName: capitalizeFirstLetter(lastNameController.text.trim()),
       middleName: middleName.isEmpty ? null : middleName,
       birthDate: _displayDate(dateOfBirthController.text),
       passportNumber: buildPassportNumber(),
@@ -310,16 +332,18 @@ class IdentityVerificationController extends GetxController with StateControlMix
 
   Future<ProfileModel> _getUpdatedProfileModel() async {
     final savedProfile = profileBox.get('currentProfile');
-    final middleName = surNameController.text.trim();
+    final middleName = capitalizeFirstLetter(surNameController.text.trim());
     final savedMiddle = savedProfile?.middleName ?? '';
     final newPassport = buildPassportNumber();
+    final firstName = capitalizeFirstLetter(nameController.text.trim());
+    final lastName = capitalizeFirstLetter(lastNameController.text.trim());
 
     return ProfileModel(
-      firstName: nameController.text.trim() != (savedProfile?.firstName ?? '')
-          ? nameController.text.trim()
+      firstName: firstName != (savedProfile?.firstName ?? '')
+          ? firstName
           : null,
-      lastName: lastNameController.text.trim() != (savedProfile?.lastName ?? '')
-          ? lastNameController.text.trim()
+      lastName: lastName != (savedProfile?.lastName ?? '')
+          ? lastName
           : null,
       middleName: middleName != savedMiddle ? middleName : null,
       birthDate: _displayDate(dateOfBirthController.text) !=
@@ -383,9 +407,12 @@ class IdentityVerificationController extends GetxController with StateControlMix
       }
 
       final latestProfile = ProfileModel(
-        firstName: fromServer.firstName ?? nameController.text.trim(),
-        lastName: fromServer.lastName ?? lastNameController.text.trim(),
-        middleName: fromServer.middleName ?? surNameController.text.trim(),
+        firstName: fromServer.firstName ??
+            capitalizeFirstLetter(nameController.text.trim()),
+        lastName: fromServer.lastName ??
+            capitalizeFirstLetter(lastNameController.text.trim()),
+        middleName: fromServer.middleName ??
+            capitalizeFirstLetter(surNameController.text.trim()),
         birthDate: fromServer.birthDate ?? _displayDate(dateOfBirthController.text),
         passportNumber: fromServer.passportNumber ?? buildPassportNumber(),
         issuedDate: fromServer.issuedDate ?? _displayDate(dateIssueController.text),

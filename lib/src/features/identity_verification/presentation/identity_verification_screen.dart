@@ -12,6 +12,7 @@ import '../../../core/states/stateful_data.dart';
 import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
 import '../../../widgets/elevated_button_with_state.dart';
+import '../../../widgets/input_formatter.dart';
 
 class IdentityVerificationScreen extends StatefulWidget {
   static const route = '/identity/verification';
@@ -116,10 +117,14 @@ class _IdentityVerificationScreenState
                             }
 
                             // 3. DEFAULT TEXT FIELDS
+                            final isNameField = ctrl == controller.nameController ||
+                                ctrl == controller.lastNameController ||
+                                ctrl == controller.surNameController;
                             return _defaultField(
                               controller: controller,
                               title: title.tr,
                               ctrl: ctrl,
+                              capitalizeName: isNameField,
                             );
                           },
                         ),
@@ -187,6 +192,7 @@ class _IdentityVerificationScreenState
     required IdentityVerificationController controller,
     required String title,
     required TextEditingController ctrl,
+    bool capitalizeName = false,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -198,6 +204,13 @@ class _IdentityVerificationScreenState
         SizedBox(height: AppDimensions.paddingMedium.h),
         TextFormField(
           textInputAction: TextInputAction.next,
+          keyboardType: capitalizeName ? TextInputType.name : TextInputType.text,
+          textCapitalization: capitalizeName
+              ? TextCapitalization.words
+              : TextCapitalization.none,
+          inputFormatters: capitalizeName
+              ? const [CapitalizeFirstLetterFormatter()]
+              : null,
           controller: ctrl,
           style: TextStyle(fontSize: 14.sp),
           onChanged: controller.onTextIsNotEmpty,

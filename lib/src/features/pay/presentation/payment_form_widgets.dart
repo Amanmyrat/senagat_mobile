@@ -13,6 +13,7 @@ import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
 import 'package:senagat_mobile/src/widgets/elevated_button_with_state.dart';
+import 'package:senagat_mobile/src/widgets/input_formatter.dart';
 
 import '../controller/alem_payment_controller.dart';
 
@@ -754,6 +755,8 @@ Widget pyggVideoFields(PaymentController controller) {
           SizedBox(height: AppDimensions.paddingMedium.h),
           TextFormField(
             keyboardType: TextInputType.name,
+            textCapitalization: TextCapitalization.words,
+            inputFormatters: const [CapitalizeFirstLetterFormatter()],
             controller: controller.nameController,
             onChanged: (_) => controller.isTextNotEmpty(),
             style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.primaryFont),
@@ -792,6 +795,8 @@ Widget pyggVideoFields(PaymentController controller) {
           SizedBox(height: AppDimensions.paddingMedium.h),
           TextFormField(
             keyboardType: TextInputType.name,
+            textCapitalization: TextCapitalization.words,
+            inputFormatters: const [CapitalizeFirstLetterFormatter()],
             controller: controller.nameController,
             onChanged: (_) => controller.isTextNotEmpty(),
             style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.primaryFont),
@@ -1034,6 +1039,8 @@ Widget pyggDecisionFields(PaymentController controller) {
           SizedBox(height: AppDimensions.paddingMedium.h),
           TextFormField(
             keyboardType: TextInputType.name,
+            textCapitalization: TextCapitalization.words,
+            inputFormatters: const [CapitalizeFirstLetterFormatter()],
             controller: controller.nameController,
             onChanged: (_) => controller.isTextNotEmpty(),
             style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.primaryFont),
@@ -1072,6 +1079,8 @@ Widget pyggDecisionFields(PaymentController controller) {
           SizedBox(height: AppDimensions.paddingMedium.h),
           TextFormField(
             keyboardType: TextInputType.name,
+            textCapitalization: TextCapitalization.words,
+            inputFormatters: const [CapitalizeFirstLetterFormatter()],
             controller: controller.nameController,
             onChanged: (_) => controller.isTextNotEmpty(),
             style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.primaryFont),

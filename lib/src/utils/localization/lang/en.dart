@@ -67,6 +67,10 @@ const Map<String, String> enUs = {
   r'currency': r'Currency',
   r'purchase': r'Purchase',
   r'sale': r'Sale',
+  r'exchange_rate_disclaimer':
+      r'The rate is valid at the current time. The exact rate will be determined at the moment the transaction is completed',
+  r'central_bank_exchange_rate':
+      r'Exchange rate of the Central Bank of Turkmenistan',
   r'telecom_internet': r'Telecom Internet',
   r'astu_internet': r'ASTU internet',
   r'notifications': r'Notifications',

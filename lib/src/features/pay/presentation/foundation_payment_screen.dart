@@ -9,6 +9,7 @@ import 'package:senagat_mobile/src/features/pay/repository/payment_repository.da
 import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
+import 'package:senagat_mobile/src/widgets/input_formatter.dart';
 
 class FoundationPaymentScreen extends StatelessWidget {
   static const route = r'/payment/foundation';
@@ -65,6 +66,8 @@ class FoundationPaymentScreen extends StatelessWidget {
         SizedBox(height: AppDimensions.paddingMedium.h),
         TextFormField(
           keyboardType: TextInputType.name,
+          textCapitalization: TextCapitalization.words,
+          inputFormatters: const [CapitalizeFirstLetterFormatter()],
           controller: controller,
           onChanged: (_) => onChanged(),
           style: TextStyle(

@@ -5,6 +5,7 @@ import 'package:senagat_mobile/src/features/pay/controller/payment_controller.da
 import 'package:senagat_mobile/src/features/pay/model/charity_model.dart';
 import 'package:senagat_mobile/src/features/pay/repository/payment_repository.dart';
 import 'package:senagat_mobile/src/utils/api_error_handler.dart';
+import 'package:senagat_mobile/src/widgets/input_formatter.dart';
 
 class FoundationPaymentController extends PaymentController {
   FoundationPaymentController(PaymentRepository repository) : super(repository);
@@ -25,8 +26,8 @@ class FoundationPaymentController extends PaymentController {
   Future<CharityModel> _getCharityModel() async {
     return CharityModel(
       bankName: selectedCard?.bank ?? '',
-      name: nameController.text,
-      surName: lastnameController.text,
+      name: capitalizeFirstLetter(nameController.text.trim()),
+      surName: capitalizeFirstLetter(lastnameController.text.trim()),
       phoneNumber: phoneController.text,
       amount: int.parse(sumController.text),
     );

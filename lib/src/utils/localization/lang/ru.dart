@@ -67,6 +67,10 @@ const Map<String, String> ruRu = {
   r'currency': r'Валюта',
   r'purchase': r'Покупка',
   r'sale': r'Продажа',
+  r'exchange_rate_disclaimer':
+      r'Курс действует на текущее время. Точный курс будет определён на момент совершения операции',
+  r'central_bank_exchange_rate':
+      r'Курс валюты Центрального банка Туркменистана',
   r'telecom_internet': r'Телеком Интернет',
   r'astu_internet': r'АГТС Интернет',
   r'notifications': r'Уведомления',

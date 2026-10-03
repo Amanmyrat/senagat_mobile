@@ -13,6 +13,7 @@ import 'package:senagat_mobile/src/utils/theme/constants/app_colors.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_dimensions.dart';
 import 'package:senagat_mobile/src/utils/theme/constants/app_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../core/states/stateful_data.dart';
 import '../../../widgets/header_widget.dart';
 import '../../card_settings/presentation/card_settings_screen.dart';
@@ -551,6 +552,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       color: AppColors.white,
                                     ),
                                     child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Row(
                                           children: [
@@ -683,6 +686,27 @@ class _HomeScreenState extends State<HomeScreen> {
                                             );
                                           },
                                         ),
+                                        SizedBox(height: 22.h),
+                                        Text(
+                                          r'exchange_rate_disclaimer'.tr,
+                                          style: TextStyle(
+                                            color: AppColors.grey,
+                                            fontSize: 12.sp,
+                                            height: 1.4,
+                                          ),
+                                        ),
+                                        SizedBox(height: 12.h),
+                                        GestureDetector(
+                                          onTap: _openCentralBankRates,
+                                          child: Text(
+                                            r'central_bank_exchange_rate'.tr,
+                                            style: TextStyle(
+                                              color: AppColors.green,
+                                              fontSize: 14.sp,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -698,6 +722,11 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _openCentralBankRates() async {
+    final uri = Uri.parse('https://www.cbt.tm/kurs/kurs_today.html');
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
   }
 
   Widget profileIsRequiredWidget(HomeController controller) {

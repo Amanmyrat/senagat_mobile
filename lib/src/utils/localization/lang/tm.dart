@@ -68,6 +68,10 @@ const Map<String, String> tkTk = {
   r'currency': r'Walýuta',
   r'purchase': r'Satyn almak',
   r'sale': r'Satyş',
+  r'exchange_rate_disclaimer':
+      r'Kurs häzirki wagta degişlidir. Takyk kurs amalyň ýerine ýetirilýän pursatynda kesgitlener',
+  r'central_bank_exchange_rate':
+      r'Türkmenistanyň Merkezi bankyň walýuta kursy',
   r'telecom_internet': r'Telekom Internet',
   r'astu_internet': r'AŞTU Internet',
   r'notifications': r'Bildirişler',
