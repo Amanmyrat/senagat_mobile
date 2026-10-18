@@ -18,6 +18,7 @@ import '../../../core/states/stateful_data.dart';
 import '../../../widgets/header_widget.dart';
 import '../../card_settings/presentation/card_settings_screen.dart';
 import '../../identity_verification/presentation/identity_verification_screen.dart';
+import '../../payment_history/presentation/payment_history_details_sheet.dart';
 import '../controller/home_controller.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -347,8 +348,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                         itemBuilder: (context, index) {
                                           return GestureDetector(
                                             onTap: () {
-                                              Get.toNamed(
-                                                PaymentHistoryScreen.route,
+                                              showPaymentHistoryDetails(
+                                                controller.history[index],
                                               );
                                             },
                                             child: Container(

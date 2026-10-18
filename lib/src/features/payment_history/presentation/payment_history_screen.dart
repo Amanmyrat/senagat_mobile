@@ -9,6 +9,7 @@ import '../../../utils/theme/constants/app_colors.dart';
 import '../../../utils/theme/constants/app_dimensions.dart';
 import '../../../utils/theme/constants/app_fonts.dart';
 import '../controller/payment_history_controller.dart';
+import 'payment_history_details_sheet.dart';
 
 class PaymentHistoryScreen extends StatefulWidget {
   static const route = '/payment/history';
@@ -136,7 +137,9 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
                             itemBuilder: (context, index) {
                               final item = controller.filteredHistory[index];
 
-                              return Container(
+                              return GestureDetector(
+                                onTap: () => showPaymentHistoryDetails(item),
+                                child: Container(
                                 width: double.infinity,
                                 padding: EdgeInsets.all(
                                   AppDimensions.paddingExtraLarge.w,
@@ -249,6 +252,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
                                       ],
                                     ),
                                   ],
+                                ),
                                 ),
                               );
                             },
